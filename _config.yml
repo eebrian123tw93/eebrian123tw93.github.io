@@ -104,4 +104,4 @@ theme: landscape
 deploy:
   type: git
   repo: git@github.com:eebrian123tw93/eebrian123tw93.github.io.git
-  branch: master
+  branch: main

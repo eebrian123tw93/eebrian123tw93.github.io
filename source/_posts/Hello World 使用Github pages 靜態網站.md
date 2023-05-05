@@ -4,7 +4,7 @@ categories: []
 date: 2023-05-05 10:03:00
 ---
 
-建立一個新的倉庫 命名為 帳戶名稱.github.io
+建立一個新的倉庫 命名為 **帳戶名稱.github.io**
 ![建立一個新的倉庫](/images/image.png)
 
 好了之後在自己的電腦上clone專案下來

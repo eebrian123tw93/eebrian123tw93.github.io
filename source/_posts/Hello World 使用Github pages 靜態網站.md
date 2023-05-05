@@ -11,7 +11,7 @@ date: 2023-05-05 10:03:00
 ```
 git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git
 ```
-進入專案 新增一個index.html 內下是Hello World
+進入專案 新增一個index.html 內容是Hello World
 ```
 cd eebrian123tw60.github.io
 echo "Hello World" > index.html

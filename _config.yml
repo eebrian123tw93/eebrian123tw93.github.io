@@ -8,8 +8,8 @@ subtitle:
 description: eebrian123tw93 note
 keywords:
 author: Brian 
-language: zg
-timezone: Taipei
+language: zh
+timezone: Asia/Taipei
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
@@ -40,7 +40,7 @@ external_link:
   exclude: ''
 filename_case: 0
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -104,4 +104,9 @@ theme: landscape
 deploy:
   type: git
   repo: git@github.com:eebrian123tw93/eebrian123tw93.github.io.git
-  branch: master
+  branch: gh-pages
+
+admin:
+  username: eebrian123tw93
+  password_hash: $2a$10$4KjZCvknyJabgb9JZwC44eCyYzgYr02gQRILG2OMcj.XpZ8XbnDtG
+  secret: eebrian123tw93 handsome

@@ -1,0 +1,16 @@
+version: '3'
+services:
+  hexo:
+    platform: linux/amd64
+    container_name: hexo-node
+    image: hexo-node
+    restart: unless-stopped
+    build: 
+      dockerfile: ./build/Dockerfile
+      args:
+        TZ: "Asia/Taipei"
+    tty: true
+    volumes:
+      - /Users/brian/Documents/eebrian123tw93.github.io:/opt:Z
+    ports:
+      - "4000:4000"

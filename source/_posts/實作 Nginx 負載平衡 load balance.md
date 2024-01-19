@@ -5,15 +5,6 @@ Last modified:  NaN
 Aliases: 
 Tags:  #DevOps 
 ---
-# Metadata
-
-Status  :: 未整理
-Source Type :: 日常對話
-Source URL :: 
-Author :: 
-Note Type :: 日常
-Topics :: #DevOps 
-
 # 實作 Nginx 負載平衡 load balance
 
 # Summery
@@ -27,18 +18,18 @@ Topics :: #DevOps
 ```
 http {
 	upstream myapp {
-	    ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash
-	    server srv1.example.com;
-	    server srv2.example.com;
-	    server srv3.example.com;
+		ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash
+		server srv1.example.com;
+		server srv2.example.com;
+		server srv3.example.com;
 	}
 
 	server {
 		listen 80;
 
-		  location / {
-			  proxy_pass   http://myapp;
-		  }
+			location / {
+				proxy_pass	 http://myapp;
+			}
 	}
 
 }
@@ -47,17 +38,17 @@ http {
 ```
 http {
 	upstream myapp {
-	    server srv1.example.com weight=3;
-	    server srv2.example.com weight=2;
-	    server srv3.example.com;
+		server srv1.example.com weight=3;
+		server srv2.example.com weight=2;
+		server srv3.example.com;
 	}
 
 	server {
 		listen 80;
 
-		  location / {
-			  proxy_pass   http://myapp;
-		  }
+			location / {
+				proxy_pass	 http://myapp;
+			}
 	}
 
 }
@@ -66,27 +57,22 @@ http {
 ```
 http {
 	upstream myapp {
-	    server srv1.example.com weight=3;
-	    server srv2.example.com backup;
-	    server srv3.example.com;
+		server srv1.example.com weight=3;
+		server srv2.example.com backup;
+		server srv3.example.com;
 	}
 
 	server {
 		listen 80;
 
-		  location / {
-			  proxy_pass   http://myapp;
-		  }
+			location / {
+				proxy_pass	 http://myapp;
+			}
 	}
 
 }
 ```
 
 ---
-
-# Note
-
----
 # Outer Link
 - [maxlist.xyz/2020/06/18/flask-nginx/](maxlist.xyz/2020/06/18/flask-nginx/)
-- 

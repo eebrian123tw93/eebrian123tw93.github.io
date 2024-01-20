@@ -1,14 +1,14 @@
 ---
 title: VM安裝
-date: 2024-01-20 13:16:07
-updated: {{ date }}
 tags:
   - vm
   - VirtualBox
   - samba
   - ssh-server
-categories:
-description:
+date: '2023-11-29 18:16:00'
+updated: '2024-01-20 17:56:21'
+categories: ''
+description: ''
 ---
 ## Install Guest Additions 
 `sudo apt-get install gcc make perl -y`

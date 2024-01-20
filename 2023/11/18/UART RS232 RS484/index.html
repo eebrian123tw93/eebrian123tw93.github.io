@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UART RS232 RS484">
+<meta property="og:url" content="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/index.html">
+<meta property="og:site_name" content="Brian&#39;s 筆記">
+<meta property="og:description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022253.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022310.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022341.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022404.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022417.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022441.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022454.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022508.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022520.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022552.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022615.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022632.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022701.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022714.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022730.png">
+<meta property="article:published_time" content="2023-11-18T19:31:00.000Z">
+<meta property="article:modified_time" content="2024-01-20T10:38:51.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="UART">
+<meta property="article:tag" content="RS232">
+<meta property="article:tag" content="RS484">
+<meta property="article:tag" content="TXRX">
+<meta property="article:tag" content="TTL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20231119022253.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/","path":"2023/11/18/UART RS232 RS484/","title":"UART RS232 RS484"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>UART RS232 RS484 | Brian's 筆記</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 筆記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text"># 介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%AE%91%E7%8E%87-%E6%B3%A2%E7%89%B9%E7%8E%87"><span class="nav-number">2.</span> <span class="nav-text">鮑率(波特率)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B8%E6%93%9A%E5%B9%80"><span class="nav-number">3.</span> <span class="nav-text">數據幀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%9F%E5%A7%8B%E4%BD%8D%E5%85%83"><span class="nav-number">3.1.</span> <span class="nav-text">啟始位元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E4%BD%8D%E5%85%83"><span class="nav-number">3.2.</span> <span class="nav-text">資料位元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E4%BD%8D%E4%BD%8D%E5%85%83"><span class="nav-number">3.3.</span> <span class="nav-text">同位位元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%81%9C%E6%AD%A2%E4%BD%8D%E5%85%83"><span class="nav-number">3.4.</span> <span class="nav-text">停止位元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8F%BE%E6%B3%81"><span class="nav-number">3.5.</span> <span class="nav-text">現況</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A5%E6%B3%95"><span class="nav-number">3.6.</span> <span class="nav-text">接法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TTL%E9%9B%BB%E5%B9%B3-Transistor-Transistor-Logic"><span class="nav-number">3.7.</span> <span class="nav-text">TTL電平 Transistor-Transistor Logic</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A3%9C%E5%85%85-UART%E4%B8%B2%E5%8F%A3%E6%B5%81%E6%8E%A7%E5%88%B6%EF%BC%88Flow-control%EF%BC%89"><span class="nav-number">3.8.</span> <span class="nav-text">(補充) UART串口流控制（Flow control）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8"><span class="nav-number">3.8.1.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%90%86"><span class="nav-number">3.8.2.</span> <span class="nav-text">原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RS232"><span class="nav-number">4.</span> <span class="nav-text">RS232</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RS485"><span class="nav-number">5.</span> <span class="nav-text">RS485</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">6.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E5%BD%B1%E7%89%87"><span class="nav-number">7.</span> <span class="nav-text">參考影片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">參考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 筆記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="UART RS232 RS484 | Brian's 筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          UART RS232 RS484
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-19 03:31:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:31:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:38:51" itemprop="dateModified" datetime="2024-01-20T18:38:51+08:00">2024-01-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
+<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
+<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
+<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
+<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
+<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
+<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
+<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
+<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
+<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
+<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
+<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
+<li><a target="_blank" rel="noopener" href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="noopener" href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
+<li><a target="_blank" rel="noopener" href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/UART/" rel="tag"># UART</a>
+              <a href="/tags/RS232/" rel="tag"># RS232</a>
+              <a href="/tags/RS484/" rel="tag"># RS484</a>
+              <a href="/tags/TXRX/" rel="tag"># TXRX</a>
+              <a href="/tags/TTL/" rel="tag"># TTL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/11/18/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/" rel="prev" title="IIC I2C （Inter-Integrated Circuit）">
+                  <i class="fa fa-chevron-left"></i> IIC I2C （Inter-Integrated Circuit）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/11/18/PWM(Pulse-width%20modulation)/" rel="next" title="PWM(Pulse-width modulation)">
+                  PWM(Pulse-width modulation) <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

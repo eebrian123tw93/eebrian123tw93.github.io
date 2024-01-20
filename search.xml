@@ -38,9 +38,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>實作 Nginx 負載平衡 load balance</title>
+    <title>[object Object]</title>
     <url>/2024/01/20/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
-    <content><![CDATA[<h1 id="實作-Nginx-負載平衡-load-balance"><a href="#實作-Nginx-負載平衡-load-balance" class="headerlink" title="實作 Nginx 負載平衡 load balance"></a>實作 Nginx 負載平衡 load balance</h1><h1 id="Summery"><a href="#Summery" class="headerlink" title="Summery"></a>Summery</h1><h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
+    <content><![CDATA[<h1 id="實作-Nginx-負載平衡-load-balance"><a href="#實作-Nginx-負載平衡-load-balance" class="headerlink" title="實作 Nginx 負載平衡 load balance"></a>實作 Nginx 負載平衡 load balance</h1><h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
 <li>round-robin：預設值，會將請留輪流平均分配到每台伺服器上</li>
 <li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>
 <li>ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的</li>
@@ -50,7 +50,7 @@
 <h2 id="備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效"><a href="#備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效" class="headerlink" title="備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效"></a>備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com backup;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">			location / &#123;</span><br><span class="line">				proxy_pass	 http://myapp;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h1 id="Outer-Link"><a href="#Outer-Link" class="headerlink" title="Outer Link"></a>Outer Link</h1><ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
 <li><a href="maxlist.xyz/2020/06/18/flask-nginx/">maxlist.xyz&#x2F;2020&#x2F;06&#x2F;18&#x2F;flask-nginx&#x2F;</a></li>
 </ul>
 ]]></content>

@@ -147,12 +147,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-count">6</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -352,6 +352,118 @@
 <h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2023/11/18/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 筆記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/11/18/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/" class="post-title-link" itemprop="url">IIC I2C （Inter-Integrated Circuit）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-19 02:38:00" itemprop="dateCreated datePublished" datetime="2023-11-19T02:38:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:23:10" itemprop="dateModified" datetime="2024-01-20T18:23:10+08:00">2024-01-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
+<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
+<p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
+<h1 id="I2C主设备与从设备的一般通信过程"><a href="#I2C主设备与从设备的一般通信过程" class="headerlink" title="I2C主设备与从设备的一般通信过程"></a>I2C主设备与从设备的一般通信过程</h1><h2 id="起始位-Start-condition-停止位-Stop-condition"><a href="#起始位-Start-condition-停止位-Stop-condition" class="headerlink" title="起始位 Start condition 停止位 Stop condition"></a>起始位 Start condition 停止位 Stop condition</h2><p><img src="/images/20231119013140.png"></p>
+<ul>
+<li>Start condition: SCL&#x3D; high + SDA falling (SDA由高到低跳變)</li>
+<li>Stop condition: SCL&#x3D;high + SDA raising (SDA由低到高跳變)</li>
+</ul>
+<h2 id="邏輯數據"><a href="#邏輯數據" class="headerlink" title="邏輯數據"></a>邏輯數據</h2><p><img src="/images/20231119013159.png"><br>SCL為High採集SDA數據<br><img src="/images/20231119013218.png"><br>表示1010000  </p>
+<h2 id="一-主设备给从设备发送-x2F-写入数据："><a href="#一-主设备给从设备发送-x2F-写入数据：" class="headerlink" title="一. 主设备给从设备发送&#x2F;写入数据："></a>一. 主设备给从设备发送&#x2F;写入数据：</h2><p><img src="/images/20231119013233.png"></p>
+<ol>
+<li>主设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 寫(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备发送数据到从设备，一般发送的每个字节数(8bit)据后会跟着等待接收来自从设备的响应(ACK)(1 bit)</li>
+<li>数据发送完毕，主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="二-主设备从从设备接收-x2F-读取数据"><a href="#二-主设备从从设备接收-x2F-读取数据" class="headerlink" title="二. 主设备从从设备接收&#x2F;读取数据"></a>二. 主设备从从设备接收&#x2F;读取数据</h2><p><img src="/images/20231119013244.png"></p>
+<ol>
+<li>设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 讀(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备接收来自从设备的数据，一般接收的每个字节(8bit)数据后会跟着向从设备发送一个响应(ACK)(1 bit)</li>
+<li>一般接收到最后一个数据后会发送一个无效响应(NACK)，然后主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="三-讀寫數據幀"><a href="#三-讀寫數據幀" class="headerlink" title="三. 讀寫數據幀"></a>三. 讀寫數據幀</h2><p><img src="/images/20231119013257.png"></p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=u62_Rjd5oMY">4分钟看懂！I2C通讯协议 最简单的总线通讯！</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=oPrfi_HCtjY">I²C通訊格式介紹</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=FamlCPP2J4o">11 IIC总线原理轻松明白</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/503219395">IIC通信协议，搞懂这篇就够了</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.strongpilab.com/i2c-introduction/">I2C-協定用法原理簡介-晶片溝通的橋樑</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/weiting-tw/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98-i2c%E9%80%9A%E8%A8%8A%E5%8D%94%E5%AE%9A%E6%93%8D%E4%BD%9C-36d4dad0c9b3">[技術筆記] I2C通訊協定操作</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
 </ul>
 
       

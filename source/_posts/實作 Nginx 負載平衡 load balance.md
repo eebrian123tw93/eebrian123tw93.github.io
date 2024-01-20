@@ -1,12 +1,11 @@
 ---
-title: {{ title }}
-date: {{ date }}
-updated: {{ date }}
+title: 實作 Nginx 負載平衡 load balance
+date: 2023-04-09 13:16:07
+updated: 2024-01-20 13:16:07
 tags: #DevOps
 categories:
 description:
 ---
-# 實作 Nginx 負載平衡 load balance
 ## 三種 load balancing 方法
 1. round-robin：預設值，會將請留輪流平均分配到每台伺服器上
 2. lest-connected：會將請求分配到目前連接數最少的伺服器上

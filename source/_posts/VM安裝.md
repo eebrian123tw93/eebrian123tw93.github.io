@@ -1,8 +1,12 @@
 ---
 title: VM安裝
 date: 2024-01-20 13:16:07
-updated: 2024-01-20 13:16:07
+updated: {{ date }}
 tags:
+  - vm
+  - VirtualBox
+  - samba
+  - ssh-server
 categories:
 description:
 ---

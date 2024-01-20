@@ -1,7 +1,7 @@
 ---
 title: 實作 Nginx 負載平衡 load balance
 date: 2023-04-09 13:16:07
-updated: 2024-01-20 13:16:07
+updated: {{ date }}
 tags: #DevOps
 categories:
 description:
@@ -24,9 +24,9 @@ http {
 	server {
 		listen 80;
 
-			location / {
-				proxy_pass	 http://myapp;
-			}
+		location / {
+			proxy_pass	 http://myapp;
+		}
 	}
 
 }
@@ -43,9 +43,9 @@ http {
 	server {
 		listen 80;
 
-			location / {
-				proxy_pass	 http://myapp;
-			}
+		location / {
+			proxy_pass	 http://myapp;
+		}
 	}
 
 }
@@ -62,9 +62,9 @@ http {
 	server {
 		listen 80;
 
-			location / {
-				proxy_pass	 http://myapp;
-			}
+		location / {
+			proxy_pass	 http://myapp;
+		}
 	}
 
 }

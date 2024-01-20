@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hello World 使用Github pages 靜態網站</title>
+    <url>/2023/05/05/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/</url>
+    <content><![CDATA[<p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
+<p>好了之後在自己的電腦上clone專案下來</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git</span><br></pre></td></tr></table></figure>
+<p>進入專案 新增一個index.html 內容是Hello World</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cd eebrian123tw60.github.io</span><br><span class="line">echo &quot;Hello World&quot; &gt; index.html</span><br></pre></td></tr></table></figure>
+<p>推到遠端的倉庫</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
+<p>等待幾分鐘 訪問<a href="https://eebrian123tw60.github.io/">https://eebrian123tw60.github.io/</a><br><img src="/images/image2.png"><br>結果就出來拉！！</p>
+<hr>
+<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
+<li><a href="https://pages.github.com/">https://pages.github.com/</a></li>
+<li><a href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始: 用github pages 上傳靜態網站</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git@github.com Permission denied (publickey)</title>
+    <url>/2023/05/05/git-github-com-Permission-denied-publickey/</url>
+    <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>如果沒有產生過公鑰，會產下面錯誤</p>
+<blockquote>
+<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
+</blockquote>
+<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>實作 Nginx 負載平衡 load balance</title>
+    <url>/2024/01/20/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
+    <content><![CDATA[<h1 id="實作-Nginx-負載平衡-load-balance"><a href="#實作-Nginx-負載平衡-load-balance" class="headerlink" title="實作 Nginx 負載平衡 load balance"></a>實作 Nginx 負載平衡 load balance</h1><h1 id="Summery"><a href="#Summery" class="headerlink" title="Summery"></a>Summery</h1><h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
+<li>round-robin：預設值，會將請留輪流平均分配到每台伺服器上</li>
+<li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>
+<li>ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的</li>
+</ol>
+<h2 id="設定不同付載平衡模式"><a href="#設定不同付載平衡模式" class="headerlink" title="設定不同付載平衡模式"></a>設定不同付載平衡模式</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash</span><br><span class="line">		server srv1.example.com;</span><br><span class="line">		server srv2.example.com;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">			location / &#123;</span><br><span class="line">				proxy_pass	 http://myapp;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Round-robin-分配權重-weight"><a href="#Round-robin-分配權重-weight" class="headerlink" title="Round-robin 分配權重 weight"></a>Round-robin 分配權重 weight</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com weight=2;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">			location / &#123;</span><br><span class="line">				proxy_pass	 http://myapp;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效"><a href="#備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效" class="headerlink" title="備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效"></a>備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com backup;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">			location / &#123;</span><br><span class="line">				proxy_pass	 http://myapp;</span><br><span class="line">			&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h1 id="Outer-Link"><a href="#Outer-Link" class="headerlink" title="Outer Link"></a>Outer Link</h1><ul>
+<li><a href="maxlist.xyz/2020/06/18/flask-nginx/">maxlist.xyz&#x2F;2020&#x2F;06&#x2F;18&#x2F;flask-nginx&#x2F;</a></li>
+</ul>
+]]></content>
+  </entry>
+</search>

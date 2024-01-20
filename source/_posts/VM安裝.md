@@ -6,7 +6,7 @@ tags:
   - samba
   - ssh-server
 date: '2023-11-29 18:16:00'
-updated: '2024-01-20 17:56:21'
+updated: '2024-01-20 18:07:07'
 categories: ''
 description: ''
 ---

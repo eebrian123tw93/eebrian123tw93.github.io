@@ -31,6 +31,50 @@
       </tags>
   </entry>
   <entry>
+    <title>H264基礎知識</title>
+    <url>/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/</url>
+    <content><![CDATA[<h1 id="H264"><a href="#H264" class="headerlink" title="H264"></a>H264</h1><p>MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC</p>
+<h1 id="I幀-B幀-P幀-IDR幀"><a href="#I幀-B幀-P幀-IDR幀" class="headerlink" title="I幀, B幀,P幀,IDR幀"></a>I幀, B幀,P幀,IDR幀</h1><p><img src="/images/20240116150548.png"></p>
+<h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照</p>
+<h2 id="GOP-兩個I幀之間的間隔"><a href="#GOP-兩個I幀之間的間隔" class="headerlink" title="GOP 兩個I幀之間的間隔"></a>GOP 兩個I幀之間的間隔</h2><p>完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差異部分編碼的幀叫 P幀，還有一種參考前後的幀編碼的幀叫 B幀<br>H264採用的核心演算法是幀內壓縮和幀間壓縮，幀內壓縮是產生 I 幀的演算法，幀間壓縮是產生 B 幀和 P 幀的演算法</p>
+<p>壓縮率 B幀 &gt; P幀 &gt; I幀<br>訊息量 I幀 &gt; P幀 &gt; B幀</p>
+<p>幀特性看底下連結<br><a href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>
+<h1 id="NALU-Network-Abstract-Layer-Unit"><a href="#NALU-Network-Abstract-Layer-Unit" class="headerlink" title="NALU (Network Abstract Layer Unit)"></a>NALU (Network Abstract Layer Unit)</h1><p><u><strong>H264編碼資料儲存或傳輸的基本單元</strong></u><br> 一般來說 前兩個是 SPS PPS 再來是IDR幀 再來是 P幀或B幀</p>
+<ul>
+<li>SPS(Sequence Parameter Sets)：序列參數集，保存了一組編碼視訊序列(Coded video sequence)的全域參數。 </li>
+<li>PPS(Picture Parameter Set)：影像參數集，對應的是一個序列中某一副影像或某幾副影像的參數。 </li>
+<li>SEI(Supplemental enhancement information)：附加增強訊息，包含了視訊畫面定時等信息，一般放在主編碼影像資料之前，在某些應用中，它可以被省略掉。</li>
+<li>IDR(Instantaneous Decoding Refresh)：即時解碼刷新。</li>
+<li>HRD(Hypothetical Reference Decoder)：假想碼流調度器<br> 。<br>如何拆解H264數據流中的NALU<br>每個NALU中，是以0x00000001 或 0x000001 當作開始標記，開始標記的後面一個字節 和 0x1f 做 &amp; 的運算得出 NALU 類型<br><img src="/images/20240116154054.png"><br>舉例: 上面有4個NALU 開頭都為 0x000001 後面一格字節就是算出NALU類型的因子<br>NALU(nal_unit_type) 類型 推導</li>
+<li>0x06 &amp; 0x1f &#x3D; 6 (SEI)</li>
+<li>0x67 &amp; 0x1f &#x3D; 7 (SPS)</li>
+<li>0x68 &amp; 0x1f &#x3D; 8 (PPS)</li>
+<li>0x65 &amp; 0x1f &#x3D; 5 (IDR)<br><img src="/images/20240116154827.png"></li>
+<li><a href="https://zhuanlan.zhihu.com/p/409527359">H264之NALU解析</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/71928833">视频和视频帧：H264编码格式整理</a></li>
+</ul>
+<h1 id="H264有兩種封裝"><a href="#H264有兩種封裝" class="headerlink" title="H264有兩種封裝"></a>H264有兩種封裝</h1><ul>
+<li><h4 id="AnnexB格式"><a href="#AnnexB格式" class="headerlink" title="AnnexB格式"></a>AnnexB格式</h4>  这种格式比较常见，也就是我们熟悉的每个帧前面都有<code>0x00 00 00 01</code>或者<code>0x00 00 01</code>作为起始码。<br>  h264文件就是采用的这种格式，每个帧前面都要有个起始码。<br>  SPS PPS等也作为一类NALU存储在这个码流中，一般在码流最前面。也就是说这种格式包含VCL 和 非VCL 类型的NALU。 </li>
+<li><strong>AVCC格式</strong><br>  这种模式也叫AVC1格式，没有起始码，每个帧最前面几个字节（通常4字节）是帧长度。<br>  这里的NALU一般没有SPS PPS等参数信息，参数信息属于额外数据extradata存在其他地方。<br>  比如ffmpeg中解析mp4文件后sps pps存在streams[index]-&gt;codecpar-&gt;extradata;中。<br>  也就是说这种码流通常只包含VCL类型NALU。<br>  这些extradata通常有如下格式（可以根据这个规则ffmpeg解析mp4文件的SPS和PPS）</li>
+</ul>
+<h1 id="H264-编码-—profile-和-level"><a href="#H264-编码-—profile-和-level" class="headerlink" title="# H264 编码 —profile 和 level"></a># H264 编码 —profile 和 level</h1><ul>
+<li>baseline profile：基本画质。支持 I&#x2F;P 帧，只支持无交错（Progressive）和 CAVLC</li>
+<li>extended profile：进阶画质。支持 I&#x2F;P&#x2F;B&#x2F;SP&#x2F;SI 帧，只支持无交错（Progressive）和 CAVLC；(用的少)</li>
+<li>main profile：主流画质。提供 I&#x2F;P&#x2F;B 帧，支持无交错（Progressive）和交错（Interlaced），也支持 CAVLC 和 CABAC 的支持</li>
+<li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>H264</tag>
+        <tag>I幀</tag>
+        <tag>GOP</tag>
+        <tag>P幀</tag>
+        <tag>IDR幀</tag>
+        <tag>B幀</tag>
+        <tag>NALU</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World 使用Github pages 靜態網站</title>
     <url>/2023/05/05/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/</url>
     <content><![CDATA[<p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
@@ -49,52 +93,6 @@
 ]]></content>
       <tags>
         <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>IIC I2C （Inter-Integrated Circuit）</title>
-    <url>/2023/11/18/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/</url>
-    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
-<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
-<p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
-<h1 id="I2C主设备与从设备的一般通信过程"><a href="#I2C主设备与从设备的一般通信过程" class="headerlink" title="I2C主设备与从设备的一般通信过程"></a>I2C主设备与从设备的一般通信过程</h1><h2 id="起始位-Start-condition-停止位-Stop-condition"><a href="#起始位-Start-condition-停止位-Stop-condition" class="headerlink" title="起始位 Start condition 停止位 Stop condition"></a>起始位 Start condition 停止位 Stop condition</h2><p><img src="/images/20231119013140.png"></p>
-<ul>
-<li>Start condition: SCL&#x3D; high + SDA falling (SDA由高到低跳變)</li>
-<li>Stop condition: SCL&#x3D;high + SDA raising (SDA由低到高跳變)</li>
-</ul>
-<h2 id="邏輯數據"><a href="#邏輯數據" class="headerlink" title="邏輯數據"></a>邏輯數據</h2><p><img src="/images/20231119013159.png"><br>SCL為High採集SDA數據<br><img src="/images/20231119013218.png"><br>表示1010000  </p>
-<h2 id="一-主设备给从设备发送-x2F-写入数据："><a href="#一-主设备给从设备发送-x2F-写入数据：" class="headerlink" title="一. 主设备给从设备发送&#x2F;写入数据："></a>一. 主设备给从设备发送&#x2F;写入数据：</h2><p><img src="/images/20231119013233.png"></p>
-<ol>
-<li>主设备发送起始（START）信号(1 bit)</li>
-<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 寫(1 bit)</li>
-<li>等待从设备响应(ACK)(1 bit)</li>
-<li>主设备发送数据到从设备，一般发送的每个字节数(8bit)据后会跟着等待接收来自从设备的响应(ACK)(1 bit)</li>
-<li>数据发送完毕，主设备发送停止(STOP)信号终止传输(1 bit)</li>
-</ol>
-<h2 id="二-主设备从从设备接收-x2F-读取数据"><a href="#二-主设备从从设备接收-x2F-读取数据" class="headerlink" title="二. 主设备从从设备接收&#x2F;读取数据"></a>二. 主设备从从设备接收&#x2F;读取数据</h2><p><img src="/images/20231119013244.png"></p>
-<ol>
-<li>设备发送起始（START）信号(1 bit)</li>
-<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 讀(1 bit)</li>
-<li>等待从设备响应(ACK)(1 bit)</li>
-<li>主设备接收来自从设备的数据，一般接收的每个字节(8bit)数据后会跟着向从设备发送一个响应(ACK)(1 bit)</li>
-<li>一般接收到最后一个数据后会发送一个无效响应(NACK)，然后主设备发送停止(STOP)信号终止传输(1 bit)</li>
-</ol>
-<h2 id="三-讀寫數據幀"><a href="#三-讀寫數據幀" class="headerlink" title="三. 讀寫數據幀"></a>三. 讀寫數據幀</h2><p><img src="/images/20231119013257.png"></p>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a href="https://www.youtube.com/watch?v=u62_Rjd5oMY">4分钟看懂！I2C通讯协议 最简单的总线通讯！</a></li>
-<li><a href="https://www.youtube.com/watch?v=oPrfi_HCtjY">I²C通訊格式介紹</a></li>
-<li><a href="https://www.youtube.com/watch?v=FamlCPP2J4o">11 IIC总线原理轻松明白</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://zhuanlan.zhihu.com/p/503219395">IIC通信协议，搞懂这篇就够了</a></li>
-<li><a href="https://www.strongpilab.com/i2c-introduction/">I2C-協定用法原理簡介-晶片溝通的橋樑</a></li>
-<li><a href="https://medium.com/weiting-tw/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98-i2c%E9%80%9A%E8%A8%8A%E5%8D%94%E5%AE%9A%E6%93%8D%E4%BD%9C-36d4dad0c9b3">[技術筆記] I2C通訊協定操作</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>IIC</tag>
-        <tag>I2C</tag>
       </tags>
   </entry>
   <entry>
@@ -166,6 +164,52 @@
         <tag>VirtualBox</tag>
         <tag>samba</tag>
         <tag>ssh-server</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IIC I2C （Inter-Integrated Circuit）</title>
+    <url>/2023/11/18/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
+<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
+<p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
+<h1 id="I2C主设备与从设备的一般通信过程"><a href="#I2C主设备与从设备的一般通信过程" class="headerlink" title="I2C主设备与从设备的一般通信过程"></a>I2C主设备与从设备的一般通信过程</h1><h2 id="起始位-Start-condition-停止位-Stop-condition"><a href="#起始位-Start-condition-停止位-Stop-condition" class="headerlink" title="起始位 Start condition 停止位 Stop condition"></a>起始位 Start condition 停止位 Stop condition</h2><p><img src="/images/20231119013140.png"></p>
+<ul>
+<li>Start condition: SCL&#x3D; high + SDA falling (SDA由高到低跳變)</li>
+<li>Stop condition: SCL&#x3D;high + SDA raising (SDA由低到高跳變)</li>
+</ul>
+<h2 id="邏輯數據"><a href="#邏輯數據" class="headerlink" title="邏輯數據"></a>邏輯數據</h2><p><img src="/images/20231119013159.png"><br>SCL為High採集SDA數據<br><img src="/images/20231119013218.png"><br>表示1010000  </p>
+<h2 id="一-主设备给从设备发送-x2F-写入数据："><a href="#一-主设备给从设备发送-x2F-写入数据：" class="headerlink" title="一. 主设备给从设备发送&#x2F;写入数据："></a>一. 主设备给从设备发送&#x2F;写入数据：</h2><p><img src="/images/20231119013233.png"></p>
+<ol>
+<li>主设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 寫(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备发送数据到从设备，一般发送的每个字节数(8bit)据后会跟着等待接收来自从设备的响应(ACK)(1 bit)</li>
+<li>数据发送完毕，主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="二-主设备从从设备接收-x2F-读取数据"><a href="#二-主设备从从设备接收-x2F-读取数据" class="headerlink" title="二. 主设备从从设备接收&#x2F;读取数据"></a>二. 主设备从从设备接收&#x2F;读取数据</h2><p><img src="/images/20231119013244.png"></p>
+<ol>
+<li>设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 讀(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备接收来自从设备的数据，一般接收的每个字节(8bit)数据后会跟着向从设备发送一个响应(ACK)(1 bit)</li>
+<li>一般接收到最后一个数据后会发送一个无效响应(NACK)，然后主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="三-讀寫數據幀"><a href="#三-讀寫數據幀" class="headerlink" title="三. 讀寫數據幀"></a>三. 讀寫數據幀</h2><p><img src="/images/20231119013257.png"></p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=u62_Rjd5oMY">4分钟看懂！I2C通讯协议 最简单的总线通讯！</a></li>
+<li><a href="https://www.youtube.com/watch?v=oPrfi_HCtjY">I²C通訊格式介紹</a></li>
+<li><a href="https://www.youtube.com/watch?v=FamlCPP2J4o">11 IIC总线原理轻松明白</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/503219395">IIC通信协议，搞懂这篇就够了</a></li>
+<li><a href="https://www.strongpilab.com/i2c-introduction/">I2C-協定用法原理簡介-晶片溝通的橋樑</a></li>
+<li><a href="https://medium.com/weiting-tw/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98-i2c%E9%80%9A%E8%A8%8A%E5%8D%94%E5%AE%9A%E6%93%8D%E4%BD%9C-36d4dad0c9b3">[技術筆記] I2C通訊協定操作</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>IIC</tag>
+        <tag>I2C</tag>
       </tags>
   </entry>
   <entry>

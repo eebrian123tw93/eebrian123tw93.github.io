@@ -1,14 +1,12 @@
 ---
-title:  實作 Nginx 負載平衡 load balance
-created: 星期一 17日 四月 2023 22:33
-Last modified:  NaN
-Aliases: 
-Tags:  #DevOps 
+title: {{ title }}
+date: {{ date }}
+updated: {{ date }}
+tags: #DevOps
+categories:
+description:
 ---
 # 實作 Nginx 負載平衡 load balance
-
-# Summery
-
 ## 三種 load balancing 方法
 1. round-robin：預設值，會將請留輪流平均分配到每台伺服器上
 2. lest-connected：會將請求分配到目前連接數最少的伺服器上
@@ -74,5 +72,5 @@ http {
 ```
 
 ---
-# Outer Link
+# 參考
 - [maxlist.xyz/2020/06/18/flask-nginx/](maxlist.xyz/2020/06/18/flask-nginx/)

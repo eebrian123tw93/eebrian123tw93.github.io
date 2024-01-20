@@ -23,7 +23,7 @@
   </entry>
   <entry>
     <title>VM安裝</title>
-    <url>/2024/01/20/VM%E5%AE%89%E8%A3%9D/</url>
+    <url>/2023/11/29/VM%E5%AE%89%E8%A3%9D/</url>
     <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
 <h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
 <li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>

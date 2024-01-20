@@ -110,3 +110,10 @@ admin:
   username: eebrian123tw93
   password_hash: $2a$10$4KjZCvknyJabgb9JZwC44eCyYzgYr02gQRILG2OMcj.XpZ8XbnDtG
   secret: eebrian123tw93 handsome
+
+# 文章搜尋功能
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html

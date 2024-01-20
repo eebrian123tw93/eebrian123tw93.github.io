@@ -22,6 +22,45 @@
       </tags>
   </entry>
   <entry>
+    <title>VM安裝</title>
+    <url>/2024/01/20/VM%E5%AE%89%E8%A3%9D/</url>
+    <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
+</ul>
+<h2 id="共用資料夾"><a href="#共用資料夾" class="headerlink" title="共用資料夾"></a>共用資料夾</h2><p><img src="/images/20231129154247.png"><br>點擊共用資料夾設定<br><img src="/images/20231129154432.png"><br>點擊加號<br><img src="/images/20231129154530.png"><br>輸入要掛載的資料夾 和 掛載點 點擊確認<br><img src="/images/20231129154609.png"><br>成功會出現在掛載點</p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.jinnsblog.com/2021/05/virtualbox-shared-folder-permission-setting.html">[Linux &#x2F; Windows] VirtualBox 共用資料夾與雙向剪貼簿之權限設定</a></li>
+</ul>
+<h2 id="加入憑證"><a href="#加入憑證" class="headerlink" title="加入憑證"></a>加入憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> my-ca-certificate.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">cd</span> /usr/local/share/ca-certificates/</span><br><span class="line">sudo <span class="built_in">chmod</span> 644 my-ca-certificate.crt</span><br><span class="line">sudo  update-ca-certificates</span><br></pre></td></tr></table></figure>
+<h3 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.kkbruce.net/2020/01/linux-windows-container-add-cert.html">如何為LINUX, WINDOWS容器加入憑證?</a></li>
+</ul>
+<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><img src="/images/20231129163310.png"><br>新增網路介面卡2 僅限主機 介面卡</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install samba -y</span><br><span class="line">smbpasswd -a root #設定root 密碼</span><br><span class="line">vim /etc/samba/smb.conf </span><br></pre></td></tr></table></figure>
+<p>smb.conf 加入底下的設定 使用root 登入 &#x2F;media&#x2F;new_drive 需要存在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[brian]</span><br><span class="line">   comment = new_drive</span><br><span class="line">   public = yes</span><br><span class="line">   path = /media/new_drive</span><br><span class="line">   guest ok = yes</span><br><span class="line">   read only = no</span><br><span class="line">   browseable = yes</span><br><span class="line">   create mask = 777</span><br><span class="line">   directory mask = 777</span><br><span class="line">   writable = yes</span><br><span class="line">   valid users = root</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20231129160349.png"><br><code>samba restart</code> or <code>/etc/init.d/smbd restart</code><br><img src="/images/20231129160659.png"><br>本機右鍵 連線網路磁碟機<br><img src="/images/20231129160740.png"><br>輸入上面資訊 <code>\\192.168.56.108\brian</code> brian 為設定檔<code>[brian]</code><br>之後 按完成 需要輸入密碼 </p>
+<h3 id="參考-3"><a href="#參考-3" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://hollyqood.wordpress.com/2016/12/08/virtualbox%e8%99%9b%e6%93%ac%e6%a9%9fubuntu%e4%bd%bf%e7%94%a8samba%e5%9c%96%e6%96%87%e6%95%99%e5%ad%b8/">virtualbox虛擬機ubuntu使用samba圖文教學</a></li>
+</ul>
+<h2 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install ssh -y</span><br><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>編輯這些參數</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>(可選)如果用root登入需要設定root密碼<br><code>sudo passwd</code><br>重啟ssh<br><code>/etc/init.d/ssh restart</code></p>
+<h3 id="參考-4"><a href="#參考-4" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
+<li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
+</ul>
+<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
+<li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
+</ul>
+<p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
+  </entry>
+  <entry>
     <title>git@github.com Permission denied (publickey)</title>
     <url>/2023/05/05/git-github-com-Permission-denied-publickey/</url>
     <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
@@ -38,9 +77,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>[object Object]</title>
-    <url>/2024/01/20/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
-    <content><![CDATA[<h1 id="實作-Nginx-負載平衡-load-balance"><a href="#實作-Nginx-負載平衡-load-balance" class="headerlink" title="實作 Nginx 負載平衡 load balance"></a>實作 Nginx 負載平衡 load balance</h1><h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
+    <title>實作 Nginx 負載平衡 load balance</title>
+    <url>/2023/04/09/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
+    <content><![CDATA[<h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
 <li>round-robin：預設值，會將請留輪流平均分配到每台伺服器上</li>
 <li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>
 <li>ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的</li>

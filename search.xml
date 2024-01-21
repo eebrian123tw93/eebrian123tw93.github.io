@@ -168,6 +168,126 @@
       </tags>
   </entry>
   <entry>
+    <title>SparkFun Thing Plus Matter - MGM240P</title>
+    <url>/2023/11/18/SparkFun%20Thing%20Plus%20Matter%20-%20MGM240P/</url>
+    <content><![CDATA[<h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
+<p><img src="/images/rJPmOAx7T.png"><br><img src="/images/rkeBu0em6.png"><br><img src="/images/rJMUOAgmT.png"><br><img src="/images/H19PO0x7a.png"><br>一直下一步，安裝到預設路徑即可 安裝完會自動打開<br><img src="/images/H1kFFAxXp.png"><br>同意並繼續<br><img src="/images/r1NhtAxQ6.png"><br>登入silabs的帳戶，免費辦一個<br>登入後會安裝驅動 輸入Admin帳號密碼安裝<br><img src="/images/HkqDc0xX6.png"><br>點擊Intall 點擊Intall by Connecting devices<br><img src="/images/Hy4oqAlQ6.png"><br>現在沒有裝置 接入USB<br><img src="/images/B1vJiAlXa.png"><br>接入USB 會需要安裝驅動板子套件按下Yes<br><img src="/images/HyS8sRxm6.png"><br>選擇板子 Next<br><img src="/images/BJROsCxmp.png"><br>選擇Auto Next<br><img src="/images/H1T3oCeQ6.png"><br>同意安裝套件 Next<br><img src="/images/ByHS2Aema.png"><br>會裝一些無線套件(geoko sdk)之類的(大約跑30分鐘)<br><img src="/images/HJYMgkbmp.png"><br>重開 Simplicity Studio<br><img src="/images/Byv9xyZmp.png"></p>
+<blockquote>
+<p>** 系統會提示更新 Adapter FW<br>不要更新保持這個1v4p9b113版本<br>(1.4.12.18刷進去會失敗，辯識會有問題，會變磚)**</p>
+</blockquote>
+<h1 id="更新版子-Adapter-Firmware-跳過"><a href="#更新版子-Adapter-Firmware-跳過" class="headerlink" title="更新版子 Adapter Firmware (跳過)"></a>更新版子 Adapter Firmware (跳過)</h1><p>更新版子參考 <a href="https://community.silabs.com/s/article/how-to-update-the-firmware-on-your-starter-kit-board">How to update the Firmware on your Starter Kit board</a><br>更新版子變磚參考 <a href="https://community.silabs.com/s/article/recover-efm32-or-efm8-kit-that-was-bricked-during-firmware-upgrade">Recover EFM32 or EFM8 kit that was bricked during firmware upgrade</a></p>
+<blockquote>
+<p> SparkFun Thing Plus Matter 曾經升到1.4.12.18，但失敗變磚，要退版本但是進入boot mode 的方法上面試不出來，最後是不知道怎麼又可以辨識出來(有可能是用手壓住後面的腳位接入USB，陰錯陽差進到 boot mode)，然後降版</p>
+</blockquote>
+<h1 id="簡單的範例-Blink-Example"><a href="#簡單的範例-Blink-Example" class="headerlink" title="簡單的範例 Blink Example"></a>簡單的範例 <a href="https://learn.sparkfun.com/tutorials/sparkfun-thing-plus-matter---mgm240p-hookup-guide/all#blink-example">Blink Example</a></h1><p>這個範例是一個會閃的燈<br><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/Hy9YGyZXp.png"><br>搜尋 blink 點擊 Platform - Blink Bare-mental<br>點擊 Next<br><img src="/images/HkO1XyZQa.png"><br>點擊 Finish<br><img src="/images/BkGX1b7T.png"><br><img src="/images/rJHA71WQT.png"><br>編譯並寫入板子<br><img src="/images/HkiX4ybX6.png"><br>編譯無錯誤 正常寫入板子後可看到燈會不斷閃爍<br><img src="/images/SyC7ByZQa.jpg"><br><img src="/images/S1vES1bmT.jpg"><br>可以到blink.c裡面的 TOOGLE_DELAY_MS 更改閃爍時間</p>
+<h2 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
+<li><a href="https://www.youtube.com/watch?v=POVRRuVCr-Q">Get Started with Simplicity Studio and the Thing Plus Matter Board</a></li>
+</ul>
+<h1 id="NCP-模式"><a href="#NCP-模式" class="headerlink" title="NCP 模式"></a>NCP 模式</h1><p><img src="/images/S1O4zC76.png"></p>
+<blockquote>
+<p>這裡Demo會要創立三個專案，目的是要創建Zigbee網路</p>
+</blockquote>
+<h2 id="創建-Bootloader-NCP-UART-XMODEM-專案"><a href="#創建-Bootloader-NCP-UART-XMODEM-專案" class="headerlink" title="創建 Bootloader - NCP UART XMODEM 專案"></a>創建 Bootloader - NCP UART XMODEM 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/By9Mw1mp.png"><br>點擊 Bootloader - NCP UART XMODEM<br>點擊 Next<br><img src="/images/BkaUwkb7T.png"><br>點擊 Finish<br><img src="/images/rJlydyXa.png"></p>
+<h2 id="創建-Zigbee-NCP-ncp-uart-hw-專案"><a href="#創建-Zigbee-NCP-ncp-uart-hw-專案" class="headerlink" title="創建 Zigbee - NCP ncp-uart-hw 專案"></a>創建 Zigbee - NCP ncp-uart-hw 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/ry3LJbX6.png"><br>點擊 Zigbee - NCP ncp-uart-hw<br>點擊 Next<br><img src="/images/Sy39kW7a.png"><br>點擊 Finish</p>
+<h2 id="創建-Zigbee-Host-Gatway-專案-在Linux上執行"><a href="#創建-Zigbee-Host-Gatway-專案-在Linux上執行" class="headerlink" title="創建 Zigbee - Host Gatway 專案 (在Linux上執行)"></a>創建 Zigbee - Host Gatway 專案 (在Linux上執行)</h2><p><img src="/images/ByLntyWX6.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Custom Board (可能會有點難點)<br>Target Device: Linux 64 bit<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Makefile IDE<br>點擊 Next<br><img src="/images/ryakcyZmT.png"><br>點擊 Zigbee - Host Gateway<br>點擊 Next<br><img src="/images/HyKZ9J7p.png"><br>點擊 Finish</p>
+<h2 id="燒入-Bootloader-NCP-UART-XMODEM"><a href="#燒入-Bootloader-NCP-UART-XMODEM" class="headerlink" title="燒入 Bootloader - NCP UART XMODEM"></a>燒入 Bootloader - NCP UART XMODEM</h2><p>燒入 Bootloader - NCP UART XMODEM 和 NCP ncp-uart-hw 要刷進板子裡面<br><img src="/images/Hyxny7a.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/Hy8f2yZma.png"><br>編譯成功完後 Binaries 出現 檔名為bootloader-uart-xmodem 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/r1Wnn1WQp.png"><br>選擇Binary File <code>v5_workspace/bootloader-uart-xmodem/GNU ARM v10.3.1 - Default/bootloader-uart-xmodem.s37</code> 點擊 Flash<br><img src="/images/BJGlkeZXp.png"><br>log 顯示 Successfully<br><img src="/images/HJhC31Q6.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader 占用兩個綠色區塊<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/SkJsJxWm6.png"><br>Seial 1 會出現 </p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Gecko Bootloader v2.03.02</span><br><span class="line">1. upload gbl</span><br><span class="line">2. run</span><br><span class="line">3. ebl info</span><br><span class="line">BL &gt; </span><br></pre></td></tr></table></figure>
+<p>代表進入 Gecko Bootloader mode </p>
+<blockquote>
+<p>在還沒刷入 Application 會進入到 Gecko Bootloader mode<br>如果已經刷了 Application 則此處不會顯示任何東西</p>
+</blockquote>
+<h2 id="燒入-NCP-ncp-uart-hw"><a href="#燒入-NCP-ncp-uart-hw" class="headerlink" title="燒入 NCP ncp-uart-hw"></a>燒入 NCP ncp-uart-hw</h2><p><img src="/images/Hy0kxCQ6.png"><br>點擊ncp-uart-hw.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/HJsvlRXa.png"><br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>點擊 Congiure<br><img src="/images/HJY3e0Zm6.png"><br>將 Flow Control 改成 Software Flow control<br><img src="/images/HyScEaWm6.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/B107BT7p.png"><br>編譯成功完後 Binaries 出現 檔名為ncp-uart-hw 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/Byb5rabmT.png"><br>選擇Binary File <code>v5_workspace/ncp-uart-hw/GNU ARM v10.3.1 - Default/ncp-uart-hw.s37</code> 點擊 Flash<br><img src="/images/S1CsrTZXp.png"><br>log 顯示 Successfully<br><img src="/images/S1mLITXa.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader + ncp-uart-hw 的分布<br>Bootloader 從0x8000000開始<br>ncp-uart-hw 從0x8006000開始<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/HJCWDabQ6.png"><br>Seial 1 不會顯示任何東西<br>代表進入 Application mode </p>
+<h2 id="編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上"><a href="#編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上" class="headerlink" title="編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)"></a>編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)</h2><p><img src="/images/B11Aupb76.png"><br>cd 到專案底下<br><img src="/images/SJSjdpWXa.png"><br><code>gcc -v</code><br><img src="/images/r11lFaZmT.png"><br><code>make -f Z3Gateway.Makefile</code><br><img src="/images/HyhsKTZmT.png"><br>編譯完成<br><img src="/images/SyIW9pbXa.png"></p>
+<h2 id="透過-Host-Gateway-控制-MCU-建立Zigbee-網路"><a href="#透過-Host-Gateway-控制-MCU-建立Zigbee-網路" class="headerlink" title="透過 Host Gateway 控制 MCU 建立Zigbee 網路"></a>透過 Host Gateway 控制 MCU 建立Zigbee 網路</h2><p><img src="/images/SJ0OqpZXp.png"><br>這裡選用Jlink OB 這也是帶有Serial Com Port 功能<br><img src="/images/H1Dhnama.png"><br>cd 到 程式所在地<br><img src="/images/HkPfpabQ6.png"><br><code>./Z3Gateway -f x -b 115200 -p  /dev/ttyACM0</code><br><img src="/images/S1aSTT76.png"><br>直接輸入info<br><img src="/images/rJXOpTWQp.png"><br>可以看到當前狀態 nodeId PanId xpan …. 接下來就是建立網路<br><img src="/images/HJPg067a.png"><br><code>network leave</code> 先離開網路<br><img src="/images/r1P5A6WQT.png"><br><code>plugin network-creator start 1</code> 成功會看到 EMBER_NETWORK_UP 0x0000 的字眼<br><img src="/images/SyBRAT7T.png"><br>再輸入info 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br><img src="/images/Sy8Iy0Wma.png"><br><code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug235-09-developing-ncp-apps-with-connect.pdf">UG235.09: Developing NCP Applications with Silicon Labs Connect v2.x</a></li>
+<li><a href="https://www.silabs.com/documents/public/application-notes/an1320-customized-ncp-zigbee7.pdf">Building a Customized NCP Application with Zigbee EmberZNet 7.x</a></li>
+<li><a href="https://www.silabs.com/documents/public/application-notes/an706-ezsp-uart-host-interfacing-guide.pdf">EZSP-UART Host Interfacing Guide</a></li>
+<li><a href="https://blog.csdn.net/lshddd/article/details/115458007">基于芯科Host-NCP解决方案的Zigbee 3.0 Gateway技术研究（-）-Z3GatewayHost应用</a></li>
+<li><a href="https://blog.csdn.net/qq_42860989/article/details/125909875">在Cygwin环境下构建和使用EmberZNet PRO Zigbee Host应用程序</a></li>
+<li><a href="https://github.com/SiliconLabs/managed-zigbee-gateway/blob/master/README.md">managed-zigbee-gateway&#x2F;README.md</a></li>
+<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a href="https://community.silabs.com/s/question/0D51M00007xeQUSSA2/how-to-verify-the-normal-operation-of-ncp?language=zh_TW">How to Verify the Normal Operation of NCP？</a></li>
+</ul>
+<h2 id="參考影片-1"><a href="#參考影片-1" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
+<li><a href="https://www.bilibili.com/video/BV1nM4y1g755/">Day1-4-EmberZnet SDK的Bootloader和OTA配置详解</a></li>
+<li><a href="https://www.bilibili.com/video/BV1fv411y7cq/">Day 1-2_EmberZnet协议栈介绍及开发工具AppBuilder介绍 (1)</a></li>
+<li><a href="https://www.bilibili.com/video/BV1bT4y1w7EJ">Day 3-1 Zigbee 3.0 RTOS网关介绍</a></li>
+<li><a href="https://www.youtube.com/watch?v=EP96d_ps4vg&ab_channel=CUSTCourses">10-01 何謂bootloader</a></li>
+<li><a href="https://www.youtube.com/watch?v=njFxwNoPbkc">ARM Bootloader开发-1.bootloader概述1</a></li>
+</ul>
+<h1 id="Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路"><a href="#Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路" class="headerlink" title="Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)"></a>Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)</h1><h2 id="創建-Bootloader-Soc-Internal-Storage-專案"><a href="#創建-Bootloader-Soc-Internal-Storage-專案" class="headerlink" title="創建 Bootloader - Soc Internal Storage 專案"></a>創建 Bootloader - Soc Internal Storage 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HyWccAWX6.png"><br>點擊 Bootloader - Soc Internal Storage (1536kB)<br>點擊 Next<br><img src="/images/r1xiqRbX6.png"><br>點擊 Finish</p>
+<h2 id="創建-Zigbee-Soc-Switch-專案"><a href="#創建-Zigbee-Soc-Switch-專案" class="headerlink" title="創建 Zigbee - Soc Switch 專案"></a>創建 Zigbee - Soc Switch 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HJKFCXT.png"><br>點擊 Zigbee - Soc Switch<br>點擊 Next<br><img src="/images/B1vXqRZXp.png"><br>點擊 Finish</p>
+<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part1"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part1" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part1"></a>修改 Zigbee - Soc Switch 專案設定 Part1</h2><p><img src="/images/B17oiRWma.png"><br>點擊 Z3Switch.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/r120sCZm6.png"><br>找到Platform &gt;&gt; Driver &gt;&gt; Button &gt;&gt; Simple Button &gt;&gt; bt1<br>點擊 Congiure<br><img src="/images/HyIm2C7p.png"><br>修改 SL_SIMPLE_BUTTON_BTN1 先隨便選一個</p>
+<p>再修改<br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>將 Flow Control 改成 Software Flow control</p>
+<h2 id="分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch"><a href="#分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch" class="headerlink" title="分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch"></a>分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch</h2><p>參考上面燒入<br><img src="/images/rkD2zJMQT.png"><br>打開console seral 1  可以看到 &gt; Z3Switch 輸入info 看資訊<br>此時不能建立網路 因為現在裝置類型是End Device 而且 創建網路需要增加plugin</p>
+<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part2"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part2" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part2"></a>修改 Zigbee - Soc Switch 專案設定 Part2</h2><p>修改<br>找到 Zigbee &gt;&gt; Utility &gt;&gt; Zigbee Device Config<br>將 Primary Network Device Type 改成 Coordonator or Router</p>
+<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Leaf Stack<br>將他 Uninstall</p>
+<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Stack<br>將他 install</p>
+<p>找到 Zigbee &gt;&gt; Utility &gt;&gt; End Device Support<br>將他 Uninstal</p>
+<p>找到 Zigbee &gt;&gt; Zigbee3.0 &gt;&gt; Network Creator<br>將他 install</p>
+<h2 id="燒入-Zigbee-Soc-Switch-Part2"><a href="#燒入-Zigbee-Soc-Switch-Part2" class="headerlink" title="燒入 Zigbee - Soc Switch Part2"></a>燒入 Zigbee - Soc Switch Part2</h2><p>參考上面燒入<br><img src="/images/r1aTByf7p.png"><br><code>network leave</code><br><img src="/images/B1xGUkGma.png"><br><code>plugin network-creator start 1</code><br><img src="/images/SyBNIyfQa.png"><br><code>info</code> 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br>之後再輸入<code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
+<h1 id="用-Bootloader-NCP-UART-XMODEM-刷-Application"><a href="#用-Bootloader-NCP-UART-XMODEM-刷-Application" class="headerlink" title="用 Bootloader - NCP UART XMODEM 刷 Application"></a>用 Bootloader - NCP UART XMODEM 刷 Application</h1><p><img src="/images/H1RwPNGXT.png"></p>
+<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/Hk5bbfM76.png"><br><code>.\commander.exe gbl create ncp-uart-hw.gbl  --app ncp-uart-hw.s37</code> </p>
+<h2 id="進入-geoko-bootloader-模式"><a href="#進入-geoko-bootloader-模式" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
+<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
+<h2 id="上傳-gbl-檔案"><a href="#上傳-gbl-檔案" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/ry6nUMzXa.png"><br>此時Memory Map 裡面只有 bootloader</p>
+<p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
+<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
+<p><img src="/images/Sy9owMzmT.png"><br>上傳中</p>
+<p><img src="/images/Hk66PffX6.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
+<p><img src="/images/SJwZMzQ6.png"><br>此時Memory Map 裡面只有 bootloader 和 Application</p>
+<p><img src="/images/Hy0SdGzQT.png"><br>按下2 啟動Application 會出現一點亂碼</p>
+<p><img src="/images/Syw9Mfm6.png"><br>啟動Application 後的 Memory Map 尾部會出現資料</p>
+<h2 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
+<li><a href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
+<li><a href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
+</ul>
+<h1 id="用-Bootloader-NCP-UART-XMODEM-更新-Bootloader"><a href="#用-Bootloader-NCP-UART-XMODEM-更新-Bootloader" class="headerlink" title="用 Bootloader - NCP UART XMODEM 更新 Bootloader"></a>用 Bootloader - NCP UART XMODEM 更新 Bootloader</h1><p><img src="/images/H1Wv54f7a.png"></p>
+<blockquote>
+<p>這裡更新Bootloader版本只能往上更新<br>編輯Bootloader版本設定  Bootloader Version Main Customer &gt;&gt; Bootloader Core</p>
+</blockquote>
+<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案-1"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案-1" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/HkXtcNz7T.png"><br><code>.\commander.exe gbl create bootloader-uart-xmodem.gbl --bootloader bootloader-uart-xmodem.s37</code></p>
+<h2 id="進入-geoko-bootloader-模式-1"><a href="#進入-geoko-bootloader-模式-1" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
+<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
+<h2 id="上傳-gbl-檔案-1"><a href="#上傳-gbl-檔案-1" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
+<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
+<p><img src="/images/S199i4MXa.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
+<p><img src="/images/rkN3sVzmp.png"><br>按 2 重新啟動 會出現 gecko bootloader v2.03.03 字眼 </p>
+<h2 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
+<li><a href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
+<li><a href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
+<li><a href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
+</ul>
+<h1 id="外接-UART-接法"><a href="#外接-UART-接法" class="headerlink" title="外接 UART 接法"></a>外接 UART 接法</h1><p>如果要走自己拉的 UTN401A + Ambar<br>最左邊要High 最右邊是Low 中間左到右分別是RX TX<br><code>H|_|RX|TX|_|G</code><br><img src="/images/rJpMMU7a.jpg"></p>
+<ul>
+<li><p>Zigbee - NCP ncp-uart-hw 專案<br>  Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>  SL_IOSTREAM_USART_VCOM 變更 RX TX 腳位輸入輸出設定</p>
+</li>
+<li><p>Bootloader - NCP UART XMODEM 專案</p>
+<ul>
+<li>Platform &gt;&gt; Bootloader &gt;&gt; Drivers &gt;&gt; Bootloader UART Driver </li>
+<li>SL_SERIAL_UART 變更 RX TX 腳位輸入輸出設定</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>Zigbee</tag>
+        <tag>MCU</tag>
+        <tag>SOC</tag>
+        <tag>SparkFun</tag>
+        <tag>MGM240P</tag>
+        <tag>simplicity-studio</tag>
+        <tag>mgm240pb32vna</tag>
+        <tag>silabs</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UART RS232 RS484</title>
     <url>/2023/11/18/UART%20RS232%20RS484/</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>

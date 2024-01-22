@@ -9,9 +9,10 @@ tags:
   - simplicity-studio
   - mgm240pb32vna
   - silabs
+categories:
+  - zigbee
 date: '2023-11-19 02:46:00'
-updated: '2024-01-21 05:06:04'
-categories: ''
+updated: '2024-01-22 14:51:46'
 description: ''
 abbrlink: 2b622287
 ---

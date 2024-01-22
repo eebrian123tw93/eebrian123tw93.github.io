@@ -21,31 +21,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="建立一個新的倉庫 命名為 帳戶名稱.github.io 好了之後在自己的電腦上clone專案下來 1git clone git@github.com:eebrian123tw60&#x2F;eebrian123tw60.github.io.git 進入專案 新增一個index.html 內容是Hello World 12cd eebrian123tw60.github.ioecho &quot;Hello">
+    <meta name="description" content="介紹直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量 簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。  要知道原始資料的位置。 要知道目地的位置。 要知道要搬多少資料長度。  配置DMA(以SRAM到外部設備) 從哪裡複製(要複製的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World 使用Github pages 靜態網站">
-<meta property="og:url" content="http://eebrian123tw93.github.io/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/index.html">
+<meta property="og:title" content="DMA (Direct Memory Access)">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html">
 <meta property="og:site_name" content="Brian&#39;s 筆記">
-<meta property="og:description" content="建立一個新的倉庫 命名為 帳戶名稱.github.io 好了之後在自己的電腦上clone專案下來 1git clone git@github.com:eebrian123tw60&#x2F;eebrian123tw60.github.io.git 進入專案 新增一個index.html 內容是Hello World 12cd eebrian123tw60.github.ioecho &quot;Hello">
+<meta property="og:description" content="介紹直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量 簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。  要知道原始資料的位置。 要知道目地的位置。 要知道要搬多少資料長度。  配置DMA(以SRAM到外部設備) 從哪裡複製(要複製的">
 <meta property="og:locale">
-<meta property="og:image" content="http://eebrian123tw93.github.io/images/image.png">
-<meta property="og:image" content="http://eebrian123tw93.github.io/images/image2.png">
-<meta property="article:published_time" content="2023-05-05T02:03:00.000Z">
-<meta property="article:modified_time" content="2023-05-05T02:03:00.000Z">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119023846.png">
+<meta property="article:published_time" content="2023-11-18T19:48:00.000Z">
+<meta property="article:modified_time" content="2024-01-20T10:27:13.000Z">
 <meta property="article:author" content="BrianLu">
-<meta property="article:tag" content="github">
+<meta property="article:tag" content="DMA">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/image.png">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20231119023846.png">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/">
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/","path":"Hello World 使用Github pages 靜態網站/","title":"Hello World 使用Github pages 靜態網站"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html","path":"posts/20231118194800-e891e3a3.html","title":"DMA (Direct Memory Access)"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hello World 使用Github pages 靜態網站 | Brian's 筆記</title>
+<title>DMA (Direct Memory Access) | Brian's 筆記</title>
   
 
 
@@ -139,7 +138,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E9%80%A3%E7%B5%90"><span class="nav-number">1.</span> <span class="nav-text">參考連結</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEDMA-%E4%BB%A5SRAM%E5%88%B0%E5%A4%96%E9%83%A8%E8%A8%AD%E5%82%99"><span class="nav-number">2.</span> <span class="nav-text">配置DMA(以SRAM到外部設備)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E5%BD%B1%E7%89%87"><span class="nav-number">3.</span> <span class="nav-text">參考影片</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">4.</span> <span class="nav-text">參考</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -184,7 +183,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -197,12 +196,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hello World 使用Github pages 靜態網站 | Brian's 筆記">
+      <meta itemprop="name" content="DMA (Direct Memory Access) | Brian's 筆記">
       <meta itemprop="description" content>
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hello World 使用Github pages 靜態網站
+          DMA (Direct Memory Access)
         </h1>
 
         <div class="post-meta-container">
@@ -213,7 +212,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-05-05 10:03:00" itemprop="dateCreated datePublished" datetime="2023-05-05T10:03:00+08:00">2023-05-05</time>
+      <time title="Created: 2023-11-19 03:48:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:48:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:27:13" itemprop="dateModified" datetime="2024-01-20T18:27:13+08:00">2024-01-20</time>
     </span>
 
   
@@ -225,18 +231,27 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
-<p>好了之後在自己的電腦上clone專案下來</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git</span><br></pre></td></tr></table></figure>
-<p>進入專案 新增一個index.html 內容是Hello World</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd eebrian123tw60.github.io</span><br><span class="line">echo &quot;Hello World&quot; &gt; index.html</span><br></pre></td></tr></table></figure>
-<p>推到遠端的倉庫</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
-<p>等待幾分鐘 訪問<a target="_blank" rel="external nofollow noopener noreferrer" href="https://eebrian123tw60.github.io/">https://eebrian123tw60.github.io/</a><br><img src="/images/image2.png"><br>結果就出來拉！！</p>
-<hr>
-<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://pages.github.com/">https://pages.github.com/</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始: 用github pages 上傳靜態網站</a></li>
+    <div class="post-body" itemprop="articleBody"><h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
+<p>簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。</p>
+<ol>
+<li>要知道原始資料的位置。</li>
+<li>要知道目地的位置。</li>
+<li>要知道要搬多少資料長度。</li>
+</ol>
+<h1 id="配置DMA-以SRAM到外部設備"><a href="#配置DMA-以SRAM到外部設備" class="headerlink" title="配置DMA(以SRAM到外部設備)"></a>配置DMA(以SRAM到外部設備)</h1><ul>
+<li>從哪裡複製(要複製的地址) SRAM Address</li>
+<li>複製的地址(複製目的地的地址) 外部設備 Address</li>
+<li>DMA方向 從 SRAM 到 外部設備</li>
+<li>傳輸資料大小</li>
+<li>SRAM 地址自增 On or Off </li>
+<li>外部設備 地址自增  On or Off</li>
+</ul>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=2_X9qD12_pw">10行代码，就能让你真正理解DMA！你用的可能很少，但是在单片机中非常重要！</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://sharing-icdesign-experience.blogspot.com/2014/05/dma.html">什麼是DMA ?</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/as480133937/article/details/104927922">【STM32】 DMA原理，步骤超细详解，一文看懂DMA</a></li>
 </ul>
 
     </div>
@@ -247,20 +262,20 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/github/" rel="tag"># github</a>
+              <a href="/tags/DMA/" rel="tag"># DMA</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/" rel="prev" title="實作 Nginx 負載平衡 load balance">
-                  <i class="fa fa-chevron-left"></i> 實作 Nginx 負載平衡 load balance
+                <a href="/posts/20231118194600-68d2e719.html" rel="prev" title="PWM(Pulse-width modulation)">
+                  <i class="fa fa-chevron-left"></i> PWM(Pulse-width modulation)
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/git-github-com-Permission-denied-publickey/" rel="next" title="git@github.com Permission denied (publickey)">
-                  git@github.com Permission denied (publickey) <i class="fa fa-chevron-right"></i>
+                <a href="/posts/20231118195000-c8085013.html" rel="next" title="Zigbee介紹">
+                  Zigbee介紹 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

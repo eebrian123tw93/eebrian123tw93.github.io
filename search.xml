@@ -2,7 +2,7 @@
 <search>
   <entry>
     <title>DMA (Direct Memory Access)</title>
-    <url>/DMA%20(Direct%20Memory%20Access)/</url>
+    <url>/posts/20231118194800-e891e3a3.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
 <p>簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。</p>
 <ol>
@@ -32,7 +32,7 @@
   </entry>
   <entry>
     <title>H264基礎知識</title>
-    <url>/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/</url>
+    <url>/posts/20240116080900-8a796e7c.html</url>
     <content><![CDATA[<h1 id="H264"><a href="#H264" class="headerlink" title="H264"></a>H264</h1><p>MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC</p>
 <h1 id="I幀-B幀-P幀-IDR幀"><a href="#I幀-B幀-P幀-IDR幀" class="headerlink" title="I幀, B幀,P幀,IDR幀"></a>I幀, B幀,P幀,IDR幀</h1><p><img src="/images/20240116150548.png"></p>
 <h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照</p>
@@ -76,7 +76,7 @@
   </entry>
   <entry>
     <title>Hello World 使用Github pages 靜態網站</title>
-    <url>/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/</url>
+    <url>/posts/20230505020300-526efc4a.html</url>
     <content><![CDATA[<p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
 <p>好了之後在自己的電腦上clone專案下來</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git</span><br></pre></td></tr></table></figure>
@@ -97,7 +97,7 @@
   </entry>
   <entry>
     <title>IIC I2C （Inter-Integrated Circuit）</title>
-    <url>/IIC%20I2C%20%EF%BC%88Inter-Integrated%20Circuit%EF%BC%89/</url>
+    <url>/posts/20231118183800-d71a458d.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
 <p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
 <p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
@@ -143,7 +143,7 @@
   </entry>
   <entry>
     <title>PWM(Pulse-width modulation)</title>
-    <url>/PWM(Pulse-width%20modulation)/</url>
+    <url>/posts/20231118194600-68d2e719.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
 <h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
 <h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
@@ -169,7 +169,7 @@
   </entry>
   <entry>
     <title>SparkFun Thing Plus Matter - MGM240P</title>
-    <url>/SparkFun%20Thing%20Plus%20Matter%20-%20MGM240P/</url>
+    <url>/posts/20231118184600-2b622287.html</url>
     <content><![CDATA[<h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
 <p><img src="/images/rJPmOAx7T.png"><br><img src="/images/rkeBu0em6.png"><br><img src="/images/rJMUOAgmT.png"><br><img src="/images/H19PO0x7a.png"><br>一直下一步，安裝到預設路徑即可 安裝完會自動打開<br><img src="/images/H1kFFAxXp.png"><br>同意並繼續<br><img src="/images/r1NhtAxQ6.png"><br>登入silabs的帳戶，免費辦一個<br>登入後會安裝驅動 輸入Admin帳號密碼安裝<br><img src="/images/HkqDc0xX6.png"><br>點擊Intall 點擊Intall by Connecting devices<br><img src="/images/Hy4oqAlQ6.png"><br>現在沒有裝置 接入USB<br><img src="/images/B1vJiAlXa.png"><br>接入USB 會需要安裝驅動板子套件按下Yes<br><img src="/images/HyS8sRxm6.png"><br>選擇板子 Next<br><img src="/images/BJROsCxmp.png"><br>選擇Auto Next<br><img src="/images/H1T3oCeQ6.png"><br>同意安裝套件 Next<br><img src="/images/ByHS2Aema.png"><br>會裝一些無線套件(geoko sdk)之類的(大約跑30分鐘)<br><img src="/images/HJYMgkbmp.png"><br>重開 Simplicity Studio<br><img src="/images/Byv9xyZmp.png"></p>
 <blockquote>
@@ -289,7 +289,7 @@
   </entry>
   <entry>
     <title>UART RS232 RS484</title>
-    <url>/UART%20RS232%20RS484/</url>
+    <url>/posts/20231118193100-f5da1a51.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
 <h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
 <h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
@@ -328,7 +328,7 @@
   </entry>
   <entry>
     <title>VM安裝</title>
-    <url>/VM%E5%AE%89%E8%A3%9D/</url>
+    <url>/posts/20231129101600-661de22d.html</url>
     <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
 <h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
 <li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
@@ -373,7 +373,7 @@
   </entry>
   <entry>
     <title>Zigbee介紹</title>
-    <url>/Zigbee%E4%BB%8B%E7%B4%B9/</url>
+    <url>/posts/20231118195000-c8085013.html</url>
     <content><![CDATA[<ul>
 <li><a href="https://blog.csdn.net/u011350258/article/details/113062464">1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法</a></li>
 <li><a href="https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf">手把手指南—— 开启你的 Zigbee 之旅</a></li>
@@ -619,7 +619,7 @@
   </entry>
   <entry>
     <title>git@github.com Permission denied (publickey)</title>
-    <url>/git-github-com-Permission-denied-publickey/</url>
+    <url>/posts/20230505084825-9174ad3f.html</url>
     <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
 
@@ -635,7 +635,7 @@
   </entry>
   <entry>
     <title>html隱藏元素的方法</title>
-    <url>/html%E9%9A%B1%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <url>/posts/20240122061800-aae208a6.html</url>
     <content><![CDATA[<ol>
 <li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
 <li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
@@ -648,7 +648,7 @@
   </entry>
   <entry>
     <title>使用WebCodecs API對H264解碼</title>
-    <url>/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/</url>
+    <url>/posts/20240122021600-ef8abaf3.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>
 <h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><img src="/images/20240122092416.png"></p>
 <ol>
@@ -680,7 +680,7 @@
   </entry>
   <entry>
     <title>實作 Nginx 負載平衡 load balance</title>
-    <url>/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
+    <url>/posts/20230409051607-ab2a7258.html</url>
     <content><![CDATA[<h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
 <li>round-robin：預設值，會將請留輪流平均分配到每台伺服器上</li>
 <li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>

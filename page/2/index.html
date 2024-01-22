@@ -192,7 +192,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20230505084825-9174ad3f.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +210,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20230505084825-9174ad3f.html" class="post-title-link" itemprop="url">git@github.com Permission denied (publickey)</a>
+          <a href="/posts/20231118194800-e891e3a3.html" class="post-title-link" itemprop="url">DMA (Direct Memory Access)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -221,7 +221,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-05-05 16:48:25" itemprop="dateCreated datePublished" datetime="2023-05-05T16:48:25+08:00">2023-05-05</time>
+      <time title="Created: 2023-11-19 03:48:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:48:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:27:13" itemprop="dateModified" datetime="2024-01-20T18:27:13+08:00">2024-01-20</time>
     </span>
 
   
@@ -234,97 +241,27 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>如果沒有產生過公鑰，會產下面錯誤</p>
-<blockquote>
-<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
-</blockquote>
-<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
-
-<p>將印出來的公鑰設定去<a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20230505020300-526efc4a.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20230505020300-526efc4a.html" class="post-title-link" itemprop="url">Hello World 使用Github pages 靜態網站</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-05-05 10:03:00" itemprop="dateCreated datePublished" datetime="2023-05-05T10:03:00+08:00">2023-05-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
-<p>好了之後在自己的電腦上clone專案下來</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git</span><br></pre></td></tr></table></figure>
-<p>進入專案 新增一個index.html 內容是Hello World</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd eebrian123tw60.github.io</span><br><span class="line">echo &quot;Hello World&quot; &gt; index.html</span><br></pre></td></tr></table></figure>
-<p>推到遠端的倉庫</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
-<p>等待幾分鐘 訪問<a target="_blank" rel="external nofollow noopener noreferrer" href="https://eebrian123tw60.github.io/">https://eebrian123tw60.github.io/</a><br><img src="/images/image2.png"><br>結果就出來拉！！</p>
-<hr>
-<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://pages.github.com/">https://pages.github.com/</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始: 用github pages 上傳靜態網站</a></li>
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
+<p>簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。</p>
+<ol>
+<li>要知道原始資料的位置。</li>
+<li>要知道目地的位置。</li>
+<li>要知道要搬多少資料長度。</li>
+</ol>
+<h1 id="配置DMA-以SRAM到外部設備"><a href="#配置DMA-以SRAM到外部設備" class="headerlink" title="配置DMA(以SRAM到外部設備)"></a>配置DMA(以SRAM到外部設備)</h1><ul>
+<li>從哪裡複製(要複製的地址) SRAM Address</li>
+<li>複製的地址(複製目的地的地址) 外部設備 Address</li>
+<li>DMA方向 從 SRAM 到 外部設備</li>
+<li>傳輸資料大小</li>
+<li>SRAM 地址自增 On or Off </li>
+<li>外部設備 地址自增  On or Off</li>
+</ul>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=2_X9qD12_pw">10行代码，就能让你真正理解DMA！你用的可能很少，但是在单片机中非常重要！</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://sharing-icdesign-experience.blogspot.com/2014/05/dma.html">什麼是DMA ?</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/as480133937/article/details/104927922">【STM32】 DMA原理，步骤超细详解，一文看懂DMA</a></li>
 </ul>
 
       
@@ -352,7 +289,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20230409051607-ab2a7258.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -370,7 +307,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20230409051607-ab2a7258.html" class="post-title-link" itemprop="url">實作 Nginx 負載平衡 load balance</a>
+          <a href="/posts/20231118194600-68d2e719.html" class="post-title-link" itemprop="url">PWM(Pulse-width modulation)</a>
         </h2>
 
         <div class="post-meta-container">
@@ -381,7 +318,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-04-09 13:16:07" itemprop="dateCreated datePublished" datetime="2023-04-09T13:16:07+08:00">2023-04-09</time>
+      <time title="Created: 2023-11-19 03:46:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:46:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:18:30" itemprop="dateModified" datetime="2024-01-20T18:18:30+08:00">2024-01-20</time>
     </span>
 
   
@@ -394,18 +338,416 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
-<li>round-robin：預設值，會將請留輪流平均分配到每台伺服器上</li>
-<li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>
-<li>ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的</li>
-</ol>
-<h2 id="設定不同付載平衡模式"><a href="#設定不同付載平衡模式" class="headerlink" title="設定不同付載平衡模式"></a>設定不同付載平衡模式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash</span><br><span class="line">		server srv1.example.com;</span><br><span class="line">		server srv2.example.com;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Round-robin-分配權重-weight"><a href="#Round-robin-分配權重-weight" class="headerlink" title="Round-robin 分配權重 weight"></a>Round-robin 分配權重 weight</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com weight=2;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效"><a href="#備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效" class="headerlink" title="備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效"></a>備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com backup;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
+<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
+<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
+<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
+<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
+<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
+<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
 
-<hr>
+<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118193100-f5da1a51.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20231118193100-f5da1a51.html" class="post-title-link" itemprop="url">UART RS232 RS484</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-19 03:31:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:31:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:38:51" itemprop="dateModified" datetime="2024-01-20T18:38:51+08:00">2024-01-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
+<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
+<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
+<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
+<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
+<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
+<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
+<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
+<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
+<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
+<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
+<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
+</ul>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="maxlist.xyz/2020/06/18/flask-nginx/">maxlist.xyz&#x2F;2020&#x2F;06&#x2F;18&#x2F;flask-nginx&#x2F;</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118184600-2b622287.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20231118184600-2b622287.html" class="post-title-link" itemprop="url">SparkFun Thing Plus Matter - MGM240P</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-19 02:46:00" itemprop="dateCreated datePublished" datetime="2023-11-19T02:46:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-21 05:06:04" itemprop="dateModified" datetime="2024-01-21T05:06:04+08:00">2024-01-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
+<p><img src="/images/rJPmOAx7T.png"><br><img src="/images/rkeBu0em6.png"><br><img src="/images/rJMUOAgmT.png"><br><img src="/images/H19PO0x7a.png"><br>一直下一步，安裝到預設路徑即可 安裝完會自動打開<br><img src="/images/H1kFFAxXp.png"><br>同意並繼續<br><img src="/images/r1NhtAxQ6.png"><br>登入silabs的帳戶，免費辦一個<br>登入後會安裝驅動 輸入Admin帳號密碼安裝<br><img src="/images/HkqDc0xX6.png"><br>點擊Intall 點擊Intall by Connecting devices<br><img src="/images/Hy4oqAlQ6.png"><br>現在沒有裝置 接入USB<br><img src="/images/B1vJiAlXa.png"><br>接入USB 會需要安裝驅動板子套件按下Yes<br><img src="/images/HyS8sRxm6.png"><br>選擇板子 Next<br><img src="/images/BJROsCxmp.png"><br>選擇Auto Next<br><img src="/images/H1T3oCeQ6.png"><br>同意安裝套件 Next<br><img src="/images/ByHS2Aema.png"><br>會裝一些無線套件(geoko sdk)之類的(大約跑30分鐘)<br><img src="/images/HJYMgkbmp.png"><br>重開 Simplicity Studio<br><img src="/images/Byv9xyZmp.png"></p>
+<blockquote>
+<p>** 系統會提示更新 Adapter FW<br>不要更新保持這個1v4p9b113版本<br>(1.4.12.18刷進去會失敗，辯識會有問題，會變磚)**</p>
+</blockquote>
+<h1 id="更新版子-Adapter-Firmware-跳過"><a href="#更新版子-Adapter-Firmware-跳過" class="headerlink" title="更新版子 Adapter Firmware (跳過)"></a>更新版子 Adapter Firmware (跳過)</h1><p>更新版子參考 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/article/how-to-update-the-firmware-on-your-starter-kit-board">How to update the Firmware on your Starter Kit board</a><br>更新版子變磚參考 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/article/recover-efm32-or-efm8-kit-that-was-bricked-during-firmware-upgrade">Recover EFM32 or EFM8 kit that was bricked during firmware upgrade</a></p>
+<blockquote>
+<p> SparkFun Thing Plus Matter 曾經升到1.4.12.18，但失敗變磚，要退版本但是進入boot mode 的方法上面試不出來，最後是不知道怎麼又可以辨識出來(有可能是用手壓住後面的腳位接入USB，陰錯陽差進到 boot mode)，然後降版</p>
+</blockquote>
+<h1 id="簡單的範例-Blink-Example"><a href="#簡單的範例-Blink-Example" class="headerlink" title="簡單的範例 Blink Example"></a>簡單的範例 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://learn.sparkfun.com/tutorials/sparkfun-thing-plus-matter---mgm240p-hookup-guide/all#blink-example">Blink Example</a></h1><p>這個範例是一個會閃的燈<br><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/Hy9YGyZXp.png"><br>搜尋 blink 點擊 Platform - Blink Bare-mental<br>點擊 Next<br><img src="/images/HkO1XyZQa.png"><br>點擊 Finish<br><img src="/images/BkGX1b7T.png"><br><img src="/images/rJHA71WQT.png"><br>編譯並寫入板子<br><img src="/images/HkiX4ybX6.png"><br>編譯無錯誤 正常寫入板子後可看到燈會不斷閃爍<br><img src="/images/SyC7ByZQa.jpg"><br><img src="/images/S1vES1bmT.jpg"><br>可以到blink.c裡面的 TOOGLE_DELAY_MS 更改閃爍時間</p>
+<h2 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=POVRRuVCr-Q">Get Started with Simplicity Studio and the Thing Plus Matter Board</a></li>
+</ul>
+<h1 id="NCP-模式"><a href="#NCP-模式" class="headerlink" title="NCP 模式"></a>NCP 模式</h1><p><img src="/images/S1O4zC76.png"></p>
+<blockquote>
+<p>這裡Demo會要創立三個專案，目的是要創建Zigbee網路</p>
+</blockquote>
+<h2 id="創建-Bootloader-NCP-UART-XMODEM-專案"><a href="#創建-Bootloader-NCP-UART-XMODEM-專案" class="headerlink" title="創建 Bootloader - NCP UART XMODEM 專案"></a>創建 Bootloader - NCP UART XMODEM 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/By9Mw1mp.png"><br>點擊 Bootloader - NCP UART XMODEM<br>點擊 Next<br><img src="/images/BkaUwkb7T.png"><br>點擊 Finish<br><img src="/images/rJlydyXa.png"></p>
+<h2 id="創建-Zigbee-NCP-ncp-uart-hw-專案"><a href="#創建-Zigbee-NCP-ncp-uart-hw-專案" class="headerlink" title="創建 Zigbee - NCP ncp-uart-hw 專案"></a>創建 Zigbee - NCP ncp-uart-hw 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/ry3LJbX6.png"><br>點擊 Zigbee - NCP ncp-uart-hw<br>點擊 Next<br><img src="/images/Sy39kW7a.png"><br>點擊 Finish</p>
+<h2 id="創建-Zigbee-Host-Gatway-專案-在Linux上執行"><a href="#創建-Zigbee-Host-Gatway-專案-在Linux上執行" class="headerlink" title="創建 Zigbee - Host Gatway 專案 (在Linux上執行)"></a>創建 Zigbee - Host Gatway 專案 (在Linux上執行)</h2><p><img src="/images/ByLntyWX6.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Custom Board (可能會有點難點)<br>Target Device: Linux 64 bit<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Makefile IDE<br>點擊 Next<br><img src="/images/ryakcyZmT.png"><br>點擊 Zigbee - Host Gateway<br>點擊 Next<br><img src="/images/HyKZ9J7p.png"><br>點擊 Finish</p>
+<h2 id="燒入-Bootloader-NCP-UART-XMODEM"><a href="#燒入-Bootloader-NCP-UART-XMODEM" class="headerlink" title="燒入 Bootloader - NCP UART XMODEM"></a>燒入 Bootloader - NCP UART XMODEM</h2><p>燒入 Bootloader - NCP UART XMODEM 和 NCP ncp-uart-hw 要刷進板子裡面<br><img src="/images/Hyxny7a.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/Hy8f2yZma.png"><br>編譯成功完後 Binaries 出現 檔名為bootloader-uart-xmodem 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/r1Wnn1WQp.png"><br>選擇Binary File <code>v5_workspace/bootloader-uart-xmodem/GNU ARM v10.3.1 - Default/bootloader-uart-xmodem.s37</code> 點擊 Flash<br><img src="/images/BJGlkeZXp.png"><br>log 顯示 Successfully<br><img src="/images/HJhC31Q6.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader 占用兩個綠色區塊<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/SkJsJxWm6.png"><br>Seial 1 會出現 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gecko Bootloader v2.03.02</span><br><span class="line">1. upload gbl</span><br><span class="line">2. run</span><br><span class="line">3. ebl info</span><br><span class="line">BL &gt; </span><br></pre></td></tr></table></figure>
+<p>代表進入 Gecko Bootloader mode </p>
+<blockquote>
+<p>在還沒刷入 Application 會進入到 Gecko Bootloader mode<br>如果已經刷了 Application 則此處不會顯示任何東西</p>
+</blockquote>
+<h2 id="燒入-NCP-ncp-uart-hw"><a href="#燒入-NCP-ncp-uart-hw" class="headerlink" title="燒入 NCP ncp-uart-hw"></a>燒入 NCP ncp-uart-hw</h2><p><img src="/images/Hy0kxCQ6.png"><br>點擊ncp-uart-hw.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/HJsvlRXa.png"><br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>點擊 Congiure<br><img src="/images/HJY3e0Zm6.png"><br>將 Flow Control 改成 Software Flow control<br><img src="/images/HyScEaWm6.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/B107BT7p.png"><br>編譯成功完後 Binaries 出現 檔名為ncp-uart-hw 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/Byb5rabmT.png"><br>選擇Binary File <code>v5_workspace/ncp-uart-hw/GNU ARM v10.3.1 - Default/ncp-uart-hw.s37</code> 點擊 Flash<br><img src="/images/S1CsrTZXp.png"><br>log 顯示 Successfully<br><img src="/images/S1mLITXa.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader + ncp-uart-hw 的分布<br>Bootloader 從0x8000000開始<br>ncp-uart-hw 從0x8006000開始<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/HJCWDabQ6.png"><br>Seial 1 不會顯示任何東西<br>代表進入 Application mode </p>
+<h2 id="編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上"><a href="#編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上" class="headerlink" title="編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)"></a>編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)</h2><p><img src="/images/B11Aupb76.png"><br>cd 到專案底下<br><img src="/images/SJSjdpWXa.png"><br><code>gcc -v</code><br><img src="/images/r11lFaZmT.png"><br><code>make -f Z3Gateway.Makefile</code><br><img src="/images/HyhsKTZmT.png"><br>編譯完成<br><img src="/images/SyIW9pbXa.png"></p>
+<h2 id="透過-Host-Gateway-控制-MCU-建立Zigbee-網路"><a href="#透過-Host-Gateway-控制-MCU-建立Zigbee-網路" class="headerlink" title="透過 Host Gateway 控制 MCU 建立Zigbee 網路"></a>透過 Host Gateway 控制 MCU 建立Zigbee 網路</h2><p><img src="/images/SJ0OqpZXp.png"><br>這裡選用Jlink OB 這也是帶有Serial Com Port 功能<br><img src="/images/H1Dhnama.png"><br>cd 到 程式所在地<br><img src="/images/HkPfpabQ6.png"><br><code>./Z3Gateway -f x -b 115200 -p  /dev/ttyACM0</code><br><img src="/images/S1aSTT76.png"><br>直接輸入info<br><img src="/images/rJXOpTWQp.png"><br>可以看到當前狀態 nodeId PanId xpan …. 接下來就是建立網路<br><img src="/images/HJPg067a.png"><br><code>network leave</code> 先離開網路<br><img src="/images/r1P5A6WQT.png"><br><code>plugin network-creator start 1</code> 成功會看到 EMBER_NETWORK_UP 0x0000 的字眼<br><img src="/images/SyBRAT7T.png"><br>再輸入info 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br><img src="/images/Sy8Iy0Wma.png"><br><code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug235-09-developing-ncp-apps-with-connect.pdf">UG235.09: Developing NCP Applications with Silicon Labs Connect v2.x</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/application-notes/an1320-customized-ncp-zigbee7.pdf">Building a Customized NCP Application with Zigbee EmberZNet 7.x</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/application-notes/an706-ezsp-uart-host-interfacing-guide.pdf">EZSP-UART Host Interfacing Guide</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lshddd/article/details/115458007">基于芯科Host-NCP解决方案的Zigbee 3.0 Gateway技术研究（-）-Z3GatewayHost应用</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42860989/article/details/125909875">在Cygwin环境下构建和使用EmberZNet PRO Zigbee Host应用程序</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/SiliconLabs/managed-zigbee-gateway/blob/master/README.md">managed-zigbee-gateway&#x2F;README.md</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/question/0D51M00007xeQUSSA2/how-to-verify-the-normal-operation-of-ncp?language=zh_TW">How to Verify the Normal Operation of NCP？</a></li>
+</ul>
+<h2 id="參考影片-1"><a href="#參考影片-1" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1nM4y1g755/">Day1-4-EmberZnet SDK的Bootloader和OTA配置详解</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1fv411y7cq/">Day 1-2_EmberZnet协议栈介绍及开发工具AppBuilder介绍 (1)</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1bT4y1w7EJ">Day 3-1 Zigbee 3.0 RTOS网关介绍</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=EP96d_ps4vg&ab_channel=CUSTCourses">10-01 何謂bootloader</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=njFxwNoPbkc">ARM Bootloader开发-1.bootloader概述1</a></li>
+</ul>
+<h1 id="Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路"><a href="#Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路" class="headerlink" title="Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)"></a>Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)</h1><h2 id="創建-Bootloader-Soc-Internal-Storage-專案"><a href="#創建-Bootloader-Soc-Internal-Storage-專案" class="headerlink" title="創建 Bootloader - Soc Internal Storage 專案"></a>創建 Bootloader - Soc Internal Storage 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HyWccAWX6.png"><br>點擊 Bootloader - Soc Internal Storage (1536kB)<br>點擊 Next<br><img src="/images/r1xiqRbX6.png"><br>點擊 Finish</p>
+<h2 id="創建-Zigbee-Soc-Switch-專案"><a href="#創建-Zigbee-Soc-Switch-專案" class="headerlink" title="創建 Zigbee - Soc Switch 專案"></a>創建 Zigbee - Soc Switch 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HJKFCXT.png"><br>點擊 Zigbee - Soc Switch<br>點擊 Next<br><img src="/images/B1vXqRZXp.png"><br>點擊 Finish</p>
+<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part1"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part1" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part1"></a>修改 Zigbee - Soc Switch 專案設定 Part1</h2><p><img src="/images/B17oiRWma.png"><br>點擊 Z3Switch.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/r120sCZm6.png"><br>找到Platform &gt;&gt; Driver &gt;&gt; Button &gt;&gt; Simple Button &gt;&gt; bt1<br>點擊 Congiure<br><img src="/images/HyIm2C7p.png"><br>修改 SL_SIMPLE_BUTTON_BTN1 先隨便選一個</p>
+<p>再修改<br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>將 Flow Control 改成 Software Flow control</p>
+<h2 id="分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch"><a href="#分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch" class="headerlink" title="分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch"></a>分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch</h2><p>參考上面燒入<br><img src="/images/rkD2zJMQT.png"><br>打開console seral 1  可以看到 &gt; Z3Switch 輸入info 看資訊<br>此時不能建立網路 因為現在裝置類型是End Device 而且 創建網路需要增加plugin</p>
+<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part2"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part2" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part2"></a>修改 Zigbee - Soc Switch 專案設定 Part2</h2><p>修改<br>找到 Zigbee &gt;&gt; Utility &gt;&gt; Zigbee Device Config<br>將 Primary Network Device Type 改成 Coordonator or Router</p>
+<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Leaf Stack<br>將他 Uninstall</p>
+<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Stack<br>將他 install</p>
+<p>找到 Zigbee &gt;&gt; Utility &gt;&gt; End Device Support<br>將他 Uninstal</p>
+<p>找到 Zigbee &gt;&gt; Zigbee3.0 &gt;&gt; Network Creator<br>將他 install</p>
+<h2 id="燒入-Zigbee-Soc-Switch-Part2"><a href="#燒入-Zigbee-Soc-Switch-Part2" class="headerlink" title="燒入 Zigbee - Soc Switch Part2"></a>燒入 Zigbee - Soc Switch Part2</h2><p>參考上面燒入<br><img src="/images/r1aTByf7p.png"><br><code>network leave</code><br><img src="/images/B1xGUkGma.png"><br><code>plugin network-creator start 1</code><br><img src="/images/SyBNIyfQa.png"><br><code>info</code> 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br>之後再輸入<code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
+<h1 id="用-Bootloader-NCP-UART-XMODEM-刷-Application"><a href="#用-Bootloader-NCP-UART-XMODEM-刷-Application" class="headerlink" title="用 Bootloader - NCP UART XMODEM 刷 Application"></a>用 Bootloader - NCP UART XMODEM 刷 Application</h1><p><img src="/images/H1RwPNGXT.png"></p>
+<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/Hk5bbfM76.png"><br><code>.\commander.exe gbl create ncp-uart-hw.gbl  --app ncp-uart-hw.s37</code> </p>
+<h2 id="進入-geoko-bootloader-模式"><a href="#進入-geoko-bootloader-模式" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
+<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
+<h2 id="上傳-gbl-檔案"><a href="#上傳-gbl-檔案" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/ry6nUMzXa.png"><br>此時Memory Map 裡面只有 bootloader</p>
+<p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
+<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
+<p><img src="/images/Sy9owMzmT.png"><br>上傳中</p>
+<p><img src="/images/Hk66PffX6.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
+<p><img src="/images/SJwZMzQ6.png"><br>此時Memory Map 裡面只有 bootloader 和 Application</p>
+<p><img src="/images/Hy0SdGzQT.png"><br>按下2 啟動Application 會出現一點亂碼</p>
+<p><img src="/images/Syw9Mfm6.png"><br>啟動Application 後的 Memory Map 尾部會出現資料</p>
+<h2 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
+</ul>
+<h1 id="用-Bootloader-NCP-UART-XMODEM-更新-Bootloader"><a href="#用-Bootloader-NCP-UART-XMODEM-更新-Bootloader" class="headerlink" title="用 Bootloader - NCP UART XMODEM 更新 Bootloader"></a>用 Bootloader - NCP UART XMODEM 更新 Bootloader</h1><p><img src="/images/H1Wv54f7a.png"></p>
+<blockquote>
+<p>這裡更新Bootloader版本只能往上更新<br>編輯Bootloader版本設定  Bootloader Version Main Customer &gt;&gt; Bootloader Core</p>
+</blockquote>
+<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案-1"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案-1" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/HkXtcNz7T.png"><br><code>.\commander.exe gbl create bootloader-uart-xmodem.gbl --bootloader bootloader-uart-xmodem.s37</code></p>
+<h2 id="進入-geoko-bootloader-模式-1"><a href="#進入-geoko-bootloader-模式-1" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
+<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
+<h2 id="上傳-gbl-檔案-1"><a href="#上傳-gbl-檔案-1" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
+<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
+<p><img src="/images/S199i4MXa.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
+<p><img src="/images/rkN3sVzmp.png"><br>按 2 重新啟動 會出現 gecko bootloader v2.03.03 字眼 </p>
+<h2 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
+</ul>
+<h1 id="外接-UART-接法"><a href="#外接-UART-接法" class="headerlink" title="外接 UART 接法"></a>外接 UART 接法</h1><p>如果要走自己拉的 UTN401A + Ambar<br>最左邊要High 最右邊是Low 中間左到右分別是RX TX<br><code>H|_|RX|TX|_|G</code><br><img src="/images/rJpMMU7a.jpg"></p>
+<ul>
+<li><p>Zigbee - NCP ncp-uart-hw 專案<br>  Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>  SL_IOSTREAM_USART_VCOM 變更 RX TX 腳位輸入輸出設定</p>
+</li>
+<li><p>Bootloader - NCP UART XMODEM 專案</p>
+<ul>
+<li>Platform &gt;&gt; Bootloader &gt;&gt; Drivers &gt;&gt; Bootloader UART Driver </li>
+<li>SL_SERIAL_UART 變更 RX TX 腳位輸入輸出設定</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118183800-d71a458d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20231118183800-d71a458d.html" class="post-title-link" itemprop="url">IIC I2C （Inter-Integrated Circuit）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-11-19 02:38:00" itemprop="dateCreated datePublished" datetime="2023-11-19T02:38:00+08:00">2023-11-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-20 18:23:10" itemprop="dateModified" datetime="2024-01-20T18:23:10+08:00">2024-01-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
+<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
+<p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
+<h1 id="I2C主设备与从设备的一般通信过程"><a href="#I2C主设备与从设备的一般通信过程" class="headerlink" title="I2C主设备与从设备的一般通信过程"></a>I2C主设备与从设备的一般通信过程</h1><h2 id="起始位-Start-condition-停止位-Stop-condition"><a href="#起始位-Start-condition-停止位-Stop-condition" class="headerlink" title="起始位 Start condition 停止位 Stop condition"></a>起始位 Start condition 停止位 Stop condition</h2><p><img src="/images/20231119013140.png"></p>
+<ul>
+<li>Start condition: SCL&#x3D; high + SDA falling (SDA由高到低跳變)</li>
+<li>Stop condition: SCL&#x3D;high + SDA raising (SDA由低到高跳變)</li>
+</ul>
+<h2 id="邏輯數據"><a href="#邏輯數據" class="headerlink" title="邏輯數據"></a>邏輯數據</h2><p><img src="/images/20231119013159.png"><br>SCL為High採集SDA數據<br><img src="/images/20231119013218.png"><br>表示1010000  </p>
+<h2 id="一-主设备给从设备发送-x2F-写入数据："><a href="#一-主设备给从设备发送-x2F-写入数据：" class="headerlink" title="一. 主设备给从设备发送&#x2F;写入数据："></a>一. 主设备给从设备发送&#x2F;写入数据：</h2><p><img src="/images/20231119013233.png"></p>
+<ol>
+<li>主设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 寫(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备发送数据到从设备，一般发送的每个字节数(8bit)据后会跟着等待接收来自从设备的响应(ACK)(1 bit)</li>
+<li>数据发送完毕，主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="二-主设备从从设备接收-x2F-读取数据"><a href="#二-主设备从从设备接收-x2F-读取数据" class="headerlink" title="二. 主设备从从设备接收&#x2F;读取数据"></a>二. 主设备从从设备接收&#x2F;读取数据</h2><p><img src="/images/20231119013244.png"></p>
+<ol>
+<li>设备发送起始（START）信号(1 bit)</li>
+<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 讀(1 bit)</li>
+<li>等待从设备响应(ACK)(1 bit)</li>
+<li>主设备接收来自从设备的数据，一般接收的每个字节(8bit)数据后会跟着向从设备发送一个响应(ACK)(1 bit)</li>
+<li>一般接收到最后一个数据后会发送一个无效响应(NACK)，然后主设备发送停止(STOP)信号终止传输(1 bit)</li>
+</ol>
+<h2 id="三-讀寫數據幀"><a href="#三-讀寫數據幀" class="headerlink" title="三. 讀寫數據幀"></a>三. 讀寫數據幀</h2><p><img src="/images/20231119013257.png"></p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=u62_Rjd5oMY">4分钟看懂！I2C通讯协议 最简单的总线通讯！</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=oPrfi_HCtjY">I²C通訊格式介紹</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=FamlCPP2J4o">11 IIC总线原理轻松明白</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/503219395">IIC通信协议，搞懂这篇就够了</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.strongpilab.com/i2c-introduction/">I2C-協定用法原理簡介-晶片溝通的橋樑</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/weiting-tw/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98-i2c%E9%80%9A%E8%A8%8A%E5%8D%94%E5%AE%9A%E6%93%8D%E4%BD%9C-36d4dad0c9b3">[技術筆記] I2C通訊協定操作</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
 </ul>
 
       
@@ -426,7 +768,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

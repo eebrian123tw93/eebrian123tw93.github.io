@@ -142,32 +142,6 @@
       </tags>
   </entry>
   <entry>
-    <title>PWM(Pulse-width modulation)</title>
-    <url>/2023/11/18/PWM(Pulse-width%20modulation)/</url>
-    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
-<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
-<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
-<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
-<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
-<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
-<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
-
-<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
-<li><a href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>PWM</tag>
-        <tag>WS2812B</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SparkFun Thing Plus Matter - MGM240P</title>
     <url>/2023/11/18/SparkFun%20Thing%20Plus%20Matter%20-%20MGM240P/</url>
     <content><![CDATA[<h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
@@ -288,6 +262,32 @@
       </tags>
   </entry>
   <entry>
+    <title>PWM(Pulse-width modulation)</title>
+    <url>/2023/11/18/PWM(Pulse-width%20modulation)/</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
+<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
+<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
+<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
+<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
+<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
+<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
+
+<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
+<li><a href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>PWM</tag>
+        <tag>WS2812B</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UART RS232 RS484</title>
     <url>/2023/11/18/UART%20RS232%20RS484/</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
@@ -324,51 +324,6 @@
         <tag>RS484</tag>
         <tag>TXRX</tag>
         <tag>TTL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VM安裝</title>
-    <url>/2023/11/29/VM%E5%AE%89%E8%A3%9D/</url>
-    <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
-<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
-</ul>
-<h2 id="共用資料夾"><a href="#共用資料夾" class="headerlink" title="共用資料夾"></a>共用資料夾</h2><p><img src="/images/20231129154247.png"><br>點擊共用資料夾設定<br><img src="/images/20231129154432.png"><br>點擊加號<br><img src="/images/20231129154530.png"><br>輸入要掛載的資料夾 和 掛載點 點擊確認<br><img src="/images/20231129154609.png"><br>成功會出現在掛載點</p>
-<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://www.jinnsblog.com/2021/05/virtualbox-shared-folder-permission-setting.html">[Linux &#x2F; Windows] VirtualBox 共用資料夾與雙向剪貼簿之權限設定</a></li>
-</ul>
-<h2 id="加入憑證"><a href="#加入憑證" class="headerlink" title="加入憑證"></a>加入憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> my-ca-certificate.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">cd</span> /usr/local/share/ca-certificates/</span><br><span class="line">sudo <span class="built_in">chmod</span> 644 my-ca-certificate.crt</span><br><span class="line">sudo  update-ca-certificates</span><br></pre></td></tr></table></figure>
-<h3 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://blog.kkbruce.net/2020/01/linux-windows-container-add-cert.html">如何為LINUX, WINDOWS容器加入憑證?</a></li>
-</ul>
-<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><img src="/images/20231129163310.png"><br>新增網路介面卡2 僅限主機 介面卡</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install samba -y</span><br><span class="line">smbpasswd -a root #設定root 密碼</span><br><span class="line">vim /etc/samba/smb.conf </span><br></pre></td></tr></table></figure>
-<p>smb.conf 加入底下的設定 使用root 登入 &#x2F;media&#x2F;new_drive 需要存在</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[brian]</span><br><span class="line">   comment = new_drive</span><br><span class="line">   public = yes</span><br><span class="line">   path = /media/new_drive</span><br><span class="line">   guest ok = yes</span><br><span class="line">   read only = no</span><br><span class="line">   browseable = yes</span><br><span class="line">   create mask = 777</span><br><span class="line">   directory mask = 777</span><br><span class="line">   writable = yes</span><br><span class="line">   valid users = root</span><br></pre></td></tr></table></figure>
-<p><img src="/images/20231129160349.png"><br><code>samba restart</code> or <code>/etc/init.d/smbd restart</code><br><img src="/images/20231129160659.png"><br>本機右鍵 連線網路磁碟機<br><img src="/images/20231129160740.png"><br>輸入上面資訊 <code>\\192.168.56.108\brian</code> brian 為設定檔<code>[brian]</code><br>之後 按完成 需要輸入密碼 </p>
-<h3 id="參考-3"><a href="#參考-3" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://hollyqood.wordpress.com/2016/12/08/virtualbox%e8%99%9b%e6%93%ac%e6%a9%9fubuntu%e4%bd%bf%e7%94%a8samba%e5%9c%96%e6%96%87%e6%95%99%e5%ad%b8/">virtualbox虛擬機ubuntu使用samba圖文教學</a></li>
-</ul>
-<h2 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install ssh -y</span><br><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
-<p>編輯這些參數</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-<p>(可選)如果用root登入需要設定root密碼<br><code>sudo passwd</code><br>重啟ssh<br><code>/etc/init.d/ssh restart</code></p>
-<h3 id="參考-4"><a href="#參考-4" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
-<li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
-</ul>
-<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-<h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
-<li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
-</ul>
-<p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>vm</tag>
-        <tag>VirtualBox</tag>
-        <tag>samba</tag>
-        <tag>ssh-server</tag>
       </tags>
   </entry>
   <entry>
@@ -695,5 +650,50 @@
 <li><a href="maxlist.xyz/2020/06/18/flask-nginx/">maxlist.xyz&#x2F;2020&#x2F;06&#x2F;18&#x2F;flask-nginx&#x2F;</a></li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>VM安裝</title>
+    <url>/2023/11/29/VM%E5%AE%89%E8%A3%9D/</url>
+    <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
+</ul>
+<h2 id="共用資料夾"><a href="#共用資料夾" class="headerlink" title="共用資料夾"></a>共用資料夾</h2><p><img src="/images/20231129154247.png"><br>點擊共用資料夾設定<br><img src="/images/20231129154432.png"><br>點擊加號<br><img src="/images/20231129154530.png"><br>輸入要掛載的資料夾 和 掛載點 點擊確認<br><img src="/images/20231129154609.png"><br>成功會出現在掛載點</p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.jinnsblog.com/2021/05/virtualbox-shared-folder-permission-setting.html">[Linux &#x2F; Windows] VirtualBox 共用資料夾與雙向剪貼簿之權限設定</a></li>
+</ul>
+<h2 id="加入憑證"><a href="#加入憑證" class="headerlink" title="加入憑證"></a>加入憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> my-ca-certificate.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">cd</span> /usr/local/share/ca-certificates/</span><br><span class="line">sudo <span class="built_in">chmod</span> 644 my-ca-certificate.crt</span><br><span class="line">sudo  update-ca-certificates</span><br></pre></td></tr></table></figure>
+<h3 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.kkbruce.net/2020/01/linux-windows-container-add-cert.html">如何為LINUX, WINDOWS容器加入憑證?</a></li>
+</ul>
+<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><img src="/images/20231129163310.png"><br>新增網路介面卡2 僅限主機 介面卡</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install samba -y</span><br><span class="line">smbpasswd -a root #設定root 密碼</span><br><span class="line">vim /etc/samba/smb.conf </span><br></pre></td></tr></table></figure>
+<p>smb.conf 加入底下的設定 使用root 登入 &#x2F;media&#x2F;new_drive 需要存在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[brian]</span><br><span class="line">   comment = new_drive</span><br><span class="line">   public = yes</span><br><span class="line">   path = /media/new_drive</span><br><span class="line">   guest ok = yes</span><br><span class="line">   read only = no</span><br><span class="line">   browseable = yes</span><br><span class="line">   create mask = 777</span><br><span class="line">   directory mask = 777</span><br><span class="line">   writable = yes</span><br><span class="line">   valid users = root</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20231129160349.png"><br><code>samba restart</code> or <code>/etc/init.d/smbd restart</code><br><img src="/images/20231129160659.png"><br>本機右鍵 連線網路磁碟機<br><img src="/images/20231129160740.png"><br>輸入上面資訊 <code>\\192.168.56.108\brian</code> brian 為設定檔<code>[brian]</code><br>之後 按完成 需要輸入密碼 </p>
+<h3 id="參考-3"><a href="#參考-3" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://hollyqood.wordpress.com/2016/12/08/virtualbox%e8%99%9b%e6%93%ac%e6%a9%9fubuntu%e4%bd%bf%e7%94%a8samba%e5%9c%96%e6%96%87%e6%95%99%e5%ad%b8/">virtualbox虛擬機ubuntu使用samba圖文教學</a></li>
+</ul>
+<h2 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install ssh -y</span><br><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>編輯這些參數</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>(可選)如果用root登入需要設定root密碼<br><code>sudo passwd</code><br>重啟ssh<br><code>/etc/init.d/ssh restart</code></p>
+<h3 id="參考-4"><a href="#參考-4" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
+<li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
+</ul>
+<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
+<li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
+</ul>
+<p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>vm</tag>
+        <tag>VirtualBox</tag>
+        <tag>samba</tag>
+        <tag>ssh-server</tag>
+      </tags>
   </entry>
 </search>

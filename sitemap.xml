@@ -38,6 +38,15 @@
   </url>
   
   <url>
+    <loc>http://eebrian123tw93.github.io/posts/20231118184600-2b622287.html</loc>
+    
+    <lastmod>2024-01-22</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://eebrian123tw93.github.io/posts/20240122061800-aae208a6.html</loc>
     
     <lastmod>2024-01-21</lastmod>
@@ -50,15 +59,6 @@
     <loc>http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html</loc>
     
     <lastmod>2024-01-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/posts/20231118184600-2b622287.html</loc>
-    
-    <lastmod>2024-01-20</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -404,5 +404,12 @@
   </url>
   
 
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/categories/zigbee/</loc>
+    <lastmod>2024-01-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
 </urlset>

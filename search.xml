@@ -276,6 +276,9 @@
 </li>
 </ul>
 ]]></content>
+      <categories>
+        <category>zigbee</category>
+      </categories>
       <tags>
         <tag>Zigbee</tag>
         <tag>MCU</tag>

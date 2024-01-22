@@ -15,6 +15,7 @@ http://eebrian123tw93.github.io/posts/20231129101600-661de22d.html
 http://eebrian123tw93.github.io/posts/20230505084825-9174ad3f.html
 http://eebrian123tw93.github.io/posts/20230505020300-526efc4a.html
 http://eebrian123tw93.github.io/posts/20230409051607-ab2a7258.html
+http://eebrian123tw93.github.io/404.html
 http://eebrian123tw93.github.io/
 http://eebrian123tw93.github.io/tags/DMA/
 http://eebrian123tw93.github.io/tags/H264/
@@ -29,6 +30,14 @@ http://eebrian123tw93.github.io/tags/IIC/
 http://eebrian123tw93.github.io/tags/I2C/
 http://eebrian123tw93.github.io/tags/PWM/
 http://eebrian123tw93.github.io/tags/WS2812B/
+http://eebrian123tw93.github.io/tags/Zigbee/
+http://eebrian123tw93.github.io/tags/MCU/
+http://eebrian123tw93.github.io/tags/SOC/
+http://eebrian123tw93.github.io/tags/SparkFun/
+http://eebrian123tw93.github.io/tags/MGM240P/
+http://eebrian123tw93.github.io/tags/simplicity-studio/
+http://eebrian123tw93.github.io/tags/mgm240pb32vna/
+http://eebrian123tw93.github.io/tags/silabs/
 http://eebrian123tw93.github.io/tags/UART/
 http://eebrian123tw93.github.io/tags/RS232/
 http://eebrian123tw93.github.io/tags/RS484/
@@ -38,14 +47,6 @@ http://eebrian123tw93.github.io/tags/vm/
 http://eebrian123tw93.github.io/tags/VirtualBox/
 http://eebrian123tw93.github.io/tags/samba/
 http://eebrian123tw93.github.io/tags/ssh-server/
-http://eebrian123tw93.github.io/tags/Zigbee/
-http://eebrian123tw93.github.io/tags/MCU/
-http://eebrian123tw93.github.io/tags/SOC/
-http://eebrian123tw93.github.io/tags/SparkFun/
-http://eebrian123tw93.github.io/tags/MGM240P/
-http://eebrian123tw93.github.io/tags/simplicity-studio/
-http://eebrian123tw93.github.io/tags/mgm240pb32vna/
-http://eebrian123tw93.github.io/tags/silabs/
 http://eebrian123tw93.github.io/tags/IEEE802154/
 http://eebrian123tw93.github.io/tags/hidden/
 http://eebrian123tw93.github.io/tags/WebCodecsAPI/

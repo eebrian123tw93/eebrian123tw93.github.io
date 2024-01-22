@@ -168,90 +168,6 @@
       </tags>
   </entry>
   <entry>
-    <title>UART RS232 RS484</title>
-    <url>/posts/20231118193100-f5da1a51.html</url>
-    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
-<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
-<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
-<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
-<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
-<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
-<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
-<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
-<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
-<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
-<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
-<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
-<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
-<li><a href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
-<li><a href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
-<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
-<li><a href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>UART</tag>
-        <tag>RS232</tag>
-        <tag>RS484</tag>
-        <tag>TXRX</tag>
-        <tag>TTL</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>VM安裝</title>
-    <url>/posts/20231129101600-661de22d.html</url>
-    <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
-<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
-</ul>
-<h2 id="共用資料夾"><a href="#共用資料夾" class="headerlink" title="共用資料夾"></a>共用資料夾</h2><p><img src="/images/20231129154247.png"><br>點擊共用資料夾設定<br><img src="/images/20231129154432.png"><br>點擊加號<br><img src="/images/20231129154530.png"><br>輸入要掛載的資料夾 和 掛載點 點擊確認<br><img src="/images/20231129154609.png"><br>成功會出現在掛載點</p>
-<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://www.jinnsblog.com/2021/05/virtualbox-shared-folder-permission-setting.html">[Linux &#x2F; Windows] VirtualBox 共用資料夾與雙向剪貼簿之權限設定</a></li>
-</ul>
-<h2 id="加入憑證"><a href="#加入憑證" class="headerlink" title="加入憑證"></a>加入憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> my-ca-certificate.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">cd</span> /usr/local/share/ca-certificates/</span><br><span class="line">sudo <span class="built_in">chmod</span> 644 my-ca-certificate.crt</span><br><span class="line">sudo  update-ca-certificates</span><br></pre></td></tr></table></figure>
-<h3 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://blog.kkbruce.net/2020/01/linux-windows-container-add-cert.html">如何為LINUX, WINDOWS容器加入憑證?</a></li>
-</ul>
-<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><img src="/images/20231129163310.png"><br>新增網路介面卡2 僅限主機 介面卡</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install samba -y</span><br><span class="line">smbpasswd -a root #設定root 密碼</span><br><span class="line">vim /etc/samba/smb.conf </span><br></pre></td></tr></table></figure>
-<p>smb.conf 加入底下的設定 使用root 登入 &#x2F;media&#x2F;new_drive 需要存在</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[brian]</span><br><span class="line">   comment = new_drive</span><br><span class="line">   public = yes</span><br><span class="line">   path = /media/new_drive</span><br><span class="line">   guest ok = yes</span><br><span class="line">   read only = no</span><br><span class="line">   browseable = yes</span><br><span class="line">   create mask = 777</span><br><span class="line">   directory mask = 777</span><br><span class="line">   writable = yes</span><br><span class="line">   valid users = root</span><br></pre></td></tr></table></figure>
-<p><img src="/images/20231129160349.png"><br><code>samba restart</code> or <code>/etc/init.d/smbd restart</code><br><img src="/images/20231129160659.png"><br>本機右鍵 連線網路磁碟機<br><img src="/images/20231129160740.png"><br>輸入上面資訊 <code>\\192.168.56.108\brian</code> brian 為設定檔<code>[brian]</code><br>之後 按完成 需要輸入密碼 </p>
-<h3 id="參考-3"><a href="#參考-3" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://hollyqood.wordpress.com/2016/12/08/virtualbox%e8%99%9b%e6%93%ac%e6%a9%9fubuntu%e4%bd%bf%e7%94%a8samba%e5%9c%96%e6%96%87%e6%95%99%e5%ad%b8/">virtualbox虛擬機ubuntu使用samba圖文教學</a></li>
-</ul>
-<h2 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install ssh -y</span><br><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
-<p>編輯這些參數</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
-<p>(可選)如果用root登入需要設定root密碼<br><code>sudo passwd</code><br>重啟ssh<br><code>/etc/init.d/ssh restart</code></p>
-<h3 id="參考-4"><a href="#參考-4" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
-<li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
-</ul>
-<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
-<h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
-<li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
-<li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
-</ul>
-<p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
-      <tags>
-        <tag>vm</tag>
-        <tag>VirtualBox</tag>
-        <tag>samba</tag>
-        <tag>ssh-server</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>SparkFun Thing Plus Matter - MGM240P</title>
     <url>/posts/20231118184600-2b622287.html</url>
     <content><![CDATA[<h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
@@ -369,6 +285,90 @@
         <tag>simplicity-studio</tag>
         <tag>mgm240pb32vna</tag>
         <tag>silabs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UART RS232 RS484</title>
+    <url>/posts/20231118193100-f5da1a51.html</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
+<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
+<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
+<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
+<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
+<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
+<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
+<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
+<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
+<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
+<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
+<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
+<li><a href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
+<li><a href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
+<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
+<li><a href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>UART</tag>
+        <tag>RS232</tag>
+        <tag>RS484</tag>
+        <tag>TXRX</tag>
+        <tag>TTL</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>VM安裝</title>
+    <url>/posts/20231129101600-661de22d.html</url>
+    <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br><img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.csdn.net/bell_love/article/details/105401852">简单解决Please install the gcc make perl packages from your distribution问题</a></li>
+</ul>
+<h2 id="共用資料夾"><a href="#共用資料夾" class="headerlink" title="共用資料夾"></a>共用資料夾</h2><p><img src="/images/20231129154247.png"><br>點擊共用資料夾設定<br><img src="/images/20231129154432.png"><br>點擊加號<br><img src="/images/20231129154530.png"><br>輸入要掛載的資料夾 和 掛載點 點擊確認<br><img src="/images/20231129154609.png"><br>成功會出現在掛載點</p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.jinnsblog.com/2021/05/virtualbox-shared-folder-permission-setting.html">[Linux &#x2F; Windows] VirtualBox 共用資料夾與雙向剪貼簿之權限設定</a></li>
+</ul>
+<h2 id="加入憑證"><a href="#加入憑證" class="headerlink" title="加入憑證"></a>加入憑證</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo <span class="built_in">cp</span> my-ca-certificate.crt /usr/local/share/ca-certificates/</span><br><span class="line"><span class="built_in">cd</span> /usr/local/share/ca-certificates/</span><br><span class="line">sudo <span class="built_in">chmod</span> 644 my-ca-certificate.crt</span><br><span class="line">sudo  update-ca-certificates</span><br></pre></td></tr></table></figure>
+<h3 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://blog.kkbruce.net/2020/01/linux-windows-container-add-cert.html">如何為LINUX, WINDOWS容器加入憑證?</a></li>
+</ul>
+<h2 id="Samba"><a href="#Samba" class="headerlink" title="Samba"></a>Samba</h2><p><img src="/images/20231129163310.png"><br>新增網路介面卡2 僅限主機 介面卡</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install samba -y</span><br><span class="line">smbpasswd -a root #設定root 密碼</span><br><span class="line">vim /etc/samba/smb.conf </span><br></pre></td></tr></table></figure>
+<p>smb.conf 加入底下的設定 使用root 登入 &#x2F;media&#x2F;new_drive 需要存在</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">[brian]</span><br><span class="line">   comment = new_drive</span><br><span class="line">   public = yes</span><br><span class="line">   path = /media/new_drive</span><br><span class="line">   guest ok = yes</span><br><span class="line">   read only = no</span><br><span class="line">   browseable = yes</span><br><span class="line">   create mask = 777</span><br><span class="line">   directory mask = 777</span><br><span class="line">   writable = yes</span><br><span class="line">   valid users = root</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20231129160349.png"><br><code>samba restart</code> or <code>/etc/init.d/smbd restart</code><br><img src="/images/20231129160659.png"><br>本機右鍵 連線網路磁碟機<br><img src="/images/20231129160740.png"><br>輸入上面資訊 <code>\\192.168.56.108\brian</code> brian 為設定檔<code>[brian]</code><br>之後 按完成 需要輸入密碼 </p>
+<h3 id="參考-3"><a href="#參考-3" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://hollyqood.wordpress.com/2016/12/08/virtualbox%e8%99%9b%e6%93%ac%e6%a9%9fubuntu%e4%bd%bf%e7%94%a8samba%e5%9c%96%e6%96%87%e6%95%99%e5%ad%b8/">virtualbox虛擬機ubuntu使用samba圖文教學</a></li>
+</ul>
+<h2 id="SSH-Server"><a href="#SSH-Server" class="headerlink" title="SSH Server"></a>SSH Server</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get install ssh -y</span><br><span class="line">vim /etc/ssh/sshd_config</span><br></pre></td></tr></table></figure>
+<p>編輯這些參數</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">Port 22</span><br><span class="line">PermitRootLogin yes</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">PubkeyAuthentication yes</span><br><span class="line">AuthorizedKeysFile	.ssh/authorized_keys</span><br></pre></td></tr></table></figure>
+<p>(可選)如果用root登入需要設定root密碼<br><code>sudo passwd</code><br>重啟ssh<br><code>/etc/init.d/ssh restart</code></p>
+<h3 id="參考-4"><a href="#參考-4" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
+<li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
+</ul>
+<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br></pre></td></tr></table></figure>
+<h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
+<li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
+</ul>
+<p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>vm</tag>
+        <tag>VirtualBox</tag>
+        <tag>samba</tag>
+        <tag>ssh-server</tag>
       </tags>
   </entry>
   <entry>

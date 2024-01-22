@@ -634,6 +634,38 @@
 ]]></content>
   </entry>
   <entry>
+    <title>使用WebCodecs API對H264解碼</title>
+    <url>/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><img src="/images/20240122092416.png"></p>
+<ol>
+<li><code>H264NALu</code> 轉成 <code>EncodedVideoChunk</code> 物件</li>
+<li>交給 <code>VideoDecoder</code> 做解碼 </li>
+<li>產物為 <code>VideoFrame</code> 會後交給 <code>Canvas</code> 渲染<br>其中 <code>EncodedVideoChunk</code> <code>VideoDecoder</code> <code>VideoFrame</code> 為  WebCodecs API 內物件</li>
+</ol>
+<h1 id="上程式"><a href="#上程式" class="headerlink" title="上程式"></a>上程式</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;avc1.4d401e&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
+<p><code>handleFrame</code>為decoder解碼完產生<code>VideoFrame</code>的callback方法，產出的每一幀都會調用這個方法，之後就是交給 <code>Canvas</code> 渲染<br><code>init</code>和<code>config</code>使用配置<code>VideoDecoder</code>的參數</p>
+<blockquote>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> 檢查<code>config</code> 是否支援</p>
+</blockquote>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
+<h2 id="將-H264NALU轉換成EncodedVideoChunk"><a href="#將-H264NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H264NALU轉換成EncodedVideoChunk"></a>將 H264NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> == <span class="number">5</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
+<p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code><br><code>key</code>:  IDR幀 關鍵幀<br><code>delta</code>: P幀 或 B幀<br>產生出來的 <code>chunk</code> 就可以餵到<code>decoder</code>去解碼了</p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
+<h2 id="將Video渲染到Canva上"><a href="#將Video渲染到Canva上" class="headerlink" title="將Video渲染到Canva上"></a>將<code>Video</code>渲染到<code>Canva</code>上</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleFrame(frame) &#123;</span><br><span class="line">	const bitmap = await createImageBitmap(frame);</span><br><span class="line">	ctx.drawImage(bitmap, 0, 0);</span><br><span class="line">	frame.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用</p>
+<h1 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://chenng.cn/posts/WebCodecs%E5%AF%B9%E9%9F%B3%E8%A7%86%E9%A2%91%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">WebCodecs对音视频进行编码解码</a></li>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API">WebCodecs API</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>H264</tag>
+        <tag>WebCodecsAPI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>實作 Nginx 負載平衡 load balance</title>
     <url>/2023/04/09/%E5%AF%A6%E4%BD%9C%20Nginx%20%E8%B2%A0%E8%BC%89%E5%B9%B3%E8%A1%A1%20load%20balance/</url>
     <content><![CDATA[<h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>

@@ -147,12 +147,12 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-count">12</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-count">32</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -169,6 +169,98 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 筆記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 筆記">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/" class="post-title-link" itemprop="url">使用WebCodecs API對H264解碼</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-22 10:16:00 / Modified: 02:33:57" itemprop="dateCreated datePublished" datetime="2024-01-22T10:16:00+08:00">2024-01-22</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><img src="/images/20240122092416.png"></p>
+<ol>
+<li><code>H264NALu</code> 轉成 <code>EncodedVideoChunk</code> 物件</li>
+<li>交給 <code>VideoDecoder</code> 做解碼 </li>
+<li>產物為 <code>VideoFrame</code> 會後交給 <code>Canvas</code> 渲染<br>其中 <code>EncodedVideoChunk</code> <code>VideoDecoder</code> <code>VideoFrame</code> 為  WebCodecs API 內物件</li>
+</ol>
+<h1 id="上程式"><a href="#上程式" class="headerlink" title="上程式"></a>上程式</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;avc1.4d401e&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
+<p><code>handleFrame</code>為decoder解碼完產生<code>VideoFrame</code>的callback方法，產出的每一幀都會調用這個方法，之後就是交給 <code>Canvas</code> 渲染<br><code>init</code>和<code>config</code>使用配置<code>VideoDecoder</code>的參數</p>
+<blockquote>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> 檢查<code>config</code> 是否支援</p>
+</blockquote>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
+<h2 id="將-H264NALU轉換成EncodedVideoChunk"><a href="#將-H264NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H264NALU轉換成EncodedVideoChunk"></a>將 H264NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> == <span class="number">5</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
+<p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code><br><code>key</code>:  IDR幀 關鍵幀<br><code>delta</code>: P幀 或 B幀<br>產生出來的 <code>chunk</code> 就可以餵到<code>decoder</code>去解碼了</p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
+<h2 id="將Video渲染到Canva上"><a href="#將Video渲染到Canva上" class="headerlink" title="將Video渲染到Canva上"></a>將<code>Video</code>渲染到<code>Canva</code>上</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function handleFrame(frame) &#123;</span><br><span class="line">	const bitmap = await createImageBitmap(frame);</span><br><span class="line">	ctx.drawImage(bitmap, 0, 0);</span><br><span class="line">	frame.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用</p>
+<h1 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://chenng.cn/posts/WebCodecs%E5%AF%B9%E9%9F%B3%E8%A7%86%E9%A2%91%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">WebCodecs对音视频进行编码解码</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API">WebCodecs API</a></li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1340,87 +1432,6 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
 
 <p>將印出來的公鑰設定去<a target="_blank" rel="noopener" href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2023/05/05/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 筆記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 筆記">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/05/05/Hello%20World%20%E4%BD%BF%E7%94%A8Github%20pages%20%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99/" class="post-title-link" itemprop="url">Hello World 使用Github pages 靜態網站</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-05-05 10:03:00" itemprop="dateCreated datePublished" datetime="2023-05-05T10:03:00+08:00">2023-05-05</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>建立一個新的倉庫 命名為 <strong>帳戶名稱.github.io</strong><br><img src="/images/image.png" alt="建立一個新的倉庫"></p>
-<p>好了之後在自己的電腦上clone專案下來</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone git@github.com:eebrian123tw60/eebrian123tw60.github.io.git</span><br></pre></td></tr></table></figure>
-<p>進入專案 新增一個index.html 內容是Hello World</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd eebrian123tw60.github.io</span><br><span class="line">echo &quot;Hello World&quot; &gt; index.html</span><br></pre></td></tr></table></figure>
-<p>推到遠端的倉庫</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add --all</span><br><span class="line">git commit -m &quot;Initial commit&quot;</span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
-<p>等待幾分鐘 訪問<a target="_blank" rel="noopener" href="https://eebrian123tw60.github.io/">https://eebrian123tw60.github.io/</a><br><img src="/images/image2.png"><br>結果就出來拉！！</p>
-<hr>
-<h2 id="參考連結"><a href="#參考連結" class="headerlink" title="參考連結"></a>參考連結</h2><ul>
-<li><a target="_blank" rel="noopener" href="https://pages.github.com/">https://pages.github.com/</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/%E9%80%B2%E6%93%8A%E7%9A%84-git-git-git/%E5%BE%9E%E9%9B%B6%E9%96%8B%E5%A7%8B-%E7%94%A8github-pages-%E4%B8%8A%E5%82%B3%E9%9D%9C%E6%85%8B%E7%B6%B2%E7%AB%99-fa2ae83e6276">從零開始: 用github pages 上傳靜態網站</a></li>
-</ul>
 
       
     </div>

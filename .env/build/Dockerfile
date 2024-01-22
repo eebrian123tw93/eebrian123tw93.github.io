@@ -1,6 +1,6 @@
 FROM --platform=linux/amd64 node 
 
-
+RUN apt-get update && apt-get install sudo
 RUN npm install hexo-cli -g
 
 
@@ -11,6 +11,5 @@ ARG TZ
 ENV TZ $TZ
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-RUN useradd -s /bin/bash -m brian && echo "brian:brian" | chpasswd && adduser brian sudo
-USER brian
+USER root
 WORKDIR /opt

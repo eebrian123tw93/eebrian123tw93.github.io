@@ -634,6 +634,19 @@
 ]]></content>
   </entry>
   <entry>
+    <title>html隱藏元素的方法</title>
+    <url>/2024/01/22/html%E9%9A%B1%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<ol>
+<li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
+<li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
+<li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>hidden</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>使用WebCodecs API對H264解碼</title>
     <url>/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>

@@ -24,7 +24,7 @@
     <meta name="description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UART RS232 RS484">
-<meta property="og:url" content="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/index.html">
+<meta property="og:url" content="http://eebrian123tw93.github.io/UART%20RS232%20RS484/index.html">
 <meta property="og:site_name" content="Brian&#39;s 筆記">
 <meta property="og:description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
 <meta property="og:locale">
@@ -55,11 +55,11 @@
 <meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20231119022253.png">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/">
+<link rel="canonical" href="http://eebrian123tw93.github.io/UART%20RS232%20RS484/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/","path":"2023/11/18/UART RS232 RS484/","title":"UART RS232 RS484"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/UART%20RS232%20RS484/","path":"UART RS232 RS484/","title":"UART RS232 RS484"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>UART RS232 RS484 | Brian's 筆記</title>
@@ -123,9 +123,7 @@
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
   </div>
   <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
@@ -203,7 +201,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2023/11/18/UART%20RS232%20RS484/">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/UART%20RS232%20RS484/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -217,7 +215,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="UART RS232 RS484 | Brian's 筆記">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -267,16 +265,16 @@
 <h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
 <h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
 <h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
-<li><a target="_blank" rel="noopener" href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
-<li><a target="_blank" rel="noopener" href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
 </ul>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a target="_blank" rel="noopener" href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
-<li><a target="_blank" rel="noopener" href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
 </ul>
 
     </div>
@@ -298,12 +296,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/11/18/SparkFun%20Thing%20Plus%20Matter%20-%20MGM240P/" rel="prev" title="SparkFun Thing Plus Matter - MGM240P">
+                <a href="/SparkFun%20Thing%20Plus%20Matter%20-%20MGM240P/" rel="prev" title="SparkFun Thing Plus Matter - MGM240P">
                   <i class="fa fa-chevron-left"></i> SparkFun Thing Plus Matter - MGM240P
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/11/18/PWM(Pulse-width%20modulation)/" rel="next" title="PWM(Pulse-width modulation)">
+                <a href="/PWM(Pulse-width%20modulation)/" rel="next" title="PWM(Pulse-width modulation)">
                   PWM(Pulse-width modulation) <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -332,7 +330,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">BrianLu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
   </div>
 
     </div>

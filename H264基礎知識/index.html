@@ -24,7 +24,7 @@
     <meta name="description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照 GOP 兩個I幀之間的間隔完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差">
 <meta property="og:type" content="article">
 <meta property="og:title" content="H264基礎知識">
-<meta property="og:url" content="http://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/index.html">
+<meta property="og:url" content="http://eebrian123tw93.github.io/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/index.html">
 <meta property="og:site_name" content="Brian&#39;s 筆記">
 <meta property="og:description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照 GOP 兩個I幀之間的間隔完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差">
 <meta property="og:locale">
@@ -45,11 +45,11 @@
 <meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20240116150548.png">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">
+<link rel="canonical" href="http://eebrian123tw93.github.io/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/","path":"2024/01/16/H264基礎知識/","title":"H264基礎知識"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/","path":"H264基礎知識/","title":"H264基礎知識"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>H264基礎知識 | Brian's 筆記</title>
@@ -113,9 +113,7 @@
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
   </div>
   <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
@@ -148,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#H264"><span class="nav-number">1.</span> <span class="nav-text">H264</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I%E5%B9%80-B%E5%B9%80-P%E5%B9%80-IDR%E5%B9%80"><span class="nav-number">2.</span> <span class="nav-text">I幀, B幀,P幀,IDR幀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I%E5%B9%80-%E9%97%9C%E9%8D%B5%E5%B9%80"><span class="nav-number">2.1.</span> <span class="nav-text">I幀 關鍵幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P%E5%B9%80-%E5%89%8D%E5%90%91%E9%A0%90%E6%B8%AC%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.2.</span> <span class="nav-text">P幀 前向預測編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%E5%B9%80-%E9%9B%99%E5%90%91%E9%A0%90%E6%B8%AC%E5%85%A7%E6%8F%92%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.3.</span> <span class="nav-text">B幀 雙向預測內插編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDR%E5%B9%80-I-%E5%B9%80%E7%9A%84%E4%B8%80%E7%A8%AE-%E7%AB%8B%E5%8D%B3%E5%88%B7%E6%96%B0"><span class="nav-number">2.4.</span> <span class="nav-text">IDR幀  I 幀的一種 立即刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOP-%E5%85%A9%E5%80%8BI%E5%B9%80%E4%B9%8B%E9%96%93%E7%9A%84%E9%96%93%E9%9A%94"><span class="nav-number">2.5.</span> <span class="nav-text">GOP 兩個I幀之間的間隔</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NALU-Network-Abstract-Layer-Unit"><span class="nav-number">3.</span> <span class="nav-text">NALU (Network Abstract Layer Unit)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H264%E6%9C%89%E5%85%A9%E7%A8%AE%E5%B0%81%E8%A3%9D"><span class="nav-number">4.</span> <span class="nav-text">H264有兩種封裝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnnexB%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">AnnexB格式</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H264-%E7%BC%96%E7%A0%81-%E2%80%94profile-%E5%92%8C-level"><span class="nav-number">5.</span> <span class="nav-text"># H264 编码 —profile 和 level</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#H264"><span class="nav-number">1.</span> <span class="nav-text">H264</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I%E5%B9%80-B%E5%B9%80-P%E5%B9%80-IDR%E5%B9%80"><span class="nav-number">2.</span> <span class="nav-text">I幀, B幀,P幀,IDR幀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I%E5%B9%80-%E9%97%9C%E9%8D%B5%E5%B9%80"><span class="nav-number">2.1.</span> <span class="nav-text">I幀 關鍵幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P%E5%B9%80-%E5%89%8D%E5%90%91%E9%A0%90%E6%B8%AC%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.2.</span> <span class="nav-text">P幀 前向預測編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%E5%B9%80-%E9%9B%99%E5%90%91%E9%A0%90%E6%B8%AC%E5%85%A7%E6%8F%92%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.3.</span> <span class="nav-text">B幀 雙向預測內插編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDR%E5%B9%80-I-%E5%B9%80%E7%9A%84%E4%B8%80%E7%A8%AE-%E7%AB%8B%E5%8D%B3%E5%88%B7%E6%96%B0"><span class="nav-number">2.4.</span> <span class="nav-text">IDR幀  I 幀的一種 立即刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOP-%E5%85%A9%E5%80%8BI%E5%B9%80%E4%B9%8B%E9%96%93%E7%9A%84%E9%96%93%E9%9A%94"><span class="nav-number">2.5.</span> <span class="nav-text">GOP 兩個I幀之間的間隔</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NALU-Network-Abstract-Layer-Unit"><span class="nav-number">3.</span> <span class="nav-text">NALU (Network Abstract Layer Unit)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H264%E6%9C%89%E5%85%A9%E7%A8%AE%E5%B0%81%E8%A3%9D"><span class="nav-number">4.</span> <span class="nav-text">H264有兩種封裝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnnexB%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">AnnexB格式</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#H264-%E7%BC%96%E7%A0%81-%E2%80%94profile-%E5%92%8C-level"><span class="nav-number">5.</span> <span class="nav-text"># H264 编码 —profile 和 level</span></a></li></div>
         </div>
         <!--/noindex-->
 
@@ -193,7 +191,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -207,7 +205,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="H264基礎知識 | Brian's 筆記">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -246,7 +244,7 @@
 <h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照</p>
 <h2 id="GOP-兩個I幀之間的間隔"><a href="#GOP-兩個I幀之間的間隔" class="headerlink" title="GOP 兩個I幀之間的間隔"></a>GOP 兩個I幀之間的間隔</h2><p>完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差異部分編碼的幀叫 P幀，還有一種參考前後的幀編碼的幀叫 B幀<br>H264採用的核心演算法是幀內壓縮和幀間壓縮，幀內壓縮是產生 I 幀的演算法，幀間壓縮是產生 B 幀和 P 幀的演算法</p>
 <p>壓縮率 B幀 &gt; P幀 &gt; I幀<br>訊息量 I幀 &gt; P幀 &gt; B幀</p>
-<p>幀特性看底下連結<br><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>
+<p>幀特性看底下連結<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>
 <h1 id="NALU-Network-Abstract-Layer-Unit"><a href="#NALU-Network-Abstract-Layer-Unit" class="headerlink" title="NALU (Network Abstract Layer Unit)"></a>NALU (Network Abstract Layer Unit)</h1><p><u><strong>H264編碼資料儲存或傳輸的基本單元</strong></u><br> 一般來說 前兩個是 SPS PPS 再來是IDR幀 再來是 P幀或B幀</p>
 <ul>
 <li>SPS(Sequence Parameter Sets)：序列參數集，保存了一組編碼視訊序列(Coded video sequence)的全域參數。 </li>
@@ -258,8 +256,8 @@
 <li>0x67 &amp; 0x1f &#x3D; 7 (SPS)</li>
 <li>0x68 &amp; 0x1f &#x3D; 8 (PPS)</li>
 <li>0x65 &amp; 0x1f &#x3D; 5 (IDR)<br><img src="/images/20240116154827.png"></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/409527359">H264之NALU解析</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/71928833">视频和视频帧：H264编码格式整理</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/409527359">H264之NALU解析</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/71928833">视频和视频帧：H264编码格式整理</a></li>
 </ul>
 <h1 id="H264有兩種封裝"><a href="#H264有兩種封裝" class="headerlink" title="H264有兩種封裝"></a>H264有兩種封裝</h1><ul>
 <li><h4 id="AnnexB格式"><a href="#AnnexB格式" class="headerlink" title="AnnexB格式"></a>AnnexB格式</h4>  这种格式比较常见，也就是我们熟悉的每个帧前面都有<code>0x00 00 00 01</code>或者<code>0x00 00 01</code>作为起始码。<br>  h264文件就是采用的这种格式，每个帧前面都要有个起始码。<br>  SPS PPS等也作为一类NALU存储在这个码流中，一般在码流最前面。也就是说这种格式包含VCL 和 非VCL 类型的NALU。 </li>
@@ -269,7 +267,7 @@
 <li>baseline profile：基本画质。支持 I&#x2F;P 帧，只支持无交错（Progressive）和 CAVLC</li>
 <li>extended profile：进阶画质。支持 I&#x2F;P&#x2F;B&#x2F;SP&#x2F;SI 帧，只支持无交错（Progressive）和 CAVLC；(用的少)</li>
 <li>main profile：主流画质。提供 I&#x2F;P&#x2F;B 帧，支持无交错（Progressive）和交错（Interlaced），也支持 CAVLC 和 CABAC 的支持</li>
-<li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a target="_blank" rel="noopener" href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
+<li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
 </ul>
 
     </div>
@@ -293,12 +291,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/11/29/VM%E5%AE%89%E8%A3%9D/" rel="prev" title="VM安裝">
+                <a href="/VM%E5%AE%89%E8%A3%9D/" rel="prev" title="VM安裝">
                   <i class="fa fa-chevron-left"></i> VM安裝
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/" rel="next" title="使用WebCodecs API對H264解碼">
+                <a href="/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/" rel="next" title="使用WebCodecs API對H264解碼">
                   使用WebCodecs API對H264解碼 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -327,7 +325,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">BrianLu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
   </div>
 
     </div>

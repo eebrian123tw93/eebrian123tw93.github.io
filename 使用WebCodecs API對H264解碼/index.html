@@ -24,7 +24,7 @@
     <meta name="description" content="介紹WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。 流程  H264NALu 轉成 EncodedVideoChunk 物件 交給 VideoDecoder 做解碼  產物為 VideoFr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用WebCodecs API對H264解碼">
-<meta property="og:url" content="http://eebrian123tw93.github.io/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/index.html">
+<meta property="og:url" content="http://eebrian123tw93.github.io/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/index.html">
 <meta property="og:site_name" content="Brian&#39;s 筆記">
 <meta property="og:description" content="介紹WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。 流程  H264NALu 轉成 EncodedVideoChunk 物件 交給 VideoDecoder 做解碼  產物為 VideoFr">
 <meta property="og:locale">
@@ -38,11 +38,11 @@
 <meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20240122092416.png">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/">
+<link rel="canonical" href="http://eebrian123tw93.github.io/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/","path":"2024/01/22/使用WebCodecs API對H264解碼/","title":"使用WebCodecs API對H264解碼"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/","path":"使用WebCodecs API對H264解碼/","title":"使用WebCodecs API對H264解碼"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
 <title>使用WebCodecs API對H264解碼 | Brian's 筆記</title>
@@ -106,9 +106,7 @@
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
   </div>
   <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
@@ -186,7 +184,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/2024/01/22/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/%E4%BD%BF%E7%94%A8WebCodecs%20API%E5%B0%8DH264%E8%A7%A3%E7%A2%BC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -200,7 +198,7 @@
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
       <meta itemprop="name" content="使用WebCodecs API對H264解碼 | Brian's 筆記">
-      <meta itemprop="description" content="">
+      <meta itemprop="description" content>
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -240,16 +238,16 @@
 <blockquote>
 <p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> 檢查<code>config</code> 是否支援</p>
 </blockquote>
-<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
+<h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
 <h2 id="將-H264NALU轉換成EncodedVideoChunk"><a href="#將-H264NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H264NALU轉換成EncodedVideoChunk"></a>將 H264NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> == <span class="number">5</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
 <p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code><br><code>key</code>:  IDR幀 關鍵幀<br><code>delta</code>: P幀 或 B幀<br>產生出來的 <code>chunk</code> 就可以餵到<code>decoder</code>去解碼了</p>
-<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
 <h2 id="將Video渲染到Canva上"><a href="#將Video渲染到Canva上" class="headerlink" title="將Video渲染到Canva上"></a>將<code>Video</code>渲染到<code>Canva</code>上</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function handleFrame(frame) &#123;</span><br><span class="line">	const bitmap = await createImageBitmap(frame);</span><br><span class="line">	ctx.drawImage(bitmap, 0, 0);</span><br><span class="line">	frame.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用</p>
 <h1 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://chenng.cn/posts/WebCodecs%E5%AF%B9%E9%9F%B3%E8%A7%86%E9%A2%91%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">WebCodecs对音视频进行编码解码</a></li>
-<li><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API">WebCodecs API</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://chenng.cn/posts/WebCodecs%E5%AF%B9%E9%9F%B3%E8%A7%86%E9%A2%91%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/">WebCodecs对音视频进行编码解码</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API">WebCodecs API</a></li>
 </ul>
 
     </div>
@@ -268,12 +266,12 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/" rel="prev" title="H264基礎知識">
+                <a href="/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/" rel="prev" title="H264基礎知識">
                   <i class="fa fa-chevron-left"></i> H264基礎知識
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2024/01/22/html%E9%9A%B1%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/" rel="next" title="html隱藏元素的方法">
+                <a href="/html%E9%9A%B1%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E6%96%B9%E6%B3%95/" rel="next" title="html隱藏元素的方法">
                   html隱藏元素的方法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
@@ -302,7 +300,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">BrianLu</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
   </div>
 
     </div>

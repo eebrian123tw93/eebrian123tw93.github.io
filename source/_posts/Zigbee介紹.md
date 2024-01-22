@@ -7,6 +7,7 @@ date: '2023-11-19 03:50:00'
 updated: '2024-01-20 18:25:20'
 categories: ''
 description: ''
+abbrlink: c8085013
 ---
 * [1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法](https://blog.csdn.net/u011350258/article/details/113062464)
 * [手把手指南—— 开启你的 Zigbee 之旅](https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf)

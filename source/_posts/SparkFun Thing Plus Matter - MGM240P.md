@@ -13,6 +13,7 @@ date: '2023-11-19 02:46:00'
 updated: '2024-01-21 05:06:04'
 categories: ''
 description: ''
+abbrlink: 2b622287
 ---
 # [SparkFun Thing Plus Matter - MGM240P](https://www.sparkfun.com/products/20270)
 # 安裝 Simplicity Studio 5

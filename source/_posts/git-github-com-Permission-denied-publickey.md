@@ -1,6 +1,8 @@
+---
 title: git@github.com Permission denied (publickey)
 created: '星期五 5日 五月 2023 12:17'
 Last modified: NaN
+abbrlink: 9174ad3f
 date: 2023-05-05 16:48:25
 Aliases:
 Tags:

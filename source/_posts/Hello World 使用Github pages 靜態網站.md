@@ -1,8 +1,10 @@
+---
 title: Hello World 使用Github pages 靜態網站
 tags:
   - github
   - ''
 categories: []
+abbrlink: 526efc4a
 date: 2023-05-05 10:03:00
 ---
 

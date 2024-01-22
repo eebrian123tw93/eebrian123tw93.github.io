@@ -7,6 +7,7 @@ date: '2024-01-22 10:16:00'
 updated: '2024-01-22 02:33:57'
 categories: ''
 description: ''
+abbrlink: ef8abaf3
 ---
 # 介紹
 WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。

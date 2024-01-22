@@ -1,8 +1,10 @@
 ---
 title: 實作 Nginx 負載平衡 load balance
+updated:
+  '[object Object]': null
+abbrlink: ab2a7258
 date: 2023-04-09 13:16:07
-updated: {{ date }}
-tags: #DevOps
+tags:
 categories:
 description:
 ---

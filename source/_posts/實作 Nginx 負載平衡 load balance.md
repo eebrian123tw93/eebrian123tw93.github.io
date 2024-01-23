@@ -1,13 +1,13 @@
 ---
 title: 實作 Nginx 負載平衡 load balance
-updated:
-  '[object Object]': null
+tags: null
+updated: '2024-01-23 14:04:13'
 abbrlink: ab2a7258
-date: 2023-04-09 13:16:07
-tags:
-categories:
-description:
+date: '2023-04-17 23:43:00'
+categories: null
+description: ''
 ---
+
 ## 三種 load balancing 方法
 1. round-robin：預設值，會將請留輪流平均分配到每台伺服器上
 2. lest-connected：會將請求分配到目前連接數最少的伺服器上

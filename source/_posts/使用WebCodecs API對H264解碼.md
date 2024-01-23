@@ -4,7 +4,7 @@ tags:
   - WebCodecsAPI
   - H264
 date: '2024-01-22 10:16:00'
-updated: '2024-01-23 02:31:50'
+updated: '2024-01-23 16:29:38'
 categories: ''
 description: ''
 abbrlink: ef8abaf3
@@ -65,7 +65,7 @@ decoder.decode(chunk);
 產生出來的 `chunk` 就可以餵到`decoder`去解碼了
 ### 參考
 - [EncodedVideoChunk](https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk)
-- {% post_link  H264基礎知識 %}
+- {% post_link  "H264基礎知識" %}
 
 ## 將`Video`渲染到`Canva`上
 ``` javasctipt

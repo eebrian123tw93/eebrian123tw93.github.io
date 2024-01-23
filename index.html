@@ -299,9 +299,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-01-22 10:16:00 / Modified: 02:33:57" itemprop="dateCreated datePublished" datetime="2024-01-22T10:16:00+08:00">2024-01-22</time>
+      <time title="Created: 2024-01-22 10:16:00" itemprop="dateCreated datePublished" datetime="2024-01-22T10:16:00+08:00">2024-01-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-23 02:31:50" itemprop="dateModified" datetime="2024-01-23T02:31:50+08:00">2024-01-23</time>
     </span>
 
   
@@ -329,7 +335,10 @@
 <h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
 <h2 id="將-H264NALU轉換成EncodedVideoChunk"><a href="#將-H264NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H264NALU轉換成EncodedVideoChunk"></a>將 H264NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> == <span class="number">5</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
 <p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code><br><code>key</code>:  IDR幀 關鍵幀<br><code>delta</code>: P幀 或 B幀<br>產生出來的 <code>chunk</code> 就可以餵到<code>decoder</code>去解碼了</p>
-<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a></li>
+<li><a href="/posts/20240116080900-8a796e7c.html" title="H264基礎知識">H264基礎知識</a></li>
+</ul>
 <h2 id="將Video渲染到Canva上"><a href="#將Video渲染到Canva上" class="headerlink" title="將Video渲染到Canva上"></a>將<code>Video</code>渲染到<code>Canva</code>上</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">function handleFrame(frame) &#123;</span><br><span class="line">	const bitmap = await createImageBitmap(frame);</span><br><span class="line">	ctx.drawImage(bitmap, 0, 0);</span><br><span class="line">	frame.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用</p>

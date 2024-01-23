@@ -4,6 +4,15 @@
   <url>
     <loc>http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html</loc>
     
+    <lastmod>2024-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html</loc>
+    
     <lastmod>2024-01-22</lastmod>
     
     <changefreq>monthly</changefreq>
@@ -48,15 +57,6 @@
   
   <url>
     <loc>http://eebrian123tw93.github.io/posts/20240122061800-aae208a6.html</loc>
-    
-    <lastmod>2024-01-21</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html</loc>
     
     <lastmod>2024-01-21</lastmod>
     
@@ -166,7 +166,7 @@
 
   <url>
     <loc>http://eebrian123tw93.github.io/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -174,231 +174,231 @@
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/DMA/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/H264/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/I%E5%B9%80/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/GOP/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/P%E5%B9%80/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/IDR%E5%B9%80/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/B%E5%B9%80/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/NALU/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/github/</loc>
-    <lastmod>2024-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/tags/IIC/</loc>
-    <lastmod>2024-01-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/tags/I2C/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/PWM/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/WS2812B/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/IIC/</loc>
+    <lastmod>2024-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/I2C/</loc>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/Zigbee/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/MCU/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/SOC/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/SparkFun/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/MGM240P/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/simplicity-studio/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/mgm240pb32vna/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/silabs/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/UART/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/RS232/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/RS484/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/TXRX/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/TTL/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/vm/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/VirtualBox/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/samba/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/ssh-server/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/IEEE802154/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/hidden/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/WebCodecsAPI/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -407,7 +407,7 @@
   
   <url>
     <loc>http://eebrian123tw93.github.io/categories/zigbee/</loc>
-    <lastmod>2024-01-22</lastmod>
+    <lastmod>2024-01-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>

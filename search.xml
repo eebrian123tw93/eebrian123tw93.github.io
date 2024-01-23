@@ -96,6 +96,32 @@
       </tags>
   </entry>
   <entry>
+    <title>PWM(Pulse-width modulation)</title>
+    <url>/posts/20231118194600-68d2e719.html</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
+<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
+<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
+<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
+<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
+<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
+<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
+
+<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
+<li><a href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>PWM</tag>
+        <tag>WS2812B</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>IIC I2C （Inter-Integrated Circuit）</title>
     <url>/posts/20231118183800-d71a458d.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
@@ -139,32 +165,6 @@
       <tags>
         <tag>IIC</tag>
         <tag>I2C</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>PWM(Pulse-width modulation)</title>
-    <url>/posts/20231118194600-68d2e719.html</url>
-    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
-<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
-<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
-<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
-<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
-<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
-<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
-
-<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
-<li><a href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>PWM</tag>
-        <tag>WS2812B</tag>
       </tags>
   </entry>
   <entry>
@@ -667,7 +667,10 @@
 <h3 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/VideoDecoder">VideoDecoder</a></p>
 <h2 id="將-H264NALU轉換成EncodedVideoChunk"><a href="#將-H264NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H264NALU轉換成EncodedVideoChunk"></a>將 H264NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> == <span class="number">5</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
 <p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code><br><code>key</code>:  IDR幀 關鍵幀<br><code>delta</code>: P幀 或 B幀<br>產生出來的 <code>chunk</code> 就可以餵到<code>decoder</code>去解碼了</p>
-<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><p><a href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a><br><a href="https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/">H264基礎知識</a></p>
+<h3 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h3><ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk">EncodedVideoChunk</a></li>
+<li><a href="/posts/20240116080900-8a796e7c.html" title="H264基礎知識">H264基礎知識</a></li>
+</ul>
 <h2 id="將Video渲染到Canva上"><a href="#將Video渲染到Canva上" class="headerlink" title="將Video渲染到Canva上"></a>將<code>Video</code>渲染到<code>Canva</code>上</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function handleFrame(frame) &#123;</span><br><span class="line">	const bitmap = await createImageBitmap(frame);</span><br><span class="line">	ctx.drawImage(bitmap, 0, 0);</span><br><span class="line">	frame.close();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用</p>

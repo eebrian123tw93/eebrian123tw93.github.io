@@ -11,6 +11,15 @@
   </url>
   
   <url>
+    <loc>http://eebrian123tw93.github.io/posts/20240123163300-3f5d67a6.html</loc>
+    
+    <lastmod>2024-01-23</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>http://eebrian123tw93.github.io/posts/20230417154300-ab2a7258.html</loc>
     
     <lastmod>2024-01-23</lastmod>
@@ -171,6 +180,13 @@
     <priority>1.0</priority>
   </url>
 
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/H265/</loc>
+    <lastmod>2024-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/DMA/</loc>
@@ -404,6 +420,13 @@
   </url>
   
 
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/</loc>
+    <lastmod>2024-01-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
   
   <url>
     <loc>http://eebrian123tw93.github.io/categories/zigbee/</loc>

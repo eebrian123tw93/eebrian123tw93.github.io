@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>20240123小日常</title>
+    <url>/posts/20240123163300-3f5d67a6.html</url>
+    <content><![CDATA[<p>今天真是個又累又氣的一天。花了4小時找一個差異。事情是這樣子的：這陣子在做<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，接下來換H265。經過了幾次測試都發現我的瀏覽器無法支援H265的解碼。於是我跑去問主管該如何處理，他給我了他的經驗，他的電腦竟然可以用Chrome播放H265&#x2F;MP4的格式。我請他將檔案給我，讓我跑跑看，結果我的也不行。我以為主管的電腦有比較好，結果問之下也沒有。</p>
+<p>就這樣我有來來回回在網路找資源，還下載了其他瀏覽器測試，還另外下載解碼包，結論都是無法。這樣搞了大概3個小時，結果最後我發現，在一個網站上竟然說在Intel 6代以後的CPU都支援H265解碼。我想我的是Intel® Core™ i7-10700處理器應該早就支援了。於是我就去安裝我內顯的驅動，猜怎麼著，還是不行。原來我電腦上有一張獨顯，那張獨顯完全不支援H265。用測試軟體跑獨顯和內顯的解碼能力，我真的要罵出髒話，獨顯的解碼能力竟然低於內顯，而且是低很多的檔次。想說這顆爛獨顯到底有何用，只是單純讓我外接的嗎？還是來考驗我的除錯能力？</p>
+<p>就這樣我用內顯重開電腦之後，H265&#x2F;MP4的影片就可以播放了。真的是讓我浪費了好多時間和精力啊啊啊啊！</p>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>H265</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DMA (Direct Memory Access)</title>
     <url>/posts/20231118194800-e891e3a3.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
@@ -621,6 +635,19 @@
       </tags>
   </entry>
   <entry>
+    <title>html隱藏元素的方法</title>
+    <url>/posts/20240122061800-aae208a6.html</url>
+    <content><![CDATA[<ol>
+<li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
+<li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
+<li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>hidden</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git@github.com Permission denied (publickey)</title>
     <url>/posts/20230505084825-9174ad3f.html</url>
     <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
@@ -635,19 +662,6 @@
 
 <p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
 ]]></content>
-  </entry>
-  <entry>
-    <title>html隱藏元素的方法</title>
-    <url>/posts/20240122061800-aae208a6.html</url>
-    <content><![CDATA[<ol>
-<li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
-<li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
-<li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>hidden</tag>
-      </tags>
   </entry>
   <entry>
     <title>使用WebCodecs API對H264解碼</title>

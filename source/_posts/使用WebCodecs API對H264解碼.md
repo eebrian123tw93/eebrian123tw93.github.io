@@ -4,7 +4,7 @@ tags:
   - WebCodecsAPI
   - H264
 date: '2024-01-22 10:16:00'
-updated: '2024-01-22 02:33:57'
+updated: '2024-01-23 02:31:50'
 categories: ''
 description: ''
 abbrlink: ef8abaf3
@@ -64,8 +64,8 @@ decoder.decode(chunk);
 `delta`: P幀 或 B幀
 產生出來的 `chunk` 就可以餵到`decoder`去解碼了
 ### 參考
-[EncodedVideoChunk](https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk)
-[H264基礎知識](https://eebrian123tw93.github.io/2024/01/16/H264%E5%9F%BA%E7%A4%8E%E7%9F%A5%E8%AD%98/)
+- [EncodedVideoChunk](https://developer.mozilla.org/en-US/docs/Web/API/EncodedVideoChunk/EncodedVideoChunk)
+- {% post_link  H264基礎知識 %}
 
 ## 將`Video`渲染到`Canva`上
 ``` javasctipt

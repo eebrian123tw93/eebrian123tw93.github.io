@@ -635,19 +635,6 @@
       </tags>
   </entry>
   <entry>
-    <title>html隱藏元素的方法</title>
-    <url>/posts/20240122061800-aae208a6.html</url>
-    <content><![CDATA[<ol>
-<li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
-<li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
-<li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
-</ol>
-]]></content>
-      <tags>
-        <tag>hidden</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>git@github.com Permission denied (publickey)</title>
     <url>/posts/20230505084825-9174ad3f.html</url>
     <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
@@ -662,6 +649,19 @@
 
 <p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
 ]]></content>
+  </entry>
+  <entry>
+    <title>html隱藏元素的方法</title>
+    <url>/posts/20240122061800-aae208a6.html</url>
+    <content><![CDATA[<ol>
+<li><a href="https://api.jquery.com/hide/">用jquery hide()的方式控制style</a><br> <code>$(&quot;.target&quot;).hide();</code></li>
+<li><strong>用Html的方式直接更改hidden屬性</strong><br> <code>hidden=&quot;true&quot;</code></li>
+<li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
+</ol>
+]]></content>
+      <tags>
+        <tag>hidden</tag>
+      </tags>
   </entry>
   <entry>
     <title>使用WebCodecs API對H264解碼</title>

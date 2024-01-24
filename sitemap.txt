@@ -1,7 +1,8 @@
 http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html
+http://eebrian123tw93.github.io/posts/20240124061700-2ff23ae2.html
+http://eebrian123tw93.github.io/posts/20230417154300-ab2a7258.html
 http://eebrian123tw93.github.io/posts/20240123163300-3f5d67a6.html
 http://eebrian123tw93.github.io/posts/20231118183800-d71a458d.html
-http://eebrian123tw93.github.io/posts/20230417154300-ab2a7258.html
 http://eebrian123tw93.github.io/posts/20231118184600-2b622287.html
 http://eebrian123tw93.github.io/posts/20231118193100-f5da1a51.html
 http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html
@@ -51,6 +52,12 @@ http://eebrian123tw93.github.io/tags/samba/
 http://eebrian123tw93.github.io/tags/ssh-server/
 http://eebrian123tw93.github.io/tags/IEEE802154/
 http://eebrian123tw93.github.io/tags/hidden/
+http://eebrian123tw93.github.io/tags/python/
+http://eebrian123tw93.github.io/tags/%E8%A3%9DB/
+http://eebrian123tw93.github.io/tags/%E9%85%B7%E7%82%AB/
 http://eebrian123tw93.github.io/tags/WebCodecsAPI/
+http://eebrian123tw93.github.io/tags/load-balance/
+http://eebrian123tw93.github.io/tags/nginx/
 http://eebrian123tw93.github.io/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/
 http://eebrian123tw93.github.io/categories/zigbee/
+http://eebrian123tw93.github.io/categories/python/

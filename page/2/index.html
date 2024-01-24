@@ -233,7 +233,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:25:20" itemprop="dateModified" datetime="2024-01-20T18:25:20+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:04" itemprop="dateModified" datetime="2024-01-24T02:17:04+08:00">2024-01-24</time>
     </span>
 
   
@@ -248,244 +248,17 @@
     <div class="post-body" itemprop="articleBody">
           <ul>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u011350258/article/details/113062464">1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf">手把手指南—— 开启你的 Zigbee 之旅</a></li>
-<li>Youtube <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/playlist?list=PLkc2nflOpCG1jYSnd6gOWpV8XhrlEF-2J">Zigbee</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=iuhY4f_DvfI&ab_channel=TorchIoTBootCamp">Day 1-1 ZigBee基础知识</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lexiyao/article/details/120969009">Zigbee快速入门第二节 – Zigbee基础介绍</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://csa-iot.org/wp-content/uploads/2023/04/05-3474-23-csg-zigbee-specification-compressed.pdf">zigbee-specification</a></li>
-</ul>
-<h1 id="ZigBee基础知识"><a href="#ZigBee基础知识" class="headerlink" title="ZigBee基础知识"></a>ZigBee基础知识</h1><h2 id="What-is-ZigBee"><a href="#What-is-ZigBee" class="headerlink" title="What is ZigBee"></a>What is ZigBee</h2><h3 id="Zigbee"><a href="#Zigbee" class="headerlink" title="Zigbee"></a>Zigbee</h3><p><img src="/images/20231119024254.png"><br>右邊是覆蓋範圍大(10KM) 大多需要被管制的 由運營商主導 城市範圍的覆蓋<br>左邊是覆蓋範圍小(100m) 家庭 樓道用<br>Zigbee 短距離通訊技術 低速通訊技術 最大速度是250Kpbs<br>傳輸控制命令 和 數據採集<br>低功耗的技術 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://support.tuya.com/zh/help/_detail/K9skz5907xerr">休眠电流在uA級別</a><br>Mesh網路拓譜結構 網路輕鬆擴展 最大節點數 65535(wifi 50 BT 8)<br>2bytes&#x3D;16bits&#x3D;2^16&#x3D;65535<br>zigbee：10-100m，蓝牙：2-10m，Wi-Fi：30-100m</p>
-<h3 id="Zigbee網路拓譜"><a href="#Zigbee網路拓譜" class="headerlink" title="Zigbee網路拓譜"></a>Zigbee網路拓譜</h3><p>Star(WiFi) vs Mesh(Zigbee) 主要差別在有無中心節點，中心節點壞了就不能正常工作</p>
-<p>Zigbee(star mesh tree)<br><img src="/images/20231119024320.png"></p>
-<h3 id="Zigbee-歷史"><a href="#Zigbee-歷史" class="headerlink" title="Zigbee 歷史"></a>Zigbee 歷史</h3><p><img src="/images/20231119024339.png"><br>2003年 Zigbee誕生<br>2016年 發布Zigbee3.0(整合統一之前的標準)</p>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.51cto.com/article/496376.html">ZigBee 3.0版标准，强化低延迟与低功耗优势，并加入网际网路通讯协定(IP)支援能力</a></p>
-<p>ZigBee完全相容Wi-Fi&#x2F;IP</p>
-<p>ZigBee 3.0完全相容IP。ZigBee设备与Wi-Fi设备类似，通常透过路由器、闸道或机上盒连接到互联网，让人可在世界其他地方利用连接互联网的个人电脑、平板或智慧手机应用程式等任何其他设备实现即时控制(图3)。由于ZigBee完全相容Wi-Fi和IP，因此没必要在手机本身插入ZigBee晶片，从而发现和控制ZigBee连接的智慧家居和物联网设备。只要通过任何联网中心均可让这一切实现，这意味着，透过Wi-Fi或蜂窝网进行联网的个人电脑和智慧手机可以作为指示板，并可毫不费力发现并与其他ZigBee设备进行通讯。</p>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/mengqidluffy/article/details/116061885">小白也能读懂的 ZigBee 3.0 简介</a></p>
-<h3 id="Zigbee-聯盟"><a href="#Zigbee-聯盟" class="headerlink" title="Zigbee 聯盟"></a>Zigbee 聯盟</h3><p><img src="/images/20231119024356.png"><br>推广Zigbee技术的主要力量。这是一个开放的组织。任何公司都可以加入Zigbee联盟作为成员。Silicon Labs是Zigbee联盟的董事会成员。</p>
-<ul>
-<li>为IoT（物联网）的无线设备端到设备端的通信制定开放的全球标准</li>
-<li>通过我们的认证计划对产品进行认证，以帮助确保互操作性(產品和平台的認證)</li>
-<li>在全球范围内推广我们的标准</li>
-</ul>
-<p><img src="/images/20231119024412.png"><br>Zigbee聯盟更名，同步推出與亞馬遜、蘋果及Google共同制定連接標準Matter</p>
-<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><h3 id="Zigbee協議"><a href="#Zigbee協議" class="headerlink" title="Zigbee協議"></a>Zigbee協議</h3><p><img src="/images/20231119024438.png"><br>基於<a target="_blank" rel="external nofollow noopener noreferrer" href="https://baike.baidu.hk/item/IEEE%20802.15.4/6657379">IEEE802.15.4</a>標準基礎上定義<br>MAC層和物理層沿用IEEE802.15.4標準<br>網路層 APS層(Application Support Sub Layer) 應用層 是Zigbee定義的標準</p>
-<p>網路層和APS層有加密的特性:加密 驗證 重傳保護</p>
-<ul>
-<li>物理層 由晶片實現 無線電的收發管理 調製解調</li>
-<li>MAC層 一半硬體 一辦軟體實現 數據收發 確認 重傳 掃描</li>
-<li>網路層 路由 設備狀狀態維護 子節點管理</li>
-<li>APS層 端到端重傳和確認 </li>
-<li>應用層 ZDO(ZigBee Device Object 特殊的設備管理功能) User應用</li>
-</ul>
-<p>灰色部分是晶片處理<br>綠色是平台供應商實現<br>橘色是應用層開發</p>
-<blockquote>
-<p>IEEE 802.15.4是一種技術標準，它定義了低速率無線個域網 （LR-WPAN）的協議。 它規定了LR-WPAN的物理層和媒體訪問控制 ，並由IEEE 802.15工作組維護，該工作組在2003年定義了該標準。它是Zigbee的基礎，諸如 ISA100.11a ， WirelessHART ， MiWi ， 6LoWPAN ，<br>PAN 個人區域網路</p>
-</blockquote>
-<h3 id="Zigbee物理層"><a href="#Zigbee物理層" class="headerlink" title="Zigbee物理層"></a>Zigbee物理層</h3><p><img src="/images/20231119024455.png"></p>
-<h4 id="工作範圍在-2-4GHz-868MHz-915MHz"><a href="#工作範圍在-2-4GHz-868MHz-915MHz" class="headerlink" title="工作範圍在 2.4GHz 868MHz 915MHz"></a>工作範圍在 2.4GHz 868MHz 915MHz</h4><ul>
-<li>2.4GHz  全球通用 250kpbs 11-26通道 2400MHz~2600MHz 每5MHz一個通道</li>
-<li>868MHz 英國電表 水表(Smart Engery) 20kpbs 0通道 </li>
-<li>915MHz 北美Zigbee 40kpbs 1-10通道 每2MHz一個通道</li>
-</ul>
-<h4 id="物理層功能"><a href="#物理層功能" class="headerlink" title="物理層功能"></a>物理層功能</h4><ul>
-<li>物理无线和MAC层的接口</li>
-<li>無線電收發管理</li>
-<li>无线电开&#x2F;关控制</li>
-<li>调制与解调</li>
-<li>信道选择</li>
-<li>链接质量估算</li>
-<li>能量检测</li>
-<li>功率調節</li>
-</ul>
-<h4 id="Zigbee-和-WIFI-共存"><a href="#Zigbee-和-WIFI-共存" class="headerlink" title="Zigbee 和 WIFI 共存??"></a>Zigbee 和 WIFI 共存??</h4><p><img src="/images/20231119024508.png"><br>Zigbee 和 WIFI 都使工作在2.4GHz 底下 會存在相互干擾的情況<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.ebyte.com/new-view-info.aspx?id=1082">怎样设置Zigbee和wifi信道避免干扰？</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://bbs.16rd.com/thread-574907-1-1.html">Zigbee和Wi-Fi的干擾和共存</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.mwrf.net/tech/rfic/2020/27496.html">在2.4GHz共存-WLAN、蓝牙、ZigBee和Thread在2.4GHz频段共存</a></p>
-<h3 id="Zigbee-MAC層"><a href="#Zigbee-MAC層" class="headerlink" title="Zigbee MAC層"></a>Zigbee MAC層</h3><h4 id="MAC幀"><a href="#MAC幀" class="headerlink" title="MAC幀"></a>MAC幀</h4><p><img src="/images/20231119024520.png"><br>前面PERAMBLE SPD PHYHeader 由物理層封裝<br>Frame Control(2bytes):標示frame類型</p>
-<ul>
-<li>Beacon 掃描網路</li>
-<li>Data 上層數據</li>
-<li>ACK 確認用</li>
-<li>MAC Command 入網時候使用的命令 MAC关联过程。<br>CRC(最後2bytes): 驗證資料包的完整性 (空氣中傳播 受到干擾 資料會丟掉)</li>
-</ul>
-<h4 id="MAC-傳送確認"><a href="#MAC-傳送確認" class="headerlink" title="MAC 傳送確認"></a>MAC 傳送確認</h4><p><img src="/images/20231119024532.png"><br>MAC层还为节点提供了一种方法，该方法可通过确认得知节点已成功接收到1跳单播传输，并且已通过验证CRC保留了所传输消息的完整性。 多跳传输应在每个跳上进行确认。节点执行CCA检查并发送消息后，它会等待MAC确认。如果未收到消息，则该节点应尝试多次重发该消息，直到其最终成功或最大的重试次数已用尽。<br><img src="/images/20231119024545.png"><br>從NodeA到NodeD發送資料通常是應用層和應用層的傳送<br>NodeA 傳到到 NodeB 確認收到回傳MAC Ack 到 NodeA<br>不是NobeB接收的資料(資料最多在網路層) 往NodeC傳直到傳到正確的接收方<br>NodeD正確的接收要回傳APS Ack確認回NodeA</p>
-<p>兩種不同的確認 如果沒收到Ack就會重傳</p>
-<ul>
-<li>MAC Ack 是點跟點的確認</li>
-<li>APS Ack 是端到端的確認</li>
-</ul>
-<h4 id="CSMA-x2F-CA-避免干擾"><a href="#CSMA-x2F-CA-避免干擾" class="headerlink" title="CSMA&#x2F;CA 避免干擾"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/51412066">CSMA&#x2F;CA 避免干擾</a></h4><p>Listen Before Talk 發送資料前聽一下<br>判斷channel是否有人在使用<br>802.15.4允许多个网络位于同一通道上。因此，需要采取某种方式来避免来自不同网络的数据包在空中碰撞而造成通信错误。MAC子层使用CSMA-CA（Carrier Sense Multiple Access&#x2F;Collision Avoidance）控制对无线电的访问。避免碰撞是通过CCA（Clear Channel Assessment）完成的。在发送之前，每个节点必须检查电波是否可以正常发送（RSSI低于CCA阈值）。如果是，则节点应继续进行并在进行少量随机退避后进行传输。如果CCA没有通过，则该节点应等待多个退避周期，然后才能再次尝试该过程。随机退避允许多个节点交错传输，因此它们总是可以在某个时间点找到干净的无线空间来作数据传输。尽管比特率很低，因为数据包比较小（128 bytes），即使在非常嘈杂的信道上每一个节点也可以成功地完成数据传输。</p>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=wXbcBSQDnFA">CSMA&#x2F;CD</a> 兩種解決碰撞問題的機制<br>CSMA(Carrier Sense Mutiple Access) 防止碰撞機制 先偵測Hub上有無通訊 無才可通訊<br>CD(Collision Detection) 偵測碰撞 當偵測碰撞到碰撞時，發出JAM訊號 清空資料 再用 後退演算法錯開<br>CA(Collision Avoidance) 避免碰撞<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://wiki.mbalib.com/zh-tw/CSMA/CA">CSMA&#x2F;CA</a></p>
-<blockquote>
-<p>CSMA&#x2F;CA是先聽一下附近有沒有人講話，沒有人講話再講話<br>CSMA&#x2F;CD是不管了直接傳，發現打斷其他人講話時就回來等一下再傳</p>
-</blockquote>
-<p>(一)差異： </p>
-<ol>
-<li>CSMA&#x2F;CD主要應用在有線網路，CSMA&#x2F;CA主要應用在無線網路。</li>
-<li>CSMA&#x2F;CD是使用碰撞偵測處理(Collision Detection)，在有線網路的環境中，可以檢測碰撞，但不容易去 避免。CSMA&#x2F;CA是使用避免碰撞處理(Collision Avoidance)，在無線網路的環境中，要使用CD去偵測碰 撞是困難的，所以在無線網路中採取CA的方式避免碰撞。 </li>
-<li>CSMA&#x2F;CD的傳輸效率較佳，但硬體成本比較高。CSMA&#x2F;CA的傳輸效率較差，但硬體成本比較低。<br>(二)運作過程： </li>
-<li>CSMA&#x2F;CD是在偵測是否有通道空閒後，在發送資料時同時進行防止Collision的檢查，如果在發送數據過 程中檢測到衝突，就立即停止發送資料，並等待一段時間，再重新發送碰撞的資料。</li>
-<li>CSMA&#x2F;CA在送出資料前，先送RTS封包確認或是聆聽網路上的狀態，若沒有人使用，等待一段時間後， 如果還沒有人使用，才送出資料。</li>
-</ol>
-<h3 id="Zigbee-網路層"><a href="#Zigbee-網路層" class="headerlink" title="Zigbee 網路層"></a>Zigbee 網路層</h3><h4 id="裝置類型"><a href="#裝置類型" class="headerlink" title="裝置類型"></a>裝置類型</h4><p><img src="/images/20231119024603.png"></p>
-<ul>
-<li>Coordinator 協調員<ul>
-<li>一個Zigbee網路只能有一個</li>
-<li>創建網路  第一個成員 地址為0x000</li>
-<li>可以路由 添加成員</li>
-<li>不能睡眠</li>
-</ul>
-</li>
-<li>Router 路由<ul>
-<li>可以路由</li>
-<li>不能睡眠</li>
-</ul>
-</li>
-<li>End Device&#x2F; Sleepy End Device 終端設備<ul>
-<li>必須附著在 Coordinator 或 Router 上</li>
-<li>不能路由 只能接收</li>
-<li>可睡眠</li>
-</ul>
-</li>
-</ul>
-<h4 id="Device-Announce-加入網路時所發送的訊息"><a href="#Device-Announce-加入網路時所發送的訊息" class="headerlink" title="Device Announce (加入網路時所發送的訊息)"></a>Device Announce (加入網路時所發送的訊息)</h4><p><img src="/images/20231119024617.png"><br>Device Type(IEEE-802.15.4定义了两种设备类型)：</p>
-<ul>
-<li>FFD(Full Function Device), 全功能设备，能够执行IEEE 802.15.4标准中描述的所有职责，并且可以在网络中担任任何角色。Coordinator&#x2F;Router</li>
-<li>RFD(Reduced Function Device), 剪裁功能设备，功能有限。 End Device&#x2F; Sleepy End Device</li>
-</ul>
-<blockquote>
-<p>RFD设备的处理能力和内存大小通常小于FFD设备。<br><img src="/images/20231119024634.png"><br>Alternate PAN Coordination 標示是否為 Coordinator<br><img src="/images/20231119024648.png"><br>Power Source Main 電源供電或者電池供電</p>
-</blockquote>
-<h4 id="網路地址-Addressing-PAN-ID-and-xPan-ID-Extended-PAN-ID"><a href="#網路地址-Addressing-PAN-ID-and-xPan-ID-Extended-PAN-ID" class="headerlink" title="網路地址 Addressing PAN ID and (xPan ID)Extended PAN ID"></a>網路地址 Addressing PAN ID and (xPan ID)Extended PAN ID</h4><p><img src="/images/20231119024701.png"></p>
-<ul>
-<li>PAN ID: 短的(不唯一) 16bit 由用戶或Coordinator隨機生成 用於mac層過濾用 0xFFFF 用於廣播 </li>
-<li>xPan ID: 長的(唯一值) Coordinator隨機生成 只有在Beacon會傳送  用於解決PAN ID衝突</li>
-</ul>
-<blockquote>
-<p>低速通訊技術 250kpbs 有效數據負荷占比低(mac頭部 network頭部…) 如果每次用64bit效數據負荷占比低 所以用短的網路地址</p>
-</blockquote>
-<blockquote>
-<p>mac層收到不是自己的PAN ID 就丟掉</p>
-</blockquote>
-<p><img src="/images/20231119024719.png"><br>☝️Beacon的封包</p>
-<h4 id="設備地址-Addressing-Node-ID-and-IEEE-Address"><a href="#設備地址-Addressing-Node-ID-and-IEEE-Address" class="headerlink" title="設備地址 Addressing Node ID and IEEE Address"></a>設備地址 Addressing Node ID and IEEE Address</h4><ul>
-<li>Node ID(Short ID) 16bits加入網路時父節點分配 可能會衝突</li>
-<li>IEEE Address(Long ID) 64bits (MAC Address) 出廠就設定好 解決Node ID衝突<br>再傳送的時候用NodeID傳送<br>如果出現衝突就更改NodeID</li>
-</ul>
-<h3 id="Zigbee-應用層"><a href="#Zigbee-應用層" class="headerlink" title="Zigbee 應用層"></a>Zigbee 應用層</h3><h4 id="EndPoint-有點像Port的概念-範圍0-255"><a href="#EndPoint-有點像Port的概念-範圍0-255" class="headerlink" title="EndPoint 有點像Port的概念 範圍0-255"></a>EndPoint 有點像Port的概念 範圍0-255</h4><p><img src="/images/20231119024733.png"></p>
-<p>EndPoint 1-239 用戶開發用<br>EndPoint 0, 240-255 保留用 0(ZDO Zigbee設備管理用) 255 廣播所有EndPoint</p>
-<p>Endpoints存在於每個節點中，以1~240的數字編號，<br>每個endpoint定義了一個在ZigBee節點上運行的application<br>(一個node可以有多個applications，也就是多個endpoints)</p>
-<p>Endpoints的三個用途：</p>
-<ul>
-<li>允許不同的app profiles存在於一個節點</li>
-<li>允許一個節點中的不同控制點</li>
-<li>允許一個節點中有不同的devices<br><img src="/images/20231119024755.png"><br>通訊是 EndPoint to EndPoint<br>一個當 Client 一個當 Server<br>通訊內容是由<strong>Cluster</strong>格式定義<br><img src="/images/20231119024811.png"><br>Cluster: 通訊Model<br>Client&#x2F;Server model<br>每一個Cluster定義一個功能(On&#x2F;Off Cluster、Level Cluster) ZCL(Zigbee Cluster Library)<br>定義命令和屬性<br><img src="/images/20231119024826.png"><br>以控制燈開關為例 開關為Client 燈為Server<br>On&#x2F;Off Cluster:<br>Commend: OnOff、Toggle<br>Attribute: On、Off</li>
-</ul>
-<blockquote>
-<p>Cluster大多定義好了功用的 但也可以客製化定義 但這樣就不通用</p>
-</blockquote>
-<h2 id="安全特性-偽造-重傳"><a href="#安全特性-偽造-重傳" class="headerlink" title="安全特性(偽造 重傳)"></a>安全特性(偽造 重傳)</h2><h3 id="應用層安全"><a href="#應用層安全" class="headerlink" title="應用層安全"></a>應用層安全</h3><p><img src="/images/20231119024856.png"><br>將Applocation層的Payload加密 中間加安全頭部 然後算出Hash值 加到最後面往下傳<br>通過檢查Hash值(APS MIC)檢查應用層有無被篡改</p>
-<h3 id="網路層安全"><a href="#網路層安全" class="headerlink" title="網路層安全"></a>網路層安全</h3><p><img src="/images/20231119024909.png"><br>將Network層的Payload加密 中間加安全頭部 然後算出Hash值 加到最後面往下傳<br>通過檢查Hash值(NWK MIC)檢查應用層有無被篡改</p>
-<blockquote>
-<p>應用層網路層對稱加密: AES128<br><img src="/images/20231119024953.png"><br>安全頭部(APS Auxiliary HDR、NWK Auxiliary HDR)有Frame Counter防止重傳</p>
-</blockquote>
-<h3 id="Frame-Counter-防止重傳"><a href="#Frame-Counter-防止重傳" class="headerlink" title="Frame Counter 防止重傳"></a>Frame Counter 防止重傳</h3><p><img src="/images/20231119025007.png"><br>接收端會記錄收到的 FrameCounter 如果接收到一樣就會丟掉封包 (只會紀錄周圍節點的FrameCounter)<br>發送端每次發送封包時會將 FrameCounter++ 達到每次FrameCounter都不一樣</p>
-<h3 id="安全特點-端到端-點到點"><a href="#安全特點-端到端-點到點" class="headerlink" title="安全特點 端到端 點到點"></a>安全特點 端到端 點到點</h3><p><img src="/images/20231119025021.png"><br>NodeA傳到NodeC 中間NodeB不會去解開APS層的資料 NodeB只會解開網路層的資料<br>APS層是 端到端 端跟端之間有秘鑰(Link Key)<br>網路層是 點到點 點跟點之間有秘鑰(NWK Key)</p>
-<h3 id="NWK-Key"><a href="#NWK-Key" class="headerlink" title="NWK Key"></a>NWK Key</h3><p><img src="/images/20231119025033.png"></p>
-<ul>
-<li>整個網路用的NWK Key都是一樣</li>
-<li>在創建網路時隨機生成 16-byte</li>
-<li>NWK 靠應用層加密傳輸</li>
-<li>Trust Center: 提供NWK Key的裝置(通常是Coordinator)</li>
-<li>有兩種模式 Centralized Distrbuted</li>
-</ul>
-<h4 id="傳送-NWK-Key"><a href="#傳送-NWK-Key" class="headerlink" title="傳送 NWK Key"></a>傳送 NWK Key</h4><h3 id="Link-Key"><a href="#Link-Key" class="headerlink" title="Link Key"></a>Link Key</h3><ul>
-<li>16-byte</li>
-<li>Trust Center Link Key 新設備加入網路傳送NWK key</li>
-<li>(install code[出廠設定] + 算法) 或 (<strong>ZigbeeAlliance09</strong>)</li>
-</ul>
-<h4 id="install-code-是透過人工完成的-更安全"><a href="#install-code-是透過人工完成的-更安全" class="headerlink" title="install code 是透過人工完成的 更安全"></a>install code 是透過人工完成的 更安全</h4><p><img src="/images/20231119025052.png"></p>
-<h2 id="加入網路"><a href="#加入網路" class="headerlink" title="加入網路"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lee_jimmy/article/details/109162896">加入網路</a></h2><h3 id="通用Link-Key-ZigbeeAlliance09"><a href="#通用Link-Key-ZigbeeAlliance09" class="headerlink" title="通用Link Key(ZigbeeAlliance09)"></a>通用Link Key(ZigbeeAlliance09)</h3><p><img src="/images/20231119025110.png"></p>
-<ul>
-<li>Coordinator 創建網路 設定PAN ID、xPAN ID、通道、功率</li>
-<li>設備可以加入網路</li>
-<li>掃描網路，新設備在每個通道發起Beacon Request等待有無回應 無回應往下一個通道發Beacon Request (因為不知道所以全發)</li>
-<li>Coordinator收到Beacon Request回覆 一個Beacon(包含PAN ID xPAN ID…)</li>
-<li>設備可能會收到很多Beacon，選擇用rssi最強當作父節點 再發送Association Request 包含(自己設備的能力…)</li>
-<li>父節點發送Association Response(分配給他沒人用 Node ID)</li>
-<li>等待接收NWK Key (Trust Center 會用Link Key(ZigbeeAlliance09)加密NWK Key) 用ZigbeeAlliance09解密</li>
-<li>router会发送一个device announce的报文（从目的地址为广播地址可以看出）通知全网，我入网了、我的设备信息都有哪些。</li>
-<li>之後就可以通訊了</li>
-</ul>
-<h3 id="使用Install-Code"><a href="#使用Install-Code" class="headerlink" title="使用Install Code"></a>使用Install Code</h3><p><img src="/images/20231119025123.png"></p>
-<ul>
-<li>Coordinator 創建網路 設定PAN ID、xPAN ID、通道、功率</li>
-<li>設備可以加入網路</li>
-<li>Coordinator 掃描 新設備Install Code建立Link Key</li>
-<li>掃描網路，新設備在每個通道發起Beacon Request等待有無回應 無回應往下一個通道發Beacon Request (因為不知道所以全發)</li>
-<li>Coordinator收到Beacon Request回覆 一個Beacon(包含PAN ID xPAN ID…)</li>
-<li>設備可能會收到很多Beacon，選擇用rssi最強當作父節點 再發送Association Request 包含(自己設備的能力…)</li>
-<li>父節點發送Association Response(分配給他沒人用 Node ID)</li>
-<li>等待接收NWK Key (Trust Center 會用Link Key(由掃描到的Install Code建立)加密NWK Key) 用設備上的Install Code產生Link Key解密</li>
-<li>router会发送一个device announce的报文（从目的地址为广播地址可以看出）通知全网，我入网了、我的设备信息都有哪些。</li>
-<li>之後就可以通訊了</li>
-</ul>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u012993936/article/details/88225371">Zigbee抓包工具</a></p>
-<ul>
-<li>Packet Sniffer</li>
-<li>Ubiqua</li>
-<li>Wireshark <ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://segmentfault.com/a/1190000041469759">手把手教你如何通过CC2531抓取Zigbee包，并解析加密Zigbee包</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.twblogs.net/a/5b8f25562b717718834a0ac9">使用CC2531 USB Dongle 抓取小米Zigbee智能硬件數據包</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.ruten.com.tw/find/?q=+CC2531">露天CC2531</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.twblogs.net/a/5c80fb1fbd9eee35fc136d05">如何用Wireshark對Zigbee進行抓包分析</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/489493842">ZigBee 无线报文的抓取与分析</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://item.taobao.com/item.htm?id=657969866117">USB Dongle CC2530 CC2531 ZigBee 协议栈 分析 抓包 工具 模块</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="http://bbs.sunsili.com/thread-226165-1-1.html">利用Wireshark对Zigbee进行抓包分析</a></li>
-</ul>
-</li>
-</ul>
-<h2 id="认识Profile和Cluster"><a href="#认识Profile和Cluster" class="headerlink" title="认识Profile和Cluster"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/yanwumuxi/article/details/123866005">认识Profile和Cluster</a></h2><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.nxp.com/pwmxy87654/attachments/pwmxy87654/wireless-connectivity/698/1/075367r03ZB_AFG-Home_Automation_Profile_for_Public_Download.pdf">Zigbee Profile</a><br><img src="/images/20231119025145.png"></p>
-<hr>
-<h3 id="Silicon-Labs-GeckoSDK"><a href="#Silicon-Labs-GeckoSDK" class="headerlink" title="Silicon Labs GeckoSDK"></a>Silicon Labs GeckoSDK</h3><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug491-zigbee-app-framework-dev-guide-sdk-7x.pdf">zigbee-app-framework-dev-guide-sdk-pdf</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/question/0D58Y00008aZEGPSA4/hello-im-working-on-a-zigbee-minimals-project-with-the-efr32-xxx-and-i-would-like-to-ask-you-how-to-create-a-callback-to-do-an-action-every-5-minutes-thank-you?language=zh_TW">New Callback</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/SiliconLabs/IoT-Developer-Boot-Camp/wiki/Zigbee-Boot-Camp">Zigbee-Boot-Camp</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/wireless/zigbee/efr32mg24-series-2-modules/device.mgm240pa32vnn?tab=specs">MGM240PA32VNN</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lexiyao/article/details/109153280">Zigbee应用程序框架开发指南 - 概述</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.sekorm.com/news/30245981.html">【经验】EmberZnet CLI指令之绑定功能实现过程</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/yanwumuxi/article/details/123866005">Zigbee Profile</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/article/zigbee-3-0-tutorial-light-and-switch-from-scratch-step-5?language=en_US">ZigBee 3.0 Tutorial - Light and Switch from Scratch</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/SiliconLabs/zigbee_applications/tree/a90ebc1e6a06ac7dd1e158f435f58e910595a477">zigbee_applications example</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://space.bilibili.com/641942011/channel/seriesdetail?sid=726018">bilibili</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://workshop.siliconforce.com/?p=862">Silicon Labs EFM8 的 Hello World 程式</a></li>
-</ul>
-<hr>
-<h3 id="TI-Z-Stack"><a href="#TI-Z-Stack" class="headerlink" title="TI Z-Stack"></a>TI Z-Stack</h3><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.ti.com/zh-tw/homepage.html">Texas Instruments</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://software-dl.ti.com/simplelink/esd/plugins/simplelink_zigbee_sdk_plugin/1.60.01.09/exports/docs/zigbee_user_guide/html/zigbee/introduction.html">TI Z-Stack User Guide</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1d94y117kj/">ZigBee开发-嵌入式物联网开发教程学习</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/yanwumuxi/article/details/126485087">Zigbee学习（三）Z-Stack代码框架解析</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/yanwumuxi/article/details/131128082">Zigbee学习（四）入网流程及抓包分析</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.wireless-tech.cn/doc/101/">Zigbee驱动安装-抓包环境搭建</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lixiaocheng1983/article/details/123090679?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-5-123090679-blog-88225371.235%5Ev38%5Epc_relevant_sort_base1&spm=1001.2101.3001.4242.4&utm_relevant_index=8">手把手教你如何通过CC2531抓取Zigbee包，并解析加密Zigbee包</a></li>
-</ul>
-<hr>
-<h3 id="zigpy"><a href="#zigpy" class="headerlink" title="zigpy"></a>zigpy</h3><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zigpy/zigpy">zigpy</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/zigpy/zigpy-cli">zugpy-cli</a></p>
-<h3 id="ZDO"><a href="#ZDO" class="headerlink" title="ZDO"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.wpgdadatong.com/question/detail/15822">ZDO</a></h3><p>提供了所有ZigBee设备共同的特殊应用，以管理已描述的各种过程。此应用程序是ZigBee设备对象或ZDO。它位于节点的应用层，并且可以使用 ZigBee设备配置文件（ZDP）和相关 cluster通过端点0与远程节点通信。它具有以下作用：</p>
-<ol>
-<li>定义网络设备的类型：协调器、路由器或终端设备</li>
-<li>初始化节点以允许应用程序运行。</li>
-<li>执行设备发现和服务发现过程。</li>
-<li>实现允许协调器创建网络以及路由器和终端设备加入和离开网络所需的过程。</li>
-<li>启动并响应绑定请求。</li>
-<li>启动并响应绑定请求提供允许在应用程序之间建立安全关系的安全服务。</li>
-<li>允许远程节点从节点检索信息，如路由表和绑定表，并执行节点的远程管理，如指示它离开网络。</li>
-</ol>
-<p>ZDO使用堆栈内的服务来实现这些角色，并提供了一种允许用户应用程序访问堆栈服务的方法。</p>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_35413125/article/details/116986028">ZigBeePro协议栈词汇名词解释</a></p>
-<p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/Msymbol/article/details/111194158">Thread协议介绍</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://iknow.stpi.narl.org.tw/Post/Read.aspx?PostID=10327">Thread可能取代Zigbee -ZHA並衝擊智慧家庭的通訊標準</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.kocpc.com.tw/archives/476397">無線技術 Thread 是什麼？它會是智慧家庭的未來嗎？</a><br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://turadise.com/matter-thread/">Matter智慧家庭控制標準協定,用Thread整合智能居家控制系統</a></p>
-
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf">手把手指南—— 开启你的 Zigbee 之旅</a>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118195000-c8085013.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </li></ul></div>
 
     
     
@@ -545,7 +318,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:27:13" itemprop="dateModified" datetime="2024-01-20T18:27:13+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:04" itemprop="dateModified" datetime="2024-01-24T02:17:04+08:00">2024-01-24</time>
     </span>
 
   
@@ -562,27 +335,17 @@
 <p>簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。</p>
 <ol>
 <li>要知道原始資料的位置。</li>
-<li>要知道目地的位置。</li>
-<li>要知道要搬多少資料長度。</li>
-</ol>
-<h1 id="配置DMA-以SRAM到外部設備"><a href="#配置DMA-以SRAM到外部設備" class="headerlink" title="配置DMA(以SRAM到外部設備)"></a>配置DMA(以SRAM到外部設備)</h1><ul>
-<li>從哪裡複製(要複製的地址) SRAM Address</li>
-<li>複製的地址(複製目的地的地址) 外部設備 Address</li>
-<li>DMA方向 從 SRAM 到 外部設備</li>
-<li>傳輸資料大小</li>
-<li>SRAM 地址自增 On or Off </li>
-<li>外部設備 地址自增  On or Off</li>
-</ul>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=2_X9qD12_pw">10行代码，就能让你真正理解DMA！你用的可能很少，但是在单片机中非常重要！</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://sharing-icdesign-experience.blogspot.com/2014/05/dma.html">什麼是DMA ?</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/as480133937/article/details/104927922">【STM32】 DMA原理，步骤超细详解，一文看懂DMA</a></li>
-</ul>
-
+<li>要知道目地的位置。
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118194800-e891e3a3.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </li></ol></div>
 
     
     
@@ -642,7 +405,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:18:30" itemprop="dateModified" datetime="2024-01-20T18:18:30+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:04" itemprop="dateModified" datetime="2024-01-24T02:17:04+08:00">2024-01-24</time>
     </span>
 
   
@@ -657,24 +420,17 @@
     <div class="post-body" itemprop="articleBody">
           <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
 <h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
-<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
-<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
-<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
-<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
-<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
-
-<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
-</ul>
-
+<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118194600-68d2e719.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </em></p></div>
 
     
     
@@ -734,7 +490,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:38:51" itemprop="dateModified" datetime="2024-01-20T18:38:51+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:05" itemprop="dateModified" datetime="2024-01-24T02:17:05+08:00">2024-01-24</time>
     </span>
 
   
@@ -748,35 +504,17 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
-<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
-<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
-<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
-<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
-<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
-<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
-<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
-<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
-<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
-<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
-<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
-<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
-</ul>
-
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118193100-f5da1a51.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </p></div>
 
     
     
@@ -836,7 +574,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-22 14:51:46" itemprop="dateModified" datetime="2024-01-22T14:51:46+08:00">2024-01-22</time>
+      <time title="Modified: 2024-01-24 02:17:05" itemprop="dateModified" datetime="2024-01-24T02:17:05+08:00">2024-01-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -859,113 +597,17 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>
-<p><img src="/images/rJPmOAx7T.png"><br><img src="/images/rkeBu0em6.png"><br><img src="/images/rJMUOAgmT.png"><br><img src="/images/H19PO0x7a.png"><br>一直下一步，安裝到預設路徑即可 安裝完會自動打開<br><img src="/images/H1kFFAxXp.png"><br>同意並繼續<br><img src="/images/r1NhtAxQ6.png"><br>登入silabs的帳戶，免費辦一個<br>登入後會安裝驅動 輸入Admin帳號密碼安裝<br><img src="/images/HkqDc0xX6.png"><br>點擊Intall 點擊Intall by Connecting devices<br><img src="/images/Hy4oqAlQ6.png"><br>現在沒有裝置 接入USB<br><img src="/images/B1vJiAlXa.png"><br>接入USB 會需要安裝驅動板子套件按下Yes<br><img src="/images/HyS8sRxm6.png"><br>選擇板子 Next<br><img src="/images/BJROsCxmp.png"><br>選擇Auto Next<br><img src="/images/H1T3oCeQ6.png"><br>同意安裝套件 Next<br><img src="/images/ByHS2Aema.png"><br>會裝一些無線套件(geoko sdk)之類的(大約跑30分鐘)<br><img src="/images/HJYMgkbmp.png"><br>重開 Simplicity Studio<br><img src="/images/Byv9xyZmp.png"></p>
-<blockquote>
-<p>** 系統會提示更新 Adapter FW<br>不要更新保持這個1v4p9b113版本<br>(1.4.12.18刷進去會失敗，辯識會有問題，會變磚)**</p>
-</blockquote>
-<h1 id="更新版子-Adapter-Firmware-跳過"><a href="#更新版子-Adapter-Firmware-跳過" class="headerlink" title="更新版子 Adapter Firmware (跳過)"></a>更新版子 Adapter Firmware (跳過)</h1><p>更新版子參考 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/article/how-to-update-the-firmware-on-your-starter-kit-board">How to update the Firmware on your Starter Kit board</a><br>更新版子變磚參考 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/article/recover-efm32-or-efm8-kit-that-was-bricked-during-firmware-upgrade">Recover EFM32 or EFM8 kit that was bricked during firmware upgrade</a></p>
-<blockquote>
-<p> SparkFun Thing Plus Matter 曾經升到1.4.12.18，但失敗變磚，要退版本但是進入boot mode 的方法上面試不出來，最後是不知道怎麼又可以辨識出來(有可能是用手壓住後面的腳位接入USB，陰錯陽差進到 boot mode)，然後降版</p>
-</blockquote>
-<h1 id="簡單的範例-Blink-Example"><a href="#簡單的範例-Blink-Example" class="headerlink" title="簡單的範例 Blink Example"></a>簡單的範例 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://learn.sparkfun.com/tutorials/sparkfun-thing-plus-matter---mgm240p-hookup-guide/all#blink-example">Blink Example</a></h1><p>這個範例是一個會閃的燈<br><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/Hy9YGyZXp.png"><br>搜尋 blink 點擊 Platform - Blink Bare-mental<br>點擊 Next<br><img src="/images/HkO1XyZQa.png"><br>點擊 Finish<br><img src="/images/BkGX1b7T.png"><br><img src="/images/rJHA71WQT.png"><br>編譯並寫入板子<br><img src="/images/HkiX4ybX6.png"><br>編譯無錯誤 正常寫入板子後可看到燈會不斷閃爍<br><img src="/images/SyC7ByZQa.jpg"><br><img src="/images/S1vES1bmT.jpg"><br>可以到blink.c裡面的 TOOGLE_DELAY_MS 更改閃爍時間</p>
-<h2 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=POVRRuVCr-Q">Get Started with Simplicity Studio and the Thing Plus Matter Board</a></li>
-</ul>
-<h1 id="NCP-模式"><a href="#NCP-模式" class="headerlink" title="NCP 模式"></a>NCP 模式</h1><p><img src="/images/S1O4zC76.png"></p>
-<blockquote>
-<p>這裡Demo會要創立三個專案，目的是要創建Zigbee網路</p>
-</blockquote>
-<h2 id="創建-Bootloader-NCP-UART-XMODEM-專案"><a href="#創建-Bootloader-NCP-UART-XMODEM-專案" class="headerlink" title="創建 Bootloader - NCP UART XMODEM 專案"></a>創建 Bootloader - NCP UART XMODEM 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/By9Mw1mp.png"><br>點擊 Bootloader - NCP UART XMODEM<br>點擊 Next<br><img src="/images/BkaUwkb7T.png"><br>點擊 Finish<br><img src="/images/rJlydyXa.png"></p>
-<h2 id="創建-Zigbee-NCP-ncp-uart-hw-專案"><a href="#創建-Zigbee-NCP-ncp-uart-hw-專案" class="headerlink" title="創建 Zigbee - NCP ncp-uart-hw 專案"></a>創建 Zigbee - NCP ncp-uart-hw 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/ry3LJbX6.png"><br>點擊 Zigbee - NCP ncp-uart-hw<br>點擊 Next<br><img src="/images/Sy39kW7a.png"><br>點擊 Finish</p>
-<h2 id="創建-Zigbee-Host-Gatway-專案-在Linux上執行"><a href="#創建-Zigbee-Host-Gatway-專案-在Linux上執行" class="headerlink" title="創建 Zigbee - Host Gatway 專案 (在Linux上執行)"></a>創建 Zigbee - Host Gatway 專案 (在Linux上執行)</h2><p><img src="/images/ByLntyWX6.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Custom Board (可能會有點難點)<br>Target Device: Linux 64 bit<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Makefile IDE<br>點擊 Next<br><img src="/images/ryakcyZmT.png"><br>點擊 Zigbee - Host Gateway<br>點擊 Next<br><img src="/images/HyKZ9J7p.png"><br>點擊 Finish</p>
-<h2 id="燒入-Bootloader-NCP-UART-XMODEM"><a href="#燒入-Bootloader-NCP-UART-XMODEM" class="headerlink" title="燒入 Bootloader - NCP UART XMODEM"></a>燒入 Bootloader - NCP UART XMODEM</h2><p>燒入 Bootloader - NCP UART XMODEM 和 NCP ncp-uart-hw 要刷進板子裡面<br><img src="/images/Hyxny7a.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/Hy8f2yZma.png"><br>編譯成功完後 Binaries 出現 檔名為bootloader-uart-xmodem 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/r1Wnn1WQp.png"><br>選擇Binary File <code>v5_workspace/bootloader-uart-xmodem/GNU ARM v10.3.1 - Default/bootloader-uart-xmodem.s37</code> 點擊 Flash<br><img src="/images/BJGlkeZXp.png"><br>log 顯示 Successfully<br><img src="/images/HJhC31Q6.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader 占用兩個綠色區塊<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/SkJsJxWm6.png"><br>Seial 1 會出現 </p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Gecko Bootloader v2.03.02</span><br><span class="line">1. upload gbl</span><br><span class="line">2. run</span><br><span class="line">3. ebl info</span><br><span class="line">BL &gt; </span><br></pre></td></tr></table></figure>
-<p>代表進入 Gecko Bootloader mode </p>
-<blockquote>
-<p>在還沒刷入 Application 會進入到 Gecko Bootloader mode<br>如果已經刷了 Application 則此處不會顯示任何東西</p>
-</blockquote>
-<h2 id="燒入-NCP-ncp-uart-hw"><a href="#燒入-NCP-ncp-uart-hw" class="headerlink" title="燒入 NCP ncp-uart-hw"></a>燒入 NCP ncp-uart-hw</h2><p><img src="/images/Hy0kxCQ6.png"><br>點擊ncp-uart-hw.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/HJsvlRXa.png"><br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>點擊 Congiure<br><img src="/images/HJY3e0Zm6.png"><br>將 Flow Control 改成 Software Flow control<br><img src="/images/HyScEaWm6.png"><br>點擊專案 點擊槌子 進行編譯<br><img src="/images/B107BT7p.png"><br>編譯成功完後 Binaries 出現 檔名為ncp-uart-hw 的各種image<br>進行寫入動作<br><img src="/images/ryDL31WXp.png"><br>點擊Tools<br><img src="/images/HJt3kZQ6.png"><br>點擊Simplicity Commander 點擊ok<br><img src="/images/Byb5rabmT.png"><br>選擇Binary File <code>v5_workspace/ncp-uart-hw/GNU ARM v10.3.1 - Default/ncp-uart-hw.s37</code> 點擊 Flash<br><img src="/images/S1CsrTZXp.png"><br>log 顯示 Successfully<br><img src="/images/S1mLITXa.png"><br>在Device Info 裡面的 MemoryMap 裡的 Flash Map 可以看到 Bootloader + ncp-uart-hw 的分布<br>Bootloader 從0x8000000開始<br>ncp-uart-hw 從0x8006000開始<br><img src="/images/SJaSJxZXa.png"><br>右鍵 Debug Adapter 選擇Launch Console<br><img src="/images/HJCWDabQ6.png"><br>Seial 1 不會顯示任何東西<br>代表進入 Application mode </p>
-<h2 id="編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上"><a href="#編譯-Zigbee-Host-Gateway-要用-Linux-編譯運行在-Linux-上" class="headerlink" title="編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)"></a>編譯 Zigbee - Host Gateway(要用 Linux 編譯運行在 Linux 上)</h2><p><img src="/images/B11Aupb76.png"><br>cd 到專案底下<br><img src="/images/SJSjdpWXa.png"><br><code>gcc -v</code><br><img src="/images/r11lFaZmT.png"><br><code>make -f Z3Gateway.Makefile</code><br><img src="/images/HyhsKTZmT.png"><br>編譯完成<br><img src="/images/SyIW9pbXa.png"></p>
-<h2 id="透過-Host-Gateway-控制-MCU-建立Zigbee-網路"><a href="#透過-Host-Gateway-控制-MCU-建立Zigbee-網路" class="headerlink" title="透過 Host Gateway 控制 MCU 建立Zigbee 網路"></a>透過 Host Gateway 控制 MCU 建立Zigbee 網路</h2><p><img src="/images/SJ0OqpZXp.png"><br>這裡選用Jlink OB 這也是帶有Serial Com Port 功能<br><img src="/images/H1Dhnama.png"><br>cd 到 程式所在地<br><img src="/images/HkPfpabQ6.png"><br><code>./Z3Gateway -f x -b 115200 -p  /dev/ttyACM0</code><br><img src="/images/S1aSTT76.png"><br>直接輸入info<br><img src="/images/rJXOpTWQp.png"><br>可以看到當前狀態 nodeId PanId xpan …. 接下來就是建立網路<br><img src="/images/HJPg067a.png"><br><code>network leave</code> 先離開網路<br><img src="/images/r1P5A6WQT.png"><br><code>plugin network-creator start 1</code> 成功會看到 EMBER_NETWORK_UP 0x0000 的字眼<br><img src="/images/SyBRAT7T.png"><br>再輸入info 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br><img src="/images/Sy8Iy0Wma.png"><br><code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug235-09-developing-ncp-apps-with-connect.pdf">UG235.09: Developing NCP Applications with Silicon Labs Connect v2.x</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/application-notes/an1320-customized-ncp-zigbee7.pdf">Building a Customized NCP Application with Zigbee EmberZNet 7.x</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/application-notes/an706-ezsp-uart-host-interfacing-guide.pdf">EZSP-UART Host Interfacing Guide</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/lshddd/article/details/115458007">基于芯科Host-NCP解决方案的Zigbee 3.0 Gateway技术研究（-）-Z3GatewayHost应用</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42860989/article/details/125909875">在Cygwin环境下构建和使用EmberZNet PRO Zigbee Host应用程序</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/SiliconLabs/managed-zigbee-gateway/blob/master/README.md">managed-zigbee-gateway&#x2F;README.md</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://community.silabs.com/s/question/0D51M00007xeQUSSA2/how-to-verify-the-normal-operation-of-ncp?language=zh_TW">How to Verify the Normal Operation of NCP？</a></li>
-</ul>
-<h2 id="參考影片-1"><a href="#參考影片-1" class="headerlink" title="參考影片"></a>參考影片</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1nM4y1g755/">Day1-4-EmberZnet SDK的Bootloader和OTA配置详解</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1fv411y7cq/">Day 1-2_EmberZnet协议栈介绍及开发工具AppBuilder介绍 (1)</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.bilibili.com/video/BV1bT4y1w7EJ">Day 3-1 Zigbee 3.0 RTOS网关介绍</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=EP96d_ps4vg&ab_channel=CUSTCourses">10-01 何謂bootloader</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=njFxwNoPbkc">ARM Bootloader开发-1.bootloader概述1</a></li>
-</ul>
-<h1 id="Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路"><a href="#Soc-模式-以Zigbee-Soc-Switch-為例-將裝置修改為Coordinator並且建立Zigbee網路" class="headerlink" title="Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)"></a>Soc 模式 (以Zigbee - Soc Switch 為例 將裝置修改為Coordinator並且建立Zigbee網路)</h1><h2 id="創建-Bootloader-Soc-Internal-Storage-專案"><a href="#創建-Bootloader-Soc-Internal-Storage-專案" class="headerlink" title="創建 Bootloader - Soc Internal Storage 專案"></a>創建 Bootloader - Soc Internal Storage 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HyWccAWX6.png"><br>點擊 Bootloader - Soc Internal Storage (1536kB)<br>點擊 Next<br><img src="/images/r1xiqRbX6.png"><br>點擊 Finish</p>
-<h2 id="創建-Zigbee-Soc-Switch-專案"><a href="#創建-Zigbee-Soc-Switch-專案" class="headerlink" title="創建 Zigbee - Soc Switch 專案"></a>創建 Zigbee - Soc Switch 專案</h2><p><img src="/images/SJeZ176.png"><br>File &gt;&gt; New &gt;&gt; Silicon Labs Project Wizard<br>Target Boards: Sparkfun Thing Plus MGM240P (BRD2704A Rev A00)<br>Target Device: mgm240pb32vna<br>SDK: Deoko SDK Suite<br>IDE&#x2F;Toolchain: Simplicity IDE<br>點擊 Next<br><img src="/images/HJKFCXT.png"><br>點擊 Zigbee - Soc Switch<br>點擊 Next<br><img src="/images/B1vXqRZXp.png"><br>點擊 Finish</p>
-<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part1"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part1" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part1"></a>修改 Zigbee - Soc Switch 專案設定 Part1</h2><p><img src="/images/B17oiRWma.png"><br>點擊 Z3Switch.slcp<br><img src="/images/BkgQlCWm6.png"><br>點擊Software Components<br><img src="/images/r120sCZm6.png"><br>找到Platform &gt;&gt; Driver &gt;&gt; Button &gt;&gt; Simple Button &gt;&gt; bt1<br>點擊 Congiure<br><img src="/images/HyIm2C7p.png"><br>修改 SL_SIMPLE_BUTTON_BTN1 先隨便選一個</p>
-<p>再修改<br>找到Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>將 Flow Control 改成 Software Flow control</p>
-<h2 id="分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch"><a href="#分別燒入-Bootloader-Soc-Internal-Storage-和-Zigbee-Soc-Switch" class="headerlink" title="分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch"></a>分別燒入 Bootloader - Soc Internal Storage 和 Zigbee - Soc Switch</h2><p>參考上面燒入<br><img src="/images/rkD2zJMQT.png"><br>打開console seral 1  可以看到 &gt; Z3Switch 輸入info 看資訊<br>此時不能建立網路 因為現在裝置類型是End Device 而且 創建網路需要增加plugin</p>
-<h2 id="修改-Zigbee-Soc-Switch-專案設定-Part2"><a href="#修改-Zigbee-Soc-Switch-專案設定-Part2" class="headerlink" title="修改 Zigbee - Soc Switch 專案設定 Part2"></a>修改 Zigbee - Soc Switch 專案設定 Part2</h2><p>修改<br>找到 Zigbee &gt;&gt; Utility &gt;&gt; Zigbee Device Config<br>將 Primary Network Device Type 改成 Coordonator or Router</p>
-<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Leaf Stack<br>將他 Uninstall</p>
-<p>找到 Zigbee &gt;&gt; Stack &gt;&gt; Pro Stack &gt;&gt; Pro Stack<br>將他 install</p>
-<p>找到 Zigbee &gt;&gt; Utility &gt;&gt; End Device Support<br>將他 Uninstal</p>
-<p>找到 Zigbee &gt;&gt; Zigbee3.0 &gt;&gt; Network Creator<br>將他 install</p>
-<h2 id="燒入-Zigbee-Soc-Switch-Part2"><a href="#燒入-Zigbee-Soc-Switch-Part2" class="headerlink" title="燒入 Zigbee - Soc Switch Part2"></a>燒入 Zigbee - Soc Switch Part2</h2><p>參考上面燒入<br><img src="/images/r1aTByf7p.png"><br><code>network leave</code><br><img src="/images/B1xGUkGma.png"><br><code>plugin network-creator start 1</code><br><img src="/images/SyBNIyfQa.png"><br><code>info</code> 可以看到當前狀態 nodeId PanId xpan …. 網路已經建立好了<br>之後再輸入<code>plugin network-creator-security open-network</code> 讓其他設備加入</p>
-<h1 id="用-Bootloader-NCP-UART-XMODEM-刷-Application"><a href="#用-Bootloader-NCP-UART-XMODEM-刷-Application" class="headerlink" title="用 Bootloader - NCP UART XMODEM 刷 Application"></a>用 Bootloader - NCP UART XMODEM 刷 Application</h1><p><img src="/images/H1RwPNGXT.png"></p>
-<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/Hk5bbfM76.png"><br><code>.\commander.exe gbl create ncp-uart-hw.gbl  --app ncp-uart-hw.s37</code> </p>
-<h2 id="進入-geoko-bootloader-模式"><a href="#進入-geoko-bootloader-模式" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
-<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
-<h2 id="上傳-gbl-檔案"><a href="#上傳-gbl-檔案" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/ry6nUMzXa.png"><br>此時Memory Map 裡面只有 bootloader</p>
-<p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
-<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
-<p><img src="/images/Sy9owMzmT.png"><br>上傳中</p>
-<p><img src="/images/Hk66PffX6.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
-<p><img src="/images/SJwZMzQ6.png"><br>此時Memory Map 裡面只有 bootloader 和 Application</p>
-<p><img src="/images/Hy0SdGzQT.png"><br>按下2 啟動Application 會出現一點亂碼</p>
-<p><img src="/images/Syw9Mfm6.png"><br>啟動Application 後的 Memory Map 尾部會出現資料</p>
-<h2 id="參考-1"><a href="#參考-1" class="headerlink" title="參考"></a>參考</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
-</ul>
-<h1 id="用-Bootloader-NCP-UART-XMODEM-更新-Bootloader"><a href="#用-Bootloader-NCP-UART-XMODEM-更新-Bootloader" class="headerlink" title="用 Bootloader - NCP UART XMODEM 更新 Bootloader"></a>用 Bootloader - NCP UART XMODEM 更新 Bootloader</h1><p><img src="/images/H1Wv54f7a.png"></p>
-<blockquote>
-<p>這裡更新Bootloader版本只能往上更新<br>編輯Bootloader版本設定  Bootloader Version Main Customer &gt;&gt; Bootloader Core</p>
-</blockquote>
-<h2 id="製作專門給-gecko-bootloader-用的-gbl檔案-1"><a href="#製作專門給-gecko-bootloader-用的-gbl檔案-1" class="headerlink" title="製作專門給 gecko bootloader 用的 gbl檔案"></a>製作專門給 gecko bootloader 用的 gbl檔案</h2><p><img src="/images/HkXtcNz7T.png"><br><code>.\commander.exe gbl create bootloader-uart-xmodem.gbl --bootloader bootloader-uart-xmodem.s37</code></p>
-<h2 id="進入-geoko-bootloader-模式-1"><a href="#進入-geoko-bootloader-模式-1" class="headerlink" title="進入 geoko bootloader 模式"></a>進入 geoko bootloader 模式</h2><p><img src="/images/B1glHMGma.jpg"><br>讓板子進入geoko bootloader 模式 預設是PC00接地，接上電源<br>如果沒有Application是直接進入到bootloader模式</p>
-<p><img src="/images/Bkpk8fGQp.png"><br>用Tera Term 看 會出現 gecko bootloader v2.03.02 字眼 </p>
-<h2 id="上傳-gbl-檔案-1"><a href="#上傳-gbl-檔案-1" class="headerlink" title="上傳 gbl 檔案"></a>上傳 gbl 檔案</h2><p><img src="/images/B14lwMGXp.png"><br>按1進入上傳模式 這裡會持續60s 如果沒有上傳檔案會恢復到Menu狀態</p>
-<p><img src="/images/HkUmvzzXT.png"><br>點擊 File &gt;&gt; Transfer &gt;&gt; XMODEM &gt;&gt; Send…</p>
-<p><img src="/images/S199i4MXa.png"><br>上傳完顯示 Serial upload complete 這時還是在 bootloader 模式</p>
-<p><img src="/images/rkN3sVzmp.png"><br>按 2 重新啟動 會出現 gecko bootloader v2.03.03 字眼 </p>
-<h2 id="參考-2"><a href="#參考-2" class="headerlink" title="參考"></a>參考</h2><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug489-gecko-bootloader-user-guide-gsdk-4.pdf">UG489: Silicon Labs Gecko Bootloader User’s Guide for GSDK 4.0 and Higher</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug162-simplicity-commander-reference-guide.pdf">UG162: Simplicity Commander Reference Guide</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.silabs.com/documents/public/user-guides/ug103-06-fundamentals-bootloading.pdf">Bootloading Fundamentals</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/emberznet-doc/blob/master/UG103.6/UG103.6.md">中文翻譯Bootloading Fundamentals</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/dsyx/docs.silabs.com_zh/blob/master/docs/UG266%20Silicon%20Labs%20Gecko%20Bootloader%20User's%20Guide.md">UG266: Silicon Labs Gecko Bootloader User’s Guide (Rev. 1.5)</a></li>
-</ul>
-<h1 id="外接-UART-接法"><a href="#外接-UART-接法" class="headerlink" title="外接 UART 接法"></a>外接 UART 接法</h1><p>如果要走自己拉的 UTN401A + Ambar<br>最左邊要High 最右邊是Low 中間左到右分別是RX TX<br><code>H|_|RX|TX|_|G</code><br><img src="/images/rJpMMU7a.jpg"></p>
-<ul>
-<li><p>Zigbee - NCP ncp-uart-hw 專案<br>  Service &gt;&gt; IO Stream &gt;&gt; Driver &gt;&gt; IO Stream: USART &gt;&gt; vcom<br>  SL_IOSTREAM_USART_VCOM 變更 RX TX 腳位輸入輸出設定</p>
-</li>
-<li><p>Bootloader - NCP UART XMODEM 專案</p>
-<ul>
-<li>Platform &gt;&gt; Bootloader &gt;&gt; Drivers &gt;&gt; Bootloader UART Driver </li>
-<li>SL_SERIAL_UART 變更 RX TX 腳位輸入輸出設定</li>
-</ul>
-</li>
-</ul>
-
+<p><img src="/images/rJPmOAx7T.png"><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118184600-2b622287.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </p></div>
 
     
     

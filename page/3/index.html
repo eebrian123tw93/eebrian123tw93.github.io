@@ -233,7 +233,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:23:10" itemprop="dateModified" datetime="2024-01-20T18:23:10+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:06" itemprop="dateModified" datetime="2024-01-24T02:17:06+08:00">2024-01-24</time>
     </span>
 
   
@@ -247,45 +247,17 @@
     
     <div class="post-body" itemprop="articleBody">
           <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119013103.png"><br>I2C(IIC)唸做I-square-C 属于两线式串行总线，由飞利浦公司开发用于微控制器(MCU)和外围设备(从设备)进行通信的一种总线，属于一主多从(一个主设备(Master)，多个从设备(Slave))的总线结构，总线上的每个设备都有一个特定的设备地址，以区分同一I2C总线上的其他设备。</p>
-<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸</p>
-<p>物理I2C接口有<strong>两根双向线</strong>， <strong>串行时钟线（SCL）和串行数据线（SDA）</strong> 组成，可用于发送和接收数据，但是通信都是由主设备发起，从设备被动响应，实现数据的传输。</p>
-<h1 id="I2C主设备与从设备的一般通信过程"><a href="#I2C主设备与从设备的一般通信过程" class="headerlink" title="I2C主设备与从设备的一般通信过程"></a>I2C主设备与从设备的一般通信过程</h1><h2 id="起始位-Start-condition-停止位-Stop-condition"><a href="#起始位-Start-condition-停止位-Stop-condition" class="headerlink" title="起始位 Start condition 停止位 Stop condition"></a>起始位 Start condition 停止位 Stop condition</h2><p><img src="/images/20231119013140.png"></p>
-<ul>
-<li>Start condition: SCL&#x3D; high + SDA falling (SDA由高到低跳變)</li>
-<li>Stop condition: SCL&#x3D;high + SDA raising (SDA由低到高跳變)</li>
-</ul>
-<h2 id="邏輯數據"><a href="#邏輯數據" class="headerlink" title="邏輯數據"></a>邏輯數據</h2><p><img src="/images/20231119013159.png"><br>SCL為High採集SDA數據<br><img src="/images/20231119013218.png"><br>表示1010000  </p>
-<h2 id="一-主设备给从设备发送-x2F-写入数据："><a href="#一-主设备给从设备发送-x2F-写入数据：" class="headerlink" title="一. 主设备给从设备发送&#x2F;写入数据："></a>一. 主设备给从设备发送&#x2F;写入数据：</h2><p><img src="/images/20231119013233.png"></p>
-<ol>
-<li>主设备发送起始（START）信号(1 bit)</li>
-<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 寫(1 bit)</li>
-<li>等待从设备响应(ACK)(1 bit)</li>
-<li>主设备发送数据到从设备，一般发送的每个字节数(8bit)据后会跟着等待接收来自从设备的响应(ACK)(1 bit)</li>
-<li>数据发送完毕，主设备发送停止(STOP)信号终止传输(1 bit)</li>
-</ol>
-<h2 id="二-主设备从从设备接收-x2F-读取数据"><a href="#二-主设备从从设备接收-x2F-读取数据" class="headerlink" title="二. 主设备从从设备接收&#x2F;读取数据"></a>二. 主设备从从设备接收&#x2F;读取数据</h2><p><img src="/images/20231119013244.png"></p>
-<ol>
-<li>设备发送起始（START）信号(1 bit)</li>
-<li>主设备发送设备地址到从设备(7&#x2F;8bit) + 讀(1 bit)</li>
-<li>等待从设备响应(ACK)(1 bit)</li>
-<li>主设备接收来自从设备的数据，一般接收的每个字节(8bit)数据后会跟着向从设备发送一个响应(ACK)(1 bit)</li>
-<li>一般接收到最后一个数据后会发送一个无效响应(NACK)，然后主设备发送停止(STOP)信号终止传输(1 bit)</li>
-</ol>
-<h2 id="三-讀寫數據幀"><a href="#三-讀寫數據幀" class="headerlink" title="三. 讀寫數據幀"></a>三. 讀寫數據幀</h2><p><img src="/images/20231119013257.png"></p>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=u62_Rjd5oMY">4分钟看懂！I2C通讯协议 最简单的总线通讯！</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=oPrfi_HCtjY">I²C通訊格式介紹</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=FamlCPP2J4o">11 IIC总线原理轻松明白</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/503219395">IIC通信协议，搞懂这篇就够了</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.strongpilab.com/i2c-introduction/">I2C-協定用法原理簡介-晶片溝通的橋樑</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://medium.com/weiting-tw/%E6%8A%80%E8%A1%93%E7%AD%86%E8%A8%98-i2c%E9%80%9A%E8%A8%8A%E5%8D%94%E5%AE%9A%E6%93%8D%E4%BD%9C-36d4dad0c9b3">[技術筆記] I2C通訊協定操作</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
-</ul>
-
+<p>半雙工、同步、串行傳輸，物理上只有兩根線（SDA&#x2F;SCL）；傳輸數據必須8位8位的傳輸<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20231118183800-d71a458d.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
-    </div>
+    </p></div>
 
     
     
@@ -505,7 +477,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-23 14:04:13" itemprop="dateModified" datetime="2024-01-23T14:04:13+08:00">2024-01-23</time>
+      <time title="Modified: 2024-01-24 02:17:06" itemprop="dateModified" datetime="2024-01-24T02:17:06+08:00">2024-01-24</time>
     </span>
 
   
@@ -523,15 +495,15 @@
 <li>lest-connected：會將請求分配到目前連接數最少的伺服器上</li>
 <li>ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的</li>
 </ol>
-<h2 id="設定不同付載平衡模式"><a href="#設定不同付載平衡模式" class="headerlink" title="設定不同付載平衡模式"></a>設定不同付載平衡模式</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash</span><br><span class="line">		server srv1.example.com;</span><br><span class="line">		server srv2.example.com;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="Round-robin-分配權重-weight"><a href="#Round-robin-分配權重-weight" class="headerlink" title="Round-robin 分配權重 weight"></a>Round-robin 分配權重 weight</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com weight=2;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效"><a href="#備份-backup-backup-代表，所有伺服器都掛掉之後，此伺服器才會生效" class="headerlink" title="備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效"></a>備份 backup backup 代表，所有伺服器都掛掉之後，此伺服器才會生效</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">http &#123;</span><br><span class="line">	upstream myapp &#123;</span><br><span class="line">		server srv1.example.com weight=3;</span><br><span class="line">		server srv2.example.com backup;</span><br><span class="line">		server srv3.example.com;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	server &#123;</span><br><span class="line">		listen 80;</span><br><span class="line"></span><br><span class="line">		location / &#123;</span><br><span class="line">			proxy_pass	 http://myapp;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="maxlist.xyz/2020/06/18/flask-nginx/">maxlist.xyz&#x2F;2020&#x2F;06&#x2F;18&#x2F;flask-nginx&#x2F;</a></li>
-</ul>
-
+<h2 id="設定不同付載平衡模式"><a href="#設定不同付載平衡模式" class="headerlink" title="設定不同付載平衡模式"></a>設定不同付載平衡模式</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20230417154300-ab2a7258.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 

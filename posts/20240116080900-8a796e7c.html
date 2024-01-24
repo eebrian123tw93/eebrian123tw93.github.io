@@ -21,18 +21,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照 GOP 兩個I幀之間的間隔完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差">
+    <meta name="description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照">
 <meta property="og:type" content="article">
 <meta property="og:title" content="H264基礎知識">
 <meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240116080900-8a796e7c.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照 GOP 兩個I幀之間的間隔完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差">
+<meta property="og:description" content="H264MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC I幀, B幀,P幀,IDR幀 I幀 關鍵幀P幀 前向預測編碼幀B幀 雙向預測內插編碼幀IDR幀  I 幀的一種 立即刷新IDR 幀禁止後面的幀向自己前面的幀參照">
 <meta property="og:locale">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240116150548.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240116154054.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240116154827.png">
 <meta property="article:published_time" content="2024-01-16T08:09:00.000Z">
-<meta property="article:modified_time" content="2024-01-20T10:29:14.000Z">
+<meta property="article:modified_time" content="2024-01-23T18:17:02.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="H264">
 <meta property="article:tag" content="I幀">
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:29:14" itemprop="dateModified" datetime="2024-01-20T18:29:14+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:02" itemprop="dateModified" datetime="2024-01-24T02:17:02+08:00">2024-01-24</time>
     </span>
 
   
@@ -262,7 +262,7 @@
     
     <div class="post-body" itemprop="articleBody"><h1 id="H264"><a href="#H264" class="headerlink" title="H264"></a>H264</h1><p>MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC</p>
 <h1 id="I幀-B幀-P幀-IDR幀"><a href="#I幀-B幀-P幀-IDR幀" class="headerlink" title="I幀, B幀,P幀,IDR幀"></a>I幀, B幀,P幀,IDR幀</h1><p><img src="/images/20240116150548.png"></p>
-<h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照</p>
+<h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照<br> <span id="more"></span></p>
 <h2 id="GOP-兩個I幀之間的間隔"><a href="#GOP-兩個I幀之間的間隔" class="headerlink" title="GOP 兩個I幀之間的間隔"></a>GOP 兩個I幀之間的間隔</h2><p>完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差異部分編碼的幀叫 P幀，還有一種參考前後的幀編碼的幀叫 B幀<br>H264採用的核心演算法是幀內壓縮和幀間壓縮，幀內壓縮是產生 I 幀的演算法，幀間壓縮是產生 B 幀和 P 幀的演算法</p>
 <p>壓縮率 B幀 &gt; P幀 &gt; I幀<br>訊息量 I幀 &gt; P幀 &gt; B幀</p>
 <p>幀特性看底下連結<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>

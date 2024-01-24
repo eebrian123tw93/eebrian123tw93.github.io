@@ -21,12 +21,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
+    <meta name="description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 115200">
 <meta property="og:type" content="article">
 <meta property="og:title" content="UART RS232 RS484">
 <meta property="og:url" content="http://eebrian123tw93.github.io/posts/20231118193100-f5da1a51.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 1152001 鮑率 即指每秒傳輸">
+<meta property="og:description" content="# 介紹UART：全雙工、異步、串行傳輸，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。 鮑率(波特率)常見的鮑率 9600 19200 38400 115200">
 <meta property="og:locale">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022253.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022310.png">
@@ -44,7 +44,7 @@
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022714.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119022730.png">
 <meta property="article:published_time" content="2023-11-18T19:31:00.000Z">
-<meta property="article:modified_time" content="2024-01-20T10:38:51.000Z">
+<meta property="article:modified_time" content="2024-01-23T18:17:05.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="UART">
 <meta property="article:tag" content="RS232">
@@ -258,7 +258,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-20 18:38:51" itemprop="dateModified" datetime="2024-01-20T18:38:51+08:00">2024-01-20</time>
+      <time title="Modified: 2024-01-24 02:17:05" itemprop="dateModified" datetime="2024-01-24T02:17:05+08:00">2024-01-24</time>
     </span>
 
   
@@ -271,7 +271,7 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
-<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br>1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br> <span id="more"></span><br> 1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
 <h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
 <h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
 <h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>

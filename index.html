@@ -225,15 +225,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2024-01-24 00:33:00" itemprop="dateCreated datePublished" datetime="2024-01-24T00:33:00+08:00">2024-01-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-23 16:29:39" itemprop="dateModified" datetime="2024-01-23T16:29:39+08:00">2024-01-23</time>
+      <time title="Created: 2024-01-24 00:33:00 / Modified: 01:52:42" itemprop="dateCreated datePublished" datetime="2024-01-24T00:33:00+08:00">2024-01-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -255,9 +249,15 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>今天真是個又累又氣的一天。花了4小時找一個差異。事情是這樣子的：這陣子在做<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，接下來換H265。經過了幾次測試都發現我的瀏覽器無法支援H265的解碼。於是我跑去問主管該如何處理，他給我了他的經驗，他的電腦竟然可以用Chrome播放H265&#x2F;MP4的格式。我請他將檔案給我，讓我跑跑看，結果我的也不行。我以為主管的電腦有比較好，結果問之下也沒有。</p>
-<p>就這樣我有來來回回在網路找資源，還下載了其他瀏覽器測試，還另外下載解碼包，結論都是無法。這樣搞了大概3個小時，結果最後我發現，在一個網站上竟然說在Intel 6代以後的CPU都支援H265解碼。我想我的是Intel® Core™ i7-10700處理器應該早就支援了。於是我就去安裝我內顯的驅動，猜怎麼著，還是不行。原來我電腦上有一張獨顯，那張獨顯完全不支援H265。用測試軟體跑獨顯和內顯的解碼能力，我真的要罵出髒話，獨顯的解碼能力竟然低於內顯，而且是低很多的檔次。想說這顆爛獨顯到底有何用，只是單純讓我外接的嗎？還是來考驗我的除錯能力？</p>
-<p>就這樣我用內顯重開電腦之後，H265&#x2F;MP4的影片就可以播放了。真的是讓我浪費了好多時間和精力啊啊啊啊！</p>
+          <h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>今天真是個又累又氣的一天。花了4小時找一個差異。事情是這樣子的：這陣子在做<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，接下來換H265。經過了幾次測試都發現我的瀏覽器無法支援H265的解碼。於是我跑去問主管該如何處理，他給我了他的經驗，他的電腦竟然可以用Chrome播放H265&#x2F;MP4的格式。我請他將檔案給我，讓我跑跑看，結果我的也不行。我以為主管的電腦有比較好，結果問之下也沒有。</p>
+<p>就這樣我有來來回回在網路找資源，還下載了其他瀏覽器測試，還另外下載解碼包<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.codecguide.com/download_kl.htm">K-Lite Codec Pack</a>，結論都是無法。這樣搞了大概3個小時，結果最後我發現，在一個網站上竟然說在Intel 6代以後的CPU都支援H265解碼。我想我的是Intel® Core™ i7-10700處理器應該早就支援了。於是我就去安裝我內顯的驅動，猜怎麼著，還是不行。原來我電腦上有一張獨顯，那張獨顯完全不支援H265。用測試軟體<a target="_blank" rel="external nofollow noopener noreferrer" href="https://bluesky-soft.com/en/DXVAChecker.html">DXVAChecker</a>跑獨顯和內顯的解碼能力，我真的要罵出髒話，獨顯的解碼能力竟然低於內顯，而且是低很多的檔次。想說這顆爛獨顯到底有何用，只是單純讓我外接的嗎？還是來考驗我的除錯能力？</p>
+<p>就這樣我用內顯重開電腦之後，H265&#x2F;MP4的影片就可以播放了。真的是讓我浪費了好多時間和精力啊啊啊啊！<br><img src="/images/20240124094118.png"><br>上面這張是獨顯 <code>AMD Radeon™ HD 7470</code><br>下面這張是<code>Intel® Core™ i7-10700</code> 內顯 <code>Intel® UHD Graphics 630</code><br><img src="/images/20240124094050.png"></p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.codecguide.com/download_kl.htm">Download K-Lite Codec Pack</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://bluesky-soft.com/en/DXVAChecker.html">DXVAChecker</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.cnblogs.com/lidabo/p/16742377.html">HEVC 软硬件的支持</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/Dontla/article/details/132752490">解决chrome浏览器不能播放H265视频播放问题……</a></li>
+</ul>
 
       
     </div>

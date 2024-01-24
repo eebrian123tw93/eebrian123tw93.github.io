@@ -4,7 +4,7 @@ tags:
   - WebCodecsAPI
   - H264
 date: '2024-01-22 10:16:00'
-updated: '2024-01-23 16:29:38'
+updated: '2024-01-24 02:17:02'
 categories: ''
 description: ''
 abbrlink: ef8abaf3
@@ -15,7 +15,8 @@ WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片
 # 流程
 ![](/images/20240122092416.png)
 1. `H264NALu` 轉成 `EncodedVideoChunk` 物件
-2. 交給 `VideoDecoder` 做解碼 
+ <!-- more -->
+ 2. 交給 `VideoDecoder` 做解碼 
 3. 產物為 `VideoFrame` 會後交給 `Canvas` 渲染
 其中 `EncodedVideoChunk` `VideoDecoder` `VideoFrame` 為  WebCodecs API 內物件
 # 上程式

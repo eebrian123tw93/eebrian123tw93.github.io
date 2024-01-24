@@ -12,7 +12,7 @@ tags:
 categories:
   - zigbee
 date: '2023-11-19 02:46:00'
-updated: '2024-01-22 14:51:46'
+updated: '2024-01-24 02:17:05'
 description: ''
 abbrlink: 2b622287
 ---
@@ -21,7 +21,8 @@ abbrlink: 2b622287
 先下載[simplicity-studio](https://www.silabs.com/developers/simplicity-studio)並安裝(防毒軟體先關掉)
 
 ![](/images/rJPmOAx7T.png)
-![](/images/rkeBu0em6.png)
+ <!-- more -->
+ ![](/images/rkeBu0em6.png)
 ![](/images/rJMUOAgmT.png)
 ![](/images/H19PO0x7a.png)
 一直下一步，安裝到預設路徑即可 安裝完會自動打開

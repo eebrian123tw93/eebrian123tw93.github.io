@@ -4,14 +4,15 @@ tags:
   - Zigbee
   - IEEE802154
 date: '2023-11-19 03:50:00'
-updated: '2024-01-20 18:25:20'
+updated: '2024-01-24 02:17:04'
 categories: ''
 description: ''
 abbrlink: c8085013
 ---
 * [1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法](https://blog.csdn.net/u011350258/article/details/113062464)
 * [手把手指南—— 开启你的 Zigbee 之旅](https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf)
-* Youtube [Zigbee](https://www.youtube.com/playlist?list=PLkc2nflOpCG1jYSnd6gOWpV8XhrlEF-2J)
+ <!-- more -->
+ * Youtube [Zigbee](https://www.youtube.com/playlist?list=PLkc2nflOpCG1jYSnd6gOWpV8XhrlEF-2J)
 * [Day 1-1 ZigBee基础知识](https://www.youtube.com/watch?v=iuhY4f_DvfI&ab_channel=TorchIoTBootCamp)
 * [Zigbee快速入门第二节 – Zigbee基础介绍](https://blog.csdn.net/lexiyao/article/details/120969009)
 * [zigbee-specification](https://csa-iot.org/wp-content/uploads/2023/04/05-3474-23-csg-zigbee-specification-compressed.pdf)

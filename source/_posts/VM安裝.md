@@ -6,7 +6,7 @@ tags:
   - samba
   - ssh-server
 date: '2023-11-29 18:16:00'
-updated: '2024-01-20 18:07:07'
+updated: '2024-01-24 02:17:03'
 categories: ''
 description: ''
 abbrlink: 661de22d
@@ -19,7 +19,8 @@ abbrlink: 661de22d
 點擊Run
 ![](/images/20231129152907.png)
 輸入密碼
-![](/images/20231129152934.png)
+ <!-- more -->
+ ![](/images/20231129152934.png)
 運行中
 ![](/images/20231129153043.png)
 無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾

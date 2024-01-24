@@ -1,7 +1,7 @@
 ---
 title: 實作 Nginx 負載平衡 load balance
 tags: null
-updated: '2024-01-23 14:04:13'
+updated: '2024-01-24 02:17:06'
 abbrlink: ab2a7258
 date: '2023-04-17 23:43:00'
 categories: null
@@ -14,7 +14,8 @@ description: ''
 3. ip-hash：利用 hash-function 來決定使用者要被分配到的伺服器，此方法可以達到同一個使用者 (IP address) 每次連結的伺服器都是相同的
 
 ## 設定不同付載平衡模式
-```
+ <!-- more -->
+ ```
 http {
 	upstream myapp {
 		ip_hash; #付載平衡模式 round-robin(default 不寫), lest_conn , ip-hash

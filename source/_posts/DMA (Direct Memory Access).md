@@ -3,7 +3,7 @@ title: DMA (Direct Memory Access)
 tags:
   - DMA
 date: '2023-11-19 03:48:00'
-updated: '2024-01-20 18:27:13'
+updated: '2024-01-24 02:17:04'
 categories: ''
 description: ''
 abbrlink: e891e3a3
@@ -16,7 +16,8 @@ abbrlink: e891e3a3
 
 1. 要知道原始資料的位置。
 2. 要知道目地的位置。
-3. 要知道要搬多少資料長度。
+ <!-- more -->
+ 3. 要知道要搬多少資料長度。
 
 # 配置DMA(以SRAM到外部設備)
 * 從哪裡複製(要複製的地址) SRAM Address

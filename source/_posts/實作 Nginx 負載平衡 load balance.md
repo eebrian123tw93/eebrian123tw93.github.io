@@ -1,11 +1,13 @@
 ---
 title: 實作 Nginx 負載平衡 load balance
-tags: null
-updated: '2024-01-24 02:17:06'
-abbrlink: ab2a7258
+tags:
+  - load_balance
+  - nginx
 date: '2023-04-17 23:43:00'
-categories: null
+updated: '2024-01-24 08:39:22'
+categories: ''
 description: ''
+abbrlink: ab2a7258
 ---
 
 ## 三種 load balancing 方法

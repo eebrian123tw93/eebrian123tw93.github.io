@@ -1,11 +1,12 @@
 ---
 title: IIC I2C （Inter-Integrated Circuit）
 tags:
-  - IIC
   - I2C
+  - IIC
 date: '2023-11-19 02:38:00'
-updated: '2024-01-24 02:17:06'
-categories: ''
+updated: '2024-01-25 07:37:06'
+categories:
+  - soc
 description: ''
 abbrlink: d71a458d
 ---

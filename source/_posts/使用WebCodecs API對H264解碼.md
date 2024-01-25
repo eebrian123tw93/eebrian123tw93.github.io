@@ -4,8 +4,9 @@ tags:
   - H264
   - WebCodecsAPI
 date: '2024-01-22 10:16:00'
-updated: '2024-01-25 06:50:15'
-categories: ''
+updated: '2024-01-25 07:34:22'
+categories:
+  - web
 description: ''
 abbrlink: ef8abaf3
 ---

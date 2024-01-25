@@ -1,14 +1,15 @@
 ---
 title: UART RS232 RS484
 tags:
-  - UART
   - RS232
   - RS484
-  - TXRX
   - TTL
+  - TXRX
+  - UART
 date: '2023-11-19 03:31:00'
-updated: '2024-01-24 02:17:05'
-categories: ''
+updated: '2024-01-25 07:37:04'
+categories:
+  - soc
 description: ''
 abbrlink: f5da1a51
 ---

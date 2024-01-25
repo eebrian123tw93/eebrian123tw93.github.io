@@ -4,8 +4,9 @@ tags:
   - PWM
   - WS2812B
 date: '2023-11-19 03:46:00'
-updated: '2024-01-24 02:17:04'
-categories: ''
+updated: '2024-01-25 07:37:02'
+categories:
+  - soc
 description: ''
 abbrlink: 68d2e719
 ---

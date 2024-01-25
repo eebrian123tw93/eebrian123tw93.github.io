@@ -1,13 +1,14 @@
 ---
 title: VM安裝
 tags:
-  - vm
   - VirtualBox
   - samba
   - ssh-server
+  - vm
 date: '2023-11-29 18:16:00'
-updated: '2024-01-24 02:17:03'
-categories: ''
+updated: '2024-01-25 07:36:59'
+categories:
+  - linux
 description: ''
 abbrlink: 661de22d
 ---

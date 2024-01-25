@@ -7,7 +7,7 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-25 02:07:38'
+updated: '2024-01-25 08:13:14'
 description: ''
 abbrlink: 2ff23ae2
 ---
@@ -45,12 +45,15 @@ with tqdm(total=100, desc='cpu%', position=1) as cpubar, tqdm(total=100, desc='r
 
 ## 再上範例1 單進程
 ```
-from tqdm import tqdm
 total = 300
 for i in range(total):
     print(i)
-
-
+```
+假設任務有300個 ++ 就算完成 每次都print 一下
+結果如下，就會非常凌亂，不夠炫炮
+![](/images/20240125155025.png)
+### 使用 tqdm
+```
 from tqdm import tqdm
 from time import sleep
 total = 300
@@ -62,6 +65,12 @@ for i in range(total):
     sleep(0.1)
 
 ```
+
+這裡也假設任務有300個 ++ 就算完成 每次都去 `update()` 進度條一下
+`update()`就是去++ 進度條的值 因為 total 有設定 所以會自動算出完成度幾 percent
+![](/images/20240125160318.gif)
+套用在自己耗時的程式馬上，就不會印的很凌亂，非常直覺
+
 ##  再上範例2 多進程
 > 需要考慮競爭的問題
 

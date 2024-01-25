@@ -1,10 +1,10 @@
 ---
 title: 使用WebCodecs API對H264解碼
 tags:
-  - WebCodecsAPI
   - H264
+  - WebCodecsAPI
 date: '2024-01-22 10:16:00'
-updated: '2024-01-24 02:17:02'
+updated: '2024-01-25 02:07:34'
 categories: ''
 description: ''
 abbrlink: ef8abaf3
@@ -53,14 +53,14 @@ decoder.configure(config);
 ## 將 H264NALU轉換成`EncodedVideoChunk`
 ``` javascript
 const init = {
-  type: unit.type == 5 ? 'key' : 'delta',
+  type: unit.type === 5 ? 'key' : 'delta',
   data: h26XBuffer,
   timestamp: timestamp,
 };
 chunk = new EncodedVideoChunk(init);
 decoder.decode(chunk);
 ```
-`EncodedVideoChunk` 初始化要分辨這一幀是 `key` 或 `delta`
+`EncodedVideoChunk` 初始化要分辨這一幀是 `key` 或 `delta` (使用NALu的unit_type)
 `key`:  IDR幀 關鍵幀 
 `delta`: P幀 或 B幀
 產生出來的 `chunk` 就可以餵到`decoder`去解碼了

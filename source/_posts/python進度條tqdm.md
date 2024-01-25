@@ -7,7 +7,7 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-24 08:48:53'
+updated: '2024-01-25 02:07:38'
 description: ''
 abbrlink: 2ff23ae2
 ---
@@ -44,6 +44,24 @@ with tqdm(total=100, desc='cpu%', position=1) as cpubar, tqdm(total=100, desc='r
 然後用`.n`更新值，再用 `.refresh()`去刷新terminal
 
 ## 再上範例1 單進程
+```
+from tqdm import tqdm
+total = 300
+for i in range(total):
+    print(i)
+
+
+from tqdm import tqdm
+from time import sleep
+total = 300
+progress = tqdm(total=total, desc='progress', position=1)
+
+for i in range(total):
+    progress.set_description(f'Processing: {i}')
+    progress.update()
+    sleep(0.1)
+
+```
 ##  再上範例2 多進程
 > 需要考慮競爭的問題
 

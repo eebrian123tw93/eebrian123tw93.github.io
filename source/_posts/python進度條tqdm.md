@@ -7,7 +7,7 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-25 08:13:14'
+updated: '2024-01-25 08:37:53'
 description: ''
 abbrlink: 2ff23ae2
 ---
@@ -16,13 +16,13 @@ abbrlink: 2ff23ae2
  <!-- more -->
  # tqdm
 ## pip 安裝 tqdm
-```
+``` bash
 python3 -m pip install tqdm 
 # or
 pip3 install tqdm
 ```
 ## 複製程式碼
-```
+``` python
 from tqdm import tqdm
 from time import sleep
 import psutil
@@ -44,7 +44,7 @@ with tqdm(total=100, desc='cpu%', position=1) as cpubar, tqdm(total=100, desc='r
 然後用`.n`更新值，再用 `.refresh()`去刷新terminal
 
 ## 再上範例1 單進程
-```
+``` python
 total = 300
 for i in range(total):
     print(i)
@@ -53,7 +53,7 @@ for i in range(total):
 結果如下，就會非常凌亂，不夠炫炮
 ![](/images/20240125155025.png)
 ### 使用 tqdm
-```
+``` python
 from tqdm import tqdm
 from time import sleep
 total = 300

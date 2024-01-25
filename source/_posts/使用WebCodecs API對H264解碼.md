@@ -4,7 +4,7 @@ tags:
   - H264
   - WebCodecsAPI
 date: '2024-01-22 10:16:00'
-updated: '2024-01-25 02:07:34'
+updated: '2024-01-25 06:50:15'
 categories: ''
 description: ''
 abbrlink: ef8abaf3
@@ -78,7 +78,7 @@ function handleFrame(frame) {
 ```
 
 # 總結
-上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用
+上述程式帶大家大致過一下WebCodecs API的流程，具體還有很多細節沒有說明，大家再小心服用，至於H265格式，可以參考{% post_link  "使用WebCodecs API對H265解碼" %} 
 # 參考
 - [WebCodecs对音视频进行编码解码](https://chenng.cn/posts/WebCodecs%E5%AF%B9%E9%9F%B3%E8%A7%86%E9%A2%91%E8%BF%9B%E8%A1%8C%E7%BC%96%E7%A0%81%E8%A7%A3%E7%A0%81/)
 - [WebCodecs API](https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API)

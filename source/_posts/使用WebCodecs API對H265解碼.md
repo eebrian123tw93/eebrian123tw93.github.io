@@ -6,12 +6,12 @@ tags:
 categories:
   - web
 date: '2024-01-25 10:43:00'
-updated: '2024-01-25 02:30:25'
+updated: '2024-01-25 06:50:19'
 description: ''
 abbrlink: 49fdb147
 ---
 # 前言
-這邊接續 上一章{% post_link  "使用WebCodecs API對H264解碼" %}，這裡的只是將程式碼有一點小改動
+這邊接續{% post_link  "使用WebCodecs API對H264解碼" %}，現在處理H265格式，這裡的只是將程式碼有一點小改動
 
 # 差異
 ## 建立 VideoDecoder
@@ -38,9 +38,9 @@ decoder.configure(config);
 ```
 這裡的不同的是  H264 和 H265 使用的 codec 不同
 > 使用 `await VideoDecoder.isConfigSupported(config)`
-> 檢查`config` 是否支援
  <!-- more -->
- 
+ > 檢查`config` 是否支援
+
 H265目前在chrome上只支援硬解，可以參考底下的連結看看硬體是否支援，
 如果硬體不行也可以下載支援H265軟硬解的 Chromium 試試看
 附上採坑日常 {% post_link  "20240123小日常" %}

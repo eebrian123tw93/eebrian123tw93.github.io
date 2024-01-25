@@ -46,6 +46,9 @@
 <li><a href="https://blog.csdn.net/as480133937/article/details/104927922">【STM32】 DMA原理，步骤超细详解，一文看懂DMA</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>soc</category>
+      </categories>
       <tags>
         <tag>DMA</tag>
       </tags>
@@ -84,14 +87,17 @@
 <li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>h264</category>
+      </categories>
       <tags>
-        <tag>H264</tag>
-        <tag>I幀</tag>
-        <tag>GOP</tag>
-        <tag>P幀</tag>
-        <tag>IDR幀</tag>
         <tag>B幀</tag>
+        <tag>GOP</tag>
+        <tag>H264</tag>
+        <tag>IDR幀</tag>
+        <tag>I幀</tag>
         <tag>NALU</tag>
+        <tag>P幀</tag>
       </tags>
   </entry>
   <entry>
@@ -156,9 +162,12 @@
 <li><a href="https://zhuanlan.zhihu.com/p/575318033">《Linux驱动：I2C驱动看这一篇就够了》</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>soc</category>
+      </categories>
       <tags>
-        <tag>IIC</tag>
         <tag>I2C</tag>
+        <tag>IIC</tag>
       </tags>
   </entry>
   <entry>
@@ -182,6 +191,9 @@
 <li><a href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>soc</category>
+      </categories>
       <tags>
         <tag>PWM</tag>
         <tag>WS2812B</tag>
@@ -341,12 +353,15 @@
 <li><a href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>soc</category>
+      </categories>
       <tags>
-        <tag>UART</tag>
         <tag>RS232</tag>
         <tag>RS484</tag>
-        <tag>TXRX</tag>
         <tag>TTL</tag>
+        <tag>TXRX</tag>
+        <tag>UART</tag>
       </tags>
   </entry>
   <entry>
@@ -387,11 +402,14 @@
 </ul>
 <p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>linux</category>
+      </categories>
       <tags>
-        <tag>vm</tag>
         <tag>VirtualBox</tag>
         <tag>samba</tag>
         <tag>ssh-server</tag>
+        <tag>vm</tag>
       </tags>
   </entry>
   <entry>
@@ -635,6 +653,9 @@
 <p><a href="https://blog.csdn.net/qq_35413125/article/details/116986028">ZigBeePro协议栈词汇名词解释</a></p>
 <p><a href="https://blog.csdn.net/Msymbol/article/details/111194158">Thread协议介绍</a><br><a href="https://iknow.stpi.narl.org.tw/Post/Read.aspx?PostID=10327">Thread可能取代Zigbee -ZHA並衝擊智慧家庭的通訊標準</a><br><a href="https://www.kocpc.com.tw/archives/476397">無線技術 Thread 是什麼？它會是智慧家庭的未來嗎？</a><br><a href="https://turadise.com/matter-thread/">Matter智慧家庭控制標準協定,用Thread整合智能居家控制系統</a></p>
 ]]></content>
+      <categories>
+        <category>zigbee</category>
+      </categories>
       <tags>
         <tag>Zigbee</tag>
         <tag>IEEE802154</tag>
@@ -665,6 +686,9 @@
 <li><strong>用css style的方式直接更改display屬性</strong><br> <code>style=&#39;display:none&#39;</code></li>
 </ol>
 ]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
       <tags>
         <tag>hidden</tag>
       </tags>
@@ -721,6 +745,9 @@
 <li><a href="https://developer.mozilla.org/en-US/docs/Web/API/WebCodecs_API">WebCodecs API</a></li>
 </ul>
 ]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
       <tags>
         <tag>H264</tag>
         <tag>WebCodecsAPI</tag>

@@ -21,15 +21,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言這邊接續 上一章使用WebCodecs API對H264解碼，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFrame,	erro">
+    <meta name="description" content="前言這邊接續使用WebCodecs API對H264解碼，現在處理H265格式，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFram">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用WebCodecs API對H265解碼">
 <meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="前言這邊接續 上一章使用WebCodecs API對H264解碼，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFrame,	erro">
+<meta property="og:description" content="前言這邊接續使用WebCodecs API對H264解碼，現在處理H265格式，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFram">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-01-25T02:43:00.000Z">
-<meta property="article:modified_time" content="2024-01-24T18:30:25.000Z">
+<meta property="article:modified_time" content="2024-01-24T22:50:19.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="H265">
 <meta property="article:tag" content="WebCodecsAPI">
@@ -233,7 +233,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2024-01-25 10:43:00 / Modified: 02:30:25" itemprop="dateCreated datePublished" datetime="2024-01-25T10:43:00+08:00">2024-01-25</time>
+      <time title="Created: 2024-01-25 10:43:00 / Modified: 06:50:19" itemprop="dateCreated datePublished" datetime="2024-01-25T10:43:00+08:00">2024-01-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -254,11 +254,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續 上一章<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，這裡的只是將程式碼有一點小改動</p>
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，現在處理H265格式，這裡的只是將程式碼有一點小改動</p>
 <h1 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;hev1.1.6.L123.B0&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
 <p>這裡的不同的是  H264 和 H265 使用的 codec 不同</p>
 <blockquote>
-<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br>檢查<code>config</code> 是否支援<br> <span id="more"></span></p>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> <span id="more"></span><br>檢查<code>config</code> 是否支援</p>
 </blockquote>
 <p>H265目前在chrome上只支援硬解，可以參考底下的連結看看硬體是否支援，<br>如果硬體不行也可以下載支援H265軟硬解的 Chromium 試試看<br>附上採坑日常 <a href="/posts/20240123163300-3f5d67a6.html" title="20240123小日常">20240123小日常</a></p>
 <h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>

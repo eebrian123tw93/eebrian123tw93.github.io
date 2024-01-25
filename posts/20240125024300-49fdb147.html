@@ -21,31 +21,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="介紹是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果. Period 週期通常週期固定然後調整占空比 Duty Circle(占空比)100%代表有1個clock有百分之100是高電平 平均電壓為 5V1 &#x3D; 5V">
+    <meta name="description" content="前言這邊接續 上一章使用WebCodecs API對H264解碼，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFrame,	erro">
 <meta property="og:type" content="article">
-<meta property="og:title" content="PWM(Pulse-width modulation)">
-<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html">
+<meta property="og:title" content="使用WebCodecs API對H265解碼">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="介紹是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果. Period 週期通常週期固定然後調整占空比 Duty Circle(占空比)100%代表有1個clock有百分之100是高電平 平均電壓為 5V1 &#x3D; 5V">
+<meta property="og:description" content="前言這邊接續 上一章使用WebCodecs API對H264解碼，這裡的只是將程式碼有一點小改動 差異建立 VideoDecoder12345678910111213141516171819function handleFrame(frame) &amp;#123;	&#x2F;&#x2F; render by canvas&amp;#125;const init &#x3D; &amp;#123;	output: handleFrame,	erro">
 <meta property="og:locale">
-<meta property="og:image" content="http://eebrian123tw93.github.io/images/20231119023727.png">
-<meta property="article:published_time" content="2023-11-18T19:46:00.000Z">
-<meta property="article:modified_time" content="2024-01-23T18:17:04.000Z">
+<meta property="article:published_time" content="2024-01-25T02:43:00.000Z">
+<meta property="article:modified_time" content="2024-01-24T18:30:25.000Z">
 <meta property="article:author" content="BrianLu">
-<meta property="article:tag" content="PWM">
-<meta property="article:tag" content="WS2812B">
+<meta property="article:tag" content="H265">
+<meta property="article:tag" content="WebCodecsAPI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20231119023727.png">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html">
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html","path":"posts/20231118194600-68d2e719.html","title":"PWM(Pulse-width modulation)"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html","path":"posts/20240125024300-49fdb147.html","title":"使用WebCodecs API對H265解碼"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>PWM(Pulse-width modulation) | Brian's 隨記</title>
+<title>使用WebCodecs API對H265解碼 | Brian's 隨記</title>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
 <script>
@@ -149,7 +147,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">介紹</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Period-%E9%80%B1%E6%9C%9F"><span class="nav-number">2.</span> <span class="nav-text">Period 週期</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Duty-Circle-%E5%8D%A0%E7%A9%BA%E6%AF%94"><span class="nav-number">3.</span> <span class="nav-text">Duty Circle(占空比)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-WS2812B"><span class="nav-number">4.</span> <span class="nav-text">範例 WS2812B</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#WS2812B-PWM-%E5%A6%82%E6%9E%9C%E6%98%AF%E5%96%AE%E7%B4%94%E7%94%A8PWM%E7%94%A8IO%E7%9A%84%E6%96%B9%E6%B3%95%E6%8E%A7%E5%88%B6duty-cycle%E7%84%A1%E6%B3%95%E6%8E%A7%E5%88%B6%E5%88%B0%E6%AF%8F%E5%80%8Bbit"><span class="nav-number">4.1.</span> <span class="nav-text">WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E5%86%8C%E8%AF%A5pwm%E9%80%9A%E9%81%93"><span class="nav-number">4.1.1.</span> <span class="nav-text">注册该pwm通道</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9A%E9%80%B1%E6%9C%9F-ns"><span class="nav-number">4.1.2.</span> <span class="nav-text">設定週期(ns)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A8%AD%E5%AE%9Aduty-cycle-ns"><span class="nav-number">4.1.3.</span> <span class="nav-text">設定duty cycle(ns)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%96%8B%E7%87%88"><span class="nav-number">4.1.4.</span> <span class="nav-text">開燈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%9C%E7%87%88"><span class="nav-number">4.1.5.</span> <span class="nav-text">關燈</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83%E5%BD%B1%E7%89%87"><span class="nav-number">5.</span> <span class="nav-text">參考影片</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B7%AE%E7%95%B0"><span class="nav-number">2.</span> <span class="nav-text">差異</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-VideoDecoder"><span class="nav-number">2.1.</span> <span class="nav-text">建立 VideoDecoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">2.2.</span> <span class="nav-text">參考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%87-H265NALU%E8%BD%89%E6%8F%9B%E6%88%90EncodedVideoChunk"><span class="nav-number">2.3.</span> <span class="nav-text">將 H265NALU轉換成EncodedVideoChunk</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B8%BD%E7%B5%90"><span class="nav-number">3.</span> <span class="nav-text">總結</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -205,7 +203,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -218,12 +216,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="PWM(Pulse-width modulation) | Brian's 隨記">
+      <meta itemprop="name" content="使用WebCodecs API對H265解碼 | Brian's 隨記">
       <meta itemprop="description" content>
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          PWM(Pulse-width modulation)
+          使用WebCodecs API對H265解碼
         </h1>
 
         <div class="post-meta-container">
@@ -233,15 +231,18 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2023-11-19 03:46:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:46:00+08:00">2023-11-19</time>
+      <time title="Created: 2024-01-25 10:43:00 / Modified: 02:30:25" itemprop="dateCreated datePublished" datetime="2024-01-25T10:43:00+08:00">2024-01-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
+        <i class="far fa-folder"></i>
       </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-24 02:17:04" itemprop="dateModified" datetime="2024-01-24T02:17:04+08:00">2024-01-24</time>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+        </span>
     </span>
 
   
@@ -253,23 +254,22 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
-<h1 id="Period-週期"><a href="#Period-週期" class="headerlink" title="Period 週期"></a>Period 週期</h1><p>通常週期固定然後調整占空比</p>
-<h1 id="Duty-Circle-占空比"><a href="#Duty-Circle-占空比" class="headerlink" title="Duty Circle(占空比)"></a>Duty Circle(占空比)</h1><p>100%代表有1個clock有百分之100是高電平 平均電壓為 5V<em>1 &#x3D; 5V<br> <span id="more"></span><br> 75%代表有1個clock有百分之75是高電平 平均電壓為 5V</em>0.75 &#x3D; 3.75V<br>25%代表有1個clock有百分之25是高電平 平均電壓為 3V<em>0.25 &#x3D; 2.25V<br>0%代表有1個clock有百分之0是高電平 平均電壓為 3V</em>0 &#x3D; 0V<br>藉由控制占空比可以控制平均電壓 控制功率 可以控制燈的亮度 馬達轉速</p>
-<h1 id="範例-WS2812B"><a href="#範例-WS2812B" class="headerlink" title="範例 WS2812B"></a>範例 WS2812B</h1><h2 id="WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit"><a href="#WS2812B-PWM-如果是單純用PWM用IO的方法控制duty-cycle無法控制到每個bit" class="headerlink" title="WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit"></a>WS2812B PWM 如果是單純用PWM用IO的方法控制duty_cycle無法控制到每個bit</h2><p>period &#x3D; 800Khz 1&#x2F;800000 &#x3D; 1250 ns<br>duty cycle 33% <code>1250*0.333 = 412.5</code> 0 碼<br>duty cycle 67% <code>1250*0.666 = 825</code> 1 碼<br>ws2812 复位信号为一个 不低于 50us</p>
-<h3 id="注册该pwm通道"><a href="#注册该pwm通道" class="headerlink" title="注册该pwm通道"></a>注册该pwm通道</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/class/pwm/pwmchip0/npwm</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/export</span><br></pre></td></tr></table></figure>
-<h3 id="設定週期-ns"><a href="#設定週期-ns" class="headerlink" title="設定週期(ns)"></a>設定週期(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 1250 &gt; /sys/class/pwm/pwmchip0/pwm0/period</span><br></pre></td></tr></table></figure>
-<h3 id="設定duty-cycle-ns"><a href="#設定duty-cycle-ns" class="headerlink" title="設定duty cycle(ns)"></a>設定duty cycle(ns)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br></pre></td></tr></table></figure>
-
-<h3 id="開燈"><a href="#開燈" class="headerlink" title="開燈"></a>開燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 825 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-<h3 id="關燈"><a href="#關燈" class="headerlink" title="關燈"></a>關燈</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo 412 &gt; /sys/class/pwm/pwmchip0/pwm0/duty_cycle</span><br><span class="line">echo 1 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br><span class="line">echo 0 &gt; /sys/class/pwm/pwmchip0/pwm0/enable</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=LCejYewAgwA">2.1.1脈衝寬度(PWM)基本介紹</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=27GkMk8ct0s">[Arduino 教學課程] 什麼！用pwm就能控制LED亮度？那個像是蚯蚓符號的東西原來有其他用意？來實作看看呼吸燈ㄅ 從零開始學Arduino #11</a></li>
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續 上一章<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，這裡的只是將程式碼有一點小改動</p>
+<h1 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;hev1.1.6.L123.B0&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
+<p>這裡的不同的是  H264 和 H265 使用的 codec 不同</p>
+<blockquote>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br>檢查<code>config</code> 是否支援<br> <span id="more"></span></p>
+</blockquote>
+<p>H265目前在chrome上只支援硬解，可以參考底下的連結看看硬體是否支援，<br>如果硬體不行也可以下載支援H265軟硬解的 Chromium 試試看<br>附上採坑日常 <a href="/posts/20240123163300-3f5d67a6.html" title="20240123小日常">20240123小日常</a></p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/StaZhu/enable-chromium-hevc-hardware-decoding">enable-chromium-hevc-hardware-decoding</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/Dontla/article/details/132752490?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-132752490-blog-135105844.235%5Ev40%5Epc_relevant_anti_vip&spm=1001.2101.3001.4242.2&utm_relevant_index=4">解决chrome浏览器不能播放H265….）DXVA Checker、GPU-Z</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://codepen.io/danm8675123/pen/abNavqG">HEVC Video Test</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://bluesky-soft.com/en/DXVAChecker.html">DXVAChecker</a></li>
 </ul>
+<h2 id="將-H265NALU轉換成EncodedVideoChunk"><a href="#將-H265NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H265NALU轉換成EncodedVideoChunk"></a>將 H265NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> === <span class="number">19</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
+<p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code> (使用NALU的unit_type)<br>這裡的不同的是 NALU的 unit_type H264 和 H265 代表的不一樣，算出unit_type的方式也有所不同，<br>大家要非常的小心</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>H265 和 H264 使用 WebCodecs 的流程大致上沒有太大的區別，需要注意的是H265對於硬體的要求比較高，當今天硬體不支援時，該如何判斷，該如何處理，還有如何解析出H264 H265 unit_type，這也需要工程師閱讀資料得知了- 可以參考<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.twblogs.net/a/5c6d2817bd9eee5c86dcca4a">HEVC&#x2F;H265幀類型判斷及NALU TYPE介紹</a></p>
 
     </div>
 
@@ -279,22 +279,19 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/PWM/" rel="tag"># PWM</a>
-              <a href="/tags/WS2812B/" rel="tag"># WS2812B</a>
+              <a href="/tags/H265/" rel="tag"># H265</a>
+              <a href="/tags/WebCodecsAPI/" rel="tag"># WebCodecsAPI</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/posts/20231118193100-f5da1a51.html" rel="prev" title="UART RS232 RS484">
-                  <i class="fa fa-chevron-left"></i> UART RS232 RS484
+                <a href="/posts/20240124061700-2ff23ae2.html" rel="prev" title="python進度條tqdm">
+                  <i class="fa fa-chevron-left"></i> python進度條tqdm
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/posts/20231118194800-e891e3a3.html" rel="next" title="DMA (Direct Memory Access)">
-                  DMA (Direct Memory Access) <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

@@ -30,7 +30,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240124113531.gif">
 <meta property="article:published_time" content="2024-01-24T06:17:00.000Z">
-<meta property="article:modified_time" content="2024-01-24T00:48:53.000Z">
+<meta property="article:modified_time" content="2024-01-24T18:07:38.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="python">
 <meta property="article:tag" content="裝B">
@@ -163,13 +163,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
@@ -234,9 +234,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-01-24 14:17:00 / Modified: 08:48:53" itemprop="dateCreated datePublished" datetime="2024-01-24T14:17:00+08:00">2024-01-24</time>
+      <time title="Created: 2024-01-24 14:17:00" itemprop="dateCreated datePublished" datetime="2024-01-24T14:17:00+08:00">2024-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-25 02:07:38" itemprop="dateModified" datetime="2024-01-25T02:07:38+08:00">2024-01-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -261,7 +267,8 @@
 <h1 id="tqdm"><a href="#tqdm" class="headerlink" title="tqdm"></a>tqdm</h1><h2 id="pip-安裝-tqdm"><a href="#pip-安裝-tqdm" class="headerlink" title="pip 安裝 tqdm"></a>pip 安裝 tqdm</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">python3 -m pip install tqdm </span><br><span class="line"># or</span><br><span class="line">pip3 install tqdm</span><br></pre></td></tr></table></figure>
 <h2 id="複製程式碼"><a href="#複製程式碼" class="headerlink" title="複製程式碼"></a>複製程式碼</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">from tqdm import tqdm</span><br><span class="line">from time import sleep</span><br><span class="line">import psutil</span><br><span class="line"></span><br><span class="line">with tqdm(total=100, desc=&#x27;cpu%&#x27;, position=1) as cpubar, tqdm(total=100, desc=&#x27;ram%&#x27;, position=0) as rambar:</span><br><span class="line">    while True:</span><br><span class="line">        rambar.n=psutil.virtual_memory().percent</span><br><span class="line">        cpubar.n=psutil.cpu_percent()</span><br><span class="line">        rambar.refresh()</span><br><span class="line">        cpubar.refresh()</span><br><span class="line">        sleep(0.5)</span><br></pre></td></tr></table></figure>
 <h2 id="看看成果"><a href="#看看成果" class="headerlink" title="看看成果"></a>看看成果</h2><p><img src="/images/20240124113531.gif"><br>是不是非常酷炫<br><code>tqdm(total=100, desc=&#39;cpu%&#39;, position=1) as cpubar</code><br><code>tqdm(total=100, desc=&#39;ram%&#39;, position=0) as rambar</code><br>個別宣告兩個進度條 <code>position</code>是顯示在第幾條位置<br>然後用<code>.n</code>更新值，再用 <code>.refresh()</code>去刷新terminal</p>
-<h2 id="再上範例1-單進程"><a href="#再上範例1-單進程" class="headerlink" title="再上範例1 單進程"></a>再上範例1 單進程</h2><h2 id="再上範例2-多進程"><a href="#再上範例2-多進程" class="headerlink" title="再上範例2 多進程"></a>再上範例2 多進程</h2><blockquote>
+<h2 id="再上範例1-單進程"><a href="#再上範例1-單進程" class="headerlink" title="再上範例1 單進程"></a>再上範例1 單進程</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">from tqdm import tqdm</span><br><span class="line">total = 300</span><br><span class="line">for i in range(total):</span><br><span class="line">    print(i)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from tqdm import tqdm</span><br><span class="line">from time import sleep</span><br><span class="line">total = 300</span><br><span class="line">progress = tqdm(total=total, desc=&#x27;progress&#x27;, position=1)</span><br><span class="line"></span><br><span class="line">for i in range(total):</span><br><span class="line">    progress.set_description(f&#x27;Processing: &#123;i&#125;&#x27;)</span><br><span class="line">    progress.update()</span><br><span class="line">    sleep(0.1)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="再上範例2-多進程"><a href="#再上範例2-多進程" class="headerlink" title="再上範例2 多進程"></a>再上範例2 多進程</h2><blockquote>
 <p>需要考慮競爭的問題</p>
 </blockquote>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><p><a target="_blank" rel="external nofollow noopener noreferrer" href="https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430">stackoverflow</a></p>
@@ -288,6 +295,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/posts/20240125024300-49fdb147.html" rel="next" title="使用WebCodecs API對H265解碼">
+                  使用WebCodecs API對H265解碼 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

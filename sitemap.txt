@@ -1,5 +1,7 @@
 http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html
+http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html
 http://eebrian123tw93.github.io/posts/20240124061700-2ff23ae2.html
+http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html
 http://eebrian123tw93.github.io/posts/20230417154300-ab2a7258.html
 http://eebrian123tw93.github.io/posts/20240123163300-3f5d67a6.html
 http://eebrian123tw93.github.io/posts/20231118183800-d71a458d.html
@@ -10,7 +12,6 @@ http://eebrian123tw93.github.io/posts/20231118194600-68d2e719.html
 http://eebrian123tw93.github.io/posts/20231118195000-c8085013.html
 http://eebrian123tw93.github.io/posts/20231129101600-661de22d.html
 http://eebrian123tw93.github.io/posts/20240116080900-8a796e7c.html
-http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html
 http://eebrian123tw93.github.io/posts/20240122061800-aae208a6.html
 http://eebrian123tw93.github.io/categories/index.html
 http://eebrian123tw93.github.io/tags/index.html
@@ -61,3 +62,4 @@ http://eebrian123tw93.github.io/tags/nginx/
 http://eebrian123tw93.github.io/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/
 http://eebrian123tw93.github.io/categories/zigbee/
 http://eebrian123tw93.github.io/categories/python/
+http://eebrian123tw93.github.io/categories/web/

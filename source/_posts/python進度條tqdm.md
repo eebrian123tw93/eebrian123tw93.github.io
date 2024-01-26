@@ -7,7 +7,7 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-25 08:37:53'
+updated: '2024-01-26 02:38:09'
 description: ''
 abbrlink: 2ff23ae2
 ---
@@ -72,11 +72,46 @@ for i in range(total):
 套用在自己耗時的程式馬上，就不會印的很凌亂，非常直覺
 
 ##  再上範例2 多進程
+![](/images/20240126102505.gif)
+莫名其妙出現兩個 `ForkPoolWorker-4` 我認為是多進程的問題
 > 需要考慮競爭的問題
 
+``` python
+from tqdm import tqdm
+from multiprocessing import Pool, Lock
+import multiprocessing
+from time import sleep
+def job(position):
+    total = 300
+    lock.acquire()
+    progress = tqdm(total=total, desc='progress', position=position)
+    lock.release()
+    for i in range(total):
+        lock.acquire()
+        progress.set_description(f'Processing- {multiprocessing.current_process().name}: {i}')
+        progress.update()
+        lock.release()
+        sleep(0.1)  
 
+if __name__ == '__main__':
+    # start 4 worker processes
+    lock = Lock()
+    pool = Pool(processes=4)
+    pool.apply_async(job, (0,)) 
+    pool.apply_async(job, (1,)) 
+    pool.apply_async(job, (2,)) 
+    pool.apply_async(job, (3,))  
+    
+    pool.close()
+    pool.join()
+
+```
+![](/images/20240126102729.gif)
+上一個鎖之後就沒出現，上面的情況了，大家可以把所拿掉玩玩看
+## 總結
+tqdm 為自己的程式看上去可以更專業，裡面還有一些參數沒有說明，大家可以去看文件了嘗試一下，另外多進程也要考慮資源共搶的情況
 # 參考
-[stackoverflow](https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430)
-
+- [stackoverflow](https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430)
+- [tqdm documentation](https://tqdm.github.io/)
 
 

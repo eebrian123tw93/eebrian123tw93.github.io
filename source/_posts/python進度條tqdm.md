@@ -7,7 +7,7 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-26 02:38:09'
+updated: '2024-01-28 04:09:10'
 description: ''
 abbrlink: 2ff23ae2
 ---
@@ -108,6 +108,13 @@ if __name__ == '__main__':
 ```
 ![](/images/20240126102729.gif)
 上一個鎖之後就沒出現，上面的情況了，大家可以把所拿掉玩玩看
+
+# PyCharm 無法正常顯示
+![](/images/20240128115759.png)
+打開執行的腳本 Edit Configurations
+![](/images/20240128120322.png)
+找到 Execution 底下 Emulate terminal in output console 打勾
+在OK 或 Apply 就可以了
 ## 總結
 tqdm 為自己的程式看上去可以更專業，裡面還有一些參數沒有說明，大家可以去看文件了嘗試一下，另外多進程也要考慮資源共搶的情況
 # 參考

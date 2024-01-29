@@ -10,7 +10,7 @@ tags:
 categories:
   - python
 date: '2024-01-26 12:15:00'
-updated: '2024-01-29 14:50:11'
+updated: '2024-01-29 15:01:32'
 description: ''
 ---
 # 前言
@@ -19,7 +19,7 @@ description: ''
 # 需求
 - python3.9
  <!-- more -->
- - 64-bit x64 
+ - intelx86/amd64  
 - docker 
 
 # 開始吧
@@ -67,9 +67,13 @@ print(mt5.version())
 - 從瀏覽器訪穩問的時候是經過3000port 開啟 vnc 連到 mt5
 - 從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通
 
- # 參考
+# 結論
+使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於，如果是Mac M1晶片無法起動成功，之後會研究好給大家．
+# 參考
 - [MetaTrader5-Docker-Image](https://github.com/gmag11/MetaTrader5-Docker-Image)
 - [python_metatrader5](https://www.mql5.com/zh/docs/python_metatrader5)
+- [rpyc](https://rpyc.readthedocs.io/en/latest/)
+- [mt5linux](https://pypi.org/project/mt5linux/)
 
 
 

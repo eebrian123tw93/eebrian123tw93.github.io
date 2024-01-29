@@ -7,10 +7,11 @@ tags:
   - python
   - rpyc
   - vnc
+  - wine
 categories:
   - python
 date: '2024-01-26 12:15:00'
-updated: '2024-01-29 15:50:01'
+updated: '2024-01-29 16:04:37'
 description: ''
 ---
 # 前言

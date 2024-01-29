@@ -205,7 +205,7 @@
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以在需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
 <li>python3.9 <span id="more"></span></li>
-<li>64-bit x64 </li>
+<li>intelx86&#x2F;amd64  </li>
 <li>docker</li>
 </ul>
 <h1 id="開始吧"><a href="#開始吧" class="headerlink" title="開始吧"></a>開始吧</h1><h2 id="先把專案-clone下來"><a href="#先把專案-clone下來" class="headerlink" title="先把專案 clone下來"></a>先把專案 clone下來</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gmag11/MetaTrader5-Docker-Image.git</span><br></pre></td></tr></table></figure>
@@ -227,9 +227,12 @@
 <li>從瀏覽器訪穩問的時候是經過3000port 開啟 vnc 連到 mt5</li>
 <li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
 </ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於，如果是Mac M1晶片無法起動成功，之後會研究好給大家．</p>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
 <li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
 <li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
+<li><a href="https://rpyc.readthedocs.io/en/latest/">rpyc</a></li>
+<li><a href="https://pypi.org/project/mt5linux/">mt5linux</a></li>
 </ul>
 ]]></content>
       <categories>

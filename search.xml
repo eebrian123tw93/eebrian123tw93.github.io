@@ -200,6 +200,51 @@
       </tags>
   </entry>
   <entry>
+    <title>Python mt5 on linux</title>
+    <url>/posts/20240126041500-7fb9c93d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以在需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
+<li>python3.9 <span id="more"></span></li>
+<li>64-bit x64 </li>
+<li>docker</li>
+</ul>
+<h1 id="開始吧"><a href="#開始吧" class="headerlink" title="開始吧"></a>開始吧</h1><h2 id="先把專案-clone下來"><a href="#先把專案-clone下來" class="headerlink" title="先把專案 clone下來"></a>先把專案 clone下來</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gmag11/MetaTrader5-Docker-Image.git</span><br></pre></td></tr></table></figure>
+<h2 id="進入到資料夾內"><a href="#進入到資料夾內" class="headerlink" title="進入到資料夾內"></a>進入到資料夾內</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> MetaTrader5-Docker-Image</span><br></pre></td></tr></table></figure>
+<h2 id="設定環境-可以更改帳號密碼"><a href="#設定環境-可以更改帳號密碼" class="headerlink" title="設定環境 可以更改帳號密碼"></a>設定環境 可以更改帳號密碼</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span></span><br><span class="line"><span class="comment">#UID=1000</span></span><br><span class="line"><span class="comment">#GID=1000</span></span><br><span class="line"><span class="comment">#CUSTOM_USER=username</span></span><br><span class="line"><span class="comment">#PASSWORD=securepassword</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-啟動"><a href="#docker-compose-啟動" class="headerlink" title="docker compose 啟動"></a>docker compose 啟動</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+<h2 id="腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間"><a href="#腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間" class="headerlink" title="腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )"></a>腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )</h2><ul>
+<li>wine (用來模擬window的環境)</li>
+<li>mone (.NET框架)</li>
+<li>python (在wine裡面安裝python)</li>
+<li>mt5 (在wine裡面安裝mt5)</li>
+<li>python packages (所需套件)</li>
+</ul>
+<h2 id="安裝完後-在瀏覽器輸入localhost-3000"><a href="#安裝完後-在瀏覽器輸入localhost-3000" class="headerlink" title="安裝完後 在瀏覽器輸入localhost:3000"></a>安裝完後 在瀏覽器輸入<a href="localhost:3000">localhost:3000</a></h2><p><img src="/images/20240129104101.png"></p>
+<h2 id="在自己的python上面安裝-mt5linux"><a href="#在自己的python上面安裝-mt5linux" class="headerlink" title="在自己的python上面安裝 mt5linux"></a>在自己的python上面安裝 mt5linux</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mt5linux==0.1.9</span><br></pre></td></tr></table></figure>
+<h2 id="測試連線"><a href="#測試連線" class="headerlink" title="測試連線"></a>測試連線</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mt5linux <span class="keyword">import</span> MetaTrader5</span><br><span class="line">mt5 = MetaTrader5(host=<span class="string">&#x27;localhost&#x27;</span>,port=<span class="number">8001</span>)</span><br><span class="line">mt5.initialize()</span><br><span class="line"><span class="built_in">print</span>(mt5.version())</span><br></pre></td></tr></table></figure>
+<h1 id="附上流程"><a href="#附上流程" class="headerlink" title="附上流程"></a>附上流程</h1><p><img src="/images/20240129102552.png"></p>
+<ul>
+<li>從瀏覽器訪穩問的時候是經過3000port 開啟 vnc 連到 mt5</li>
+<li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
+<li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>MT5</tag>
+        <tag>docker</tag>
+        <tag>linux</tag>
+        <tag>python</tag>
+        <tag>rpyc</tag>
+        <tag>vnc</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SparkFun Thing Plus Matter - MGM240P</title>
     <url>/posts/20231118184600-2b622287.html</url>
     <content><![CDATA[<h1 id="SparkFun-Thing-Plus-Matter-MGM240P"><a href="#SparkFun-Thing-Plus-Matter-MGM240P" class="headerlink" title="SparkFun Thing Plus Matter - MGM240P"></a><a href="https://www.sparkfun.com/products/20270">SparkFun Thing Plus Matter - MGM240P</a></h1><h1 id="安裝-Simplicity-Studio-5"><a href="#安裝-Simplicity-Studio-5" class="headerlink" title="安裝 Simplicity Studio 5"></a>安裝 Simplicity Studio 5</h1><p>先下載<a href="https://www.silabs.com/developers/simplicity-studio">simplicity-studio</a>並安裝(防毒軟體先關掉)</p>

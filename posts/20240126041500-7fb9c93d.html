@@ -21,17 +21,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="前言因為客戶有需求，所以在需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案MetaTrader5-Docker-Image 需求 python3.9">
+    <meta name="description" content="前言因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案MetaTrader5-Docker-Image 需求 python3.9">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python mt5 on linux">
 <meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240126041500-7fb9c93d.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="前言因為客戶有需求，所以在需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案MetaTrader5-Docker-Image 需求 python3.9">
+<meta property="og:description" content="前言因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案MetaTrader5-Docker-Image 需求 python3.9">
 <meta property="og:locale">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240129104101.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240129102552.png">
 <meta property="article:published_time" content="2024-01-26T04:15:00.000Z">
-<meta property="article:modified_time" content="2024-01-29T07:01:32.000Z">
+<meta property="article:modified_time" content="2024-01-29T07:50:01.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="MT5">
 <meta property="article:tag" content="docker">
@@ -246,7 +246,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-29 15:01:32" itemprop="dateModified" datetime="2024-01-29T15:01:32+08:00">2024-01-29</time>
+      <time title="Modified: 2024-01-29 15:50:01" itemprop="dateModified" datetime="2024-01-29T15:50:01+08:00">2024-01-29</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -267,7 +267,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以在需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
+    <div class="post-body" itemprop="articleBody"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
 <li>python3.9 <span id="more"></span></li>
 <li>intelx86&#x2F;amd64  </li>
@@ -292,7 +292,7 @@
 <li>從瀏覽器訪穩問的時候是經過3000port 開啟 vnc 連到 mt5</li>
 <li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
 </ul>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於，如果是Mac M1晶片無法起動成功，之後會研究好給大家．</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於Intelx86或amd64，如果是Mac M1晶片無法起動成功，之後會研究好給大家．</p>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>

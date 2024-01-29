@@ -41,6 +41,7 @@ http://eebrian123tw93.github.io/tags/linux/
 http://eebrian123tw93.github.io/tags/python/
 http://eebrian123tw93.github.io/tags/rpyc/
 http://eebrian123tw93.github.io/tags/vnc/
+http://eebrian123tw93.github.io/tags/wine/
 http://eebrian123tw93.github.io/tags/Zigbee/
 http://eebrian123tw93.github.io/tags/MCU/
 http://eebrian123tw93.github.io/tags/SOC/

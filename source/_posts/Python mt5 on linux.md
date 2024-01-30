@@ -13,6 +13,7 @@ categories:
 date: '2024-01-26 12:15:00'
 updated: '2024-01-30 16:27:51'
 description: ''
+abbrlink: 7fb9c93d
 ---
 # 前言
 因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案[MetaTrader5-Docker-Image](https://github.com/gmag11/MetaTrader5-Docker-Image)

@@ -12,6 +12,7 @@ categories:
 date: '2024-01-30 12:15:00'
 updated: '2024-01-30 16:44:07'
 description: ''
+abbrlink: 3099daac
 ---
 # 前言
 接續之前{% post_link  "Python mt5 on linux" %}已經可以在docker順利啟動mt5．前面這篇通常是部署在Server上，但是開發的時候又是拿Mac開發，決定要嘗試看看，現在要來在Mac M1 上面啟動，因為如果按造{% post_link  "Python mt5 on linux" %}的話，會在docker起 vnc ，但好像沒有arm的版本，所以這次就不在docker上啟動了

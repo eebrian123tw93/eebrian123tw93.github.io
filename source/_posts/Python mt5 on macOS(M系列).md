@@ -10,7 +10,7 @@ tags:
 categories:
   - python
 date: '2024-01-30 12:15:00'
-updated: '2024-01-30 16:37:24'
+updated: '2024-01-30 16:44:07'
 description: ''
 ---
 # 前言
@@ -166,6 +166,18 @@ fi
 
 ```
 這個腳本會判斷是否已經安裝，第一次安裝會比較久一點
+## 建立腳本
+大家可以建立一個`start.sh` 的腳本 將上面的腳本程式複製進去
+``` bash
+# 建立腳本
+touch start.sh
+# 編輯腳本 把上面的整坨貼進去
+vim start.sh
+# 給 start.sh 執行權限
+chmod +x start.sh
+# 執行腳本
+bash start.sh
+```
 ## 腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )
 - wine (用來模擬window的環境)
 - mone (.NET框架)

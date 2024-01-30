@@ -203,8 +203,9 @@
     <title>Python mt5 on linux</title>
     <url>/posts/20240126041500-7fb9c93d.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
+<p>如果是Mac M系列 請參考<a href="/posts/20240130041500-undefined.html" title="Python mt5 on linuxPython mt5 on macOS(M系列)">Python mt5 on linuxPython mt5 on macOS(M系列)</a><br> <span id="more"></span></p>
 <h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
-<li>python3.9 <span id="more"></span></li>
+<li>python3.9</li>
 <li>intelx86&#x2F;amd64  </li>
 <li>docker</li>
 </ul>
@@ -224,10 +225,10 @@
 <h2 id="測試連線"><a href="#測試連線" class="headerlink" title="測試連線"></a>測試連線</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mt5linux <span class="keyword">import</span> MetaTrader5</span><br><span class="line">mt5 = MetaTrader5(host=<span class="string">&#x27;localhost&#x27;</span>,port=<span class="number">8001</span>)</span><br><span class="line">mt5.initialize()</span><br><span class="line"><span class="built_in">print</span>(mt5.version())</span><br></pre></td></tr></table></figure>
 <h1 id="附上流程"><a href="#附上流程" class="headerlink" title="附上流程"></a>附上流程</h1><p><img src="/images/20240129102552.png"></p>
 <ul>
-<li>從瀏覽器訪穩問的時候是經過3000port 開啟 vnc 連到 mt5</li>
+<li>從瀏覽器訪問的時候是經過3000port 開啟 vnc 連到 mt5</li>
 <li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
 </ul>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於Intelx86或amd64，如果是Mac M1晶片無法起動成功，之後會研究好給大家．</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於Intelx86或amd64，如果是Mac M1晶片無法起動成功，參考<a href="/posts/20240130041500-undefined.html" title="Python mt5 on linuxPython mt5 on macOS(M系列)">Python mt5 on linuxPython mt5 on macOS(M系列)</a>．</p>
 <h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
 <li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
 <li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
@@ -246,6 +247,54 @@
         <tag>rpyc</tag>
         <tag>vnc</tag>
         <tag>wine</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python mt5 on linuxPython mt5 on macOS(M系列)</title>
+    <url>/posts/20240130041500-3099daac.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>接續之前<a href="/posts/20240126041500-undefined.html" title="Python mt5 on linux">Python mt5 on linux</a>已經可以在docker順利啟動mt5．<br>前面這篇通常是部署在Server上，但是開發的時候又是拿Mac開發，決定要嘗試看看，現在要來在Mac M1 上面啟動，因為如果按造<a href="/posts/20240126041500-undefined.html" title="Python mt5 on linux">Python mt5 on linux</a>的話，會在docker起 vnc ，但好像沒有arm的版本，所以這次就不在docker上啟動了<br> <span id="more"></span></p>
+<p>如果是linux 請參考<a href="/posts/20240126041500-undefined.html" title="Python mt5 on linux">Python mt5 on linux</a></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
+<li>python3.9 </li>
+<li>MacOS M系列</li>
+</ul>
+<h1 id="開始吧"><a href="#開始吧" class="headerlink" title="開始吧"></a>開始吧</h1><h2 id="上腳本"><a href="#上腳本" class="headerlink" title="上腳本"></a>上腳本</h2><p>感謝 <a href="https://github.com/gmag11/MetaTrader5-Docker-Image/blob/main/Metatrader/start.sh">MetaTrader5-Docker-Image</a>此腳本由此腳本更改</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">brew tap gcenx/wine</span><br><span class="line">brew install --cask --no-quarantine wine-crossover</span><br><span class="line"><span class="keyword">if</span> [ ! -e ~/.wine ]; <span class="keyword">then</span></span><br><span class="line">  wineboot --init</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Configuration variables</span></span><br><span class="line">mt5file=~/.wine/drive_c/<span class="string">&quot;Program Files/MetaTrader 5/terminal64.exe&quot;</span></span><br><span class="line">wine_executable=<span class="string">&quot;wine&quot;</span></span><br><span class="line">metatrader_version=<span class="string">&quot;5.0.36&quot;</span></span><br><span class="line">mt5server_port=<span class="string">&quot;8001&quot;</span></span><br><span class="line">mono_url=<span class="string">&quot;https://dl.winehq.org/wine/wine-mono/8.0.0/wine-mono-8.0.0-x86.msi&quot;</span></span><br><span class="line">python_url=<span class="string">&quot;https://www.python.org/ftp/python/3.9.0/python-3.9.0.exe&quot;</span></span><br><span class="line">mt5setup_url=<span class="string">&quot;https://download.mql5.com/cdn/web/metaquotes.software.corp/mt5/mt5setup.exe&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to display a graphical message</span></span><br><span class="line"><span class="function"><span class="title">show_message</span></span>() &#123;</span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to check if a dependency is installed</span></span><br><span class="line"><span class="function"><span class="title">check_dependency</span></span>() &#123;</span><br><span class="line">    <span class="keyword">if</span> ! <span class="built_in">command</span> -v <span class="variable">$1</span> &amp;&gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">        <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$1</span> is not installed. Please install it to continue.&quot;</span></span><br><span class="line">        <span class="built_in">exit</span> 1</span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to check if a Python package is installed</span></span><br><span class="line"><span class="function"><span class="title">is_python_package_installed</span></span>() &#123;</span><br><span class="line">    python3 -c <span class="string">&quot;import pkg_resources; exit(not pkg_resources.require(&#x27;<span class="variable">$1</span>&#x27;))&quot;</span> 2&gt;/dev/null</span><br><span class="line">    <span class="built_in">return</span> $?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Function to check if a Python package is installed in Wine</span></span><br><span class="line"><span class="function"><span class="title">is_wine_python_package_installed</span></span>() &#123;</span><br><span class="line">    <span class="variable">$wine_executable</span> python -c <span class="string">&quot;import pkg_resources; exit(not pkg_resources.require(&#x27;<span class="variable">$1</span>&#x27;))&quot;</span> 2&gt;/dev/null</span><br><span class="line">    <span class="built_in">return</span> $?</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check for necessary dependencies</span></span><br><span class="line">check_dependency <span class="string">&quot;curl&quot;</span></span><br><span class="line">check_dependency <span class="string">&quot;<span class="variable">$wine_executable</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Mono if not present</span></span><br><span class="line"><span class="keyword">if</span> [ ! -e ~/.wine/drive_c/windows/mono ]; <span class="keyword">then</span></span><br><span class="line">    show_message <span class="string">&quot;[1/7] Downloading and installing Mono...&quot;</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -f ~/.wine/drive_c/mono.msi ]</span><br><span class="line">    <span class="keyword">then</span></span><br><span class="line">      wget -O ~/.wine/drive_c/mono.msi  <span class="variable">$mono_url</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    WINEDLLOVERRIDES=mscoree=d <span class="variable">$wine_executable</span> msiexec /i ~/.wine/drive_c/mono.msi /qn</span><br><span class="line">    show_message <span class="string">&quot;[1/7] Mono installed.&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    show_message <span class="string">&quot;[1/7] Mono is already installed.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ -e <span class="string">&quot;<span class="variable">$mt5file</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    show_message <span class="string">&quot;[2/7] File <span class="variable">$mt5file</span> already exists.&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    show_message <span class="string">&quot;[2/7] File <span class="variable">$mt5file</span> is not installed. Installing...&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Set Windows 10 mode in Wine and download and install MT5</span></span><br><span class="line">    <span class="variable">$wine_executable</span> reg add <span class="string">&quot;HKEY_CURRENT_USER\\Software\\Wine&quot;</span> /v Version /t REG_SZ /d <span class="string">&quot;win10&quot;</span> /f</span><br><span class="line">    show_message <span class="string">&quot;[3/7] Downloading MT5 installer...&quot;</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -e ~/.wine/drive_c/mt5setup.exe ]; <span class="keyword">then</span></span><br><span class="line">      wget -O ~/.wine/drive_c/mt5setup.exe <span class="variable">$mt5setup_url</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    show_message <span class="string">&quot;[3/7] Installing MetaTrader 5...&quot;</span></span><br><span class="line">    <span class="variable">$wine_executable</span> ~/.wine/drive_c/mt5setup.exe <span class="string">&quot;/auto&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Recheck if MetaTrader 5 is installed</span></span><br><span class="line"><span class="keyword">if</span> [ -e <span class="string">&quot;<span class="variable">$mt5file</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">    show_message <span class="string">&quot;[4/7] File <span class="variable">$mt5file</span> is installed. Running MT5...&quot;</span></span><br><span class="line">    <span class="variable">$wine_executable</span> <span class="string">&quot;<span class="variable">$mt5file</span>&quot;</span> &amp;</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    show_message <span class="string">&quot;[4/7] File <span class="variable">$mt5file</span> is not installed. MT5 cannot be run.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install Python in Wine if not present</span></span><br><span class="line"><span class="keyword">if</span> ! <span class="variable">$wine_executable</span> python --version 2&gt;/dev/null; <span class="keyword">then</span></span><br><span class="line">    show_message <span class="string">&quot;[5/7] Installing Python in Wine...&quot;</span></span><br><span class="line">    <span class="keyword">if</span> [ ! -f ~/.wine/drive_c/python-3.9.0.exe ]; <span class="keyword">then</span></span><br><span class="line">      wget -O ~/.wine/drive_c/python-3.9.0.exe <span class="variable">$python_url</span></span><br><span class="line">    <span class="keyword">fi</span></span><br><span class="line">    <span class="variable">$wine_executable</span> ~/.wine/drive_c/python-3.9.0.exe /quiet InstallAllUsers=1 PrependPath=1</span><br><span class="line"></span><br><span class="line">    show_message <span class="string">&quot;[5/7] Python installed in Wine.&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    show_message <span class="string">&quot;[5/7] Python is already installed in Wine.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Upgrade pip and install required packages</span></span><br><span class="line">show_message <span class="string">&quot;[6/7] Installing Python libraries&quot;</span></span><br><span class="line"><span class="variable">$wine_executable</span> python -m pip install --upgrade --no-cache-dir pip</span><br><span class="line"><span class="comment"># Install MetaTrader5 library in Windows if not installed</span></span><br><span class="line">show_message <span class="string">&quot;[6/7] Installing MetaTrader5 library in Windows&quot;</span></span><br><span class="line"><span class="keyword">if</span> ! is_wine_python_package_installed <span class="string">&quot;MetaTrader5==<span class="variable">$metatrader_version</span>&quot;</span>; <span class="keyword">then</span></span><br><span class="line">    <span class="variable">$wine_executable</span> python -m pip install --no-cache-dir MetaTrader5==<span class="variable">$metatrader_version</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="comment"># Install mt5linux library in Windows if not installed</span></span><br><span class="line">show_message <span class="string">&quot;[6/7] Checking and installing mt5linux library in Windows if necessary&quot;</span></span><br><span class="line"><span class="keyword">if</span> ! is_wine_python_package_installed <span class="string">&quot;mt5linux&quot;</span>; <span class="keyword">then</span></span><br><span class="line">    <span class="variable">$wine_executable</span> python -m pip install --no-cache-dir mt5linux</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install mt5linux library in Linux if not installed</span></span><br><span class="line">show_message <span class="string">&quot;[6/7] Checking and installing mt5linux library in Linux if necessary&quot;</span></span><br><span class="line"><span class="keyword">if</span> ! is_python_package_installed <span class="string">&quot;mt5linux&quot;</span>; <span class="keyword">then</span></span><br><span class="line">    pip install --upgrade --no-cache-dir mt5linux</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Install pyxdg library in Linux if not installed</span></span><br><span class="line">show_message <span class="string">&quot;[6/7] Checking and installing pyxdg library in Linux if necessary&quot;</span></span><br><span class="line"><span class="keyword">if</span> ! is_python_package_installed <span class="string">&quot;pyxdg&quot;</span>; <span class="keyword">then</span></span><br><span class="line">    pip install --upgrade --no-cache-dir pyxdg</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Start the MT5 server on Linux</span></span><br><span class="line">show_message <span class="string">&quot;[7/7] Starting the mt5linux server...&quot;</span></span><br><span class="line">python3 -m mt5linux --host 0.0.0.0 -p <span class="variable">$mt5server_port</span> -w <span class="variable">$wine_executable</span> python.exe &amp;</span><br><span class="line"></span><br><span class="line"><span class="comment"># Give the server some time to start</span></span><br><span class="line"><span class="built_in">sleep</span> 5</span><br><span class="line"></span><br><span class="line"><span class="comment"># Check if the server is running</span></span><br><span class="line"><span class="keyword">if</span>  lsof -n -i:<span class="variable">$mt5server_port</span> | grep LISTEN &gt; /dev/null; <span class="keyword">then</span></span><br><span class="line">    show_message <span class="string">&quot;[7/7] The mt5linux server is running on port <span class="variable">$mt5server_port</span>.&quot;</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">    show_message <span class="string">&quot;[7/7] Failed to start the mt5linux server on port <span class="variable">$mt5server_port</span>.&quot;</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>這個腳本會判斷是否已經安裝，第一次安裝會比較久一點</p>
+<h2 id="腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間"><a href="#腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間" class="headerlink" title="腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )"></a>腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )</h2><ul>
+<li>wine (用來模擬window的環境)</li>
+<li>mone (.NET框架)</li>
+<li>python (在wine裡面安裝python)</li>
+<li>mt5 (在wine裡面安裝mt5)</li>
+<li>python packages (所需套件)</li>
+</ul>
+<h2 id="安裝完後-會直接開啟-MT5"><a href="#安裝完後-會直接開啟-MT5" class="headerlink" title="安裝完後 會直接開啟 MT5"></a>安裝完後 會直接開啟 MT5</h2><p><img src="/images/20240131121021.png"></p>
+<h2 id="在自己的python上面安裝-mt5linux"><a href="#在自己的python上面安裝-mt5linux" class="headerlink" title="在自己的python上面安裝 mt5linux"></a>在自己的python上面安裝 mt5linux</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mt5linux==0.1.9</span><br></pre></td></tr></table></figure>
+<h2 id="測試連線"><a href="#測試連線" class="headerlink" title="測試連線"></a>測試連線</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mt5linux <span class="keyword">import</span> MetaTrader5</span><br><span class="line">mt5 = MetaTrader5(host=<span class="string">&#x27;localhost&#x27;</span>, port=<span class="number">8001</span>)</span><br><span class="line">mt5.initialize()</span><br><span class="line"><span class="built_in">print</span>(mt5.version())</span><br></pre></td></tr></table></figure>
+<h1 id="附上流程"><a href="#附上流程" class="headerlink" title="附上流程"></a>附上流程</h1><p><img src="/images/20240131120931.png"></p>
+<ul>
+<li>GUI 顯示 wine 裡面的 MT5</li>
+<li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>感謝<a href="https://github.com/gmag11/MetaTrader5-Docker-Image/blob/main/Metatrader/start.sh">MetaTrader5-Docker-Image</a>腳本幫助，雖然沒用docker啟動，有可能會污染環境，但是在M系列上面順利執行，這樣開發也可以順利開發了。</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
+<li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
+<li><a href="https://rpyc.readthedocs.io/en/latest/">rpyc</a></li>
+<li><a href="https://pypi.org/project/mt5linux/">mt5linux</a></li>
+<li><a href="https://blog.csdn.net/rjc_lihui/article/details/124053424">Mac M1 安装 wine 过程</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>MT5</tag>
+        <tag>python</tag>
+        <tag>rpyc</tag>
+        <tag>vnc</tag>
+        <tag>wine</tag>
+        <tag>mac</tag>
       </tags>
   </entry>
   <entry>
@@ -372,48 +421,6 @@
       </tags>
   </entry>
   <entry>
-    <title>UART RS232 RS484</title>
-    <url>/posts/20231118193100-f5da1a51.html</url>
-    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
-<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br> <span id="more"></span><br> 1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
-<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
-<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
-<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
-<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
-<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
-<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
-<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
-<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
-<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
-<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
-<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
-<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
-<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
-<li><a href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
-<li><a href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
-<li><a href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
-<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
-<li><a href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
-<li><a href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>soc</category>
-      </categories>
-      <tags>
-        <tag>RS232</tag>
-        <tag>RS484</tag>
-        <tag>TTL</tag>
-        <tag>TXRX</tag>
-        <tag>UART</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>VM安裝</title>
     <url>/posts/20231129101600-661de22d.html</url>
     <content><![CDATA[<h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br> <span id="more"></span><br> <img src="/images/20231129152934.png"><br>運行中<br><img src="/images/20231129153043.png"><br>無報錯 安裝成功後 reboot 可以縮放 剪貼簿 公用資料夾</p>
@@ -459,6 +466,48 @@
         <tag>samba</tag>
         <tag>ssh-server</tag>
         <tag>vm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>UART RS232 RS484</title>
+    <url>/posts/20231118193100-f5da1a51.html</url>
+    <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
+<h1 id="鮑率-波特率"><a href="#鮑率-波特率" class="headerlink" title="鮑率(波特率)"></a>鮑率(波特率)</h1><p>常見的鮑率 9600 19200 38400 115200<br> <span id="more"></span><br> 1 鮑率 即指每秒傳輸1個符號(bit)<br>9600代表每秒傳輸9600高低電平，如果不匹配會導致亂碼<br>每一個 bit 的時間就是 1&#x2F;9600</p>
+<h1 id="數據幀"><a href="#數據幀" class="headerlink" title="數據幀"></a>數據幀</h1><p><img src="/images/20231119022310.png"></p>
+<h2 id="啟始位元"><a href="#啟始位元" class="headerlink" title="啟始位元"></a>啟始位元</h2><p>表示資料封包開始， UART 的發送方會將資料傳輸線從高電壓低電壓變成低電壓</p>
+<h2 id="資料位元"><a href="#資料位元" class="headerlink" title="資料位元"></a>資料位元</h2><p>可以定義為 5bit、6bit、7bit、8bit</p>
+<h2 id="同位位元"><a href="#同位位元" class="headerlink" title="同位位元"></a>同位位元</h2><p>用於檢查資料正確性 同位位元有兩種模式：偶同位(even) 和 奇同位(odd)</p>
+<h2 id="停止位元"><a href="#停止位元" class="headerlink" title="停止位元"></a>停止位元</h2><p>表示資料封包結束， UART 的發送方會將資料傳輸線從低電壓變成高電壓並保持1~2位元時間。</p>
+<h2 id="現況"><a href="#現況" class="headerlink" title="現況"></a>現況</h2><p>現在 UART 很少使用同位位元來偵錯了。常見的「38400,8,N,1」這種設定，意思就是 38400 bps 的鮑率、8 個資料位元，N 則代表沒有同位位元，1 是 1 個停止位元的意思；現在其實已經很少看到後面不是「8,N,1」的設定，因為 同位位元已經幾乎不再使用，而 8 個資料位元和 1 個停止位元也幾乎成爲標準。</p>
+<h2 id="接法"><a href="#接法" class="headerlink" title="接法"></a>接法</h2><p><img src="/images/20231119022341.png"><br>TX接RX RX接TX </p>
+<h2 id="TTL電平-Transistor-Transistor-Logic"><a href="#TTL電平-Transistor-Transistor-Logic" class="headerlink" title="TTL電平 Transistor-Transistor Logic"></a>TTL電平 Transistor-Transistor Logic</h2><p><img src="/images/20231119022404.png"><br>2.4v<del>5v 為高電平 0</del>0.4 為低電平<br><img src="/images/20231119022417.png"><br>容易造成干擾 所以通訊距離大約1m內 改進RS232 和 RS485</p>
+<h2 id="補充-UART串口流控制（Flow-control）"><a href="#補充-UART串口流控制（Flow-control）" class="headerlink" title="(補充) UART串口流控制（Flow control）"></a>(補充) UART串口流控制（Flow control）</h2><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>是管理两个节点之间数据传输速率的过程，以防止出现接收端的数据缓冲区已满，而发送端依然继续发送数据，所导致数据丢失</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>当接收端的数据缓冲区已满，无法处理数据来时，就发出 “不再接收” 的信号，发送端则停止发送，直到发送端收到 “可以继续发送” 的信号再发送数据。<br>计算机中常用的两种流控制分别是<strong>硬件流控制</strong>（RTS &#x2F;CTS、DTR &#x2F;DSR等）和<strong>软件流控制</strong>（XON &#x2F;XOFF）</p>
+<h1 id="RS232"><a href="#RS232" class="headerlink" title="RS232"></a>RS232</h1><p>RS(Recommended Stabdard) 推薦標準<br>將TTL電平轉換成232電平 轉換電壓 抗干擾能力變強 還是傳輸原來的數據只是改變電壓 還是全雙工<br>傳輸距離到15米 2M&#x2F;s<br><img src="/images/20231119022441.png"><br>也是只用到 RxD TxD GND<br><img src="/images/20231119022454.png"><br>將TTL電平轉換成232電平<br><img src="/images/20231119022508.png"><br>進去TTL 5V 轉換成232電平 -12V (影片有錯)<br><img src="/images/20231119022520.png"><br>進去TTL 0V 轉換成232電平 +12V (影片有錯)<br><img src="/images/20231119022552.png"><br>正確的轉換<br><img src="/images/20231119022615.png"><br>232電平 高電平為3V-15V 低電平為-3V~-15V 抗干擾能力變強</p>
+<h1 id="RS485"><a href="#RS485" class="headerlink" title="RS485"></a>RS485</h1><p>將TTL電平轉換成485電平 轉換差分信號 抗干擾能力變強 變成半雙工<br>傳輸距離到1200米 50M&#x2F;s<br><img src="/images/20231119022632.png"><br><img src="/images/20231119022701.png"><br>差分信號 A大於B訊號為0 B大於A訊號為1<br><img src="/images/20231119022714.png"><br>受干擾時，因為是雙絞線所以基本是是同時干擾，還是差分，干擾能力強</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p><img src="/images/20231119022730.png"><br>RS232 RS485 只有改變物理層</p>
+<h1 id="參考影片"><a href="#參考影片" class="headerlink" title="參考影片"></a>參考影片</h1><ul>
+<li><a href="https://www.youtube.com/watch?v=HKQaYN5Odlk">5分钟看懂!串口RS232 RS485最本质的区别！</a></li>
+<li><a href="https://youtu.be/ia2x1oenic0">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與RS-232_Part 1 串列通訊介紹</a></li>
+<li><a href="https://youtu.be/xKdV7lcvy1o">嵌入式系統(I)_洪崇文_單元四 通用非同步收發傳輸UART 與 RS-232_Part 2 UART通訊與RS232 I</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://www.block.tw/blog/uart/">UART 串列通訊</a></li>
+<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a href="https://blog.csdn.net/qq_42992084/article/details/104761474">UART串口流控制（Flow control）</a></li>
+<li><a href="https://semhuang.pixnet.net/blog/post/141101276">UART 硬體流量控制 CTS及RTS</a></li>
+<li><a href="https://silverwind1982.pixnet.net/blog/post/361701597-uart">UART 簡介</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>soc</category>
+      </categories>
+      <tags>
+        <tag>RS232</tag>
+        <tag>RS484</tag>
+        <tag>TTL</tag>
+        <tag>TXRX</tag>
+        <tag>UART</tag>
       </tags>
   </entry>
   <entry>

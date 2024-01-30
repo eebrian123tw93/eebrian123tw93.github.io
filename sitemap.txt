@@ -1,4 +1,5 @@
 http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html
+http://eebrian123tw93.github.io/posts/20240130041500-3099daac.html
 http://eebrian123tw93.github.io/posts/20240126041500-7fb9c93d.html
 http://eebrian123tw93.github.io/posts/20240124061700-2ff23ae2.html
 http://eebrian123tw93.github.io/posts/20240116080900-8a796e7c.html
@@ -42,6 +43,7 @@ http://eebrian123tw93.github.io/tags/python/
 http://eebrian123tw93.github.io/tags/rpyc/
 http://eebrian123tw93.github.io/tags/vnc/
 http://eebrian123tw93.github.io/tags/wine/
+http://eebrian123tw93.github.io/tags/mac/
 http://eebrian123tw93.github.io/tags/Zigbee/
 http://eebrian123tw93.github.io/tags/MCU/
 http://eebrian123tw93.github.io/tags/SOC/
@@ -50,15 +52,15 @@ http://eebrian123tw93.github.io/tags/MGM240P/
 http://eebrian123tw93.github.io/tags/simplicity-studio/
 http://eebrian123tw93.github.io/tags/mgm240pb32vna/
 http://eebrian123tw93.github.io/tags/silabs/
+http://eebrian123tw93.github.io/tags/VirtualBox/
+http://eebrian123tw93.github.io/tags/samba/
+http://eebrian123tw93.github.io/tags/ssh-server/
+http://eebrian123tw93.github.io/tags/vm/
 http://eebrian123tw93.github.io/tags/RS232/
 http://eebrian123tw93.github.io/tags/RS484/
 http://eebrian123tw93.github.io/tags/TTL/
 http://eebrian123tw93.github.io/tags/TXRX/
 http://eebrian123tw93.github.io/tags/UART/
-http://eebrian123tw93.github.io/tags/VirtualBox/
-http://eebrian123tw93.github.io/tags/samba/
-http://eebrian123tw93.github.io/tags/ssh-server/
-http://eebrian123tw93.github.io/tags/vm/
 http://eebrian123tw93.github.io/tags/IEEE802154/
 http://eebrian123tw93.github.io/tags/hidden/
 http://eebrian123tw93.github.io/tags/%E8%A3%9DB/

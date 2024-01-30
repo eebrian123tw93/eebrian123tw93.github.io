@@ -428,34 +428,6 @@
   </url>
   
   <url>
-    <loc>http://eebrian123tw93.github.io/tags/VirtualBox/</loc>
-    <lastmod>2024-01-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/tags/samba/</loc>
-    <lastmod>2024-01-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/tags/ssh-server/</loc>
-    <lastmod>2024-01-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>http://eebrian123tw93.github.io/tags/vm/</loc>
-    <lastmod>2024-01-30</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>http://eebrian123tw93.github.io/tags/RS232/</loc>
     <lastmod>2024-01-30</lastmod>
     <changefreq>weekly</changefreq>
@@ -485,6 +457,34 @@
   
   <url>
     <loc>http://eebrian123tw93.github.io/tags/UART/</loc>
+    <lastmod>2024-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/VirtualBox/</loc>
+    <lastmod>2024-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/samba/</loc>
+    <lastmod>2024-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/ssh-server/</loc>
+    <lastmod>2024-01-30</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://eebrian123tw93.github.io/tags/vm/</loc>
     <lastmod>2024-01-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

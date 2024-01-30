@@ -10,7 +10,7 @@ tags:
 categories:
   - python
 date: '2024-01-30 12:15:00'
-updated: '2024-01-30 16:32:23'
+updated: '2024-01-30 16:36:14'
 description: ''
 ---
 # 前言
@@ -26,7 +26,7 @@ description: ''
 
 # 開始吧
 ## 上腳本
-感謝 [MetaTrader5-Docker-Image](https://github.com/gmag11/MetaTrader5-Docker-Image/blob/main/Metatrader/start.sh)此腳本由此腳本更改
+感謝 [MetaTrader5-Docker-Image](https://github.com/gmag11/MetaTrader5-Docker-Image/blob/main/Metatrader/start.sh)腳本幫助
 ``` bash
 brew tap gcenx/wine
 brew install --cask --no-quarantine wine-crossover

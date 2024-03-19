@@ -7,11 +7,11 @@ tags:
 categories:
   - IPC
 date: '2024-03-19 15:10:00'
-updated: '2024-03-19 07:05:34'
+updated: '2024-03-19 07:11:07'
 description: ''
 ---
 # 前言
-最近在處理影像buffer的時，範例在建立buffer記憶體是用其他 library去生成，影像 buffer 是通過mmap 去取的，但是我需要其他進程也可以拿到這個 buffer ，
+最近在處理影像buffer時，範例在建立buffer記憶體是用其他 library去生成，影像 buffer 是通過mmap 去取的，但是我需要其他進程也可以拿到這個 buffer ，
 
 有種做法是完整複製buffer，然後開一塊share memory處理，但是這樣會造成cpu一直在copy
 還有種作法是找到 file descriptor 參照哪個檔案，但查詢了許久，我無法得知 file descriptor 是參照哪個檔案，

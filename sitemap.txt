@@ -1,4 +1,5 @@
 http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html
+http://eebrian123tw93.github.io/posts/20240319071000-8084e2f0.html
 http://eebrian123tw93.github.io/posts/20240130041500-3099daac.html
 http://eebrian123tw93.github.io/posts/20240126041500-7fb9c93d.html
 http://eebrian123tw93.github.io/posts/20240124061700-2ff23ae2.html
@@ -65,6 +66,8 @@ http://eebrian123tw93.github.io/tags/IEEE802154/
 http://eebrian123tw93.github.io/tags/hidden/
 http://eebrian123tw93.github.io/tags/%E8%A3%9DB/
 http://eebrian123tw93.github.io/tags/%E9%85%B7%E7%82%AB/
+http://eebrian123tw93.github.io/tags/IPC/
+http://eebrian123tw93.github.io/tags/fd/
 http://eebrian123tw93.github.io/tags/WebCodecsAPI/
 http://eebrian123tw93.github.io/tags/load-balance/
 http://eebrian123tw93.github.io/tags/nginx/
@@ -75,3 +78,4 @@ http://eebrian123tw93.github.io/categories/python/
 http://eebrian123tw93.github.io/categories/zigbee/
 http://eebrian123tw93.github.io/categories/linux/
 http://eebrian123tw93.github.io/categories/web/
+http://eebrian123tw93.github.io/categories/IPC/

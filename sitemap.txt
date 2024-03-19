@@ -1,4 +1,5 @@
 http://eebrian123tw93.github.io/googledf1ea02199cc60ec.html
+http://eebrian123tw93.github.io/posts/20240319163300-5da60ff1.html
 http://eebrian123tw93.github.io/posts/20240319071000-8084e2f0.html
 http://eebrian123tw93.github.io/posts/20240130041500-3099daac.html
 http://eebrian123tw93.github.io/posts/20240126041500-7fb9c93d.html
@@ -24,6 +25,9 @@ http://eebrian123tw93.github.io/posts/20230505020300-526efc4a.html
 http://eebrian123tw93.github.io/404.html
 http://eebrian123tw93.github.io/
 http://eebrian123tw93.github.io/tags/H265/
+http://eebrian123tw93.github.io/tags/adb/
+http://eebrian123tw93.github.io/tags/bitbake/
+http://eebrian123tw93.github.io/tags/yocto/
 http://eebrian123tw93.github.io/tags/DMA/
 http://eebrian123tw93.github.io/tags/B%E5%B9%80/
 http://eebrian123tw93.github.io/tags/GOP/
@@ -66,9 +70,9 @@ http://eebrian123tw93.github.io/tags/IEEE802154/
 http://eebrian123tw93.github.io/tags/hidden/
 http://eebrian123tw93.github.io/tags/%E8%A3%9DB/
 http://eebrian123tw93.github.io/tags/%E9%85%B7%E7%82%AB/
+http://eebrian123tw93.github.io/tags/WebCodecsAPI/
 http://eebrian123tw93.github.io/tags/IPC/
 http://eebrian123tw93.github.io/tags/fd/
-http://eebrian123tw93.github.io/tags/WebCodecsAPI/
 http://eebrian123tw93.github.io/tags/load-balance/
 http://eebrian123tw93.github.io/tags/nginx/
 http://eebrian123tw93.github.io/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/

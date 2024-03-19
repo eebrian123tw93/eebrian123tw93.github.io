@@ -21,25 +21,30 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="隨手記錄筆記，幫助記憶">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Brian&#39;s 隨記">
-<meta property="og:url" content="http://eebrian123tw93.github.io/tags/IDR%E5%B9%80/index.html">
+    <meta name="description" content="本文這些天每天上班都處在一個迴圈的感覺，每解決完一個問，就會有新的問題，最近的任務是要移植代碼到新的板子上，學到了很多像是 bikbake pkg_config ycoto….，蠻多點都是大概過一下，沒問題就往下… 有一個地方卡比較久就是要使用 adb root 的權限比較大，如果是用adb user 登入adb  然後再 su，雖然是root 但是權限還是有問題，像說要insmod 都說沒權限，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20240319小日常">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240319163300-5da60ff1.html">
 <meta property="og:site_name" content="Brian&#39;s 隨記">
-<meta property="og:description" content="隨手記錄筆記，幫助記憶">
+<meta property="og:description" content="本文這些天每天上班都處在一個迴圈的感覺，每解決完一個問，就會有新的問題，最近的任務是要移植代碼到新的板子上，學到了很多像是 bikbake pkg_config ycoto….，蠻多點都是大概過一下，沒問題就往下… 有一個地方卡比較久就是要使用 adb root 的權限比較大，如果是用adb user 登入adb  然後再 su，雖然是root 但是權限還是有問題，像說要insmod 都說沒權限，">
 <meta property="og:locale">
+<meta property="article:published_time" content="2024-03-19T16:33:00.000Z">
+<meta property="article:modified_time" content="2024-03-19T00:23:42.000Z">
 <meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="adb">
+<meta property="article:tag" content="bitbake">
+<meta property="article:tag" content="yocto">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://eebrian123tw93.github.io/tags/IDR%E5%B9%80/">
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20240319163300-5da60ff1.html">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh","comments":"","permalink":"","path":"tags/IDR幀/index.html","title":""}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20240319163300-5da60ff1.html","path":"posts/20240319163300-5da60ff1.html","title":"20240319小日常"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Tag: IDR幀 | Brian's 隨記</title>
+<title>20240319小日常 | Brian's 隨記</title>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
 <script>
@@ -130,7 +135,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -143,6 +148,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%AC%E6%96%87"><span class="nav-number">1.</span> <span class="nav-text">本文</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -187,48 +193,114 @@
 
     </div>
 
-    <div class="main-inner tag posts-collapse">
+    <div class="main-inner post posts-expand">
 
 
   
+
+
+<div class="post-block">
   
   
-  <div class="post-block">
-    <div class="post-content">
-      <div class="collection-title">
-        <h1 class="collection-header">IDR幀
-          <small>Tag</small>
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240319163300-5da60ff1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="20240319小日常 | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20240319小日常
         </h1>
-      </div>
 
-      
-    <div class="collection-year">
-      <span class="collection-header">2024</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-03-20 00:33:00" itemprop="dateCreated datePublished" datetime="2024-03-20T00:33:00+08:00">2024-03-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-03-19 08:23:42" itemprop="dateModified" datetime="2024-03-19T08:23:42+08:00">2024-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>這些天每天上班都處在一個迴圈的感覺，每解決完一個問，就會有新的問題，最近的任務是要移植代碼到新的板子上，學到了很多像是 bikbake pkg_config ycoto….，蠻多點都是大概過一下，沒問題就往下…</p>
+<p>有一個地方卡比較久就是要使用 adb root 的權限比較大，如果是用adb user 登入adb  然後再 su，雖然是root 但是權限還是有問題，像說要insmod 都說沒權限，氣鼠掉ㄟ<br> <span id="more"></span></p>
+<p>再來就是 bitbake 裡面 <a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u014603518/article/details/127800875">FILES_${PN}</a> 會將檔案加入打包中，但要小心在do_rootfs會重複就會有問題<br>每次在測試有沒有打包進去都要花超久時間驗證，因為一次都要20分鐘以上。</p>
+<p>再來是bitbake 更改設定kernel ，因為預設kernel 沒有開IPC，多虧有<a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.youtube.com/watch?v=uErrAUtxgt4&list=PLwqS94HTEwpQmgL1UsSwNk_2tQdzq3eVJ&index=45&ab_channel=Tech-A-Byte">Yocto Tutorial - 28 Kernel Configuration using Config Fragments | diffconfig</a><br>，才能順利在板子上跨進程溝通。</p>
+<p>在其中還有學到使用locate 指令用來快速尋找檔案，和find比起來，當要搜尋整台電腦時，會用 locate ，搜資較夾底下的內容時會用find。</p>
+<p>再來是概念的問題，在送資料到其他地方處理時，最簡單的方法是複製，但這樣會造成cpu負擔，期待的方法是零複製，DMA(Direct Memory Access,直接存儲取訪問) , 只要配置好address ，讓另一個進程直接去讀取</p>
+<p>雖然以前高中的時候，玩過android root，但是還是會有一堆坑要踩，還有很多需要學習，這些以後可以幫助我解決更多其他問題 。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-      <div class="post-meta-container">
-        <time itemprop="dateCreated" datetime="2024-01-16T16:09:00+08:00" content="2024-01-16">
-          01-16
-        </time>
-      </div>
+    
+    
+    
 
-      <div class="post-title">
-          <a class="post-title-link" href="/posts/20240116080900-8a796e7c.html" itemprop="url">
-            <span itemprop="name">H264基礎知識</span>
-          </a>
-      </div>
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/adb/" rel="tag"># adb</a>
+              <a href="/tags/bitbake/" rel="tag"># bitbake</a>
+              <a href="/tags/yocto/" rel="tag"># yocto</a>
+          </div>
 
-      
-    </header>
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20240319071000-8084e2f0.html" rel="prev" title="share_file_descriptor(shrare fd)">
+                  <i class="fa fa-chevron-left"></i> share_file_descriptor(shrare fd)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
   </article>
+</div>
 
-    </div>
-  </div>
-  
-  
-  
+
+
+
+
 
 </div>
   </main>

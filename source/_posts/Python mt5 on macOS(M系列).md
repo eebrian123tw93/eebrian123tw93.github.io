@@ -1,5 +1,5 @@
 ---
-title: Python mt5 on linuxPython mt5 on macOS(M系列)
+title: Python mt5 on macOS(M系列)
 tags:
   - MT5
   - mac

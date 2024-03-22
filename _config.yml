@@ -130,3 +130,11 @@ nofollow:
 abbrlink:
   alg: crc32
   rep: hex
+
+sitemap:
+  path: 
+    - sitemap.xml
+    - sitemap.txt
+  rel: false
+  tags: false
+  categories: false

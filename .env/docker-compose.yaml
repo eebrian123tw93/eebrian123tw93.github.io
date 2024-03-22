@@ -11,6 +11,6 @@ services:
         TZ: "Asia/Taipei"
     tty: true
     volumes:
-      - /Users/brian/Documents/eebrian123tw93.github.io:/opt:Z
+      - /media/new_drive/eebrian123tw93.github.io/:/opt:Z
     ports:
       - "4000:4000"

@@ -9,6 +9,7 @@ Disallow: /vendors/
 Disallow: /fonts/
 Disallow: /vendors/
 Disallow: /fancybox/
+Disallow: /images
 
 Sitemap: https://eebrian123tw93.github.io/sitemap.xml
 Sitemap: https://eebrian123tw93.github.io/baidusitemap.xml

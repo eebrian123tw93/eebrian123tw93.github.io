@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="LDAPLDAP 為身份識別伺服器與內部檔案系統伺服器其他服務如(gitlab、ipcamera、Samba….) 可以做綁定，透過LDAP server 做驗證，將帳號密碼做整合 在驗證時，服務會向LDAP做驗證，權限控制還使由服務設定，LDAP server 只會存資料而已">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LDAP">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240416074500-51c3235.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="LDAPLDAP 為身份識別伺服器與內部檔案系統伺服器其他服務如(gitlab、ipcamera、Samba….) 可以做綁定，透過LDAP server 做驗證，將帳號密碼做整合 在驗證時，服務會向LDAP做驗證，權限控制還使由服務設定，LDAP server 只會存資料而已">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416160514.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416160738.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416161136.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416144938.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416145153.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416145244.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416145259.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416145425.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416145706.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240416152235.png">
+<meta property="article:published_time" content="2024-04-16T07:45:00.000Z">
+<meta property="article:modified_time" content="2024-05-05T23:27:02.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="openldap">
+<meta property="article:tag" content="phpldapadmin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20240416160514.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20240416074500-51c3235.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20240416074500-51c3235.html","path":"posts/20240416074500-51c3235.html","title":"LDAP"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>LDAP | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#LDAP"><span class="nav-number">1.</span> <span class="nav-text">LDAP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B3%BB%E7%B5%B1%E8%AA%AA%E6%98%8E"><span class="nav-number">2.</span> <span class="nav-text">系統說明</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#openldap-phpldapadmin"><span class="nav-number">3.</span> <span class="nav-text">openldap + phpldapadmin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose-yml"><span class="nav-number">3.1.</span> <span class="nav-text">docker_compose.yml</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%9F%E5%8B%95%E6%9C%8D%E5%8B%99"><span class="nav-number">3.2.</span> <span class="nav-text">啟動服務</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%8D%E5%8B%99log"><span class="nav-number">3.3.</span> <span class="nav-text">查看服務log</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#window-tcp-%E8%BD%89%E7%99%BC"><span class="nav-number">4.</span> <span class="nav-text">window tcp 轉發</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#phpldapadmin"><span class="nav-number">5.</span> <span class="nav-text">phpldapadmin</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A8%AA%E5%95%8F-http-192-168-56-111-8081"><span class="nav-number">5.1.</span> <span class="nav-text">訪問 http:&#x2F;&#x2F;192.168.56.111:8081&#x2F;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%85%A5"><span class="nav-number">5.2.</span> <span class="nav-text">登入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8Bentry"><span class="nav-number">5.3.</span> <span class="nav-text">建立entry</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4%E9%9B%86"><span class="nav-number">6.</span> <span class="nav-text">指令集</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%99%BB%E5%85%A5-server"><span class="nav-number">6.1.</span> <span class="nav-text">登入 server</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E4%BB%A4"><span class="nav-number">7.</span> <span class="nav-text">指令</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-openldap-memberOf%E6%AC%84%E4%BD%8D"><span class="nav-number">8.</span> <span class="nav-text">docker openldap memberOf欄位</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E6%8F%90"><span class="nav-number">8.1.</span> <span class="nav-text">前提</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B-ou-x3D-users-dc-x3D-ipcamera-dc-x3D-com-%E5%92%8C-ou-x3D-groups-dc-x3D-ipcamera-dc-x3D-comdocker-%E8%A3%A1%E9%9D%A2-x2F-container-x2F-service-x2F-slapd-x2F-assets-x2F-config-x2F-bootstrap-x2F-ldif-x2F-03-memberOf-ldif-%E7%82%BA-groupOfUniqueNames-add-user-ldif-add-unique-group-ldif-%E4%B8%8B%E6%8C%87%E4%BB%A4-%E5%8F%83%E8%80%83-LDAP-%E5%85%A5%E9%96%80-%E4%BD%BF%E7%94%A8-Docker-%E5%BB%BA%E7%BD%AE-LDAP-%E7%B3%BB%E7%B5%B1-OpenLDAP-%E6%B7%BB%E5%8A%A0groupOfUniqueNames%E5%B1%9E%E6%80%A7-%E5%90%AF%E7%94%A8OpenLDAP%E7%9A%84memberOf%E7%89%B9%E6%80%A7-LDAP%E6%B7%BB%E5%8A%A0-memberOf-%E6%A8%A1%E5%9D%97-%E5%A6%82%E4%BD%95%E5%90%AF%E7%94%A8-OpenLDAP-%E7%9A%84-memberOf-%E7%89%B9%E6%80%A7-OpenLDAP-%E7%B3%BB%E5%88%977-%E2%80%94-memberof-amp-refint"><span class="nav-number">8.2.</span> <span class="nav-text">建立 ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;com 和 ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;comdocker 裡面 &#x2F;container&#x2F;service&#x2F;slapd&#x2F;assets&#x2F;config&#x2F;bootstrap&#x2F;ldif&#x2F;03-memberOf.ldif 為 groupOfUniqueNames## add_user.ldif12345678910111213dn: cn&#x3D;Brian Lin,ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;comcn: Brian LingivenName: Briansn: Linuid: blinuidNumber: 5000gidNumber: 1000userPassword: {SHA}M6XDJwA47cNw9gm5kXV1uTQuMoY&#x3D;homeDirectory: &#x2F;home&#x2F;johnmail: john.doe@example.comobjectClass: topobjectClass: posixAccountobjectClass: inetOrgPerson##  add_unique_group.ldif1234567891011121314151617181920dn: cn&#x3D;admin,ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;comobjectClass: topobjectClass: groupOfUniqueNamescn: adminuniqueMember: cn&#x3D;Brian Lin,ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;comdn: cn&#x3D;oprator,ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;comobjectClass: topobjectClass: groupOfUniqueNamescn: opratoruniqueMember: dn: cn&#x3D;user,ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;comobjectClass: topobjectClass: groupOfUniqueNamescn: useruniqueMember: ## 下指令123456# 新增user和groupsldapadd -x -D cn&#x3D;admin,dc&#x3D;ipcamera,dc&#x3D;com -W -f add_user.ldif ldapadd -x -D cn&#x3D;admin,dc&#x3D;ipcamera,dc&#x3D;com -W -f add_unique_group.ldif # 查詢 要帶上查詢的attribute&#x3D;memberOfldapsearch -x -D &quot;cn&#x3D;Brian Lin,ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;com&quot; -w admin -b &quot;dc&#x3D;ipcamera,dc&#x3D;com&quot; &quot;cn&#x3D;Brian Lin&quot; memberOf # 參考- LDAP 入門- 使用 Docker 建置 LDAP 系統- OpenLDAP 添加groupOfUniqueNames属性- 启用OpenLDAP的memberOf特性- LDAP添加 memberOf 模块- 如何启用 OpenLDAP 的 memberOf 特性- OpenLDAP 系列7 — memberof &amp; refint</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240416074500-51c3235.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="LDAP | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LDAP
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-04-16 15:45:00" itemprop="dateCreated datePublished" datetime="2024-04-16T15:45:00+08:00">2024-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-05-06 07:27:02" itemprop="dateModified" datetime="2024-05-06T07:27:02+08:00">2024-05-06</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="LDAP"><a href="#LDAP" class="headerlink" title="LDAP"></a>LDAP</h1><p>LDAP 為身份識別伺服器與內部檔案系統伺服器<br>其他服務如(gitlab、ipcamera、Samba….) 可以做綁定，<br>透過LDAP server 做驗證，將帳號密碼做整合</p>
+<p><img src="/images/20240416160514.png"><br>在驗證時，服務會向LDAP做驗證，權限控制還使由服務設定，<br>LDAP server 只會存資料而已<br><img src="/images/20240416160738.png"><br> <span id="more"></span><br> 比如在ipcamera網頁登入的是一般操作者，LDAP 指會存這個這個user的等級<br>ipcamera 拿到這個user 的等級，回應相對應的權限服務 </p>
+<h1 id="系統說明"><a href="#系統說明" class="headerlink" title="系統說明"></a>系統說明</h1><p>LDAP 基本上就是個樹狀目錄系統，可以根據需求增加節點，例如公司叫「example」，下面有兩個部門人資「People」及IT「Servers」，人資下面有個員工，如下圖示意：<br><img src="/images/20240416161136.png"><br>值得注意的是，LDAP表示方式<strong>都是由小到大</strong>，下面登入的帳號，就是先說他是誰，後面才描述其他屬性。</p>
+<h1 id="openldap-phpldapadmin"><a href="#openldap-phpldapadmin" class="headerlink" title="openldap + phpldapadmin"></a>openldap + phpldapadmin</h1><h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker_compose.yml"></a>docker_compose.yml</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">openldap:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">openldap</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">osixia/openldap:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8389:389&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8636:636&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">~/ldap/backup:/data/backup</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">~/ldap/data:/var/lib/openldap</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">~/ldap/config:/etc/openldap/slapd.d</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">~/ldap/certs:/assets/slapd/certs</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">--copy-service</span>,  <span class="string">--loglevel</span>, <span class="string">debug</span>]</span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">LDAP_DOMAIN=ipcamera.com</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">LDAP_BASE_DN=dc=ipcamera,dc=com</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">LDAP_ADMIN_PASSWORD=admin</span></span><br><span class="line">  <span class="attr">phpldapadmin:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">phpldapadmin</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">osixia/phpldapadmin:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8081:80&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PHPLDAPADMIN_HTTPS=&quot;false&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">PHPLDAPADMIN_LDAP_HOSTS=openldap</span></span><br><span class="line">    <span class="attr">links:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">openldap</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">openldap</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="啟動服務"><a href="#啟動服務" class="headerlink" title="啟動服務"></a>啟動服務</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+<h2 id="查看服務log"><a href="#查看服務log" class="headerlink" title="查看服務log"></a>查看服務log</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs openldap -f</span><br></pre></td></tr></table></figure>
+<h1 id="window-tcp-轉發"><a href="#window-tcp-轉發" class="headerlink" title="window tcp 轉發"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/cw_hello1/article/details/105968359">window tcp 轉發</a></h1><p>因為在ldap server 在不同網段，所以需要轉發</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增轉發規則</span></span><br><span class="line">netsh interface portproxy add v4tov4 listenport=389 listenaddress=192.168.57.2 connectaddress=192.168.56.111 connectport=8389</span><br><span class="line">netsh interface portproxy add v4tov4 listenport=8081 listenaddress=192.168.57.2 connectaddress=192.168.56.111 connectport=8081</span><br><span class="line"></span><br><span class="line"><span class="comment"># 顯示規則</span></span><br><span class="line">netsh interface portproxy show all</span><br><span class="line"></span><br><span class="line"><span class="comment"># 重開機需要刪除後新增</span></span><br><span class="line">netsh interface portproxy delete v4tov4 listenport=389 listenaddress=192.168.57.2</span><br></pre></td></tr></table></figure>
+
+<h1 id="phpldapadmin"><a href="#phpldapadmin" class="headerlink" title="phpldapadmin"></a>phpldapadmin</h1><h2 id="訪問-http-192-168-56-111-8081"><a href="#訪問-http-192-168-56-111-8081" class="headerlink" title="訪問 http://192.168.56.111:8081/"></a>訪問 <a target="_blank" rel="external nofollow noopener noreferrer" href="http://192.168.56.111:8081/">http://192.168.56.111:8081/</a></h2><p><img src="/images/20240416144938.png"></p>
+<h2 id="登入"><a href="#登入" class="headerlink" title="登入"></a>登入</h2><p>docker compose預設: 帳號cn&#x3D;admin,dc&#x3D;example,dc&#x3D;org 密碼 admin<br>帳號: cn&#x3D;admin,dc&#x3D;ipcamera,dc&#x3D;com<br>密碼: admin<br><img src="/images/20240416145153.png"></p>
+<h2 id="建立entry"><a href="#建立entry" class="headerlink" title="建立entry"></a>建立entry</h2><p><img src="/images/20240416145244.png"><br>新增節點非常簡單，只要在要新增節點的上一層，點擊下面的 Create a child entry，就可以新增節點。<br><img src="/images/20240416145259.png"><br>常用的是Generic 這些類別<br><img src="/images/20240416145425.png"><br>簡單的權限管理為以下樹狀結構</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">groups(ou)</span><br><span class="line">	admin(cn)</span><br><span class="line">	operator(cn)</span><br><span class="line">	user(cn)</span><br><span class="line">users(ou)</span><br><span class="line">	Brian Lu(cn)</span><br><span class="line">	Vivian Chen(cn)</span><br><span class="line">	...</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20240416145706.png"><br><img src="/images/20240416152235.png"></p>
+<h1 id="指令集"><a href="#指令集" class="headerlink" title="指令集"></a>指令集</h1><h2 id="登入-server"><a href="#登入-server" class="headerlink" title="登入 server"></a>登入 server</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -ti openldap bash</span><br></pre></td></tr></table></figure>
+<h1 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查詢數據庫訊息</span></span><br><span class="line">ldapsearch -Q -LLL -Y EXTERNAL -H ldapi:/// -b cn=config dn</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用admin查詢</span></span><br><span class="line">ldapsearch -x -D <span class="string">&quot;cn=admin,dc=ipcamera,dc=com&quot;</span> -w admin -b <span class="string">&quot;dc=ipcamera,dc=com&quot;</span> <span class="string">&quot;(objectClass=*)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用Brian Lu查詢</span></span><br><span class="line">ldapsearch -x -D <span class="string">&quot;cn=Brian Lu,ou=users,dc=ipcamera,dc=com&quot;</span> -w admin -b <span class="string">&quot;dc=ipcamera,dc=com&quot;</span> <span class="string">&quot;(objectClass=*)&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 變更olc權限，使得Brian Lu可以查詢 docker compose預設密碼為config </span></span><br><span class="line"><span class="comment"># &#123;1&#125;mdb為使用的database使用上面查詢數據庫訊息查詢</span></span><br><span class="line">ldapmodify -x -D <span class="string">&quot;cn=admin,cn=config&quot;</span> -w config &lt;&lt;<span class="string">EOF</span></span><br><span class="line"><span class="string">dn: olcDatabase=&#123;1&#125;mdb,cn=config</span></span><br><span class="line"><span class="string">changetype: modify</span></span><br><span class="line"><span class="string">add: olcAccess</span></span><br><span class="line"><span class="string">olcAccess: &#123;2&#125;to dn.subtree=&quot;dc=ipcamera,dc=com&quot;</span></span><br><span class="line"><span class="string">  by dn=&quot;cn=Brian Lu,ou=users,dc=ipcamera,dc=com&quot; read</span></span><br><span class="line"><span class="string">  by dn=&quot;cn=Brian Lin,ou=users,dc=ipcamera,dc=com&quot; read</span></span><br><span class="line"><span class="string">  by * none</span></span><br><span class="line"><span class="string">EOF</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="docker-openldap-memberOf欄位"><a href="#docker-openldap-memberOf欄位" class="headerlink" title="docker openldap memberOf欄位"></a>docker openldap memberOf欄位</h1><h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><h2 id="建立-ou-x3D-users-dc-x3D-ipcamera-dc-x3D-com-和-ou-x3D-groups-dc-x3D-ipcamera-dc-x3D-comdocker-裡面-x2F-container-x2F-service-x2F-slapd-x2F-assets-x2F-config-x2F-bootstrap-x2F-ldif-x2F-03-memberOf-ldif-為-groupOfUniqueNames-add-user-ldif-add-unique-group-ldif-下指令-參考-LDAP-入門-使用-Docker-建置-LDAP-系統-OpenLDAP-添加groupOfUniqueNames属性-启用OpenLDAP的memberOf特性-LDAP添加-memberOf-模块-如何启用-OpenLDAP-的-memberOf-特性-OpenLDAP-系列7-—-memberof-amp-refint"><a href="#建立-ou-x3D-users-dc-x3D-ipcamera-dc-x3D-com-和-ou-x3D-groups-dc-x3D-ipcamera-dc-x3D-comdocker-裡面-x2F-container-x2F-service-x2F-slapd-x2F-assets-x2F-config-x2F-bootstrap-x2F-ldif-x2F-03-memberOf-ldif-為-groupOfUniqueNames-add-user-ldif-add-unique-group-ldif-下指令-參考-LDAP-入門-使用-Docker-建置-LDAP-系統-OpenLDAP-添加groupOfUniqueNames属性-启用OpenLDAP的memberOf特性-LDAP添加-memberOf-模块-如何启用-OpenLDAP-的-memberOf-特性-OpenLDAP-系列7-—-memberof-amp-refint" class="headerlink" title="建立 ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;com 和 ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;comdocker 裡面 &#x2F;container&#x2F;service&#x2F;slapd&#x2F;assets&#x2F;config&#x2F;bootstrap&#x2F;ldif&#x2F;03-memberOf.ldif 為 groupOfUniqueNames## add_user.ldif##  add_unique_group.ldif## 下指令# 參考- LDAP 入門- 使用 Docker 建置 LDAP 系統- OpenLDAP 添加groupOfUniqueNames属性- 启用OpenLDAP的memberOf特性- LDAP添加 memberOf 模块- 如何启用 OpenLDAP 的 memberOf 特性- OpenLDAP 系列7 — memberof &amp; refint"></a>建立 ou&#x3D;users,dc&#x3D;ipcamera,dc&#x3D;com 和 ou&#x3D;groups,dc&#x3D;ipcamera,dc&#x3D;com<br>docker 裡面 &#x2F;container&#x2F;service&#x2F;slapd&#x2F;assets&#x2F;config&#x2F;bootstrap&#x2F;ldif&#x2F;03-memberOf.ldif 為 groupOfUniqueNames<br>## add_user.ldif<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">dn: cn=Brian Lin,ou=<span class="built_in">users</span>,dc=ipcamera,dc=com</span><br><span class="line">cn: Brian Lin</span><br><span class="line">givenName: Brian</span><br><span class="line">sn: Lin</span><br><span class="line">uid: blin</span><br><span class="line">uidNumber: 5000</span><br><span class="line">gidNumber: 1000</span><br><span class="line">userPassword: &#123;SHA&#125;M6XDJwA47cNw9gm5kXV1uTQuMoY=</span><br><span class="line">homeDirectory: /home/john</span><br><span class="line">mail: john.doe@example.com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: posixAccount</span><br><span class="line">objectClass: inetOrgPerson</span><br></pre></td></tr></table></figure><br>##  add_unique_group.ldif<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">dn: cn=admin,ou=<span class="built_in">groups</span>,dc=ipcamera,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: groupOfUniqueNames</span><br><span class="line">cn: admin</span><br><span class="line">uniqueMember: cn=Brian Lin,ou=<span class="built_in">users</span>,dc=ipcamera,dc=com</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dn: cn=oprator,ou=<span class="built_in">groups</span>,dc=ipcamera,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: groupOfUniqueNames</span><br><span class="line">cn: oprator</span><br><span class="line">uniqueMember: </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dn: cn=user,ou=<span class="built_in">groups</span>,dc=ipcamera,dc=com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: groupOfUniqueNames</span><br><span class="line">cn: user</span><br><span class="line">uniqueMember: </span><br><span class="line"></span><br></pre></td></tr></table></figure><br>## 下指令<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新增user和groups</span></span><br><span class="line">ldapadd -x -D cn=admin,dc=ipcamera,dc=com -W -f add_user.ldif </span><br><span class="line">ldapadd -x -D cn=admin,dc=ipcamera,dc=com -W -f add_unique_group.ldif </span><br><span class="line"></span><br><span class="line"><span class="comment"># 查詢 要帶上查詢的attribute=memberOf</span></span><br><span class="line">ldapsearch -x -D <span class="string">&quot;cn=Brian Lin,ou=users,dc=ipcamera,dc=com&quot;</span> -w admin -b <span class="string">&quot;dc=ipcamera,dc=com&quot;</span> <span class="string">&quot;cn=Brian Lin&quot;</span> memberOf </span><br></pre></td></tr></table></figure><br># 參考<br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://linux.vbird.org/somepaper/20050817-ldap-1.pdf">LDAP 入門</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://chrislee0728.medium.com/%E4%BD%BF%E7%94%A8-docker-%E5%BB%BA%E7%BD%AE-ldap-%E7%B3%BB%E7%B5%B1-82370c53bc9f">使用 Docker 建置 LDAP 系統</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://chenzhonzhou.github.io/2020/11/04/openldap-tian-jia-groupofuniquenames-shu-xing/">OpenLDAP 添加groupOfUniqueNames属性</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.linuxprobe.com/enable-memberof-openldap.html">启用OpenLDAP的memberOf特性</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u011607971/article/details/119037796">LDAP添加 memberOf 模块</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://mayanbin.com/posts/enable-memberof-in-openldap">如何启用 OpenLDAP 的 memberOf 特性</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.cnblogs.com/eagle6688/p/16990393.html">OpenLDAP 系列7 — memberof &amp; refint</a></h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/openldap/" rel="tag"># openldap</a>
+              <a href="/tags/phpldapadmin/" rel="tag"># phpldapadmin</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20240319163300-5da60ff1.html" rel="prev" title="20240319小日常">
+                  <i class="fa fa-chevron-left"></i> 20240319小日常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20240506024400-613b46cc.html" rel="next" title="Nessus">
+                  Nessus <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

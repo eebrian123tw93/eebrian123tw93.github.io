@@ -7,6 +7,7 @@ date: '2024-04-16 15:45:00'
 updated: '2024-05-06 07:27:02'
 categories: []
 description: ''
+abbrlink: 51c3235
 ---
 # LDAP
 LDAP 為身份識別伺服器與內部檔案系統伺服器

@@ -7,6 +7,7 @@ categories:
 date: '2024-05-06 15:58:00'
 updated: '2024-05-06 07:02:10'
 description: ''
+abbrlink: 7abecaea
 ---
 # 前言
 在使用Nessus最一般的就是用 Basic Network Scan 但這會掃描非常久時間，所以可以使用

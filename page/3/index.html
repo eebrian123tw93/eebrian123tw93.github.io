@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">54</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -188,6 +188,274 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240125024300-49fdb147.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20240125024300-49fdb147.html" class="post-title-link" itemprop="url">使用WebCodecs API對H265解碼</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-25 10:43:00 / Modified: 06:50:19" itemprop="dateCreated datePublished" datetime="2024-01-25T10:43:00+08:00">2024-01-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，現在處理H265格式，這裡的只是將程式碼有一點小改動</p>
+<h1 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;hev1.1.6.L123.B0&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
+<p>這裡的不同的是  H264 和 H265 使用的 codec 不同</p>
+<blockquote>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20240125024300-49fdb147.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </p></blockquote></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240124061700-2ff23ae2.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20240124061700-2ff23ae2.html" class="post-title-link" itemprop="url">python進度條tqdm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-01-24 14:17:00" itemprop="dateCreated datePublished" datetime="2024-01-24T14:17:00+08:00">2024-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-01-28 04:09:10" itemprop="dateModified" datetime="2024-01-28T04:09:10+08:00">2024-01-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在查網站時，無意間逛到<a target="_blank" rel="external nofollow noopener noreferrer" href="https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430">stackoverflow</a>，有人用python的tqdm顯示記憶體和cpu的使用量，看起來有點酷炫，就來複製貼上玩一下吧，也可以用在python需要耗時的程式上，也不用一直print log看起來非常亂。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20240124061700-2ff23ae2.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240123163300-3f5d67a6.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20240123163300-3f5d67a6.html" class="post-title-link" itemprop="url">20240123小日常</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-01-24 00:33:00 / Modified: 02:17:06" itemprop="dateCreated datePublished" datetime="2024-01-24T00:33:00+08:00">2024-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>今天真是個又累又氣的一天。花了4小時找一個差異。事情是這樣子的：這陣子在做<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，接下來換H265。經過了幾次測試都發現我的瀏覽器無法支援H265的解碼。於是我跑去問主管該如何處理，他給我了他的經驗，他的電腦竟然可以用Chrome播放H265&#x2F;MP4的格式。我請他將檔案給我，讓我跑跑看，結果我的也不行。我以為主管的電腦有比較好，結果問之下也沒有。<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20240123163300-3f5d67a6.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -373,288 +641,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240116080900-8a796e7c.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20240116080900-8a796e7c.html" class="post-title-link" itemprop="url">H264基礎知識</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-01-16 16:09:00" itemprop="dateCreated datePublished" datetime="2024-01-16T16:09:00+08:00">2024-01-16</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:54" itemprop="dateModified" datetime="2024-01-25T07:37:54+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/h264/" itemprop="url" rel="index"><span itemprop="name">h264</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="H264"><a href="#H264" class="headerlink" title="H264"></a>H264</h1><p>MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC</p>
-<h1 id="I幀-B幀-P幀-IDR幀"><a href="#I幀-B幀-P幀-IDR幀" class="headerlink" title="I幀, B幀,P幀,IDR幀"></a>I幀, B幀,P幀,IDR幀</h1><p><img src="/images/20240116150548.png"></p>
-<h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20240116080900-8a796e7c.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231129101600-661de22d.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20231129101600-661de22d.html" class="post-title-link" itemprop="url">VM安裝</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-11-29 18:16:00" itemprop="dateCreated datePublished" datetime="2023-11-29T18:16:00+08:00">2023-11-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:36:59" itemprop="dateModified" datetime="2024-01-25T07:36:59+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20231129101600-661de22d.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118195000-c8085013.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20231118195000-c8085013.html" class="post-title-link" itemprop="url">Zigbee介紹</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2023-11-19 03:50:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:50:00+08:00">2023-11-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:02" itemprop="dateModified" datetime="2024-01-25T07:37:02+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/zigbee/" itemprop="url" rel="index"><span itemprop="name">zigbee</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u011350258/article/details/113062464">1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf">手把手指南—— 开启你的 Zigbee 之旅</a>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20231118195000-c8085013.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </li></ul></div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/4/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/2/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/4/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

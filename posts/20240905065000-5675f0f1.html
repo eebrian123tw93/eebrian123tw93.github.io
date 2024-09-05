@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Sonarqube 服務docker run1docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube docker compose&#96;12345678910111213141516171819202122232425262728293031version: &quot;3&quot;services:  sonar">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sonarqube">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20240905065000-5675f0f1.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="Sonarqube 服務docker run1docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube docker compose&#96;12345678910111213141516171819202122232425262728293031version: &quot;3&quot;services:  sonar">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135340.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135413.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135503.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135545.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135622.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135659.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905135735.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905143201.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20240905144822.png">
+<meta property="article:published_time" content="2024-09-05T06:50:00.000Z">
+<meta property="article:modified_time" content="2024-09-05T01:25:48.000Z">
+<meta property="article:author" content="BrianLu">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20240905135340.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20240905065000-5675f0f1.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20240905065000-5675f0f1.html","path":"posts/20240905065000-5675f0f1.html","title":"sonarqube"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>sonarqube | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Sonarqube-%E6%9C%8D%E5%8B%99"><span class="nav-number">1.</span> <span class="nav-text">Sonarqube 服務</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-run"><span class="nav-number">1.1.</span> <span class="nav-text">docker run</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose-96"><span class="nav-number">1.2.</span> <span class="nav-text">docker compose&#96;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SonarScanner%E5%95%9F%E5%8B%95%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">SonarScanner啟動器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A8%AA%E5%95%8F-localhost-9000"><span class="nav-number">3.</span> <span class="nav-text">訪問 localhost:9000</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A0%90%E8%A8%AD%E5%B8%B3%E5%AF%86-admin-x2F-admin"><span class="nav-number">3.1.</span> <span class="nav-text">預設帳密 admin&#x2F;admin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%B0%88%E6%A1%88"><span class="nav-number">3.2.</span> <span class="nav-text">建立專案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E5%88%86%E6%9E%90"><span class="nav-number">3.3.</span> <span class="nav-text">建立分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B0%87%E8%B3%87%E6%96%99%E5%A4%BE%E5%85%A7%E9%80%81%E4%B8%8A%E5%8E%BB%E6%9C%8D%E5%8B%99%E5%88%86%E6%9E%90"><span class="nav-number">4.</span> <span class="nav-text">將資料夾內送上去服務分析</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">參考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240905065000-5675f0f1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="sonarqube | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          sonarqube
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2024-09-05 14:50:00 / Modified: 09:25:48" itemprop="dateCreated datePublished" datetime="2024-09-05T14:50:00+08:00">2024-09-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Sonarqube-服務"><a href="#Sonarqube-服務" class="headerlink" title="Sonarqube 服務"></a>Sonarqube 服務</h1><h2 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube</span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-96"><a href="#docker-compose-96" class="headerlink" title="docker compose&#96;"></a>docker compose&#96;</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">sonarqube:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">sonarqube:community</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_URL:</span> <span class="string">jdbc:postgresql://db:5432/sonar</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_USERNAME:</span> <span class="string">sonar</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_PASSWORD:</span> <span class="string">sonar</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_data:/opt/sonarqube/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_extensions:/opt/sonarqube/extensions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_logs:/opt/sonarqube/logs</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:12</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">sonar</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">sonar</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql:/var/lib/postgresql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql_data:/var/lib/postgresql/data</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">sonarqube_data:</span></span><br><span class="line">  <span class="attr">sonarqube_extensions:</span></span><br><span class="line">  <span class="attr">sonarqube_logs:</span></span><br><span class="line">  <span class="attr">postgresql:</span></span><br><span class="line">  <span class="attr">postgresql_data:</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="SonarScanner啟動器"><a href="#SonarScanner啟動器" class="headerlink" title="SonarScanner啟動器"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.sonarsource.com/sonarqube/9.9/analyzing-source-code/scanners/sonarscanner/">SonarScanner</a>啟動器</h1> <span id="more"></span>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.1.0.4477-linux-x64.zip</span><br><span class="line">unzip sonar-scanner-cli-6.1.0.4477-linux-x64.zip</span><br><span class="line"><span class="built_in">export</span> PATH=<span class="string">&quot;<span class="subst">$(pwd)</span>/sonar-scanner-6.1.0.4477-linux-x64/bin:<span class="variable">$PATH</span>&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="訪問-localhost-9000"><a href="#訪問-localhost-9000" class="headerlink" title="訪問 localhost:9000"></a>訪問 <a target="_blank" rel="external nofollow noopener noreferrer" href="http://localhost:9000/">localhost:9000</a></h1><h2 id="預設帳密-admin-x2F-admin"><a href="#預設帳密-admin-x2F-admin" class="headerlink" title="預設帳密 admin&#x2F;admin"></a>預設帳密 admin&#x2F;admin</h2><p><img src="/images/20240905135340.png"></p>
+<h2 id="建立專案"><a href="#建立專案" class="headerlink" title="建立專案"></a>建立專案</h2><p>點擊<a target="_blank" rel="external nofollow noopener noreferrer" href="http://localhost:9000/tutorials?id=Test&selectedTutorial=local">create local project</a><br><img src="/images/20240905135413.png"><br>輸入專案名稱 點擊Next<br><img src="/images/20240905135503.png"><br>點擊Use the glogal setting<br><img src="/images/20240905135545.png"></p>
+<h2 id="建立分析"><a href="#建立分析" class="headerlink" title="建立分析"></a>建立分析</h2><p>點擊Locally<br><img src="/images/20240905135622.png"><br>建立分析token<br><img src="/images/20240905135659.png"><br>點擊 continue<br><img src="/images/20240905135735.png"><br>複製 command<br><img src="/images/20240905143201.png"></p>
+<h1 id="將資料夾內送上去服務分析"><a href="#將資料夾內送上去服務分析" class="headerlink" title="將資料夾內送上去服務分析"></a>將資料夾內送上去服務分析</h1><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> <span class="string">&quot;project path&quot;</span></span><br><span class="line">sonar-scanner \</span><br><span class="line">  -Dsonar.projectKey=Test \</span><br><span class="line">  -Dsonar.sources=. \</span><br><span class="line">  -Dsonar.host.url=http://localhost:9000 \</span><br><span class="line">  -Dsonar.token=sqp_21fd7ffbfd319d6ef13a7afa8b1598b164c5c2c7</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/20240905144822.png"><br>看到 EXECUTION SUCEESS 表示成功<br>點選 <a target="_blank" rel="external nofollow noopener noreferrer" href="http://localhost:9000/dashboard?id=Test">http://localhost:9000/dashboard?id=Test</a> 查看分析結果</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://old-oomusou.goodjack.tw/sonarqube/docker/">如何使用 Docker 安裝 SonarQube？</a></li>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://ithelp.ithome.com.tw/articles/10294624">Day 8: 快快樂樂地用SonarQube進行檢測吧!</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20240701102200-34a3e7e0.html" rel="prev" title="20240701小日常 3">
+                  <i class="fa fa-chevron-left"></i> 20240701小日常 3
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -6,7 +6,7 @@ tags:
   - ssh-server
   - vm
 date: '2023-11-29 18:16:00'
-updated: '2024-01-25 07:36:59'
+updated: '2024-09-05 09:25:45'
 categories:
   - linux
 description: ''
@@ -129,6 +129,9 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 vim ~/.zshrc
 # plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting
 source ~/.zshrc
+
+git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
+plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete
 ```
 ### 參考
 - [如何在Linux作業系統上使用 Z Shell (Zsh)？](https://magiclen.org/zsh/)

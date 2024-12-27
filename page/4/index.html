@@ -155,7 +155,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -166,7 +166,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -197,7 +197,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240122021600-ef8abaf3.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240905065000-5675f0f1.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -215,7 +215,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20240122021600-ef8abaf3.html" class="post-title-link" itemprop="url">使用WebCodecs API對H264解碼</a>
+          <a href="/posts/20240905065000-5675f0f1.html" class="post-title-link" itemprop="url">sonarqube</a>
         </h2>
 
         <div class="post-meta-container">
@@ -225,24 +225,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2024-01-22 10:16:00" itemprop="dateCreated datePublished" datetime="2024-01-22T10:16:00+08:00">2024-01-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:34:22" itemprop="dateModified" datetime="2024-01-25T07:34:22+08:00">2024-01-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
-        </span>
+      <time title="Created: 2024-09-05 14:50:00 / Modified: 09:25:48" itemprop="dateCreated datePublished" datetime="2024-09-05T14:50:00+08:00">2024-09-05</time>
     </span>
 
   
@@ -255,20 +240,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>
-<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><p><img src="/images/20240122092416.png"></p>
-<ol>
-<li><code>H264NALu</code> 轉成 <code>EncodedVideoChunk</code> 物件
+          <h1 id="Sonarqube-服務"><a href="#Sonarqube-服務" class="headerlink" title="Sonarqube 服務"></a>Sonarqube 服務</h1><h2 id="docker-run"><a href="#docker-run" class="headerlink" title="docker run"></a>docker run</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name sonarqube -p 9000:9000 -p 9092:9092 sonarqube</span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-96"><a href="#docker-compose-96" class="headerlink" title="docker compose&#96;"></a>docker compose&#96;</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">sonarqube:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">sonarqube:community</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_URL:</span> <span class="string">jdbc:postgresql://db:5432/sonar</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_USERNAME:</span> <span class="string">sonar</span></span><br><span class="line">      <span class="attr">SONAR_JDBC_PASSWORD:</span> <span class="string">sonar</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_data:/opt/sonarqube/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_extensions:/opt/sonarqube/extensions</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">sonarqube_logs:/opt/sonarqube/logs</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:12</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">sonar</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">sonar</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql:/var/lib/postgresql</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql_data:/var/lib/postgresql/data</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">sonarqube_data:</span></span><br><span class="line">  <span class="attr">sonarqube_extensions:</span></span><br><span class="line">  <span class="attr">sonarqube_logs:</span></span><br><span class="line">  <span class="attr">postgresql:</span></span><br><span class="line">  <span class="attr">postgresql_data:</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="SonarScanner啟動器"><a href="#SonarScanner啟動器" class="headerlink" title="SonarScanner啟動器"></a><a target="_blank" rel="external nofollow noopener noreferrer" href="https://docs.sonarsource.com/sonarqube/9.9/analyzing-source-code/scanners/sonarscanner/">SonarScanner</a>啟動器</h1>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20240122021600-ef8abaf3.html#more" rel="contents">
+              <a class="btn" href="/posts/20240905065000-5675f0f1.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </div>
 
     
     
@@ -292,7 +277,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240116080900-8a796e7c.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240701102200-34a3e7e0.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -310,7 +295,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20240116080900-8a796e7c.html" class="post-title-link" itemprop="url">H264基礎知識</a>
+          <a href="/posts/20240701102200-34a3e7e0.html" class="post-title-link" itemprop="url">20240701小日常 3</a>
         </h2>
 
         <div class="post-meta-container">
@@ -321,14 +306,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-01-16 16:09:00" itemprop="dateCreated datePublished" datetime="2024-01-16T16:09:00+08:00">2024-01-16</time>
+      <time title="Created: 2024-07-01 18:22:00" itemprop="dateCreated datePublished" datetime="2024-07-01T18:22:00+08:00">2024-07-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:54" itemprop="dateModified" datetime="2024-01-25T07:37:54+08:00">2024-01-25</time>
+      <time title="Modified: 2024-12-27 02:19:14" itemprop="dateModified" datetime="2024-12-27T02:19:14+08:00">2024-12-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -336,7 +321,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/h264/" itemprop="url" rel="index"><span itemprop="name">h264</span></a>
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
         </span>
     </span>
 
@@ -350,12 +335,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="H264"><a href="#H264" class="headerlink" title="H264"></a>H264</h1><p>MPEG-4的⼀個組成部分–MPEG-4 Part 10，⼜叫Advanced Video Codec，因此常稱為MPEG-4 AVC或直接叫AVC</p>
-<h1 id="I幀-B幀-P幀-IDR幀"><a href="#I幀-B幀-P幀-IDR幀" class="headerlink" title="I幀, B幀,P幀,IDR幀"></a>I幀, B幀,P幀,IDR幀</h1><p><img src="/images/20240116150548.png"></p>
-<h2 id="I幀-關鍵幀"><a href="#I幀-關鍵幀" class="headerlink" title="I幀 關鍵幀"></a>I幀 關鍵幀</h2><h2 id="P幀-前向預測編碼幀"><a href="#P幀-前向預測編碼幀" class="headerlink" title="P幀 前向預測編碼幀"></a>P幀 前向預測編碼幀</h2><h2 id="B幀-雙向預測內插編碼幀"><a href="#B幀-雙向預測內插編碼幀" class="headerlink" title="B幀 雙向預測內插編碼幀"></a>B幀 雙向預測內插編碼幀</h2><h2 id="IDR幀-I-幀的一種-立即刷新"><a href="#IDR幀-I-幀的一種-立即刷新" class="headerlink" title="IDR幀  I 幀的一種 立即刷新"></a>IDR幀  I 幀的一種 立即刷新</h2><p>IDR 幀禁止後面的幀向自己前面的幀參照<br>
+          <p>接續上篇<a href="/posts/20240701092200-43a4d776.html" title="20240701小日常 2">20240701小日常 2</a></p>
+<h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>在實作新功能時，發現這裡的程式碼都放在一起，沒有封裝或這沒有歸類，程式碼已經到 7000 行<br>這是我無法接受的，聽說原本這個檔案有10000~20000 行，這個已經是拆過的檔案，原先的已經照<br>著頁面顯示拆成一塊一塊的 component，但是經過我的觀察，還是藕合很嚴重，多語系 , media player , datacenter,<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20240116080900-8a796e7c.html#more" rel="contents">
+              <a class="btn" href="/posts/20240701102200-34a3e7e0.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -386,7 +370,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231129101600-661de22d.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240701092200-43a4d776.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -404,7 +388,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20231129101600-661de22d.html" class="post-title-link" itemprop="url">VM安裝</a>
+          <a href="/posts/20240701092200-43a4d776.html" class="post-title-link" itemprop="url">20240701小日常 2</a>
         </h2>
 
         <div class="post-meta-container">
@@ -415,14 +399,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-11-29 18:16:00" itemprop="dateCreated datePublished" datetime="2023-11-29T18:16:00+08:00">2023-11-29</time>
+      <time title="Created: 2024-07-01 17:22:00" itemprop="dateCreated datePublished" datetime="2024-07-01T17:22:00+08:00">2024-07-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-09-05 09:25:45" itemprop="dateModified" datetime="2024-09-05T09:25:45+08:00">2024-09-05</time>
+      <time title="Modified: 2024-12-27 02:19:14" itemprop="dateModified" datetime="2024-12-27T02:19:14+08:00">2024-12-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -430,7 +414,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
         </span>
     </span>
 
@@ -444,10 +428,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="Install-Guest-Additions"><a href="#Install-Guest-Additions" class="headerlink" title="Install Guest Additions"></a>Install Guest Additions</h2><p><code>sudo apt-get install gcc make perl -y</code><br><img src="/images/20231129152725.png"><br>插入 Guest Additions CD 映像<br><img src="/images/20231129152840.png"><br>點擊Run<br><img src="/images/20231129152907.png"><br>輸入密碼<br>
+          <p>接續上篇<a href="/posts/20240701082200-daad86cc.html" title="20240701小日常 1">20240701小日常 1</a></p>
+<h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>接下的功能是Camrea在瀏覽器要支援雙向對話的功能，這邊其實包含兩個功能要單獨看，一個是播放聲音，一個是錄音將音訊傳給Camrea，在看code的時候發現，哇!，都註解掉了，原來前人都鋪好錄了，打開不就好了，但是沒有向的這麼簡單。</p>
+<p>接下就是遇到的問題，這是是用websocket做連線雙向溝通，在播放聲音功能的部分，出現類似心跳聲的聲音，到網路上搜尋到的代碼，寫發都差不多，幾乎都一樣，但是為甚麼會有問題，一開始以為是 過來的PCM格式設定不一樣，或者buffer被干擾， 或者 websocket在傳輸時，資料沒有完整，結果都不是，是因為每當websocket onMessage 收到資料就直接播放，但是每個buffer 只有 0.125 秒，api就 每0.125 秒 一直 start stop，我猜心跳聲就是一秒內 start stop 8次造成的，最後的解法是將 buffer Queue 起來 然後 merge 起來 ，累積1 秒再播放，心跳聲就解除了。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20231129101600-661de22d.html#more" rel="contents">
+              <a class="btn" href="/posts/20240701092200-43a4d776.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -478,7 +464,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118195000-c8085013.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240701082200-daad86cc.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -496,7 +482,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20231118195000-c8085013.html" class="post-title-link" itemprop="url">Zigbee介紹</a>
+          <a href="/posts/20240701082200-daad86cc.html" class="post-title-link" itemprop="url">20240701小日常 1</a>
         </h2>
 
         <div class="post-meta-container">
@@ -507,14 +493,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2023-11-19 03:50:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:50:00+08:00">2023-11-19</time>
+      <time title="Created: 2024-07-01 16:22:00" itemprop="dateCreated datePublished" datetime="2024-07-01T16:22:00+08:00">2024-07-01</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:02" itemprop="dateModified" datetime="2024-01-25T07:37:02+08:00">2024-01-25</time>
+      <time title="Modified: 2024-12-27 02:19:14" itemprop="dateModified" datetime="2024-12-27T02:19:14+08:00">2024-12-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -522,7 +508,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/zigbee/" itemprop="url" rel="index"><span itemprop="name">zigbee</span></a>
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
         </span>
     </span>
 
@@ -536,19 +522,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/u011350258/article/details/113062464">1、ZigBee 开发教程之基础篇—ZigBee简介和学习方法</a></li>
-<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://zigbeealliance.org/wp-content/uploads/2019/12/Getting-Started-with-Zigbee-3.0-CN.pdf">手把手指南—— 开启你的 Zigbee 之旅</a>
+          <h1 id="本文"><a href="#本文" class="headerlink" title="本文"></a>本文</h1><p>從五月到七月上旬，陸陸續續推了大概43個 commmits，主要是在 WEB 新增功能 還有重構。<br>這大概是最近碰到最多的網頁的code的吧!!!</p>
+<p>第一個功能就是將wfs.js換成用 jmuxer ，順便支援H265 功能，還有一不分是 wfs.js 已經被改的不成樣子了，但觀察到的是 這個套件將 websocket 連線 和 decode H264 的代碼耦合，維護性很低。<br>這邊遇到比較困難的事，串流過來的格式，瀏覽器不一定會支援，所以要去解析 I frame 裡面的NaLu資料 轉成像 <code>hev1.1.6.L123.B0</code> 的字串，詢問瀏覽器支不支援<code>window.MediaSource.isTypeSupported(codecString)</code>，感謝同事和主管的幫忙，因為中間還要去了解將 sps 欄位拉出來<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20231118195000-c8085013.html#more" rel="contents">
+              <a class="btn" href="/posts/20240701082200-daad86cc.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ul></div>
+    </p></div>
 
     
     
@@ -572,7 +557,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20231118194800-e891e3a3.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20240506075800-7abecaea.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -590,7 +575,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20231118194800-e891e3a3.html" class="post-title-link" itemprop="url">DMA (Direct Memory Access)</a>
+          <a href="/posts/20240506075800-7abecaea.html" class="post-title-link" itemprop="url">Nessus Advanced Scan</a>
         </h2>
 
         <div class="post-meta-container">
@@ -600,15 +585,9 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
+      
 
-      <time title="Created: 2023-11-19 03:48:00" itemprop="dateCreated datePublished" datetime="2023-11-19T03:48:00+08:00">2023-11-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:02" itemprop="dateModified" datetime="2024-01-25T07:37:02+08:00">2024-01-25</time>
+      <time title="Created: 2024-05-06 15:58:00 / Modified: 07:02:10" itemprop="dateCreated datePublished" datetime="2024-05-06T15:58:00+08:00">2024-05-06</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -616,7 +595,7 @@
       </span>
       <span class="post-meta-item-text">In</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/soc/" itemprop="url" rel="index"><span itemprop="name">soc</span></a>
+          <a href="/categories/%E8%B3%87%E5%AE%89/" itemprop="url" rel="index"><span itemprop="name">資安</span></a>
         </span>
     </span>
 
@@ -630,21 +609,20 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
-<p>簡單來說，就是搬資料，不需要用到CPU的指令。換言之，搬資料時，CPU不用知道。要怎麼做可以確保搬的資料不會錯。</p>
-<ol>
-<li>要知道原始資料的位置。</li>
-<li>要知道目地的位置。
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用Nessus最一般的就是用 Basic Network Scan 但這會掃描非常久時間，所以可以使用<br>Advanced Scan選擇想要掃的項目，但是茫茫大海要如何選擇特定的Plugin呢</p>
+<h1 id="新增掃描"><a href="#新增掃描" class="headerlink" title="新增掃描"></a>新增掃描</h1><p><img src="/images/20240506131854.png"></p>
+<h1 id="這裡可以選擇要掃描的範本"><a href="#這裡可以選擇要掃描的範本" class="headerlink" title="這裡可以選擇要掃描的範本"></a>這裡可以選擇要掃描的範本</h1><p><img src="/images/20240506131950.png"></p>
+<h1 id="選擇-Advanced-Scan"><a href="#選擇-Advanced-Scan" class="headerlink" title="選擇 Advanced Scan"></a>選擇 Advanced Scan</h1>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20231118194800-e891e3a3.html#more" rel="contents">
+              <a class="btn" href="/posts/20240506075800-7abecaea.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </div>
 
     
     
@@ -661,7 +639,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

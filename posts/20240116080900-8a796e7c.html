@@ -32,7 +32,7 @@
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240116154054.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20240116154827.png">
 <meta property="article:published_time" content="2024-01-16T08:09:00.000Z">
-<meta property="article:modified_time" content="2024-01-24T23:37:54.000Z">
+<meta property="article:modified_time" content="2024-12-26T17:27:21.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="I幀">
 <meta property="article:tag" content="B幀">
@@ -156,7 +156,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#H264"><span class="nav-number">1.</span> <span class="nav-text">H264</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I%E5%B9%80-B%E5%B9%80-P%E5%B9%80-IDR%E5%B9%80"><span class="nav-number">2.</span> <span class="nav-text">I幀, B幀,P幀,IDR幀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I%E5%B9%80-%E9%97%9C%E9%8D%B5%E5%B9%80"><span class="nav-number">2.1.</span> <span class="nav-text">I幀 關鍵幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P%E5%B9%80-%E5%89%8D%E5%90%91%E9%A0%90%E6%B8%AC%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.2.</span> <span class="nav-text">P幀 前向預測編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%E5%B9%80-%E9%9B%99%E5%90%91%E9%A0%90%E6%B8%AC%E5%85%A7%E6%8F%92%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.3.</span> <span class="nav-text">B幀 雙向預測內插編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDR%E5%B9%80-I-%E5%B9%80%E7%9A%84%E4%B8%80%E7%A8%AE-%E7%AB%8B%E5%8D%B3%E5%88%B7%E6%96%B0"><span class="nav-number">2.4.</span> <span class="nav-text">IDR幀  I 幀的一種 立即刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOP-%E5%85%A9%E5%80%8BI%E5%B9%80%E4%B9%8B%E9%96%93%E7%9A%84%E9%96%93%E9%9A%94"><span class="nav-number">2.5.</span> <span class="nav-text">GOP 兩個I幀之間的間隔</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NALU-Network-Abstract-Layer-Unit"><span class="nav-number">3.</span> <span class="nav-text">NALU (Network Abstract Layer Unit)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H264%E6%9C%89%E5%85%A9%E7%A8%AE%E5%B0%81%E8%A3%9D"><span class="nav-number">4.</span> <span class="nav-text">H264有兩種封裝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnnexB%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">AnnexB格式</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#H264-%E7%BC%96%E7%A0%81-%E2%80%94profile-%E5%92%8C-level"><span class="nav-number">5.</span> <span class="nav-text"># H264 编码 —profile 和 level</span></a></li></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#H264"><span class="nav-number">1.</span> <span class="nav-text">H264</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#I%E5%B9%80-B%E5%B9%80-P%E5%B9%80-IDR%E5%B9%80"><span class="nav-number">2.</span> <span class="nav-text">I幀, B幀,P幀,IDR幀</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#I%E5%B9%80-%E9%97%9C%E9%8D%B5%E5%B9%80"><span class="nav-number">2.1.</span> <span class="nav-text">I幀 關鍵幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#P%E5%B9%80-%E5%89%8D%E5%90%91%E9%A0%90%E6%B8%AC%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.2.</span> <span class="nav-text">P幀 前向預測編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B%E5%B9%80-%E9%9B%99%E5%90%91%E9%A0%90%E6%B8%AC%E5%85%A7%E6%8F%92%E7%B7%A8%E7%A2%BC%E5%B9%80"><span class="nav-number">2.3.</span> <span class="nav-text">B幀 雙向預測內插編碼幀</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDR%E5%B9%80-I-%E5%B9%80%E7%9A%84%E4%B8%80%E7%A8%AE-%E7%AB%8B%E5%8D%B3%E5%88%B7%E6%96%B0"><span class="nav-number">2.4.</span> <span class="nav-text">IDR幀  I 幀的一種 立即刷新</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#GOP-%E5%85%A9%E5%80%8BI%E5%B9%80%E4%B9%8B%E9%96%93%E7%9A%84%E9%96%93%E9%9A%94"><span class="nav-number">2.5.</span> <span class="nav-text">GOP 兩個I幀之間的間隔</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DTS-%E5%92%8C-PTS"><span class="nav-number">2.6.</span> <span class="nav-text">DTS 和 PTS</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NALU-Network-Abstract-Layer-Unit"><span class="nav-number">3.</span> <span class="nav-text">NALU (Network Abstract Layer Unit)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#H264%E6%9C%89%E5%85%A9%E7%A8%AE%E5%B0%81%E8%A3%9D"><span class="nav-number">4.</span> <span class="nav-text">H264有兩種封裝</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#AnnexB%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.0.0.1.</span> <span class="nav-text">AnnexB格式</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#H264-%E7%BC%96%E7%A0%81-%E2%80%94profile-%E5%92%8C-level"><span class="nav-number">5.</span> <span class="nav-text"># H264 编码 —profile 和 level</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%83%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">參考</span></a></li></div>
         </div>
         <!--/noindex-->
 
@@ -169,7 +169,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">43</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -180,7 +180,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -248,7 +248,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-01-25 07:37:54" itemprop="dateModified" datetime="2024-01-25T07:37:54+08:00">2024-01-25</time>
+      <time title="Modified: 2024-12-27 01:27:21" itemprop="dateModified" datetime="2024-12-27T01:27:21+08:00">2024-12-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -275,6 +275,11 @@
 <h2 id="GOP-兩個I幀之間的間隔"><a href="#GOP-兩個I幀之間的間隔" class="headerlink" title="GOP 兩個I幀之間的間隔"></a>GOP 兩個I幀之間的間隔</h2><p>完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差異部分編碼的幀叫 P幀，還有一種參考前後的幀編碼的幀叫 B幀<br>H264採用的核心演算法是幀內壓縮和幀間壓縮，幀內壓縮是產生 I 幀的演算法，幀間壓縮是產生 B 幀和 P 幀的演算法</p>
 <p>壓縮率 B幀 &gt; P幀 &gt; I幀<br>訊息量 I幀 &gt; P幀 &gt; B幀</p>
 <p>幀特性看底下連結<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>
+<h2 id="DTS-和-PTS"><a href="#DTS-和-PTS" class="headerlink" title="DTS 和 PTS"></a>DTS 和 PTS</h2><p>由于 B-帧需要未来的参考帧才能解码，于是便有了 DTS（Decode Timestamp，解码时间戳）和 PTS（Presentation Timestamp，显示时间戳）的概念。</p>
+<p>编码器在编码时需要提供 DTS 和 PTS；而解码器在解码时会根据 DTS 顺序解码，再根据 PTS 顺序播放。当然，编码器是按照 DTS 顺序进行编码的，视频帧也是按照 DTS 顺序传输的。</p>
+<p>以上述 GOP 结构图为例，PTS 顺序为图中的 1-9 顺序，对应的 DTS 顺序如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">     I B P B P B P B I</span><br><span class="line">PTS: 1 2 3 4 5 6 7 8 9</span><br><span class="line">DTS: 1 3 2 5 4 7 6 9 8</span><br></pre></td></tr></table></figure>
+<p>即在解码 B-帧之前，先根据 DTS 解码它需要的所有参考帧，再根据 PTS 组帧播放。不过我们在实时通话领域通常不使用 B-帧，所以 DTS 通常等于 PTS。</p>
 <h1 id="NALU-Network-Abstract-Layer-Unit"><a href="#NALU-Network-Abstract-Layer-Unit" class="headerlink" title="NALU (Network Abstract Layer Unit)"></a>NALU (Network Abstract Layer Unit)</h1><p><u><strong>H264編碼資料儲存或傳輸的基本單元</strong></u><br> 一般來說 前兩個是 SPS PPS 再來是IDR幀 再來是 P幀或B幀</p>
 <ul>
 <li>SPS(Sequence Parameter Sets)：序列參數集，保存了一組編碼視訊序列(Coded video sequence)的全域參數。 </li>
@@ -298,6 +303,9 @@
 <li>extended profile：进阶画质。支持 I&#x2F;P&#x2F;B&#x2F;SP&#x2F;SI 帧，只支持无交错（Progressive）和 CAVLC；(用的少)</li>
 <li>main profile：主流画质。提供 I&#x2F;P&#x2F;B 帧，支持无交错（Progressive）和交错（Interlaced），也支持 CAVLC 和 CABAC 的支持</li>
 <li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a target="_blank" rel="external nofollow noopener noreferrer" href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.piasy.com/2017/09/22/I-Need-Know-About-H264/index.html">我需要知道：H.264</a></li>
 </ul>
 
     </div>

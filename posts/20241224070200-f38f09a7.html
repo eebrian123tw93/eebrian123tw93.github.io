@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Candiates Examples12345678910&#x2F;&#x2F; 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，&#x2F;&#x2F; 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；&#x2F;&#x2F; host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连a&#x3D;candidate:udpcandidate">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ICE連線排序規則">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="Candiates Examples12345678910&#x2F;&#x2F; 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，&#x2F;&#x2F; 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；&#x2F;&#x2F; host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连a&#x3D;candidate:udpcandidate">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-12-24T07:02:00.000Z">
+<meta property="article:modified_time" content="2024-12-26T18:31:02.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html","path":"posts/20241224070200-f38f09a7.html","title":"ICE連線排序規則"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ICE連線排序規則 | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Candiates-Examples"><span class="nav-number">1.</span> <span class="nav-text">Candiates Examples</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%80%99%E9%80%89%E5%AF%B9%EF%BC%88Candidate-Pair%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">候选对（Candidate Pair）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%99%E9%80%89%E5%88%97%E8%A1%A8"><span class="nav-number">2.0.1.</span> <span class="nav-text">候选列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%99%E9%80%89%E5%AF%B9%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.0.2.</span> <span class="nav-text">候选对的定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%80%99%E9%80%89%E5%AF%B9%E7%9A%84%E7%94%A8%E9%80%94"><span class="nav-number">2.0.3.</span> <span class="nav-text">候选对的用途</span></a></li></ol></li></ol><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8B%89%E7%A8%8B%E5%BC%8F%E7%A2%BC%E5%8F%83%E8%80%83"><span class="nav-number">3.</span> <span class="nav-text">拉程式碼參考webrtc</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#p2p-x2F-base-x2F-basic-ice-controller-cc-%E2%80%93-gt-SortAndSwitchConnection"><span class="nav-number">4.</span> <span class="nav-text">p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#CompareConnections"><span class="nav-number">4.1.</span> <span class="nav-text">CompareConnections</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CompareConnectionStates-%E6%A0%B9%E6%93%9A%E7%8B%80%E6%85%8B"><span class="nav-number">4.1.1.</span> <span class="nav-text">CompareConnectionStates 根據狀態</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CompareConnectionCandidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83"><span class="nav-number">4.1.2.</span> <span class="nav-text">CompareConnectionCandidates 網路環境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%84%AA%E5%85%88%E7%B4%9A"><span class="nav-number">4.1.2.1.</span> <span class="nav-text">優先級</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%80%99%E9%80%89%E5%AF%B9%E4%BC%98%E5%85%88%E7%BA%A7%E8%AE%A1%E7%AE%97"><span class="nav-number">4.1.2.1.1.</span> <span class="nav-text">候选对优先级计算</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">5.</span> <span class="nav-text">結論</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AF%94%E8%BC%83%E5%85%88%E5%BE%8C%E9%A0%86%E5%BA%8F1-States-%E7%8B%80%E6%85%8B-1-%E6%98%AF%E5%90%A6%E5%8F%AF%E5%AF%AB-2-%E6%98%AF%E5%90%A6%E5%8F%AF%E6%94%B6-3-%E6%98%AF%E5%90%A6%E9%80%A3%E6%8E%A52-remote-nomination-%E5%A6%82%E6%98%AF%E5%8F%97%E6%8E%A7%E7%AB%AF-%E6%8E%A8%E8%96%A6%E5%80%BC3-last-data-received-%E5%A6%82%E6%98%AF%E5%8F%97%E6%8E%A7%E7%AB%AF-%E4%B8%8A%E6%AC%A1%E6%8E%A5%E6%94%B6%E6%95%B8%E6%93%9A%E6%99%82%E9%96%93%E6%88%B34-Candidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83-1-%E7%B6%B2%E8%B7%AF%E9%A1%9E%E5%9E%8B-2-%E5%84%AA%E5%85%88%E7%B4%9A-3-%E6%9B%B4%E6%96%B0%E4%BB%A3%E6%95%B8-4-%E6%98%AF%E5%90%A6%E8%A2%AB%E4%BF%AE%E5%89%AA5-rtt-%E4%BE%86%E5%9B%9E%E6%99%82%E9%96%93-%E5%8F%83%E8%80%83-webrtc-ICE%E7%A9%BF%E9%80%8F%E8%BF%9E%E6%8E%A5%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E8%AF%A6%E8%A7%A3-ICE-%E8%BF%9E%E6%8E%A5%E6%8E%92%E5%BA%8F%E8%A7%84%E5%88%99"><span class="nav-number">5.1.</span> <span class="nav-text">比較先後順序1. States 狀態    1. 是否可寫    2. 是否可收    3. 是否連接2. remote_nomination (如是受控端)推薦值3. last_data_received (如是受控端)上次接收數據時間戳4. Candidates 網路環境    1. 網路類型    2. 優先級    3. 更新代數    4. 是否被修剪5. rtt 來回時間# 參考- webrtc ICE穿透连接排序算法详解- ICE 连接排序规则</span></a></li></ol></li></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ICE連線排序規則 | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ICE連線排序規則
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 15:02:00" itemprop="dateCreated datePublished" datetime="2024-12-24T15:02:00+08:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-27 02:31:02" itemprop="dateModified" datetime="2024-12-27T02:31:02+08:00">2024-12-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
+<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
+<ol>
+<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。 <span id="more"></span></li>
+<li><strong>远程候选列表</strong>：从对等方通过信令协议（如 SDP）传递过来的候选列表。</li>
+</ol>
+<h3 id="候选对的定义"><a href="#候选对的定义" class="headerlink" title="候选对的定义"></a><strong>候选对的定义</strong></h3><p>候选对是本地候选和远程候选的组合。<br>假设：</p>
+<ul>
+<li>本地候选列表有 3 个候选：<code>A1</code>, <code>A2</code>, <code>A3</code>。</li>
+<li>远程候选列表有 2 个候选：<code>B1</code>, <code>B2</code>。<br>候选对的组合方式是<strong>笛卡尔积</strong>，即将每个本地候选与每个远程候选配对：</li>
+<li>候选对 &#x3D; {<code>(A1, B1)</code>, <code>(A1, B2)</code>, <code>(A2, B1)</code>, <code>(A2, B2)</code>, <code>(A3, B1)</code>, <code>(A3, B2)</code>}</li>
+</ul>
+<h3 id="候选对的用途"><a href="#候选对的用途" class="headerlink" title="候选对的用途"></a><strong>候选对的用途</strong></h3><p>候选对是用于连接性检查的单位。ICE 通过尝试不同的候选对来找出最佳的连接路径。</p>
+<ol>
+<li><strong>连接测试</strong>：对于每个候选对，ICE 会发送 STUN 请求来检查它们是否能够成功建立连接。<ul>
+<li>如果候选对能通过 STUN 验证，它会被标记为 “有效候选对”。</li>
+<li>最终选择一个优先级最高的有效候选对作为实际的连接路径。</li>
+</ul>
+</li>
+<li><strong>打洞（NAT Traversal）</strong>：候选对的连接性检查也会触发 NAT 打洞，帮助双方建立直接连接。</li>
+</ol>
+<h1 id="拉程式碼參考"><a href="#拉程式碼參考" class="headerlink" title="拉程式碼參考"></a>拉程式碼參考<a href="/posts/20230806170400-af856b41.html" title="webrtc">webrtc</a></h1><h1 id="p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection"><a href="#p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection" class="headerlink" title="p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection"></a>p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">IceControllerInterface::SwitchResult</span></span><br><span class="line"><span class="function"><span class="title">BasicIceController::SortAndSwitchConnection</span><span class="params">(IceSwitchReason reason)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Find the best alternative connection by sorting.  It is important to note</span></span><br><span class="line">  <span class="comment">// that amongst equal preference, writable connections, this will choose the</span></span><br><span class="line">  <span class="comment">// one whose estimated latency is lowest.  So it is the only one that we</span></span><br><span class="line">  <span class="comment">// need to consider switching to.</span></span><br><span class="line">  <span class="comment">// TODO(honghaiz): Don&#x27;t sort;  Just use std::max_element in the right places.</span></span><br><span class="line">  absl::<span class="built_in">c_stable_sort</span>(</span><br><span class="line">      connections_, [<span class="keyword">this</span>](<span class="type">const</span> Connection* a, <span class="type">const</span> Connection* b) &#123;</span><br><span class="line">        <span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line">        <span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; <span class="string">&quot;Sorting &quot;</span> &lt;&lt; connections_.<span class="built_in">size</span>()</span><br><span class="line">                      &lt;&lt; <span class="string">&quot; available connections due to: &quot;</span></span><br><span class="line">                      &lt;&lt; <span class="built_in">IceSwitchReasonToString</span>(reason);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; connections_.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; connections_[i]-&gt;<span class="built_in">ToString</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">const</span> Connection* top_connection =</span><br><span class="line">      (!connections_.<span class="built_in">empty</span>()) ? connections_[<span class="number">0</span>] : <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">ShouldSwitchConnection</span>(reason, top_connection);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>c_stable_sort 將 connections_ 做排序 ，排序完後拿出第一個 connection 在呼叫 ShouldSwitchConnection<br>c_stable_sort 裡面使用類似lambda用法</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line"><span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br></pre></td></tr></table></figure>
+<p>先去 CompareConnections 排序<br>如果沒有比較出來就是用 rtt &lt;同一個封包來回時間（Round-Trip Time）&gt; 做比較</p>
+<h2 id="CompareConnections"><a href="#CompareConnections" class="headerlink" title="CompareConnections"></a>CompareConnections</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BasicIceController::CompareConnections</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* a,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* b,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::optional&lt;<span class="type">int64_t</span>&gt; receiving_unchanged_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">bool</span>* missed_receiving_unchanged_threshold)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(a != <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(b != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We prefer to switch to a writable and receiving connection over a</span></span><br><span class="line">  <span class="comment">// non-writable or non-receiving connection, even if the latter has</span></span><br><span class="line">  <span class="comment">// been nominated by the controlling side.</span></span><br><span class="line">  <span class="type">int</span> state_cmp = <span class="built_in">CompareConnectionStates</span>(a, b, receiving_unchanged_threshold,</span><br><span class="line">                                          missed_receiving_unchanged_threshold);</span><br><span class="line">  <span class="keyword">if</span> (state_cmp != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> state_cmp;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">ice_role_func_</span>() == ICEROLE_CONTROLLED) &#123;</span><br><span class="line">    <span class="comment">// Compare the connections based on the nomination states and the last data</span></span><br><span class="line">    <span class="comment">// received time if this is on the controlled side.</span></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &gt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &lt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &gt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &lt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Compare the network cost and priority.</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">CompareConnectionCandidates</span>(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a href="#CompareConnectionStates-%E6%A0%B9%E6%93%9A%E7%8B%80%E6%85%8B">CompareConnectionStates 根據狀態</a></li>
+<li>remote_nomination (如是受控端)推薦值</li>
+<li>last_data_received (如是受控端)上次接收數據時間戳</li>
+<li><a href="#CompareConnectionCandidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83">CompareConnectionCandidates 網路環境</a></li>
+</ol>
+<h3 id="CompareConnectionStates-根據狀態"><a href="#CompareConnectionStates-根據狀態" class="headerlink" title="CompareConnectionStates 根據狀態"></a>CompareConnectionStates 根據狀態</h3><ol>
+<li>是否可寫</li>
+<li>是否可收</li>
+<li>是否連接</li>
+</ol>
+<h3 id="CompareConnectionCandidates-網路環境"><a href="#CompareConnectionCandidates-網路環境" class="headerlink" title="CompareConnectionCandidates 網路環境"></a>CompareConnectionCandidates 網路環境</h3><ol>
+<li><a href="#%E5%84%AA%E5%85%88%E7%B4%9A">優先級</a></li>
+<li>更新代數</li>
+<li>是否被修剪</li>
+</ol>
+<h4 id="優先級"><a href="#優先級" class="headerlink" title="優先級"></a>優先級</h4><p>WebRTC 会创建一个候选对（Candidate Pair）的检查列表，用于连接性检查。候选对的排序遵循以下规则：</p>
+<h5 id="候选对优先级计算"><a href="#候选对优先级计算" class="headerlink" title="候选对优先级计算"></a>候选对优先级计算</h5><p>候选对优先级&#x3D;2^32×min(本地优先级,远程优先级)+2×max(本地优先级,远程优先级)+(本地优先级&gt;远程优先级?1:0)<br>參考p2p&#x2F;base&#x2F;connection.cc  Connection::priority()</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><h2 id="比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则"><a href="#比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则" class="headerlink" title="比較先後順序1. States 狀態    1. 是否可寫    2. 是否可收    3. 是否連接2. remote_nomination (如是受控端)推薦值3. last_data_received (如是受控端)上次接收數據時間戳4. Candidates 網路環境    1. 網路類型    2. 優先級    3. 更新代數    4. 是否被修剪5. rtt 來回時間# 參考- webrtc ICE穿透连接排序算法详解- ICE 连接排序规则"></a>比較先後順序<br>1. States 狀態<br>    1. 是否可寫<br>    2. 是否可收<br>    3. 是否連接<br>2. remote_nomination (如是受控端)推薦值<br>3. last_data_received (如是受控端)上次接收數據時間戳<br>4. Candidates 網路環境<br>    1. 網路類型<br>    2. 優先級<br>    3. 更新代數<br>    4. 是否被修剪<br>5. rtt 來回時間<br># 參考<br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://blog.csdn.net/breezeewu/article/details/142210879">webrtc ICE穿透连接排序算法详解</a><br>- <a target="_blank" rel="external nofollow noopener noreferrer" href="https://webrtc.mthli.com/connection/ice-connection-sorting/#compareconnectionstates">ICE 连接排序规则</a></h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20241224063000-40453b0a.html" rel="prev" title="PeerConnection 連線過程">
+                  <i class="fa fa-chevron-left"></i> PeerConnection 連線過程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20241226081700-efd237b7.html" rel="next" title="Webrtc視訊流">
+                  Webrtc視訊流 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

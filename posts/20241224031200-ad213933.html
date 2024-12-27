@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="RTCP (RTP Control Protocol) 介紹RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。 主要功能 提供統計資訊 RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTCP（Real-time Transport Control Protocol）">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="RTCP (RTP Control Protocol) 介紹RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。 主要功能 提供統計資訊 RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-12-24T03:12:00.000Z">
+<meta property="article:modified_time" content="2024-12-26T18:31:02.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html","path":"posts/20241224031200-ad213933.html","title":"RTCP（Real-time Transport Control Protocol）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RTCP（Real-time Transport Control Protocol） | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#RTCP-RTP-Control-Protocol-%E4%BB%8B%E7%B4%B9"><span class="nav-number">1.</span> <span class="nav-text">RTCP (RTP Control Protocol) 介紹</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">1.1.</span> <span class="nav-text">主要功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTCP-%E5%8C%85%E7%B5%90%E6%A7%8B"><span class="nav-number">1.2.</span> <span class="nav-text">RTCP 包結構</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTCP-%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">1.3.</span> <span class="nav-text">RTCP 的工作流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTCP-%E7%9A%84%E6%87%89%E7%94%A8%E5%A0%B4%E6%99%AF"><span class="nav-number">1.4.</span> <span class="nav-text">RTCP 的應用場景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RTCP-%E8%88%87-RTP-%E7%9A%84%E5%8D%80%E5%88%A5"><span class="nav-number">1.5.</span> <span class="nav-text">RTCP 與 RTP 的區別</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RTCP（Real-time Transport Control Protocol） | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RTCP（Real-time Transport Control Protocol）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 11:12:00" itemprop="dateCreated datePublished" datetime="2024-12-24T11:12:00+08:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-27 02:31:02" itemprop="dateModified" datetime="2024-12-27T02:31:02+08:00">2024-12-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h3 id="RTCP-RTP-Control-Protocol-介紹"><a href="#RTCP-RTP-Control-Protocol-介紹" class="headerlink" title="RTCP (RTP Control Protocol) 介紹"></a>RTCP (RTP Control Protocol) 介紹</h3><p>RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。</p>
+<h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a><strong>主要功能</strong></h4><ol>
+<li><p><strong>提供統計資訊</strong><br> RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助檢測網絡問題並評估性能。</p>
+ <span id="more"></span>
+</li>
+<li><p><strong>同步多媒體流</strong><br> RTCP 可以幫助同步來自不同來源的多媒體流，例如音頻和視頻流，確保它們在接收端正確對齊。</p>
+</li>
+<li><p><strong>標識參與者</strong><br> RTCP 包含 CNAME（Canonical Name），用於標識會話中的參與者，方便處理多個流之間的對應關係。</p>
+</li>
+<li><p><strong>帶寬控制</strong><br> RTCP 使用一定比例的帶寬（通常是 RTP 數據流的 5%），以確保其不會過度佔用網絡資源。</p>
+</li>
+</ol>
+<h4 id="RTCP-包結構"><a href="#RTCP-包結構" class="headerlink" title="RTCP 包結構"></a><strong>RTCP 包結構</strong></h4><p>RTCP 使用多種類型的報告包來實現其功能，主要包括：</p>
+<ol>
+<li><p><strong>SR（Sender Report）</strong></p>
+<ul>
+<li>由主動發送數據的參與者生成。</li>
+<li>包括發送的數據包數量、字節數量和時間戳等資訊。</li>
+</ul>
+</li>
+<li><p><strong>RR（Receiver Report）</strong></p>
+<ul>
+<li>由接收數據的參與者生成。</li>
+<li>提供接收端的反饋信息，例如丟包率、抖動、延遲等。</li>
+</ul>
+</li>
+<li><p><strong>SDES（Source Description Items）</strong></p>
+<ul>
+<li>用於標識參與者的元數據，如 CNAME（Canonical Name）、姓名和電子郵件等。</li>
+</ul>
+</li>
+<li><p><strong>BYE（Goodbye）</strong></p>
+<ul>
+<li>用於通知其他參與者某個來源即將離開會話。</li>
+</ul>
+</li>
+<li><p><strong>APP（Application-Specific Messages）</strong></p>
+<ul>
+<li>提供應用程序自定義的控制信息。</li>
+</ul>
+</li>
+</ol>
+<h4 id="RTCP-的工作流程"><a href="#RTCP-的工作流程" class="headerlink" title="RTCP 的工作流程"></a><strong>RTCP 的工作流程</strong></h4><ol>
+<li>RTP 負責傳輸實時數據流，如音頻或視頻數據。</li>
+<li>RTCP 定期發送控制消息，讓參與者了解網絡狀況和其他流的情況。</li>
+<li>根據 RTCP 的統計和反饋，應用可以調整編碼參數、優化網絡使用或重新同步流。</li>
+</ol>
+<h4 id="RTCP-的應用場景"><a href="#RTCP-的應用場景" class="headerlink" title="RTCP 的應用場景"></a><strong>RTCP 的應用場景</strong></h4><ul>
+<li><strong>WebRTC</strong>：在 WebRTC 中，RTCP 為實時音視頻會話提供網絡性能監控和同步支持。</li>
+<li><strong>IPTV</strong>：在互聯網視頻廣播中，RTCP 協助監控網絡質量，保證用戶體驗。</li>
+<li><strong>視頻會議系統</strong>：RTCP 用於多點視頻會議中的性能反饋和同步。</li>
+</ul>
+<h4 id="RTCP-與-RTP-的區別"><a href="#RTCP-與-RTP-的區別" class="headerlink" title="RTCP 與 RTP 的區別"></a><strong>RTCP 與 RTP 的區別</strong></h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>RTP</th>
+<th>RTCP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>傳輸實時多媒體數據</td>
+<td>管理和監控 RTP 傳輸</td>
+</tr>
+<tr>
+<td>包類型</td>
+<td>音視頻數據包</td>
+<td>控制和反饋報告包</td>
+</tr>
+<tr>
+<td>帶寬使用</td>
+<td>主要佔用網絡帶寬</td>
+<td>佔用 RTP 帶寬的 5%</td>
+</tr>
+<tr>
+<td>例子</td>
+<td>音頻數據、視頻數據</td>
+<td>丟包率、延遲、同步信息</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20241223100300-345ae512.html" rel="prev" title="WebRTC基礎">
+                  <i class="fa fa-chevron-left"></i> WebRTC基礎
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20241224063000-40453b0a.html" rel="next" title="PeerConnection 連線過程">
+                  PeerConnection 連線過程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -163,6 +163,11 @@
 <h2 id="GOP-兩個I幀之間的間隔"><a href="#GOP-兩個I幀之間的間隔" class="headerlink" title="GOP 兩個I幀之間的間隔"></a>GOP 兩個I幀之間的間隔</h2><p>完整編碼的幀叫 I幀，參考先前的 I 幀產生的只包含差異部分編碼的幀叫 P幀，還有一種參考前後的幀編碼的幀叫 B幀<br>H264採用的核心演算法是幀內壓縮和幀間壓縮，幀內壓縮是產生 I 幀的演算法，幀間壓縮是產生 B 幀和 P 幀的演算法</p>
 <p>壓縮率 B幀 &gt; P幀 &gt; I幀<br>訊息量 I幀 &gt; P幀 &gt; B幀</p>
 <p>幀特性看底下連結<br><a href="https://blog.csdn.net/qq_29350001/article/details/73770702">图像和流媒体 – I 帧,B帧,P帧,IDR帧的区别</a></p>
+<h2 id="DTS-和-PTS"><a href="#DTS-和-PTS" class="headerlink" title="DTS 和 PTS"></a>DTS 和 PTS</h2><p>由于 B-帧需要未来的参考帧才能解码，于是便有了 DTS（Decode Timestamp，解码时间戳）和 PTS（Presentation Timestamp，显示时间戳）的概念。</p>
+<p>编码器在编码时需要提供 DTS 和 PTS；而解码器在解码时会根据 DTS 顺序解码，再根据 PTS 顺序播放。当然，编码器是按照 DTS 顺序进行编码的，视频帧也是按照 DTS 顺序传输的。</p>
+<p>以上述 GOP 结构图为例，PTS 顺序为图中的 1-9 顺序，对应的 DTS 顺序如下：</p>
+<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">     I B P B P B P B I</span><br><span class="line">PTS: 1 2 3 4 5 6 7 8 9</span><br><span class="line">DTS: 1 3 2 5 4 7 6 9 8</span><br></pre></td></tr></table></figure>
+<p>即在解码 B-帧之前，先根据 DTS 解码它需要的所有参考帧，再根据 PTS 组帧播放。不过我们在实时通话领域通常不使用 B-帧，所以 DTS 通常等于 PTS。</p>
 <h1 id="NALU-Network-Abstract-Layer-Unit"><a href="#NALU-Network-Abstract-Layer-Unit" class="headerlink" title="NALU (Network Abstract Layer Unit)"></a>NALU (Network Abstract Layer Unit)</h1><p><u><strong>H264編碼資料儲存或傳輸的基本單元</strong></u><br> 一般來說 前兩個是 SPS PPS 再來是IDR幀 再來是 P幀或B幀</p>
 <ul>
 <li>SPS(Sequence Parameter Sets)：序列參數集，保存了一組編碼視訊序列(Coded video sequence)的全域參數。 </li>
@@ -186,6 +191,9 @@
 <li>extended profile：进阶画质。支持 I&#x2F;P&#x2F;B&#x2F;SP&#x2F;SI 帧，只支持无交错（Progressive）和 CAVLC；(用的少)</li>
 <li>main profile：主流画质。提供 I&#x2F;P&#x2F;B 帧，支持无交错（Progressive）和交错（Interlaced），也支持 CAVLC 和 CABAC 的支持</li>
 <li>high profile：高级画质。在 main profile 的基础上增加了 8x8 内部预测、自定义量化、无损视频编码和更多的 YUV 格式<br><a href="https://winddoing.github.io/post/e114a1a8.html">H264 编码 —profile 和 level</a></li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://blog.piasy.com/2017/09/22/I-Need-Know-About-H264/index.html">我需要知道：H.264</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -220,6 +228,188 @@
 ]]></content>
       <tags>
         <tag>github</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ICE Interactive Connectivity Establishment，交互式连接建立</title>
+    <url>/posts/20241223083000-58bf8773.html</url>
+    <content><![CDATA[<p><strong>ICE（Interactive Connectivity Establishment，交互式连接建立）</strong> 是一種協議框架，旨在幫助網絡應用程式在 NAT（網絡地址轉換）和防火牆環境下進行點對點（P2P）連接。ICE 綜合了多種 NAT 穿越技術，包括 STUN 和 TURN，用於建立可靠的通信通道。<br><img src="/images/20241223152120.png"><br><strong>STUN&#x2F;TURN+NAT穿越流&#x3D;ICE流程</strong><br> <span id="more"></span><br> ICE 是框架，STUN 和 TURN 是技術支持。</p>
+<p>ICE用于NAT穿透，确定媒体流传输地址。这是音视频互通的第一步。包括如下四个流程</p>
+<ol>
+<li>收集候选地址</li>
+<li>产生offer&#x2F;answer sdp，将候选地址携带在sdp中(通过Signal Server单独传输)</li>
+<li>通过sdp中携带的候选者地址进行连通性测试<br>三个步骤是串行的，完成上一步骤才进行下一步</li>
+</ol>
+<h4 id="收集候选地址-Candiate"><a href="#收集候选地址-Candiate" class="headerlink" title="收集候选地址(Candiate)"></a>收集候选地址(Candiate)</h4><p>互通的两端所在的网络拓扑可能包括如下几种：</p>
+<ol>
+<li>在内网中(同一网段，或是跨网段)，通过内网地址互通</li>
+<li>在NAT之后，通过本机NAT映射后的外网的IP和Port互通</li>
+<li>需要通过relay服务器来互通</li>
+</ol>
+<p>所以收集地址时，分别对应三种类型的Candiate地址</p>
+<ul>
+<li>host 类型,即本机内网的 IP 和端口</li>
+<li>srflx 类型,即本机 NAT 映射后的外网的 IP 和端口</li>
+<li>relay 类型,即中继服务器的 IP 和端口</li>
+</ul>
+<p>3种类型的Candiate优先级依次是host,srflx,relay。按这种优先级进行连通测试。</p>
+<h4 id="ICE流程"><a href="#ICE流程" class="headerlink" title="ICE流程"></a>ICE流程</h4><p><img src="/images/20241223152415.png"><br>1.收集candidates</p>
+<ul>
+<li>获取本机host address</li>
+<li>从STUN服务器获取srvflx address</li>
+<li>从TURN服务器获取relay address<br>2.交换candidates 发起offer的一方称为主叫方，Web A为主叫方。在A获取到candidates后，会在offer携带。被叫方Web B收到offer，开始收集candiates，收集完后，在answer消息中携带。(sdp中的<code>a=candidate</code>属性行携带本端的candidates地址)<br>3.按优先级进行连通检查</li>
+</ul>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a><strong>核心概念</strong></h3><ol>
+<li><strong>目標：</strong><ul>
+<li>促進點對點通信，即使通信雙方在不同的網絡環境（如 NAT 背後）中。</li>
+</ul>
+</li>
+<li><strong>主要任務：</strong><ul>
+<li>探測雙方的網絡可達性。</li>
+<li>尋找最佳的網絡路徑。</li>
+<li>處理候選連接，最終確定最有效的通信方式。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="ICE-的組成部分"><a href="#ICE-的組成部分" class="headerlink" title="ICE 的組成部分"></a><strong>ICE 的組成部分</strong></h3><ol>
+<li><strong>候選（Candidates）：</strong><ul>
+<li>ICE 嘗試多種方式來建立通信，並將每種方式表示為一個「候選地址」。</li>
+<li><strong>候選類型：</strong><ul>
+<li><strong>主機候選（Host Candidate）：</strong> 本地網絡接口的地址。</li>
+<li><strong>反射候選（Server Reflexive Candidate）：</strong> 通過 STUN 服務器獲得的公共 IP 和端口。</li>
+<li><strong>中繼候選（Relay Candidate）：</strong> 通過 TURN 服務器中繼流量的地址。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><strong>STUN（Session Traversal Utilities for NAT）：</strong><ul>
+<li>幫助獲取公共 IP 和端口。</li>
+<li>用於檢測候選地址的可達性。</li>
+</ul>
+</li>
+<li><strong>TURN（Traversal Using Relays around NAT）：</strong><ul>
+<li>提供中繼服務器，以確保在嚴格 NAT 或防火牆環境中也能建立連接。</li>
+</ul>
+</li>
+<li><strong>優先級排序：</strong><ul>
+<li>每個候選地址根據特定算法分配優先級，確保選擇性能最佳的連接。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="ICE-的工作流程"><a href="#ICE-的工作流程" class="headerlink" title="ICE 的工作流程"></a><strong>ICE 的工作流程</strong></h3><ol>
+<li><strong>候選地址收集（Gathering Candidates）：</strong><ul>
+<li>雙方應用程序通過主機地址、STUN、TURN 等方式獲取一組候選地址。</li>
+</ul>
+</li>
+<li><strong>候選地址交換（Exchanging Candidates）：</strong><ul>
+<li>雙方通過信令（如 SIP 或 WebRTC 的 SDP）交換候選地址。</li>
+</ul>
+</li>
+<li><strong>連接檢測（Connectivity Checks）：</strong><ul>
+<li>使用 STUN 請求測試候選地址的可達性。</li>
+</ul>
+</li>
+<li><strong>選擇最佳連接（Candidate Pair Selection）：</strong><ul>
+<li>基於檢測結果和優先級，選擇一對候選地址作為最終通信通道。</li>
+</ul>
+</li>
+<li><strong>連接建立（Establish Connection）：</strong><ul>
+<li>通過選定的候選對進行數據交換。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="應用場景"><a href="#應用場景" class="headerlink" title="應用場景"></a><strong>應用場景</strong></h3><ol>
+<li><p><strong>WebRTC：</strong></p>
+<ul>
+<li>ICE 是 WebRTC 實現點對點音視頻通信的基礎。</li>
+</ul>
+</li>
+<li><p><strong>VoIP：</strong></p>
+<ul>
+<li>ICE 支持 SIP 協議進行語音通信。</li>
+</ul>
+</li>
+<li><p><strong>點對點文件傳輸：</strong></p>
+<ul>
+<li>在 NAT 和防火牆環境下提供穩定的文件共享。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="ICE-與-STUN、TURN-的關係"><a href="#ICE-與-STUN、TURN-的關係" class="headerlink" title="ICE 與 STUN、TURN 的關係"></a><strong>ICE 與 STUN、TURN 的關係</strong></h3><ul>
+<li><strong>ICE 是框架，STUN 和 TURN 是技術支持。</strong><ul>
+<li>STUN 和 TURN 負責獲取候選地址和中繼流量。</li>
+<li>ICE 組織候選地址的收集、交換和選擇，並進行連接檢測。</li>
+</ul>
+</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://juejin.cn/post/7131010868115931143">浅述webrtc中的ICE流程</a></li>
+<li></li>
+</ul>
+]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ICE連線排序規則</title>
+    <url>/posts/20241224070200-f38f09a7.html</url>
+    <content><![CDATA[<h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
+<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
+<ol>
+<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。 <span id="more"></span></li>
+<li><strong>远程候选列表</strong>：从对等方通过信令协议（如 SDP）传递过来的候选列表。</li>
+</ol>
+<h3 id="候选对的定义"><a href="#候选对的定义" class="headerlink" title="候选对的定义"></a><strong>候选对的定义</strong></h3><p>候选对是本地候选和远程候选的组合。<br>假设：</p>
+<ul>
+<li>本地候选列表有 3 个候选：<code>A1</code>, <code>A2</code>, <code>A3</code>。</li>
+<li>远程候选列表有 2 个候选：<code>B1</code>, <code>B2</code>。<br>候选对的组合方式是<strong>笛卡尔积</strong>，即将每个本地候选与每个远程候选配对：</li>
+<li>候选对 &#x3D; {<code>(A1, B1)</code>, <code>(A1, B2)</code>, <code>(A2, B1)</code>, <code>(A2, B2)</code>, <code>(A3, B1)</code>, <code>(A3, B2)</code>}</li>
+</ul>
+<h3 id="候选对的用途"><a href="#候选对的用途" class="headerlink" title="候选对的用途"></a><strong>候选对的用途</strong></h3><p>候选对是用于连接性检查的单位。ICE 通过尝试不同的候选对来找出最佳的连接路径。</p>
+<ol>
+<li><strong>连接测试</strong>：对于每个候选对，ICE 会发送 STUN 请求来检查它们是否能够成功建立连接。<ul>
+<li>如果候选对能通过 STUN 验证，它会被标记为 “有效候选对”。</li>
+<li>最终选择一个优先级最高的有效候选对作为实际的连接路径。</li>
+</ul>
+</li>
+<li><strong>打洞（NAT Traversal）</strong>：候选对的连接性检查也会触发 NAT 打洞，帮助双方建立直接连接。</li>
+</ol>
+<h1 id="拉程式碼參考"><a href="#拉程式碼參考" class="headerlink" title="拉程式碼參考"></a>拉程式碼參考<a href="/posts/20230806170400-af856b41.html" title="webrtc">webrtc</a></h1><h1 id="p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection"><a href="#p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection" class="headerlink" title="p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection"></a>p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">IceControllerInterface::SwitchResult</span></span><br><span class="line"><span class="function"><span class="title">BasicIceController::SortAndSwitchConnection</span><span class="params">(IceSwitchReason reason)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Find the best alternative connection by sorting.  It is important to note</span></span><br><span class="line">  <span class="comment">// that amongst equal preference, writable connections, this will choose the</span></span><br><span class="line">  <span class="comment">// one whose estimated latency is lowest.  So it is the only one that we</span></span><br><span class="line">  <span class="comment">// need to consider switching to.</span></span><br><span class="line">  <span class="comment">// TODO(honghaiz): Don&#x27;t sort;  Just use std::max_element in the right places.</span></span><br><span class="line">  absl::<span class="built_in">c_stable_sort</span>(</span><br><span class="line">      connections_, [<span class="keyword">this</span>](<span class="type">const</span> Connection* a, <span class="type">const</span> Connection* b) &#123;</span><br><span class="line">        <span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line">        <span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; <span class="string">&quot;Sorting &quot;</span> &lt;&lt; connections_.<span class="built_in">size</span>()</span><br><span class="line">                      &lt;&lt; <span class="string">&quot; available connections due to: &quot;</span></span><br><span class="line">                      &lt;&lt; <span class="built_in">IceSwitchReasonToString</span>(reason);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; connections_.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; connections_[i]-&gt;<span class="built_in">ToString</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">const</span> Connection* top_connection =</span><br><span class="line">      (!connections_.<span class="built_in">empty</span>()) ? connections_[<span class="number">0</span>] : <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">ShouldSwitchConnection</span>(reason, top_connection);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>c_stable_sort 將 connections_ 做排序 ，排序完後拿出第一個 connection 在呼叫 ShouldSwitchConnection<br>c_stable_sort 裡面使用類似lambda用法</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line"><span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br></pre></td></tr></table></figure>
+<p>先去 CompareConnections 排序<br>如果沒有比較出來就是用 rtt &lt;同一個封包來回時間（Round-Trip Time）&gt; 做比較</p>
+<h2 id="CompareConnections"><a href="#CompareConnections" class="headerlink" title="CompareConnections"></a>CompareConnections</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BasicIceController::CompareConnections</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* a,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* b,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::optional&lt;<span class="type">int64_t</span>&gt; receiving_unchanged_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">bool</span>* missed_receiving_unchanged_threshold)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(a != <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(b != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We prefer to switch to a writable and receiving connection over a</span></span><br><span class="line">  <span class="comment">// non-writable or non-receiving connection, even if the latter has</span></span><br><span class="line">  <span class="comment">// been nominated by the controlling side.</span></span><br><span class="line">  <span class="type">int</span> state_cmp = <span class="built_in">CompareConnectionStates</span>(a, b, receiving_unchanged_threshold,</span><br><span class="line">                                          missed_receiving_unchanged_threshold);</span><br><span class="line">  <span class="keyword">if</span> (state_cmp != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> state_cmp;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">ice_role_func_</span>() == ICEROLE_CONTROLLED) &#123;</span><br><span class="line">    <span class="comment">// Compare the connections based on the nomination states and the last data</span></span><br><span class="line">    <span class="comment">// received time if this is on the controlled side.</span></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &gt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &lt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &gt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &lt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Compare the network cost and priority.</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">CompareConnectionCandidates</span>(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a href="#CompareConnectionStates-%E6%A0%B9%E6%93%9A%E7%8B%80%E6%85%8B">CompareConnectionStates 根據狀態</a></li>
+<li>remote_nomination (如是受控端)推薦值</li>
+<li>last_data_received (如是受控端)上次接收數據時間戳</li>
+<li><a href="#CompareConnectionCandidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83">CompareConnectionCandidates 網路環境</a></li>
+</ol>
+<h3 id="CompareConnectionStates-根據狀態"><a href="#CompareConnectionStates-根據狀態" class="headerlink" title="CompareConnectionStates 根據狀態"></a>CompareConnectionStates 根據狀態</h3><ol>
+<li>是否可寫</li>
+<li>是否可收</li>
+<li>是否連接</li>
+</ol>
+<h3 id="CompareConnectionCandidates-網路環境"><a href="#CompareConnectionCandidates-網路環境" class="headerlink" title="CompareConnectionCandidates 網路環境"></a>CompareConnectionCandidates 網路環境</h3><ol>
+<li><a href="#%E5%84%AA%E5%85%88%E7%B4%9A">優先級</a></li>
+<li>更新代數</li>
+<li>是否被修剪</li>
+</ol>
+<h4 id="優先級"><a href="#優先級" class="headerlink" title="優先級"></a>優先級</h4><p>WebRTC 会创建一个候选对（Candidate Pair）的检查列表，用于连接性检查。候选对的排序遵循以下规则：</p>
+<h5 id="候选对优先级计算"><a href="#候选对优先级计算" class="headerlink" title="候选对优先级计算"></a>候选对优先级计算</h5><p>候选对优先级&#x3D;2^32×min(本地优先级,远程优先级)+2×max(本地优先级,远程优先级)+(本地优先级&gt;远程优先级?1:0)<br>參考p2p&#x2F;base&#x2F;connection.cc  Connection::priority()</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><h2 id="比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则"><a href="#比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则" class="headerlink" title="比較先後順序1. States 狀態    1. 是否可寫    2. 是否可收    3. 是否連接2. remote_nomination (如是受控端)推薦值3. last_data_received (如是受控端)上次接收數據時間戳4. Candidates 網路環境    1. 網路類型    2. 優先級    3. 更新代數    4. 是否被修剪5. rtt 來回時間# 參考- webrtc ICE穿透连接排序算法详解- ICE 连接排序规则"></a>比較先後順序<br>1. States 狀態<br>    1. 是否可寫<br>    2. 是否可收<br>    3. 是否連接<br>2. remote_nomination (如是受控端)推薦值<br>3. last_data_received (如是受控端)上次接收數據時間戳<br>4. Candidates 網路環境<br>    1. 網路類型<br>    2. 優先級<br>    3. 更新代數<br>    4. 是否被修剪<br>5. rtt 來回時間<br># 參考<br>- <a href="https://blog.csdn.net/breezeewu/article/details/142210879">webrtc ICE穿透连接排序算法详解</a><br>- <a href="https://webrtc.mthli.com/connection/ice-connection-sorting/#compareconnectionstates">ICE 连接排序规则</a></h2>]]></content>
+      <tags>
+        <tag>WebRTC</tag>
       </tags>
   </entry>
   <entry>
@@ -298,6 +488,184 @@
       </tags>
   </entry>
   <entry>
+    <title>NAT（Network Address Translation，網路位址轉換）</title>
+    <url>/posts/20241223034700-7727d3af.html</url>
+    <content><![CDATA[<p>NAT（Network Address Translation，網路位址轉換）是一種網路技術，用於將內部網路的私有IP地址轉換為公共IP地址，或反向轉換。這項技術的主要目的是讓多台內部設備能夠共享一個或少量公共IP地址進行外部網路通信，同時提高網路安全性。</p>
+<h3 id="NAT-的主要功能："><a href="#NAT-的主要功能：" class="headerlink" title="NAT 的主要功能："></a>NAT 的主要功能：</h3><ol>
+<li><strong>地址重用</strong>：通過使用私有IP地址，節省了公共IP地址的資源。</li>
+<li><strong>隱藏內部網路結構</strong>：外部設備無法直接訪問內部設備，提高了安全性。 <span id="more"></span></li>
+<li><strong>負載分擔</strong>（可選）：某些高級NAT設備可以實現多條外部連接的負載均衡。</li>
+</ol>
+<h3 id="NAT-的類型："><a href="#NAT-的類型：" class="headerlink" title="NAT 的類型："></a>NAT 的類型：</h3><ol>
+<li><p><strong>靜態NAT（Static NAT）</strong>：</p>
+<ul>
+<li>一對一地將私有IP地址映射到公共IP地址。</li>
+<li>用於需要外部設備直接訪問內部設備的情況。</li>
+</ul>
+</li>
+<li><p><strong>動態NAT（Dynamic NAT）</strong>：</p>
+<ul>
+<li>使用一組公共IP地址，根據需求動態分配給內部設備。</li>
+<li>不保證每個內部設備都有固定的公共IP。</li>
+</ul>
+</li>
+<li><p><strong>PAT（Port Address Translation）</strong> 或稱「NAPT」：</p>
+<ul>
+<li>多對一的NAT，也叫「多工NAT」。</li>
+<li>通過改變傳輸層的端口號讓多個內部設備共享一個公共IP地址。</li>
+<li>是家庭路由器最常見的NAT形式。</li>
+</ul>
+</li>
+</ol>
+<h3 id="NAT-的工作原理："><a href="#NAT-的工作原理：" class="headerlink" title="NAT 的工作原理："></a>NAT 的工作原理：</h3><ol>
+<li><p><strong>請求發送（內部到外部）：</strong></p>
+<ul>
+<li>當內部設備向外部網路發送請求時，NAT設備會將內部的私有IP地址和端口號轉換為公共IP地址和新的端口號。</li>
+<li>NAT設備在內部維護一個映射表，用於跟蹤這些轉換。</li>
+</ul>
+</li>
+<li><p><strong>響應接收（外部到內部）：</strong></p>
+<ul>
+<li>當外部網路的響應到達NAT設備時，NAT設備根據映射表將公共IP地址和端口號還原為內部的私有IP地址和端口號，然後將數據包轉發到內部設備。</li>
+</ul>
+</li>
+</ol>
+<h3 id="使用場景："><a href="#使用場景：" class="headerlink" title="使用場景："></a>使用場景：</h3><ul>
+<li><strong>家庭或企業網路</strong>：讓多台設備共享一個ISP分配的公共IP地址。</li>
+<li><strong>伺服器部署</strong>：在某些情況下，需要靜態NAT來將特定公共IP地址映射到內部伺服器。</li>
+</ul>
+<p>NAT 雖然能節省IP資源和提升安全性，但也可能導致某些應用（例如P2P網路或VoIP）運行效率降低，因為這些應用依賴於直接的端到端通信。</p>
+<h1 id="NAT（网络地址转换）分为以下四种类型"><a href="#NAT（网络地址转换）分为以下四种类型" class="headerlink" title="NAT（网络地址转换）分为以下四种类型"></a>NAT（网络地址转换）分为以下四种类型</h1><h3 id="1-完全圆锥型-NAT（Full-Cone-NAT）"><a href="#1-完全圆锥型-NAT（Full-Cone-NAT）" class="headerlink" title="1. 完全圆锥型 NAT（Full Cone NAT）"></a>1. <strong>完全圆锥型 NAT（Full Cone NAT）</strong></h3><ul>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li>一个内部地址和端口与一个外部地址和端口一一对应。</li>
+<li>任何外部设备都可以通过已映射的外部地址和端口发送数据包到内部设备。</li>
+<li>无需特定的访问限制。</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>连接容易建立，适合P2P和VoIP应用。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>安全性较低，因为任何外部主机都可以通过已映射的端口访问内部设备。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="2-受限圆锥型-NAT（Restricted-Cone-NAT）"><a href="#2-受限圆锥型-NAT（Restricted-Cone-NAT）" class="headerlink" title="2. 受限圆锥型 NAT（Restricted Cone NAT）"></a>2. <strong>受限圆锥型 NAT（Restricted Cone NAT）</strong></h3><ul>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li>一个内部地址和端口与一个外部地址和端口一一对应。</li>
+<li>只有在内部设备主动发送数据包给外部设备后，外部设备才能通过已映射的外部端口回复数据包。</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>比完全圆锥型 NAT 更安全。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>外部设备不能主动发起连接，可能对某些应用程序造成限制。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-端口受限圆锥型-NAT（Port-Restricted-Cone-NAT）"><a href="#3-端口受限圆锥型-NAT（Port-Restricted-Cone-NAT）" class="headerlink" title="3. 端口受限圆锥型 NAT（Port Restricted Cone NAT）"></a>3. <strong>端口受限圆锥型 NAT（Port Restricted Cone NAT）</strong></h3><ul>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li>在受限圆锥型 NAT 的基础上进一步限制：<ul>
+<li>外部设备只有在特定端口上收到内部设备的连接请求后，才能通过该端口回复数据包。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>比受限圆锥型 NAT 更加安全。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>连接建立较为复杂，对某些应用程序的兼容性较差。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4-对称型-NAT（Symmetric-NAT）"><a href="#4-对称型-NAT（Symmetric-NAT）" class="headerlink" title="4. 对称型 NAT（Symmetric NAT）"></a>4. <strong>对称型 NAT（Symmetric NAT）</strong></h3><ul>
+<li><p><strong>特性</strong>：</p>
+<ul>
+<li>一个内部地址和端口的映射取决于目标外部地址和端口。</li>
+<li>每次连接到不同的外部目标都会生成不同的映射。</li>
+<li>外部设备无法直接发起连接，即使内部设备先发送了数据包。</li>
+</ul>
+</li>
+<li><p><strong>优点</strong>：</p>
+<ul>
+<li>安全性最高。</li>
+</ul>
+</li>
+<li><p><strong>缺点</strong>：</p>
+<ul>
+<li>对P2P和VoIP应用支持最差，因为很难穿透NAT。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="对比总结"><a href="#对比总结" class="headerlink" title="对比总结"></a><strong>对比总结</strong></h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>安全性</th>
+<th>穿透难度</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>完全圆锥型 NAT</td>
+<td>低</td>
+<td>最低</td>
+<td>所有人可访问映射的端口</td>
+</tr>
+<tr>
+<td>受限圆锥型 NAT</td>
+<td>中</td>
+<td>中低</td>
+<td>外部设备需先接收到内部请求</td>
+</tr>
+<tr>
+<td>端口受限圆锥型 NAT</td>
+<td>高</td>
+<td>中高</td>
+<td>需要特定端口匹配</td>
+</tr>
+<tr>
+<td>对称型 NAT</td>
+<td>最高</td>
+<td>最高</td>
+<td>每次连接生成唯一映射</td>
+</tr>
+<tr>
+<td>对称型 NAT &gt; 端口受限圆锥型 NAT &gt; 受限圆锥型 NAT &gt; 完全圆锥型 NAT</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="应用建议"><a href="#应用建议" class="headerlink" title="应用建议"></a><strong>应用建议</strong></h3><ul>
+<li><strong>完全圆锥型 NAT</strong>：适合无严格安全需求的环境，如家庭娱乐网络。</li>
+<li><strong>受限圆锥型 NAT 和端口受限圆锥型 NAT</strong>：适合需要一定安全性但仍需较高连接性能的环境。</li>
+<li><strong>对称型 NAT</strong>：适合高安全需求的企业网络。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nessus Advanced Scan</title>
     <url>/posts/20240506075800-7abecaea.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在使用Nessus最一般的就是用 Basic Network Scan 但這會掃描非常久時間，所以可以使用<br>Advanced Scan選擇想要掃的項目，但是茫茫大海要如何選擇特定的Plugin呢</p>
@@ -361,6 +729,31 @@
       </tags>
   </entry>
   <entry>
+    <title>P2P 打洞（Peer-to-Peer NAT Traversal）</title>
+    <url>/posts/20241219102800-464c14bb.html</url>
+    <content><![CDATA[<h1 id="兩個裝置分別在NAT後面"><a href="#兩個裝置分別在NAT後面" class="headerlink" title="兩個裝置分別在NAT後面"></a>兩個裝置分別在NAT後面</h1><p><img src="/images/20241219171958.png"></p>
+<h1 id="這時需要一台Server當作溝通橋梁-傳送訊號"><a href="#這時需要一台Server當作溝通橋梁-傳送訊號" class="headerlink" title="這時需要一台Server當作溝通橋梁 傳送訊號"></a>這時需要一台Server當作溝通橋梁 傳送訊號</h1><p><img src="/images/20241219172742.png"></p>
+<h1 id="裝置A向Sever註冊自己外網-IP-和-port"><a href="#裝置A向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置A向Sever註冊自己外網  IP 和 port"></a>裝置A向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172424.png"><br>在 A 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊<br> <span id="more"></span></p>
+<h1 id="裝置B向Sever註冊自己外網-IP-和-port"><a href="#裝置B向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置B向Sever註冊自己外網  IP 和 port"></a>裝置B向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172021.png"><br>在 B 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊</p>
+<h1 id="Sever-向A-B-裝置-傳送對方的-IP-和-port"><a href="#Sever-向A-B-裝置-傳送對方的-IP-和-port" class="headerlink" title="Sever 向A B 裝置 傳送對方的 IP 和 port"></a>Sever 向A B 裝置 傳送對方的 IP 和 port</h1><p><img src="/images/20241219172034.png"><br>Server向A傳送B的 ip 和 port<br>Server向B傳送A的 ip 和 port</p>
+<h1 id="A-向-B-發送-UDP-封包"><a href="#A-向-B-發送-UDP-封包" class="headerlink" title="A 向 B 發送 UDP 封包"></a>A 向 B 發送 UDP 封包</h1><p><img src="/images/20241219172123.png"><br>A 向 B 發送 UDP 封包 在這個過程中 A 的源端口為 3000 並且在穿過 NAT A 時，<br>留下紀錄 192.168.1.1:3000 &lt;-&gt; 203.0.113.1:1234<br>封包到達NAT B時，因為不知如何轉發，所以將此封包拋棄</p>
+<h1 id="B-向-A-發送-UDP-封包"><a href="#B-向-A-發送-UDP-封包" class="headerlink" title="B 向 A 發送 UDP 封包"></a>B 向 A 發送 UDP 封包</h1><p><img src="/images/20241219172134.png"><br>B 向 A 發送 UDP 封包 在這個過程中 B 的源端口為 3000 並且在穿過 NAT B 時，<br>留下紀錄 192.168.30.1:3000 &lt;-&gt; 192.51.100.1:1233<br>封包到達NAT A時，因為先前已有紀錄轉發，所以將此封包轉到 A</p>
+<h1 id="兩邊可以通過UDP-做-P2P連線"><a href="#兩邊可以通過UDP-做-P2P連線" class="headerlink" title="兩邊可以通過UDP 做 P2P連線"></a>兩邊可以通過UDP 做 P2P連線</h1><p><img src="/images/20241219172144.png"></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>  上述流程為簡易的流程，如</p>
+<ul>
+<li>如何知道自己公網 IP 以及 <a href="/posts/20241223034700-7727d3af.html" title="NAT（Network Address Translation，網路位址轉換）">NAT（Network Address Translation，網路位址轉換）</a>#NAT（网络地址转换）分为以下四种类型 需要用 <a href="/posts/20241223035000-d4e6d128.html" title="STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）">STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</a></li>
+<li>如果NAT類型為 非對稱NAT  需要用 <a href="/posts/20241223040900-46d03228.html" title="TURN 協議（Traversal Using Relays around NAT）">TURN 協議（Traversal Using Relays around NAT）</a><br>  如果遇到不同的設備，成功率會不同，上述流程需要一台Server做幫忙，且NAT類型為 非對稱NAT，仰賴NAT映射關係及UDP特性</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://webrtc.mthli.com/basic/p2p-hole-punching/">P2P 打洞原理</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+        <tag>p2p</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>PWM(Pulse-width modulation)</title>
     <url>/posts/20231118194600-68d2e719.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023727.png"><br>是將脈波轉為類比信號的“一種技術”,利用在頻率不變的狀態下, 改變占空比大小, 使整體平均電壓值上升或下降, 藉此間歇性電壓及功率切換以節省能源及控制等效果.</p>
@@ -387,6 +780,29 @@
       <tags>
         <tag>PWM</tag>
         <tag>WS2812B</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>PeerConnection 連線過程</title>
+    <url>/posts/20241224063000-40453b0a.html</url>
+    <content><![CDATA[<h1 id="上圖"><a href="#上圖" class="headerlink" title="上圖"></a>上圖</h1><p><img src="/images/20241224132201.png"></p>
+<h2 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h2><ol>
+<li>上圖不完全是API的呼叫流程，讀者仍需要參考WebRTC的文件或原始碼註解。</li>
+<li>先進入房間的使用者是發起方（ClientA），後進入房間的使用者是參與者（ClientB）。伺服器可以將它們與ICE伺服器位址一起傳回給參與者。</li>
+<li>add streams 不是連接流程中的關鍵步驟，也可以在ICE流程之後再執行。 <span id="more"></span></li>
+<li>通話雙方均與指定的ICE伺服器連線成功後，即可開始相互推流。</li>
+<li>在多人會議服務端架構中，一般由SFU伺服器同時擔當ICE伺服器的角色。</li>
+</ol>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://webrtc.mthli.com/connection/peer-connection/">PeerConnection 连接流程</a></li>
+<li><a href="https://juejin.cn/post/6844904079102050311">WebRTC &gt;RTCPeerConnection-建立连接的全过程</a></li>
+<li><a href="https://blog.csdn.net/lym594887256/article/details/124081420">WebRTC系列-WebRTC基础(四)连接建立时序图及运行机制</a></li>
+<li><a href="https://blog.csdn.net/aggresss/article/details/106832965">WebRTC PeerConnection 建立连接过程介绍</a></li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
       </tags>
   </entry>
   <entry>
@@ -487,6 +903,373 @@
         <tag>vnc</tag>
         <tag>wine</tag>
         <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTCP（Real-time Transport Control Protocol）</title>
+    <url>/posts/20241224031200-ad213933.html</url>
+    <content><![CDATA[<h3 id="RTCP-RTP-Control-Protocol-介紹"><a href="#RTCP-RTP-Control-Protocol-介紹" class="headerlink" title="RTCP (RTP Control Protocol) 介紹"></a>RTCP (RTP Control Protocol) 介紹</h3><p>RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。</p>
+<h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a><strong>主要功能</strong></h4><ol>
+<li><p><strong>提供統計資訊</strong><br> RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助檢測網絡問題並評估性能。</p>
+ <span id="more"></span>
+</li>
+<li><p><strong>同步多媒體流</strong><br> RTCP 可以幫助同步來自不同來源的多媒體流，例如音頻和視頻流，確保它們在接收端正確對齊。</p>
+</li>
+<li><p><strong>標識參與者</strong><br> RTCP 包含 CNAME（Canonical Name），用於標識會話中的參與者，方便處理多個流之間的對應關係。</p>
+</li>
+<li><p><strong>帶寬控制</strong><br> RTCP 使用一定比例的帶寬（通常是 RTP 數據流的 5%），以確保其不會過度佔用網絡資源。</p>
+</li>
+</ol>
+<h4 id="RTCP-包結構"><a href="#RTCP-包結構" class="headerlink" title="RTCP 包結構"></a><strong>RTCP 包結構</strong></h4><p>RTCP 使用多種類型的報告包來實現其功能，主要包括：</p>
+<ol>
+<li><p><strong>SR（Sender Report）</strong></p>
+<ul>
+<li>由主動發送數據的參與者生成。</li>
+<li>包括發送的數據包數量、字節數量和時間戳等資訊。</li>
+</ul>
+</li>
+<li><p><strong>RR（Receiver Report）</strong></p>
+<ul>
+<li>由接收數據的參與者生成。</li>
+<li>提供接收端的反饋信息，例如丟包率、抖動、延遲等。</li>
+</ul>
+</li>
+<li><p><strong>SDES（Source Description Items）</strong></p>
+<ul>
+<li>用於標識參與者的元數據，如 CNAME（Canonical Name）、姓名和電子郵件等。</li>
+</ul>
+</li>
+<li><p><strong>BYE（Goodbye）</strong></p>
+<ul>
+<li>用於通知其他參與者某個來源即將離開會話。</li>
+</ul>
+</li>
+<li><p><strong>APP（Application-Specific Messages）</strong></p>
+<ul>
+<li>提供應用程序自定義的控制信息。</li>
+</ul>
+</li>
+</ol>
+<h4 id="RTCP-的工作流程"><a href="#RTCP-的工作流程" class="headerlink" title="RTCP 的工作流程"></a><strong>RTCP 的工作流程</strong></h4><ol>
+<li>RTP 負責傳輸實時數據流，如音頻或視頻數據。</li>
+<li>RTCP 定期發送控制消息，讓參與者了解網絡狀況和其他流的情況。</li>
+<li>根據 RTCP 的統計和反饋，應用可以調整編碼參數、優化網絡使用或重新同步流。</li>
+</ol>
+<h4 id="RTCP-的應用場景"><a href="#RTCP-的應用場景" class="headerlink" title="RTCP 的應用場景"></a><strong>RTCP 的應用場景</strong></h4><ul>
+<li><strong>WebRTC</strong>：在 WebRTC 中，RTCP 為實時音視頻會話提供網絡性能監控和同步支持。</li>
+<li><strong>IPTV</strong>：在互聯網視頻廣播中，RTCP 協助監控網絡質量，保證用戶體驗。</li>
+<li><strong>視頻會議系統</strong>：RTCP 用於多點視頻會議中的性能反饋和同步。</li>
+</ul>
+<h4 id="RTCP-與-RTP-的區別"><a href="#RTCP-與-RTP-的區別" class="headerlink" title="RTCP 與 RTP 的區別"></a><strong>RTCP 與 RTP 的區別</strong></h4><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>RTP</th>
+<th>RTCP</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>功能</td>
+<td>傳輸實時多媒體數據</td>
+<td>管理和監控 RTP 傳輸</td>
+</tr>
+<tr>
+<td>包類型</td>
+<td>音視頻數據包</td>
+<td>控制和反饋報告包</td>
+</tr>
+<tr>
+<td>帶寬使用</td>
+<td>主要佔用網絡帶寬</td>
+<td>佔用 RTP 帶寬的 5%</td>
+</tr>
+<tr>
+<td>例子</td>
+<td>音頻數據、視頻數據</td>
+<td>丟包率、延遲、同步信息</td>
+</tr>
+</tbody></table>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTP（Real-time Transport Protocol）</title>
+    <url>/posts/20241223094600-fcb5500e.html</url>
+    <content><![CDATA[<p>RTP（Real-time Transport Protocol）是一个用于在互联网上传输实时音频和视频的网络传输协议。它被广泛用于流媒体、VoIP（网络电话）、视频会议等实时通信领域。以下是关于 RTP 的一些核心概念和特性：</p>
+<hr>
+<h3 id="1-RTP-的主要功能"><a href="#1-RTP-的主要功能" class="headerlink" title="1. RTP 的主要功能"></a><strong>1. RTP 的主要功能</strong></h3><ul>
+<li><strong>数据传输</strong>：RTP 提供了一种实时传输音频和视频的机制，允许多媒体数据被分割成小的数据包进行传输。</li>
+<li><strong>时间同步</strong>：RTP 使用时间戳（timestamp）来帮助接收端同步数据流，例如在音视频同步中至关重要。 <span id="more"></span></li>
+<li><strong>序列号</strong>：每个 RTP 数据包都有一个序列号，用于检测丢包和重新排序。</li>
+<li><strong>实时传输控制</strong>：通过 RTP 的控制协议（RTCP），实现网络状态监控和服务质量反馈。</li>
+</ul>
+<hr>
+<h3 id="2-RTP-的协议栈"><a href="#2-RTP-的协议栈" class="headerlink" title="2. RTP 的协议栈"></a><strong>2. RTP 的协议栈</strong></h3><p>RTP 工作在传输层协议（通常是 UDP）之上，但它本身不提供传输可靠性：</p>
+<ul>
+<li><strong>应用层</strong>：负责具体的多媒体应用（如音频、视频编解码）。</li>
+<li><strong>RTP 层</strong>：处理实时传输功能。</li>
+<li><strong>传输层（通常为 UDP）</strong>：提供快速、低延迟的数据传输。</li>
+</ul>
+<hr>
+<h3 id="3-RTP-数据包结构"><a href="#3-RTP-数据包结构" class="headerlink" title="3. RTP 数据包结构"></a><strong>3. RTP 数据包结构</strong></h3><p>一个 RTP 数据包通常包含以下字段：</p>
+<ol>
+<li><strong>版本号（Version）</strong>：标识 RTP 的版本，目前为 2。</li>
+<li><strong>填充（Padding）</strong>：用于数据填充。</li>
+<li><strong>扩展（Extension）</strong>：标识是否有额外的扩展头。</li>
+<li><strong>标志位（CSRC Count）</strong>：标识 CSRC 标识符的数量。</li>
+<li><strong>标记（Marker）</strong>：用于特定事件的标记。</li>
+<li><strong>负载类型（Payload Type）</strong>：指示负载的类型（如音频或视频编码格式）。</li>
+<li><strong>序列号（Sequence Number）</strong>：检测丢包和包重排序。</li>
+<li><strong>时间戳（Timestamp）</strong>：同步媒体数据流。</li>
+<li><strong>同步源标识符（SSRC）</strong>：标识流的源。</li>
+<li><strong>贡献源标识符（CSRC）</strong>：标识贡献流的源（通常在混音场景中使用）。</li>
+</ol>
+<hr>
+<h3 id="4-RTP-和-RTCP"><a href="#4-RTP-和-RTCP" class="headerlink" title="4. RTP 和 RTCP"></a><strong>4. RTP 和 RTCP</strong></h3><ul>
+<li><strong>RTP（Real-time Transport Protocol）</strong>：<ul>
+<li>主要负责实时数据的传输。</li>
+<li>示例：音频和视频的编码数据包。</li>
+</ul>
+</li>
+<li><strong>RTCP（RTP Control Protocol）</strong>：<ul>
+<li>与 RTP 配合，用于提供控制信息。</li>
+<li>提供以下功能：<ul>
+<li><strong>QoS 反馈</strong>：提供关于网络状况的统计信息（如丢包率、抖动等）。</li>
+<li><strong>参与者标识</strong>：通过 RTCP 包传输参与者的身份信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-RTP-的典型应用"><a href="#5-RTP-的典型应用" class="headerlink" title="5. RTP 的典型应用"></a><strong>5. RTP 的典型应用</strong></h3><ul>
+<li><strong>VoIP（网络电话）</strong>：通过 RTP 传输语音数据。</li>
+<li><strong>视频会议</strong>：支持多个音视频流的传输和同步。</li>
+<li><strong>流媒体</strong>：如网络直播或点播系统。</li>
+<li><strong>实时游戏</strong>：传输实时游戏中的音视频数据。</li>
+</ul>
+<hr>
+<h3 id="6-RTP-的优缺点"><a href="#6-RTP-的优缺点" class="headerlink" title="6. RTP 的优缺点"></a><strong>6. RTP 的优缺点</strong></h3><h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ul>
+<li>适合实时数据传输。</li>
+<li>支持多种负载类型（灵活性强）。</li>
+<li>结合 RTCP 能提供服务质量监控。</li>
+</ul>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ul>
+<li>不保证传输可靠性（依赖下层协议，如 UDP）。</li>
+<li>无内置加密功能，需要其他协议（如 SRTP）增强安全性。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SDP（Session Description Protocol, 会话描述协议）</title>
+    <url>/posts/20241223074500-739a46ba.html</url>
+    <content><![CDATA[<p>会话描述协议（SDP，Session Description Protocol）是一种用于多媒体通信的文本格式协议。它通常用于描述多媒体会话的参数，例如会议、语音或视频通话、ICE 服务器信息、音视频编码信息，以便参与方可以协商和建立通信。</p>
+<h2 id="SDP-本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如-RTP、RTCP-或-SIP）结合使用，以建立和管理会话。以下是-SDP-的一些关键点："><a href="#SDP-本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如-RTP、RTCP-或-SIP）结合使用，以建立和管理会话。以下是-SDP-的一些关键点：" class="headerlink" title="SDP 本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如 RTP、RTCP 或 SIP）结合使用，以建立和管理会话。以下是 SDP 的一些关键点： 
+ "></a>SDP 本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如 RTP、RTCP 或 SIP）结合使用，以建立和管理会话。以下是 SDP 的一些关键点：<br> <span id="more"></span>
+ </h2><h3 id="核心功能"><a href="#核心功能" class="headerlink" title="核心功能"></a><strong>核心功能</strong></h3><ol>
+<li><strong>会话描述：</strong> 描述会话的基本信息（例如名称、时间、地点）。</li>
+<li><strong>媒体信息：</strong> 指定会话中涉及的媒体类型（音频、视频等）、传输协议（如 RTP）和编码格式（如 H.264、Opus）。</li>
+<li><strong>网络地址：</strong> 提供媒体传输所需的 IP 地址和端口。</li>
+<li><strong>能力协商：</strong> 描述参与方的媒体能力，便于协商。</li>
+</ol>
+<hr>
+<h3 id="SDP-的结构"><a href="#SDP-的结构" class="headerlink" title="SDP 的结构"></a><strong>SDP 的结构</strong></h3><p>SDP 的结构由多行键值对组成，每行的格式为：</p>
+<figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;键&gt;=&lt;值&gt;&lt;CR&gt;&lt;LF&gt;</span><br></pre></td></tr></table></figure>
+<p>&lt;键&gt;&#x3D;&lt;值&gt;大小寫敏感 且&#x3D;之間不能有空白</p>
+<ul>
+<li><code>&lt;键&gt;</code> : 為單一小寫單字，代表特定屬性</li>
+<li><code>&lt;值&gt;</code> : 一串與屬性有關的結構化文字描述，UTF-8編碼。</li>
+</ul>
+<h4 id="常见字段"><a href="#常见字段" class="headerlink" title="常见字段"></a><strong>常见字段</strong></h4><p>整個SDP內容主要會由<code>Session description</code>、<code>Time description</code>、<code>Media description</code> 這三大類組成，<br>每個信息可能會包含多個<code>Time description</code>、<code>Media description</code>資訊。</p>
+<h5 id="Session-description"><a href="#Session-description" class="headerlink" title="Session description"></a>Session description</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">v=  (protocol version number, currently only 0)</span><br><span class="line">   o=  (originator and session identifier : username, id, version number, network address)</span><br><span class="line">   s=  (session name : mandatory with at least one UTF-8-encoded character)</span><br><span class="line">   i=* (session title or short information)</span><br><span class="line">   u=* (URI of description)</span><br><span class="line">   e=* (zero or more email address with optional name of contacts)</span><br><span class="line">   p=* (zero or more phone number with optional name of contacts)</span><br><span class="line">   c=* (connection information—not required if included in all media)</span><br><span class="line">   b=* (zero or more bandwidth information lines)</span><br><span class="line">   _One or more **time descriptions** (&quot;t=&quot; and &quot;r=&quot; lines; see [below](https://en.wikipedia.org/wiki/Session_Description_Protocol#Time_description))_</span><br><span class="line">   z=* (time zone adjustments)</span><br><span class="line">   k=* (encryption key)</span><br><span class="line">   a=* (zero or more session attribute lines)</span><br><span class="line">   _Zero or more **Media descriptions** (each one starting by an &quot;m=&quot; line; see [below](https://en.wikipedia.org/wiki/Session_Description_Protocol#Media_description))_</span><br></pre></td></tr></table></figure>
+<h5 id="Time-description-mandatory-強制"><a href="#Time-description-mandatory-強制" class="headerlink" title="Time description(mandatory 強制)"></a>Time description(mandatory 強制)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">t=  (time the session is active)</span><br><span class="line">r=* (zero or more repeat times)</span><br></pre></td></tr></table></figure>
+<h5 id="Media-description-optional"><a href="#Media-description-optional" class="headerlink" title="Media description (optional)"></a>Media description (optional)</h5><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">m=  (media name and transport address)</span><br><span class="line">i=* (media title or information field)</span><br><span class="line">c=* (connection information — optional if included at session level)</span><br><span class="line">b=* (zero or more bandwidth information lines)</span><br><span class="line">k=* (encryption key)</span><br><span class="line">a=* (zero or more media attribute lines — overriding the Session attribute lines)</span><br></pre></td></tr></table></figure>
+<h4 id="示例-SDP-文件"><a href="#示例-SDP-文件" class="headerlink" title="示例 SDP 文件"></a><strong>示例 SDP 文件</strong></h4><p>以下是一个简单的 SDP 示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">v=0</span><br><span class="line">o=- 2890844526 2890842807 IN IP4 192.168.1.10</span><br><span class="line">s=Example</span><br><span class="line">c=IN IP4 203.0.113.1</span><br><span class="line">t=0 0</span><br><span class="line">m=audio 49170 RTP/AVP 0</span><br><span class="line">a=rtpmap:0 PCMU/8000</span><br><span class="line">m=video 51372 RTP/AVP 96</span><br><span class="line">a=rtpmap:96 H264/90000</span><br></pre></td></tr></table></figure>
+<h3 id="SDP-的用途"><a href="#SDP-的用途" class="headerlink" title="SDP 的用途"></a><strong>SDP 的用途</strong></h3><ol>
+<li><strong>SIP 会话：</strong> 在 VoIP 系统中，SDP 与 SIP 配合，传递会话描述信息。</li>
+<li><strong>WebRTC：</strong> 用于浏览器之间的实时通信，协商音视频参数。</li>
+<li><strong>多媒体广播：</strong> 描述视频会议或流媒体会话。</li>
+</ol>
+<hr>
+<h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a><strong>扩展</strong></h3><p>虽然 SDP 是一种标准化协议，但不同应用可能需要扩展一些属性。例如，WebRTC 定义了额外的 SDP 属性用于描述数据通道和 NAT 穿越技术。</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>SDP 就是規範描述多媒體通信的格式，使用key,value作為結構<br>只是單單的格式定義 不包含媒體傳輸</p>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</title>
+    <url>/posts/20241223035000-d4e6d128.html</url>
+    <content><![CDATA[<p>STUN（Session Traversal Utilities for NAT，NAT 穿越會話工具）是一種網絡協議，用於協助用戶端通過 NAT（網絡地址轉換）和防火牆發現其<strong>公共 IP 地址和端口</strong>。STUN 的主要目的是幫助建立點對點連接，尤其是在使用 NAT 和防火牆的網絡環境中，例如即時通訊或視頻通話等應用。</p>
+<p>NAT 自己不会告诉服务器它是什么类型的，我们需要一套交互式策略检测对应的类型<br> <span id="more"></span></p>
+<p>RFC 3489<br><img src="/images/20241223104352.png"><br>此演算法在RFC 3489被提出，但在RFC 5389中被刪除。</p>
+<h3 id="STUN-的主要功能"><a href="#STUN-的主要功能" class="headerlink" title="STUN 的主要功能"></a><strong>STUN 的主要功能</strong></h3><ol>
+<li><strong>發現公共 IP 地址和端口</strong>： STUN 協議允許用戶端詢問 STUN 伺服器，用戶端的公共 IP 地址和伺服器看到的端口號是什麼。</li>
+<li><strong>檢測 NAT 類型</strong>： STUN 能夠幫助用戶端檢測 NAT 的類型（如全錐形 NAT、限制錐形 NAT、對稱 NAT 等），以便了解網絡條件。</li>
+<li><strong>協助 P2P 連接</strong>： 通過 STUN，兩個位於 NAT 後的用戶端可以交換公共地址，嘗試建立直接的點對點連接。</li>
+</ol>
+<h3 id="STUN-的工作原理"><a href="#STUN-的工作原理" class="headerlink" title="STUN 的工作原理"></a><strong>STUN 的工作原理</strong></h3><ol>
+<li><strong>用戶端請求</strong>： 用戶端向 STUN 伺服器發送一個包含其本地 IP 和端口的請求。</li>
+<li><strong>伺服器響應</strong>： STUN 伺服器收到請求後，根據其視角返回用戶端的公共 IP 地址和端口。</li>
+<li><strong>NAT 類型檢測</strong>： 通過改變請求的參數，例如更換來源地址、使用不同的伺服器，STUN 可以分析 NAT 的行為，判斷是哪種類型的 NAT。</li>
+</ol>
+<h3 id="STUN-協議的用途"><a href="#STUN-協議的用途" class="headerlink" title="STUN 協議的用途"></a><strong>STUN 協議的用途</strong></h3><ul>
+<li><strong>WebRTC 通信</strong>： 在 WebRTC 中，STUN 是一個關鍵技術，用於讓瀏覽器間建立直接連接。</li>
+<li><strong>VoIP 和視頻會議</strong>： 如 Skype、Zoom 等應用會利用 STUN 來協助穿越 NAT。</li>
+<li><strong>在線遊戲</strong>： 幫助遊戲客戶端在 NAT 後通信。</li>
+</ul>
+<h3 id="STUN-和其他-NAT-穿越技術"><a href="#STUN-和其他-NAT-穿越技術" class="headerlink" title="STUN 和其他 NAT 穿越技術"></a><strong>STUN 和其他 NAT 穿越技術</strong></h3><ol>
+<li><strong>STUN</strong>： 用於發現公共地址和協助直接通信。適用於全錐形 NAT 和部分限制錐形 NAT。</li>
+<li><strong>TURN（Traversal Using Relays around NAT）</strong>： 當直接連接不可行時（如對稱 NAT），TURN 允許數據通過中繼伺服器傳輸。</li>
+<li><strong>ICE（Interactive Connectivity Establishment）</strong>： 綜合使用 STUN 和 TURN 的技術，幫助選擇最佳的通信路徑。</li>
+</ol>
+<hr>
+<h3 id="STUN-的限制"><a href="#STUN-的限制" class="headerlink" title="STUN 的限制"></a><strong>STUN 的限制</strong></h3><ul>
+<li><strong>對稱 NAT 支持有限</strong>： 對於對稱 NAT，用戶端通常無法直接建立連接，需要配合 TURN 使用。</li>
+<li><strong>依賴 STUN 伺服器</strong>： 必須配置和維護可靠的 STUN 伺服器，才能確保其正常運行。</li>
+<li><strong>安全性考量</strong>： STUN 不加密數據，可能面臨中間人攻擊或地址偽造。</li>
+</ul>
+<h3 id="STUN-演算法的基本概念"><a href="#STUN-演算法的基本概念" class="headerlink" title="STUN 演算法的基本概念"></a><strong>STUN 演算法的基本概念</strong></h3><ol>
+<li><p><strong>NAT 類型檢測</strong>：</p>
+<ul>
+<li>判斷 NAT 的行為，包括地址映射和數據包過濾規則。</li>
+<li>確定 NAT 是「全錐形 NAT」、「限制錐形 NAT」、「端口限制錐形 NAT」還是「對稱 NAT」。</li>
+</ul>
+</li>
+<li><p><strong>穿越測試</strong>：</p>
+<ul>
+<li>利用多種測試組合檢測 NAT 穿越能力，確保應用程序可以建立有效的通信通道。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="STUN-的主要測試步驟"><a href="#STUN-的主要測試步驟" class="headerlink" title="STUN 的主要測試步驟"></a><strong>STUN 的主要測試步驟</strong></h3><p>STUN 使用以下步驟和測試模式來檢測 NAT 的類型和行為：</p>
+<h4 id="步驟-1-發送基本測試-Test-I"><a href="#步驟-1-發送基本測試-Test-I" class="headerlink" title="步驟 1: 發送基本測試 (Test I)"></a><strong>步驟 1: 發送基本測試 (Test I)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向 STUN 伺服器發送一個 Binding Request。</li>
+<li>該請求從用戶端的本地地址 <code>A</code> 發出，經過 NAT 之後，伺服器會看到轉換後的公共地址 <code>A&#39;</code>。</li>
+<li>伺服器返回一個 Binding Response，其中包含 <code>MAPPED-ADDRESS</code>。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果返回的 <code>MAPPED-ADDRESS</code> 與請求中的來源地址一致，表示沒有 NAT 或在同一局域網中。</li>
+<li>如果不同，則 NAT 存在，記錄公共地址。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-2-發送不同來源地址的測試-Test-II"><a href="#步驟-2-發送不同來源地址的測試-Test-II" class="headerlink" title="步驟 2: 發送不同來源地址的測試 (Test II)"></a><strong>步驟 2: 發送不同來源地址的測試 (Test II)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向伺服器發送第二個請求，改變來源端口或地址。</li>
+<li>這一測試用於檢測 NAT 是否會對來源地址改變的數據包進行映射更新。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器返回相同的地址，則 NAT 是錐形 NAT。</li>
+<li>如果伺服器返回的地址不同，則 NAT 是對稱 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-3-使用不同伺服器的測試-Test-III"><a href="#步驟-3-使用不同伺服器的測試-Test-III" class="headerlink" title="步驟 3: 使用不同伺服器的測試 (Test III)"></a><strong>步驟 3: 使用不同伺服器的測試 (Test III)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向另一個 STUN 伺服器發送請求（伺服器 B）。</li>
+<li>比較伺服器 A 和 B 返回的地址。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器 A 和 B 返回相同的公共地址，表示 NAT 為全錐形 NAT。</li>
+<li>如果返回的公共地址不同，表示 NAT 為對稱 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-4-開啟目標伺服器測試-Test-IV"><a href="#步驟-4-開啟目標伺服器測試-Test-IV" class="headerlink" title="步驟 4: 開啟目標伺服器測試 (Test IV)"></a><strong>步驟 4: 開啟目標伺服器測試 (Test IV)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向伺服器發送包含目標伺服器地址的請求。</li>
+<li>測試 NAT 是否允許數據包從特定外部地址進入。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器能響應，表示 NAT 為限制錐形 NAT。</li>
+<li>如果伺服器無法響應，則 NAT 是端口限制錐形 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="STUN-發現-NAT-類型的算法決策表"><a href="#STUN-發現-NAT-類型的算法決策表" class="headerlink" title="STUN 發現 NAT 類型的算法決策表"></a><strong>STUN 發現 NAT 類型的算法決策表</strong></h3><p>下表簡要說明了 STUN 在不同步驟中的行為和決策：</p>
+<table>
+<thead>
+<tr>
+<th><strong>測試步驟</strong></th>
+<th><strong>返回地址是否一致</strong></th>
+<th><strong>NAT 類型</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Test I</td>
+<td>是</td>
+<td>無 NAT 或防火牆</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>NAT 存在</td>
+</tr>
+<tr>
+<td>Test II</td>
+<td>是</td>
+<td>錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>對稱 NAT</td>
+</tr>
+<tr>
+<td>Test III</td>
+<td>是</td>
+<td>全錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>限制錐形或端口限制錐形 NAT</td>
+</tr>
+<tr>
+<td>Test IV</td>
+<td>是</td>
+<td>限制錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>端口限制錐形 NAT</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="關於防火牆檢測"><a href="#關於防火牆檢測" class="headerlink" title="關於防火牆檢測"></a><strong>關於防火牆檢測</strong></h3><ul>
+<li>防火牆的檢測基於數據包是否能到達伺服器。</li>
+<li>如果所有測試數據包都無法響應，可能是防火牆完全阻止了 UDP 流量。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
       </tags>
   </entry>
   <entry>
@@ -613,6 +1396,115 @@
       </tags>
   </entry>
   <entry>
+    <title>TURN 協議（Traversal Using Relays around NAT）</title>
+    <url>/posts/20241223040900-46d03228.html</url>
+    <content><![CDATA[<p><strong>TURN（Traversal Using Relays around NAT）</strong> 是一種用於穿越 NAT（Network Address Translation）和防火牆的網絡協議，通常在實時通信應用中使用，例如視頻通話、即時消息和其他需要點對點連接的應用。通過<strong>中繼服務器轉發流量</strong>來解決這些問題</p>
+<hr>
+<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a><strong>核心概念</strong></h3><ol>
+<li><p><strong>背景：</strong></p>
+<ul>
+<li>NAT 和防火牆可能會阻止直接的點對點通信。</li>
+</ul>
+</li>
+</ol>
+ <span id="more"></span>
+<pre><code> - &#123;% post_link  "STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）" %&#125;有助於獲取公共 IP 和端口，但在某些情況下無法建立直接連接，例如雙重 NAT 或嚴格防火牆環境。
+</code></pre>
+<ol start="2">
+<li><p><strong>解決方案：</strong></p>
+<ul>
+<li>TURN 通過<strong>中繼服務器轉發流量</strong>來解決這些問題，從而在無法建立直接連接時提供通信路徑。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a><strong>工作原理</strong></h3><ol>
+<li><p><strong>客戶端和 TURN 服務器交互：</strong></p>
+<ul>
+<li>客戶端向 TURN 服務器請求一個中繼地址（Relay Address）。</li>
+<li>TURN 服務器分配一個臨時的公共 IP 和端口，充當中繼節點。</li>
+</ul>
+</li>
+<li><p><strong>中繼通信：</strong></p>
+<ul>
+<li>之後的流量通過 TURN 服務器轉發。通信的一方將數據發送到 TURN 服務器，然後由 TURN 服務器轉發給另一方。</li>
+</ul>
+</li>
+<li><p><strong>協議依賴：</strong></p>
+<ul>
+<li>TURN 使用 UDP 為主，但也支持 TCP 和 TLS（加密通道）。</li>
+<li>TURN 協議由 RFC 5766 定義。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="應用場景"><a href="#應用場景" class="headerlink" title="應用場景"></a><strong>應用場景</strong></h3><ol>
+<li><p><strong>WebRTC（Web Real-Time Communication）：</strong></p>
+<ul>
+<li>TURN 是 WebRTC 中必須的技術之一，與 STUN 配合使用，確保音視頻通信的可靠性。</li>
+</ul>
+</li>
+<li><p><strong>高防火牆場景：</strong></p>
+<ul>
+<li>在企業網絡或高度限制的環境中，TURN 是唯一的解決方案。</li>
+</ul>
+</li>
+<li><p><strong>NAT 穿越：</strong></p>
+<ul>
+<li>當 STUN 無法建立直接通信時，TURN 是備選方案。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="TURN-的限制"><a href="#TURN-的限制" class="headerlink" title="TURN 的限制"></a><strong>TURN 的限制</strong></h3><ol>
+<li><p><strong>性能開銷：</strong></p>
+<ul>
+<li>TURN 流量經過服務器中繼，會帶來額外的延遲和服務器負載。</li>
+</ul>
+</li>
+<li><p><strong>帶寬需求：</strong></p>
+<ul>
+<li>TURN 服務器需要足夠的帶寬來處理大量的數據流量。</li>
+</ul>
+</li>
+<li><p><strong>部署成本：</strong></p>
+<ul>
+<li>運行和維護 TURN 服務器需要額外的基礎設施資源。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="TURN-和-STUN-的區別"><a href="#TURN-和-STUN-的區別" class="headerlink" title="TURN 和 STUN 的區別"></a><strong>TURN 和 STUN 的區別</strong></h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>STUN</th>
+<th>TURN</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>用途</strong></td>
+<td>發現公共 IP 和端口</td>
+<td>提供中繼服務器轉發流量</td>
+</tr>
+<tr>
+<td><strong>性能開銷</strong></td>
+<td>較低</td>
+<td>較高</td>
+</tr>
+<tr>
+<td><strong>直連能力</strong></td>
+<td>適用於大多數 NAT 環境</td>
+<td>適用於無法直連的情況</td>
+</tr>
+</tbody></table>
+<p>如果您想部署 TURN 服務器，常見的開源軟件包括 <a href="https://github.com/coturn/coturn">Coturn</a>。</p>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>UART RS232 RS484</title>
     <url>/posts/20231118193100-f5da1a51.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="# 介紹"></a># 介紹</h1><p>UART：<strong>全雙工、異步、串行傳輸</strong>，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC&#x2F;TX&#x2F;RX&#x2F;GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。<br><img src="/images/20231119022253.png"></p>
@@ -700,6 +1592,110 @@
         <tag>samba</tag>
         <tag>ssh-server</tag>
         <tag>vm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WebRTC 使用了哪些協定</title>
+    <url>/posts/20241226090200-ee154cd8.html</url>
+    <content><![CDATA[<h2 id="WebRTC-使用了哪些協定"><a href="#WebRTC-使用了哪些協定" class="headerlink" title="WebRTC 使用了哪些協定"></a>WebRTC 使用了哪些協定</h2><p>我們最熟悉的網路傳輸協定TCP與UDP，作為傳輸層，兩者都有各自的優缺點，<br>而在WebRTC中，需要能夠實現即時串流應用，在影音傳輸方面上，第一個想到可以搭配的協定，<br>肯定是UDP。</p>
+<p>然而UDP雖然適合影音傳輸上的應用，但在WebRTC中還需要能夠流量控制或處理擁塞等功能，這些是UDP所沒有的功能，<br>為此在UDP上附加了許多輔助協定，如下圖：</p>
+ <span id="more"></span>
+<p> <img src="/images/20241227094202.png"></p>
+<p>圖片擷取自<a href="https://hpbn.co/webrtc/">High Performance Browser Networking book</a></p>
+<p>上圖展示了整個WebRTC所運用的協定架構，左邊(TCP)為Signal應用，右邊(UDP)為串流應用，<br>協定堆的搭配使用，補足彼此的不足，而本章主要專注在串流應用(右邊)上的協定上，為WebRTC提供了哪些功能。</p>
+<h3 id="加密-DTLS"><a href="#加密-DTLS" class="headerlink" title="加密: DTLS"></a>加密: DTLS</h3><p>DTLS 與 TLS 都是為網路傳輸提供數據安全與完整性的協定，<br>TLS在TCP協定上，而DTLS在UDP協定上。</p>
+<p>雖然DTLS是建構在TLS上，但兩者的加密驗證方式是不同的，有興趣可以深入研究看看～</p>
+<p>DTLS主要用途：會在通信雙方連接時產生密鑰，對傳輸數據進行加密再交由UDP。</p>
+<h3 id="影音數據傳輸-SRTP"><a href="#影音數據傳輸-SRTP" class="headerlink" title="影音數據傳輸: SRTP"></a>影音數據傳輸: SRTP</h3><p>SRTP(Secure Real-Time Transport Protocol): 安全即時傳輸協定。</p>
+<p>是基於<a href="https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API/Intro_to_RTP">RTP</a>(Real-Time Transport Protocol)上的擴展，主要用途還是圍繞在核心的RTC上。</p>
+<p>RTP的主要用途: 針對定義網路影音數據傳輸的標準格式，因此常用於多媒體應用上。</p>
+<p>但在多媒體應用上，RTP並不能保證服務質量<a href="https://en.wikipedia.org/wiki/Quality_of_service">QoS(quality-of-service)</a>，也就不能有效控制串流的品質，例如：依照頻寬調整影音數據的壓縮或是限制傳輸流量的大小等，因此常會搭配<a href="https://zh.wikipedia.org/wiki/%E5%AE%9E%E6%97%B6%E4%BC%A0%E8%BE%93%E6%8E%A7%E5%88%B6%E5%8D%8F%E8%AE%AE">RTCP</a>(Real-time Transport Control Protocol)。</p>
+<p>而SRTP從命名上就能知道，是在RTP上加上安全性(secure)加密機制，同樣與其搭檔的RTCP也有一個伴生協定SRTCP。</p>
+<h3 id="資料傳輸-SCTP"><a href="#資料傳輸-SCTP" class="headerlink" title="資料傳輸: SCTP"></a>資料傳輸: SCTP</h3><p>SCTP（Stream Control Transmission Protocol）：串流控制傳輸協定。</p>
+<p>它是屬於較新訂定的協定，而主要優點是，它提供了像 TCP 一樣是可靠、有序的資料傳輸，同時也將UDP的高效做結合，也因此漸漸有許多應用層漸漸在 SCTP 的特性基礎上進行構建。</p>
+<p>WebRTC是應用在<code>RTCDataChannel</code>中，藉由它的特性，例如多流或是可配置的無順序性配送等，並且搭配 DTLS 來加強安全性。</p>
+<p>詳細可以參考<a href="http://www.faqs.org/rfcs/rfc3286.html">RFC 3286</a>中的說明。</p>
+<h2 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h2><p>本章暸解到:</p>
+<ul>
+<li>WebRTC protocol stack (所用的協定堆)</li>
+<li>各個層級的協定互相搭配的用意</li>
+<li>DTLS,RTP&#x2F;RTCP,SCTP 的功用</li>
+</ul>
+<p>這邊主要明白其中的基礎概念，並沒有做深入的探討～</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考:"></a>參考:</h1><ul>
+<li><a href="https://ithelp.ithome.com.tw/articles/10249334">WebRTC 使用了哪些協定</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>WebRTC基礎</title>
+    <url>/posts/20241223100300-345ae512.html</url>
+    <content><![CDATA[<h3 id="1-理解-WebRTC-基本概念"><a href="#1-理解-WebRTC-基本概念" class="headerlink" title="1. 理解 WebRTC 基本概念"></a>1. <strong>理解 WebRTC 基本概念</strong></h3><ul>
+<li><a href="/posts/20241223034700-7727d3af.html" title="NAT（Network Address Translation，網路位址轉換）">NAT（Network Address Translation，網路位址轉換）</a></li>
+<li><a href="/posts/20241219102800-464c14bb.html" title="P2P 打洞（Peer-to-Peer NAT Traversal）">P2P 打洞（Peer-to-Peer NAT Traversal）</a>：WebRTC 通常基於 P2P 進行通信，因此需要處理 NAT（網絡地址轉換）問題。打洞技術幫助穿越 NAT 和防火牆，使 P2P 連接可能。
+ <span id="more"></span></li>
+<li><a href="/posts/20241223035000-d4e6d128.html" title="STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）">STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</a>：STUN 是一個協議，用於幫助 WebRTC 客戶端發現其公共 IP 地址和端口。這對於 P2P 連接至關重要。</li>
+<li><a href="/posts/20241223040900-46d03228.html" title="TURN 協議（Traversal Using Relays around NAT）">TURN 協議（Traversal Using Relays around NAT）</a>：當 P2P 連接無法建立時，TURN 服務器用作中繼來轉發數據，保證通信不會中斷。</li>
+<li><a href="/posts/20241223083000-58bf8773.html" title="ICE Interactive Connectivity Establishment，交互式连接建立">ICE Interactive Connectivity Establishment，交互式连接建立</a>：ICE 是 WebRTC 中的連接建立過程，結合 STUN 和 TURN 來選擇最佳的連接路徑。</li>
+<li><a href="/posts/20241223074500-739a46ba.html" title="SDP（Session Description Protocol, 会话描述协议）">SDP（Session Description Protocol, 会话描述协议）</a>]</li>
+<li><a href="/posts/20241223082200-314296ad.html" title="信令服务器">信令服务器</a></li>
+</ul>
+<h3 id="2-了解傳輸協議"><a href="#2-了解傳輸協議" class="headerlink" title="2. 了解傳輸協議"></a>2. <strong>了解傳輸協議</strong></h3><ul>
+<li><a href="/posts/20241223094600-fcb5500e.html" title="RTP（Real-time Transport Protocol）">RTP（Real-time Transport Protocol）</a>：WebRTC 使用 RTP 來傳輸語音和視頻流。它為實時應用提供了一個適合的數據包格式。</li>
+<li>**<a href="/posts/20241224031200-ad213933.html" title="RTCP（Real-time Transport Control Protocol）">RTCP（Real-time Transport Control Protocol）</a>**：RTCP 是用於監控 RTP 流量質量的協議，它會定期回報傳輸情況。</li>
+</ul>
+<h3 id="3-學習"><a href="#3-學習" class="headerlink" title="3. 學習"></a>3. <strong>學習<a href="/posts/20241223082200-314296ad.html" title="信令服务器">信令服务器</a></strong></h3><ul>
+<li>WebRTC 本身並不定義信令過程。信令服務器用來協調 P2P 連接的建立，通常包括交換候選地址（ICE candidates）、會議協議、媒體協商等。</li>
+<li><a href="/posts/20241224063000-40453b0a.html" title="PeerConnection 連線過程">PeerConnection 連線過程</a></li>
+<li><a href="/posts/20241224070200-f38f09a7.html" title="ICE連線排序規則">ICE連線排序規則</a></li>
+<li>常見的信令方式有 WebSocket 或 HTTP 請求。需要學習如何建立一個信令服務器，來實現 WebRTC 客戶端之間的通信協議。</li>
+<li><a href="/posts/20241223100200-2469950e.html" title="搭建webrtc服务器">搭建webrtc服务器</a></li>
+<li><a href="/posts/20230806170400-af856b41.html" title="webrtc">webrtc</a></li>
+</ul>
+<h3 id="4-實作步驟"><a href="#4-實作步驟" class="headerlink" title="4. 實作步驟"></a>4. <strong>實作步驟</strong></h3><ul>
+<li><strong>建立 WebRTC 連接</strong>：理解如何通過 JavaScript API（如 <code>RTCPeerConnection</code>、<code>RTCDataChannel</code>）創建 P2P 連接。</li>
+<li><strong>處理 ICE 候選</strong>：學會如何使用 STUN 和 TURN 服務器來發現和協商連接。</li>
+<li><strong>處理媒體流</strong>：學會如何處理音頻和視頻流的捕捉、編碼、解碼，以及如何發送和接收這些流。</li>
+</ul>
+<h3 id="5-工具與資源"><a href="#5-工具與資源" class="headerlink" title="5. 工具與資源"></a>5. <strong>工具與資源</strong></h3><ul>
+<li><strong>WebRTC 教程</strong>：網上有許多 WebRTC 實作教程和範例，幫助你從簡單的 P2P 連接開始學習。</li>
+<li><strong>WebRTC 網頁應用範例</strong>：從實際應用入手，例如開發視頻聊天應用，來了解如何將 STUN、TURN、ICE 和 RTP 整合進去。</li>
+</ul>
+<h3 id="6"><a href="#6" class="headerlink" title="6. "></a>6. <a href="/posts/20241226081700-efd237b7.html" title="Webrtc視訊流">Webrtc視訊流</a></h3><h3 id="7"><a href="#7" class="headerlink" title="7."></a>7.<a href="/posts/20241226090200-ee154cd8.html" title="WebRTC 使用了哪些協定">WebRTC 使用了哪些協定</a></h3><h3 id="8-多人會議"><a href="#8-多人會議" class="headerlink" title="8. 多人會議"></a>8. 多人會議</h3><h2 id="视频会议服务器SFU、MCU、Mesh三种类型的区别-參考-WebRTC-学习指南-WebRTC-Native-源码导读"><a href="#视频会议服务器SFU、MCU、Mesh三种类型的区别-參考-WebRTC-学习指南-WebRTC-Native-源码导读" class="headerlink" title="视频会议服务器SFU、MCU、Mesh三种类型的区别# 參考- WebRTC 学习指南- WebRTC Native 源码导读"></a><a href="https://blog.csdn.net/zhizhuodewo6/article/details/104797267">视频会议服务器SFU、MCU、Mesh三种类型的区别</a><br># 參考<br>- <a href="https://webrtc.mthli.com/">WebRTC 学习指南</a><br>- <a href="https://blog.piasy.com/2017/07/24/WebRTC-Android-Camera-Capture/index.html">WebRTC Native 源码导读</a></h2>]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Webrtc視訊流</title>
+    <url>/posts/20241226081700-efd237b7.html</url>
+    <content><![CDATA[<h1 id="開啟相機主要類別-以安卓為例"><a href="#開啟相機主要類別-以安卓為例" class="headerlink" title="開啟相機主要類別(以安卓為例)"></a>開啟相機主要類別(以安卓為例)</h1><p><img src="/images/20241226150748.png"></p>
+<h1 id="frame的流向"><a href="#frame的流向" class="headerlink" title="frame的流向"></a>frame的流向</h1><p><img src="/images/20241226150839.png"><br>攝影機擷取的視訊幀資料會被傳遞到 VideoBroadcaster 這個類別進行處理，而擷取過程也到此為止。從 VideoBroadcaster 的名稱就不難發現，幀資料接下來會被以廣播的形式發送給各個訂閱者，也就是說後續的渲染、編碼（和發送）過程是並行處理的。<br> <span id="more"></span></p>
+<h1 id="選染以及編碼和發送"><a href="#選染以及編碼和發送" class="headerlink" title="選染以及編碼和發送"></a>選染以及編碼和發送</h1><p><img src="/images/20241226150927.png"><br>本地渲染 和 編碼發送 有透過 VideoTrack.addSink(sink) 向 broadcaser 註冊 OnFrame callback 事件</p>
+<ul>
+<li>本地渲染 透過 SurfaceViewRenderer 收到 frame 再將帧数据渲染到了 EGL</li>
+<li>編碼發送 <ol>
+<li>这里的编码器是 LibvpxVp8Encoder，但换成其他继承自 <code>webrtc::VideoEncoder</code> 的子类都是可以的 </li>
+<li>RtpPacket 入队之后，将由 <code>webrtc::ProcessThreadImpl::Process</code> 进行处理，严格意义上已经不算是调用栈了，但读者也可以将其理解为 RtpPacket 的处理流程。<figure class="highlight text"><table><tr><td class="code"><pre><span class="line">webrtc::VideoStreamEncoder::OnFrame</span><br><span class="line">  → webrtc::VideoStreamEncoder::MaybeEncodeVideoFrame</span><br><span class="line">  → webrtc::VideoStreamEncoder::EncodeVideoFrame</span><br><span class="line">  → webrtc::LibvpxVp8Encoder::Encode #1</span><br><span class="line">  → webrtc::LibvpxVp8Encoder::GetEncodedPartitions</span><br><span class="line">  → webrtc::VideoStreamEncoder::OnEncodedImage</span><br><span class="line">  → webrtc::internal::VideoSendStreamImpl::OnEncodedImage</span><br><span class="line">  → webrtc::RtpVideoSender::OnEncodedImage</span><br><span class="line">  → webrtc::RTPSenderVideo::SendEncodedImage</span><br><span class="line">  → webrtc::RTPSenderVideo::SendVideo</span><br><span class="line">  → webrtc::RTPSenderVideo::LogAndSendToNetwork</span><br><span class="line">  → webrtc::RTPSender::EnqueuePackets</span><br><span class="line">  → webrtc::PacedSender::EnqueuePackets</span><br><span class="line">  → webrtc::PacingController::EnqueuePacket</span><br><span class="line">  → webrtc::PacingController::EnqueuePacketInternal</span><br><span class="line">  → webrtc::PacedSender::Process #2</span><br><span class="line">  → webrtc::PacingController::ProcessPackets</span><br><span class="line">  → webrtc::PacedSender::SendRtpPacket</span><br><span class="line">  → webrtc::ModuleRtpRtcpImpl2::TrySendPacket</span><br><span class="line">  → webrtc::RtpSenderEgress::SendPacket</span><br><span class="line">  → webrtc::RtpSenderEgress::SendPacketToNetwork</span><br><span class="line">  → cricket::WebRtcVideoChannel::SendRtp</span><br><span class="line">  → cricket::MediaChannel::SendPacket</span><br><span class="line">  → cricket::MediaChannel::DoSendPacket</span><br><span class="line">  → cricket::VideoChannel::SendPacket</span><br><span class="line">  → webrtc::DtlsSrtpTransport::SendRtpPacket #3</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h1 id="添加濾鏡"><a href="#添加濾鏡" class="headerlink" title="添加濾鏡"></a>添加濾鏡</h1><p>由於需要即時預覽濾鏡效果，所以必須在渲染開始之前添加濾鏡。好在 WebRTC 已經提供了 VideoProcessor 這個介面類，可以對擷取到的幀資料進行預處理，呼叫 VideoSource.setVideoProcessor(processor) 即可設定：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">VideoSource</span> <span class="keyword">extends</span> <span class="title class_">MediaSource</span> &#123;</span><br><span class="line">  <span class="comment">// other definitions...</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">CapturerObserver</span> <span class="variable">capturerObserver</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">CapturerObserver</span>() &#123;</span><br><span class="line">    <span class="comment">// other definitions...</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFrameCaptured</span><span class="params">(VideoFrame frame)</span> &#123;</span><br><span class="line">      <span class="keyword">final</span> VideoProcessor.<span class="type">FrameAdaptationParameters</span> <span class="variable">parameters</span> <span class="operator">=</span></span><br><span class="line">          nativeAndroidVideoTrackSource.adaptFrame(frame);</span><br><span class="line">      <span class="keyword">synchronized</span> (videoProcessorLock) &#123;</span><br><span class="line">        <span class="keyword">if</span> (videoProcessor != <span class="literal">null</span>) &#123;</span><br><span class="line">          videoProcessor.onFrameCaptured(frame, parameters);          </span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// body method...</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// other definitions...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>VideoProcessor 的簡單實現</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">Example</span> <span class="keyword">implements</span> <span class="title class_">VideoProcessor</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Nullable</span> <span class="keyword">private</span> VideoSink mVideoSink;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCapturerStarted</span><span class="params">(<span class="type">boolean</span> success)</span> &#123;</span><br><span class="line">    <span class="comment">// DO SOMETHING IF YOU WANT.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onCapturerStopped</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">// DO SOMETHING IF YOU WANT.</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setSink</span><span class="params">(<span class="meta">@Nullable</span> VideoSink sink)</span> &#123;</span><br><span class="line">    <span class="comment">// 需要持有 WebRTC 传入的 VideoSink 对象</span></span><br><span class="line">    mVideoSink = sink;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onFrameCaptured</span><span class="params">(<span class="meta">@NonNull</span> VideoFrame frame)</span> &#123;</span><br><span class="line">    <span class="type">VideoFrame</span> <span class="variable">newFrame</span> <span class="operator">=</span> yourVideoFilter(frame);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 会调用 NativeAndroidVideoTrackSource 将新的帧数据传递给 Native 层</span></span><br><span class="line">    <span class="keyword">if</span> (mVideoSink != <span class="literal">null</span>) mVideoSink.onFrame(frame);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://webrtc.mthli.com/media/video-outbound">视频推流过程</a></li>
+<li><a href="https://blog.piasy.com/2017/07/24/WebRTC-Android-Camera-Capture/index.html">WebRTC Native 源码导读（一）：安卓相机采集实现分析</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+        <tag>android</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -1129,6 +2125,76 @@
       </tags>
   </entry>
   <entry>
+    <title>信令服务器</title>
+    <url>/posts/20241223082200-314296ad.html</url>
+    <content><![CDATA[<p><strong>信令服务器</strong>是实时通信（如 WebRTC、VoIP 或视频会议）中的一个关键组件，用于交换必要的控制信息（信令）以建立和管理连接。信令服务器本身并不传输音视频或数据流，而是<strong>协助通信双方完成会话建立和参数协商</strong>。</p>
+<hr>
+<h3 id="信令服务器的核心功能"><a href="#信令服务器的核心功能" class="headerlink" title="信令服务器的核心功能"></a><strong>信令服务器的核心功能</strong></h3><ol>
+<li><p><strong>身份验证与注册</strong></p>
+<ul>
+<li>确认用户的身份，并在需要时允许用户注册或登录到服务系统。</li>
+</ul>
+</li>
+<li><p><strong>设备发现与配对</strong></p>
+ <span id="more"></span>
+<ul>
+<li>在通信开始前，协助两端发现彼此，并共享必要的网络信息。</li>
+</ul>
+</li>
+<li><p><strong>交换会话描述信息</strong></p>
+<ul>
+<li>使用协议（如 SDP）传递媒体会话参数（音频、视频格式、网络地址、端口等）。</li>
+</ul>
+</li>
+<li><p><strong>网络穿越协助</strong></p>
+<ul>
+<li>协助处理 NAT 或防火墙问题（通常通过 STUN 和 TURN 服务器配合）。</li>
+</ul>
+</li>
+<li><p><strong>状态同步与会话管理</strong></p>
+<ul>
+<li>处理连接建立、修改和终止的信令交换。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="信令服务器在-WebRTC-中的角色"><a href="#信令服务器在-WebRTC-中的角色" class="headerlink" title="信令服务器在 WebRTC 中的角色"></a><strong>信令服务器在 WebRTC 中的角色</strong></h3><p>在 WebRTC 中，信令服务器主要负责传递以下信息：</p>
+<ol>
+<li><p><strong>SDP（Session Description Protocol）</strong></p>
+<ul>
+<li>包括设备的音视频能力、编解码器信息、媒体轨道等。</li>
+</ul>
+</li>
+<li><p><strong>ICE 候选信息</strong></p>
+<ul>
+<li>提供点对点通信所需的网络信息（IP 地址、端口等）。</li>
+</ul>
+</li>
+<li><p><strong>控制消息</strong></p>
+<ul>
+<li>用于启动、结束或修改会话。</li>
+</ul>
+</li>
+</ol>
+<p><strong>信令协议示例：</strong></p>
+<ul>
+<li>WebSockets</li>
+<li>HTTP(S) (通常使用 POST 或 GET)</li>
+<li>XMPP (扩展消息和状态协议)</li>
+<li>SIP (会话初始协议)</li>
+</ul>
+<hr>
+<h3 id="信令服务器的实现"><a href="#信令服务器的实现" class="headerlink" title="信令服务器的实现"></a><strong>信令服务器的实现</strong></h3><h4 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a><strong>技术选型</strong></h4><p>信令服务器的实现可以基于多种技术，以下是常见选择：</p>
+<ul>
+<li><strong>语言</strong>：Node.js、Python、Java、Go 等。</li>
+<li><strong>传输协议</strong>：WebSocket、HTTP&#x2F;HTTPS、SIP、XMPP 等。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>實作 Nginx 負載平衡 load balance</title>
     <url>/posts/20230417154300-ab2a7258.html</url>
     <content><![CDATA[<h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
@@ -1149,6 +2215,39 @@
       <tags>
         <tag>load_balance</tag>
         <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建webrtc服务器</title>
+    <url>/posts/20241223100200-2469950e.html</url>
+    <content><![CDATA[<p><a href="https://developer.aliyun.com/article/877670">如何搭建一个简单的webrtc服务器</a></p>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>webrtc</title>
+    <url>/posts/20230806170400-af856b41.html</url>
+    <content><![CDATA[<h1 id="env"><a href="#env" class="headerlink" title="env"></a>env</h1><h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">22.04</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置非互動模式，更新包管理器並安裝必要軟體</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">    git curl python3 vim xz-utils lsb-release sudo file &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get clean &amp;&amp; <span class="built_in">rm</span> -rf /var/lib/apt/lists/*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">    ca-certificates &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    update-ca-certificates &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">rm</span> -rf /var/lib/apt/lists/*</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆 depot_tools 並設置 PATH</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git /opt/depot_tools</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置環境變數</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/opt/depot_tools:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /opt</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-yml"><a href="#docker-compose-yml" class="headerlink" title="docker-compose.yml"></a>docker-compose.yml</h2><figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">webrtc-env:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">webrtc-env</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">.</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">./Dockerfile</span></span><br><span class="line">    <span class="attr">platform:</span> <span class="string">linux/amd64</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">/media/hdd/webrtc:/opt/webrtc</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">tty:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<h1 id="Note"><a href="#Note" class="headerlink" title="Note"></a>Note</h1> <span id="more"></span>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="built_in">mkdir</span> webrtc-checkout</span><br><span class="line"><span class="built_in">cd</span> webrtc-checkout</span><br><span class="line">fetch --nohooks webrtc</span><br><span class="line">gclient <span class="built_in">sync</span></span><br><span class="line"><span class="built_in">cd</span> src</span><br><span class="line">./build/install-build-deps.sh</span><br><span class="line">gn gen out/Default</span><br><span class="line">ninja -C out/Default</span><br></pre></td></tr></table></figure>
+<h1 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line"><span class="built_in">mkdir</span> webrtc-android </span><br><span class="line"><span class="built_in">cd</span> webrtc-android </span><br><span class="line">fetch --nohooks webrtc_android</span><br><span class="line">gclient <span class="built_in">sync</span></span><br><span class="line"><span class="built_in">cd</span> src</span><br><span class="line">./build/install-build-deps.sh</span><br><span class="line"></span><br><span class="line"><span class="comment">#產出來的檔案在/src/libwebrtc.aar</span></span><br><span class="line">./tools_webrtc/android/build_aar.py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 20241225 不行使用</span></span><br><span class="line">gn gen out/Debug --args=<span class="string">&#x27;target_os=&quot;android&quot; target_cpu=&quot;arm&quot;&#x27;</span></span><br><span class="line"><span class="comment"># 參考 build_aar.py /tmp/tmp_2yg5wol/armeabi-v7a# cat args.gn</span></span><br><span class="line">gn gen out/Debug --args=<span class="string">&#x27;target_os=&quot;android&quot; target_cpu=&quot;arm&quot; enable_rust=true enable_rust_cxx=true&#x27;</span></span><br><span class="line"></span><br><span class="line">ninja -C out/Debug</span><br><span class="line"><span class="comment">#只build</span></span><br></pre></td></tr></table></figure>
+<h1 id="iOS"><a href="#iOS" class="headerlink" title="iOS"></a>iOS</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> ../</span><br><span class="line"><span class="built_in">mkdir</span> webrtc-ios</span><br><span class="line"><span class="built_in">cd</span> webrtc-ios</span><br><span class="line">fetch --nohooks webrtc_ios</span><br><span class="line">gn gen out/ios_64 --args=<span class="string">&#x27;target_os=&quot;ios&quot; target_cpu=&quot;arm64&quot; target_environment=&quot;device&quot;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<ul>
+<li><a href="https://www.cnblogs.com/ai-tuge/p/14489588.html">webrtc全平台下载编译步骤详细说明</a></li>
+<li><a href="https://webrtc.googlesource.com/src/+/main/docs/native-code/development/README.md#getting-the-code">WebRTC development</a></li>
+<li><a href="https://webrtc.googlesource.com/src/+/main/docs/native-code/android/">WebRTC development android</a></li>
+<li><a href="https://webrtc.googlesource.com/src/+/main/docs/native-code/ios/">WebRTC development ios</a></li>
+<li><a href="https://webrtc.mthli.com/basic/webrtc-compilation/">编译源码</a></li>
+<li></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
       </tags>
   </entry>
 </search>

@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="RTP（Real-time Transport Protocol）是一个用于在互联网上传输实时音频和视频的网络传输协议。它被广泛用于流媒体、VoIP（网络电话）、视频会议等实时通信领域。以下是关于 RTP 的一些核心概念和特性：  1. RTP 的主要功能 数据传输：RTP 提供了一种实时传输音频和视频的机制，允许多媒体数据被分割成小的数据包进行传输。 时间同步：RTP 使用时间戳（timesta">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTP（Real-time Transport Protocol）">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20241223094600-fcb5500e.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="RTP（Real-time Transport Protocol）是一个用于在互联网上传输实时音频和视频的网络传输协议。它被广泛用于流媒体、VoIP（网络电话）、视频会议等实时通信领域。以下是关于 RTP 的一些核心概念和特性：  1. RTP 的主要功能 数据传输：RTP 提供了一种实时传输音频和视频的机制，允许多媒体数据被分割成小的数据包进行传输。 时间同步：RTP 使用时间戳（timesta">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-12-23T09:46:00.000Z">
+<meta property="article:modified_time" content="2024-12-26T18:31:02.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="WebRTC">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20241223094600-fcb5500e.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20241223094600-fcb5500e.html","path":"posts/20241223094600-fcb5500e.html","title":"RTP（Real-time Transport Protocol）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RTP（Real-time Transport Protocol） | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-RTP-%E7%9A%84%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD"><span class="nav-number">1.</span> <span class="nav-text">1. RTP 的主要功能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-RTP-%E7%9A%84%E5%8D%8F%E8%AE%AE%E6%A0%88"><span class="nav-number">2.</span> <span class="nav-text">2. RTP 的协议栈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-RTP-%E6%95%B0%E6%8D%AE%E5%8C%85%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">3. RTP 数据包结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-RTP-%E5%92%8C-RTCP"><span class="nav-number">4.</span> <span class="nav-text">4. RTP 和 RTCP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-RTP-%E7%9A%84%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">5. RTP 的典型应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-RTP-%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">6.</span> <span class="nav-text">6. RTP 的优缺点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="nav-number">6.1.</span> <span class="nav-text">优点：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="nav-number">6.2.</span> <span class="nav-text">缺点：</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">43</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241223094600-fcb5500e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RTP（Real-time Transport Protocol） | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RTP（Real-time Transport Protocol）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-23 17:46:00" itemprop="dateCreated datePublished" datetime="2024-12-23T17:46:00+08:00">2024-12-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2024-12-27 02:31:02" itemprop="dateModified" datetime="2024-12-27T02:31:02+08:00">2024-12-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>RTP（Real-time Transport Protocol）是一个用于在互联网上传输实时音频和视频的网络传输协议。它被广泛用于流媒体、VoIP（网络电话）、视频会议等实时通信领域。以下是关于 RTP 的一些核心概念和特性：</p>
+<hr>
+<h3 id="1-RTP-的主要功能"><a href="#1-RTP-的主要功能" class="headerlink" title="1. RTP 的主要功能"></a><strong>1. RTP 的主要功能</strong></h3><ul>
+<li><strong>数据传输</strong>：RTP 提供了一种实时传输音频和视频的机制，允许多媒体数据被分割成小的数据包进行传输。</li>
+<li><strong>时间同步</strong>：RTP 使用时间戳（timestamp）来帮助接收端同步数据流，例如在音视频同步中至关重要。 <span id="more"></span></li>
+<li><strong>序列号</strong>：每个 RTP 数据包都有一个序列号，用于检测丢包和重新排序。</li>
+<li><strong>实时传输控制</strong>：通过 RTP 的控制协议（RTCP），实现网络状态监控和服务质量反馈。</li>
+</ul>
+<hr>
+<h3 id="2-RTP-的协议栈"><a href="#2-RTP-的协议栈" class="headerlink" title="2. RTP 的协议栈"></a><strong>2. RTP 的协议栈</strong></h3><p>RTP 工作在传输层协议（通常是 UDP）之上，但它本身不提供传输可靠性：</p>
+<ul>
+<li><strong>应用层</strong>：负责具体的多媒体应用（如音频、视频编解码）。</li>
+<li><strong>RTP 层</strong>：处理实时传输功能。</li>
+<li><strong>传输层（通常为 UDP）</strong>：提供快速、低延迟的数据传输。</li>
+</ul>
+<hr>
+<h3 id="3-RTP-数据包结构"><a href="#3-RTP-数据包结构" class="headerlink" title="3. RTP 数据包结构"></a><strong>3. RTP 数据包结构</strong></h3><p>一个 RTP 数据包通常包含以下字段：</p>
+<ol>
+<li><strong>版本号（Version）</strong>：标识 RTP 的版本，目前为 2。</li>
+<li><strong>填充（Padding）</strong>：用于数据填充。</li>
+<li><strong>扩展（Extension）</strong>：标识是否有额外的扩展头。</li>
+<li><strong>标志位（CSRC Count）</strong>：标识 CSRC 标识符的数量。</li>
+<li><strong>标记（Marker）</strong>：用于特定事件的标记。</li>
+<li><strong>负载类型（Payload Type）</strong>：指示负载的类型（如音频或视频编码格式）。</li>
+<li><strong>序列号（Sequence Number）</strong>：检测丢包和包重排序。</li>
+<li><strong>时间戳（Timestamp）</strong>：同步媒体数据流。</li>
+<li><strong>同步源标识符（SSRC）</strong>：标识流的源。</li>
+<li><strong>贡献源标识符（CSRC）</strong>：标识贡献流的源（通常在混音场景中使用）。</li>
+</ol>
+<hr>
+<h3 id="4-RTP-和-RTCP"><a href="#4-RTP-和-RTCP" class="headerlink" title="4. RTP 和 RTCP"></a><strong>4. RTP 和 RTCP</strong></h3><ul>
+<li><strong>RTP（Real-time Transport Protocol）</strong>：<ul>
+<li>主要负责实时数据的传输。</li>
+<li>示例：音频和视频的编码数据包。</li>
+</ul>
+</li>
+<li><strong>RTCP（RTP Control Protocol）</strong>：<ul>
+<li>与 RTP 配合，用于提供控制信息。</li>
+<li>提供以下功能：<ul>
+<li><strong>QoS 反馈</strong>：提供关于网络状况的统计信息（如丢包率、抖动等）。</li>
+<li><strong>参与者标识</strong>：通过 RTCP 包传输参与者的身份信息。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="5-RTP-的典型应用"><a href="#5-RTP-的典型应用" class="headerlink" title="5. RTP 的典型应用"></a><strong>5. RTP 的典型应用</strong></h3><ul>
+<li><strong>VoIP（网络电话）</strong>：通过 RTP 传输语音数据。</li>
+<li><strong>视频会议</strong>：支持多个音视频流的传输和同步。</li>
+<li><strong>流媒体</strong>：如网络直播或点播系统。</li>
+<li><strong>实时游戏</strong>：传输实时游戏中的音视频数据。</li>
+</ul>
+<hr>
+<h3 id="6-RTP-的优缺点"><a href="#6-RTP-的优缺点" class="headerlink" title="6. RTP 的优缺点"></a><strong>6. RTP 的优缺点</strong></h3><h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ul>
+<li>适合实时数据传输。</li>
+<li>支持多种负载类型（灵活性强）。</li>
+<li>结合 RTCP 能提供服务质量监控。</li>
+</ul>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ul>
+<li>不保证传输可靠性（依赖下层协议，如 UDP）。</li>
+<li>无内置加密功能，需要其他协议（如 SRTP）增强安全性。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/WebRTC/" rel="tag"># WebRTC</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20241223083000-58bf8773.html" rel="prev" title="ICE Interactive Connectivity Establishment，交互式连接建立">
+                  <i class="fa fa-chevron-left"></i> ICE Interactive Connectivity Establishment，交互式连接建立
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20241223100200-2469950e.html" rel="next" title="搭建webrtc服务器">
+                  搭建webrtc服务器 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

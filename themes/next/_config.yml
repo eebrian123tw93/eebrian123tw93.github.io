@@ -930,5 +930,5 @@ google_adsense:
   enable_page_level_ads: true
   ## siderbar_enable 這邊建立廣告後才會用到
   siderbar_enable: true # 是否開啟側邊欄廣告
-  # siderbar_data_ad_slot: 0000000 # 請輸入廣告 slot
+  siderbar_data_ad_slot: 7182416679 # 請輸入廣告 slot
 

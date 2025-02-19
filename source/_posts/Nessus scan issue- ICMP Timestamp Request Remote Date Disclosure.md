@@ -8,6 +8,7 @@ categories:
 date: '2025-02-18 12:38:00'
 updated: '2025-02-19 01:21:14'
 description: ''
+abbrlink: 8d2c5c93
 ---
 **ICMP Timestamp Request Remote Date Disclosure** 是一種資訊洩露漏洞，主要與 ICMP（Internet Control Message Protocol）中的 **Timestamp Request（類型 13）** 和 **Timestamp Reply（類型 14）** 相關。
 ### **可能的問題與風險**

@@ -9,6 +9,7 @@ categories:
 date: '2025-02-14 18:22:00'
 updated: '2025-02-19 01:21:13'
 description: ''
+abbrlink: '5e422532'
 ---
 今天在除錯時，發現有時兩路websocket LiveView 開下去，就造成卡頓，到websocket的流程一看原來裡面有一個機制，
 是會去檢查當前拿到的Frame Number 和 encode 最新的 Frame Number ，如果差距太大（例如: 兩個fps之類的），

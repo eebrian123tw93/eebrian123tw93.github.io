@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ICMP Timestamp Request Remote Date Disclosure 是一種資訊洩露漏洞，主要與 ICMP（Internet Control Message Protocol）中的 Timestamp Request（類型 13） 和 Timestamp Reply（類型 14） 相關。 可能的問題與風險 系統時間洩露（時間同步攻擊）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Nessus scan issue- ICMP Timestamp Request Remote Date Disclosure">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20250218043800-8d2c5c93.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="ICMP Timestamp Request Remote Date Disclosure 是一種資訊洩露漏洞，主要與 ICMP（Internet Control Message Protocol）中的 Timestamp Request（類型 13） 和 Timestamp Reply（類型 14） 相關。 可能的問題與風險 系統時間洩露（時間同步攻擊）">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20250218113332.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20250218113344.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20250218113509.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20250218113518.png">
+<meta property="article:published_time" content="2025-02-18T04:38:00.000Z">
+<meta property="article:modified_time" content="2025-02-18T17:21:14.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="Nessus">
+<meta property="article:tag" content="chatgpt">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20250218113332.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20250218043800-8d2c5c93.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20250218043800-8d2c5c93.html","path":"posts/20250218043800-8d2c5c93.html","title":"Nessus scan issue- ICMP Timestamp Request Remote Date Disclosure"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Nessus scan issue- ICMP Timestamp Request Remote Date Disclosure | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%AF%E8%83%BD%E7%9A%84%E5%95%8F%E9%A1%8C%E8%88%87%E9%A2%A8%E9%9A%AA"><span class="nav-number">1.</span> <span class="nav-text">可能的問題與風險</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BF%AE%E5%BE%A9%E8%88%87%E7%B7%A9%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">如何修復與緩解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AB%96"><span class="nav-number">3.</span> <span class="nav-text">結論</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A5%E4%B8%8A%E6%98%AFChatGPT%E5%BE%97%E5%9B%9E%E8%A6%86"><span class="nav-number">4.</span> <span class="nav-text">以上是ChatGPT得回覆</span></a></li></ol><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%97%E8%AD%89%E6%B3%95%E4%B8%80"><span class="nav-number"></span> <span class="nav-text">驗證法一</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A9%97%E8%AD%89%E6%B3%95%E4%BA%8C"><span class="nav-number"></span> <span class="nav-text">驗證法二</span></a></li></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <i class="fa fa-google"></i> AdSense
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20250218043800-8d2c5c93.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Nessus scan issue- ICMP Timestamp Request Remote Date Disclosure | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Nessus scan issue- ICMP Timestamp Request Remote Date Disclosure
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2025-02-18 12:38:00" itemprop="dateCreated datePublished" datetime="2025-02-18T12:38:00+08:00">2025-02-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-02-19 01:21:14" itemprop="dateModified" datetime="2025-02-19T01:21:14+08:00">2025-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/web/" itemprop="url" rel="index"><span itemprop="name">web</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><strong>ICMP Timestamp Request Remote Date Disclosure</strong> 是一種資訊洩露漏洞，主要與 ICMP（Internet Control Message Protocol）中的 <strong>Timestamp Request（類型 13）</strong> 和 <strong>Timestamp Reply（類型 14）</strong> 相關。</p>
+<h3 id="可能的問題與風險"><a href="#可能的問題與風險" class="headerlink" title="可能的問題與風險"></a><strong>可能的問題與風險</strong></h3><ol>
+<li><p><strong>系統時間洩露（時間同步攻擊）</strong></p>
+ <span id="more"></span>
+<ul>
+<li>攻擊者可以透過 ICMP Timestamp Request 回應的時間資訊，獲取目標系統的當前時間。</li>
+<li>這可能有助於進行「時序攻擊」（Timing Attack），例如分析時間同步問題、推測隨機數生成器的狀態等。</li>
+</ul>
+</li>
+<li><p><strong>協助進行網路探測（Network Reconnaissance）</strong></p>
+<ul>
+<li>攻擊者可以掃描大量 IP 來確定哪些系統回應 ICMP Timestamp Request，進一步縮小攻擊範圍。</li>
+<li>此外，透過不同設備的回應時間，可以推測目標設備的地理位置或時區。</li>
+</ul>
+</li>
+<li><p><strong>協助執行 NTP 攻擊（Network Time Protocol Attack）</strong></p>
+<ul>
+<li>若攻擊者發現目標設備的時間與標準時間不同，可能嘗試對 NTP 服務進行攻擊，例如 <strong>NTP 反射攻擊（NTP Amplification Attack）</strong> 或 <strong>時間重置攻擊（Time Shift Attack）</strong>，導致系統錯誤。</li>
+</ul>
+</li>
+<li><p><strong>幫助識別作業系統與設備類型</strong></p>
+<ul>
+<li>不同作業系統（Windows、Linux、BSD 等）對 ICMP Timestamp Request 的回應方式可能不同，因此攻擊者可以利用這些資訊進行指紋識別（Fingerprinting）。</li>
+<li>例如，某些設備的時鐘可能是從開機時間開始計算的，而非標準 UTC 時間。</li>
+</ul>
+</li>
+<li><p><strong>協助分佈式攻擊（Distributed Attack）</strong></p>
+<ul>
+<li>在分散式攻擊中，攻擊者可以利用這些時間資訊來同步惡意行為，例如 DDoS 攻擊中的「時間協調」（Coordinated Timing Attack）。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="如何修復與緩解"><a href="#如何修復與緩解" class="headerlink" title="如何修復與緩解"></a><strong>如何修復與緩解</strong></h3><ol>
+<li><strong>封鎖 ICMP Timestamp Request（類型 13）</strong></li>
+</ol>
+<ul>
+<li>在防火牆（如 <code>iptables</code> 或 <code>pf</code>）或網路設備上封鎖 ICMP 類型 13 封包：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p icmp --icmp-type timestamp-request -j DROP</span><br></pre></td></tr></table></figure></li>
+<li>若使用 <code>pf</code>（如 OpenBSD &#x2F; FreeBSD）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">block <span class="keyword">in</span> quick proto icmp icmp-type timestamp</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol start="2">
+<li><strong>在網路設備上停用 ICMP Timestamp 回應</strong><ul>
+<li>部分設備（如 Cisco、Juniper）可以透過 CLI 停用 ICMP Timestamp：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">no ip icmp timestamp-reply</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>針對伺服器或終端設備進行系統加固</strong><ul>
+<li>在 Linux 系統中，透過 sysctl 限制 ICMP：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;net.ipv4.icmp_echo_ignore_all = 1&quot;</span> &gt;&gt; /etc/sysctl.conf sysctl -p</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><strong>使用 NTP 進行時間同步，避免時鐘偏移</strong><ul>
+<li>確保系統時間同步到可信任的時間伺服器（如 <code>time.google.com</code>、<code>ntp.org</code>）。</li>
+<li>若設備時間偏差過大，可能會影響 TLS、Kerberos 認證等安全機制。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="結論"><a href="#結論" class="headerlink" title="結論"></a><strong>結論</strong></h3><p>ICMP Timestamp Request Remote Date Disclosure 本身不是一個直接的攻擊向量，但它會洩露系統時間資訊，可能被攻擊者利用來進一步分析和計劃攻擊。建議在不影響正常業務的情況下，封鎖 ICMP Timestamp Request，並確保系統時間正確同步，以降低潛在風險。</p>
+<h3 id="以上是ChatGPT得回覆"><a href="#以上是ChatGPT得回覆" class="headerlink" title="以上是ChatGPT得回覆"></a>以上是ChatGPT得回覆</h3><h2 id="驗證法一"><a href="#驗證法一" class="headerlink" title="驗證法一"></a>驗證法一</h2><p>使用 nping(安裝wireshark完應該有) 指令測試驗證 icmp type 13 為 timestamp request  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nping --icmp --icmp-type 13 192.168.57.3 </span><br></pre></td></tr></table></figure>
+<p><img src="/images/20250218113332.png"><br>看到 RCVD有收到來自192.168.57.3的回覆 這是原本的<br><img src="/images/20250218113344.png"><br>沒有收到來自192.168.57.3的回覆 這是修改後的</p>
+<h2 id="驗證法二"><a href="#驗證法二" class="headerlink" title="驗證法二"></a>驗證法二</h2><p>使用Nessus的Advance Scan<br>Plugins 只選擇 General 裡面的 ICMP Timestamp Request Remote Date Disclosure<br>做掃描<br><img src="/images/20250218113509.png"><br>原本會掃描出黃色Low 的 ICMP Timestamp Request 弱點<br><img src="/images/20250218113518.png"><br>修改後 就不會出現</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Nessus/" rel="tag"># Nessus</a>
+              <a href="/tags/chatgpt/" rel="tag"># chatgpt</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20250214102200-5e422532.html" rel="prev" title="20250214小日常-WebSocket IDR Frame delay">
+                  <i class="fa fa-chevron-left"></i> 20250214小日常-WebSocket IDR Frame delay
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2025</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

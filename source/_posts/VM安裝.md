@@ -6,11 +6,16 @@ tags:
   - ssh-server
   - vm
 date: '2023-11-29 18:16:00'
-updated: '2024-09-05 09:25:45'
+updated: '2025-02-19 08:51:01'
 categories:
   - linux
 description: ''
 abbrlink: 661de22d
+keywords:
+  - VirtualBox
+  - samba
+  - ssh-server
+  - vm
 ---
 ## Install Guest Additions 
 `sudo apt-get install gcc make perl -y`

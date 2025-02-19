@@ -4,10 +4,13 @@ tags:
   - load_balance
   - nginx
 date: '2023-04-17 23:43:00'
-updated: '2024-01-24 08:39:22'
+updated: '2025-02-19 08:51:01'
 categories: ''
 description: ''
 abbrlink: ab2a7258
+keywords:
+  - load_balance
+  - nginx
 ---
 
 ## 三種 load balancing 方法

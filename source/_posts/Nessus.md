@@ -6,9 +6,12 @@ tags:
 categories:
   - 資安
 date: '2024-05-06 10:44:00'
-updated: '2024-05-06 05:55:42'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: 613b46cc
+keywords:
+  - Nessus
+  - docker
 ---
 # 介紹
 Nessus是一個弱點掃描工具，業界廣泛使用的漏洞與系統設定評估產品

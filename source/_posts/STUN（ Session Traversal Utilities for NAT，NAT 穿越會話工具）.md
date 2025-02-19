@@ -1,11 +1,13 @@
 ---
 title: STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）
 date: '2024-12-23 11:50:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 categories: []
 description: ''
 abbrlink: d4e6d128
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 STUN（Session Traversal Utilities for NAT，NAT 穿越會話工具）是一種網絡協議，用於協助用戶端通過 NAT（網絡地址轉換）和防火牆發現其**公共 IP 地址和端口**。STUN 的主要目的是幫助建立點對點連接，尤其是在使用 NAT 和防火牆的網絡環境中，例如即時通訊或視頻通話等應用。

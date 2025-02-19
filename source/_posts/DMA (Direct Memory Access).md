@@ -3,11 +3,13 @@ title: DMA (Direct Memory Access)
 tags:
   - DMA
 date: '2023-11-19 03:48:00'
-updated: '2024-01-25 07:37:02'
+updated: '2025-02-19 08:51:00'
 categories:
   - soc
 description: ''
 abbrlink: e891e3a3
+keywords:
+  - DMA
 ---
 # 介紹
 ![](/images/20231119023846.png)

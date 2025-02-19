@@ -2,10 +2,12 @@
 title: ICE連線排序規則
 categories: []
 date: '2024-12-24 15:02:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: f38f09a7
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 # Candiates Examples

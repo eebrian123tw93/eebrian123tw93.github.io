@@ -1,11 +1,13 @@
 ---
 title: PeerConnection 連線過程
 date: '2024-12-24 14:30:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 categories: []
 description: ''
 abbrlink: 40453b0a
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 # 上圖

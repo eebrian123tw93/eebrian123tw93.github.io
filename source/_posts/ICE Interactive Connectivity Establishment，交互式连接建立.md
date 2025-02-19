@@ -5,9 +5,11 @@ tags:
 categories:
   - web
 date: '2024-12-23 16:30:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: 58bf8773
+keywords:
+  - WebRTC
 ---
 **ICE（Interactive Connectivity Establishment，交互式连接建立）** 是一種協議框架，旨在幫助網絡應用程式在 NAT（網絡地址轉換）和防火牆環境下進行點對點（P2P）連接。ICE 綜合了多種 NAT 穿越技術，包括 STUN 和 TURN，用於建立可靠的通信通道。
 ![](/images/20241223152120.png)

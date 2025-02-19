@@ -2,10 +2,12 @@
 title: NAT（Network Address Translation，網路位址轉換）
 categories: []
 date: '2024-12-23 11:47:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:02'
 description: ''
 abbrlink: 7727d3af
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 NAT（Network Address Translation，網路位址轉換）是一種網路技術，用於將內部網路的私有IP地址轉換為公共IP地址，或反向轉換。這項技術的主要目的是讓多台內部設備能夠共享一個或少量公共IP地址進行外部網路通信，同時提高網路安全性。

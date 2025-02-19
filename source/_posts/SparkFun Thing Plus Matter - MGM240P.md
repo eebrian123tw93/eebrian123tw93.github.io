@@ -1,20 +1,29 @@
 ---
 title: SparkFun Thing Plus Matter - MGM240P
 tags:
-  - Zigbee
   - MCU
+  - MGM240P
   - SOC
   - SparkFun
-  - MGM240P
-  - simplicity-studio
+  - Zigbee
   - mgm240pb32vna
   - silabs
+  - simplicity-studio
 categories:
   - zigbee
 date: '2023-11-19 02:46:00'
-updated: '2024-01-24 02:17:05'
+updated: '2025-02-19 08:51:01'
 description: ''
 abbrlink: 2b622287
+keywords:
+  - MCU
+  - MGM240P
+  - SOC
+  - SparkFun
+  - Zigbee
+  - mgm240pb32vna
+  - silabs
+  - simplicity-studio
 ---
 # [SparkFun Thing Plus Matter - MGM240P](https://www.sparkfun.com/products/20270)
 # 安裝 Simplicity Studio 5

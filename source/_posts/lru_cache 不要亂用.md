@@ -7,9 +7,13 @@ tags:
 categories:
   - 小日常
 date: '2025-02-19 16:15:00'
-updated: '2025-02-19 07:26:32'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: 6a4c0b66
+keywords:
+  - cache
+  - memory_leak
+  - python
 ---
  今天發現跑的一支python程式裡面，我的記憶體不斷上漲，
  使用好幾套監測套件

@@ -7,11 +7,17 @@ tags:
   - TXRX
   - UART
 date: '2023-11-19 03:31:00'
-updated: '2024-01-25 07:37:04'
+updated: '2025-02-19 08:51:02'
 categories:
   - soc
 description: ''
 abbrlink: f5da1a51
+keywords:
+  - RS232
+  - RS484
+  - TTL
+  - TXRX
+  - UART
 ---
 # # 介紹
 UART：**全雙工、異步、串行傳輸**，收發獨立，UART總線並沒有時鐘線，所以需要提前定義好對應的波特率，傳輸速度較慢，物理上4根線（VCC/TX/RX/GND），雖然速度慢，但是可用於不同主機間的通信，通常用於debug調試非常方便；傳輸時數據位可以5、6、7、8位。

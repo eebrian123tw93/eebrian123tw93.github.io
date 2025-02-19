@@ -6,9 +6,12 @@ tags:
 categories:
   - web
 date: '2024-01-25 10:43:00'
-updated: '2024-12-27 02:19:13'
+updated: '2025-02-19 08:51:01'
 description: ''
 abbrlink: 49fdb147
+keywords:
+  - H265
+  - WebCodecsAPI
 ---
 # 前言
 這邊接續{% post_link  "使用WebCodecs API對H264解碼" %}，現在處理H265格式，這裡的只是將程式碼有一點小改動

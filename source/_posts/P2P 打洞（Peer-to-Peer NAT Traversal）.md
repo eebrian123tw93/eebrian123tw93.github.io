@@ -1,11 +1,14 @@
 ---
 title: P2P 打洞（Peer-to-Peer NAT Traversal）
 date: '2024-12-19 18:28:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 categories: []
 description: ''
 abbrlink: 464c14bb
 tags:
+  - WebRTC
+  - p2p
+keywords:
   - WebRTC
   - p2p
 ---

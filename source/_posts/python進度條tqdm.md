@@ -7,9 +7,13 @@ tags:
 categories:
   - python
 date: '2024-01-24 14:17:00'
-updated: '2024-01-28 04:09:10'
+updated: '2025-02-19 08:51:02'
 description: ''
 abbrlink: 2ff23ae2
+keywords:
+  - python
+  - 裝B
+  - 酷炫
 ---
 # 前言
 在查網站時，無意間逛到[stackoverflow](https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430)，有人用python的tqdm顯示記憶體和cpu的使用量，看起來有點酷炫，就來複製貼上玩一下吧，也可以用在python需要耗時的程式上，也不用一直print log看起來非常亂。

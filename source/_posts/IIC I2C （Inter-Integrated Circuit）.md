@@ -4,11 +4,14 @@ tags:
   - I2C
   - IIC
 date: '2023-11-19 02:38:00'
-updated: '2024-01-25 07:37:06'
+updated: '2025-02-19 08:51:01'
 categories:
   - soc
 description: ''
 abbrlink: d71a458d
+keywords:
+  - I2C
+  - IIC
 ---
 # 介紹
 ![](/images/20231119013103.png)

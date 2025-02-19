@@ -2,10 +2,12 @@
 title: RTP（Real-time Transport Protocol）
 categories: []
 date: '2024-12-23 17:46:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: fcb5500e
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 RTP（Real-time Transport Protocol）是一个用于在互联网上传输实时音频和视频的网络传输协议。它被广泛用于流媒体、VoIP（网络电话）、视频会议等实时通信领域。以下是关于 RTP 的一些核心概念和特性：

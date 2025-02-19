@@ -2,10 +2,12 @@
 title: RTCP（Real-time Transport Control Protocol）
 categories: []
 date: '2024-12-24 11:12:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: ad213933
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 ### RTCP (RTP Control Protocol) 介紹

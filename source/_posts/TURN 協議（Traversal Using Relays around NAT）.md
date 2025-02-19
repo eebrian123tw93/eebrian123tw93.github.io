@@ -1,11 +1,13 @@
 ---
 title: TURN 協議（Traversal Using Relays around NAT）
 date: '2024-12-23 12:09:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 categories: []
 description: ''
 abbrlink: 46d03228
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 **TURN（Traversal Using Relays around NAT）** 是一種用於穿越 NAT（Network Address Translation）和防火牆的網絡協議，通常在實時通信應用中使用，例如視頻通話、即時消息和其他需要點對點連接的應用。通過**中繼服務器轉發流量**來解決這些問題

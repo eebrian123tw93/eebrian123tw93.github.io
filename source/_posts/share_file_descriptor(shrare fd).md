@@ -7,9 +7,13 @@ tags:
 categories:
   - IPC
 date: '2024-03-19 15:10:00'
-updated: '2024-03-19 07:11:07'
+updated: '2025-02-19 08:51:02'
 description: ''
 abbrlink: 8084e2f0
+keywords:
+  - IPC
+  - fd
+  - linux
 ---
 # 前言
 最近在處理影像buffer時，範例在建立buffer記憶體是用其他 library去生成，影像 buffer 是通過mmap 去取的，但是我需要其他進程也可以拿到這個 buffer ，

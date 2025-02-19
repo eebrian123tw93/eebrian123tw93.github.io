@@ -3,10 +3,12 @@ title: WebRTC基礎
 tags:
   - WebRTC
 date: '2024-12-23 18:03:00'
-updated: '2024-12-27 02:33:32'
+updated: '2025-02-19 08:51:02'
 categories: []
 description: ''
 abbrlink: 345ae512
+keywords:
+  - WebRTC
 ---
 ### 1. **理解 WebRTC 基本概念**
 

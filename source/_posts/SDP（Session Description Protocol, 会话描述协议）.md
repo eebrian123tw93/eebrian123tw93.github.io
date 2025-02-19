@@ -2,10 +2,12 @@
 title: SDP（Session Description Protocol, 会话描述协议）
 categories: []
 date: '2024-12-23 15:45:00'
-updated: '2024-12-27 02:31:02'
+updated: '2025-02-19 08:51:03'
 description: ''
 abbrlink: 739a46ba
 tags:
+  - WebRTC
+keywords:
   - WebRTC
 ---
 会话描述协议（SDP，Session Description Protocol）是一种用于多媒体通信的文本格式协议。它通常用于描述多媒体会话的参数，例如会议、语音或视频通话、ICE 服务器信息、音视频编码信息，以便参与方可以协商和建立通信。

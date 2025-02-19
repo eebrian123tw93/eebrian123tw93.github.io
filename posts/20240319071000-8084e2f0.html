@@ -30,7 +30,7 @@
 <meta property="og:description" content="前言最近在處理影像buffer時，範例在建立buffer記憶體是用其他 library去生成，影像 buffer 是通過mmap 去取的，但是我需要其他進程也可以拿到這個 buffer ， 有種做法是完整複製buffer，然後開一塊share memory處理，但是這樣會造成cpu一直在copy還有種作法是找到 file descriptor 參照哪個檔案，但查詢了許久，我無法得知 file de">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-03-19T07:10:00.000Z">
-<meta property="article:modified_time" content="2024-03-18T23:11:07.000Z">
+<meta property="article:modified_time" content="2025-02-19T00:51:02.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="linux">
 <meta property="article:tag" content="IPC">
@@ -250,9 +250,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2024-03-19 15:10:00 / Modified: 07:11:07" itemprop="dateCreated datePublished" datetime="2024-03-19T15:10:00+08:00">2024-03-19</time>
+      <time title="Created: 2024-03-19 15:10:00" itemprop="dateCreated datePublished" datetime="2024-03-19T15:10:00+08:00">2024-03-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-02-19 08:51:02" itemprop="dateModified" datetime="2025-02-19T08:51:02+08:00">2025-02-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">

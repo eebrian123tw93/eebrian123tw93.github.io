@@ -163,7 +163,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">46</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -174,7 +174,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">65</span>
+        <span class="site-state-item-count">67</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -205,6 +205,95 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20250219081500-6a4c0b66.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20250219081500-6a4c0b66.html" class="post-title-link" itemprop="url">lru_cache 不要亂用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2025-02-19 16:15:00 / Modified: 07:26:32" itemprop="dateCreated datePublished" datetime="2025-02-19T16:15:00+08:00">2025-02-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p> 今天發現跑的一支python程式裡面，我的記憶體不斷上漲，<br> 使用好幾套監測套件</p>
+<ul>
+<li>tracemalloc</li>
+<li>objgraph<br> 找來找去都找不到哪裡記憶體增加<br> 已知大概範圍，但不管如何 <code>del</code>，<code>gc</code> 也呼叫了記憶體還是蹭蹭蹭往上漲，<br> 我以為是我這邊的問題，因為我大部分都是互叫別人的套件，徹底檢查我的程式碼也沒有看到哪裡有洩漏可能，我這支程式是去Influxdb拿資料，還一步步的去追到套件的程式碼也沒看出哪裡有問題，甚至印出所有物件，看是否有循環引用的問題，分析半天也沒看出來
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20250219081500-6a4c0b66.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </li></ul></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -560,94 +649,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241224070200-f38f09a7.html" class="post-title-link" itemprop="url">ICE連線排序規則</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-24 15:02:00" itemprop="dateCreated datePublished" datetime="2024-12-24T15:02:00+08:00">2024-12-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2024-12-27 02:31:02" itemprop="dateModified" datetime="2024-12-27T02:31:02+08:00">2024-12-27</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
-<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
-<ol>
-<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20241224070200-f38f09a7.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </li></ol></div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/9/">9</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>

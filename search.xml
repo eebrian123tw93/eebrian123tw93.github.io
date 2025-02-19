@@ -258,6 +258,60 @@
       </tags>
   </entry>
   <entry>
+    <title>ICE連線排序規則</title>
+    <url>/posts/20241224070200-f38f09a7.html</url>
+    <content><![CDATA[<h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
+<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
+<ol>
+<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。 <span id="more"></span></li>
+<li><strong>远程候选列表</strong>：从对等方通过信令协议（如 SDP）传递过来的候选列表。</li>
+</ol>
+<h3 id="候选对的定义"><a href="#候选对的定义" class="headerlink" title="候选对的定义"></a><strong>候选对的定义</strong></h3><p>候选对是本地候选和远程候选的组合。<br>假设：</p>
+<ul>
+<li>本地候选列表有 3 个候选：<code>A1</code>, <code>A2</code>, <code>A3</code>。</li>
+<li>远程候选列表有 2 个候选：<code>B1</code>, <code>B2</code>。<br>候选对的组合方式是<strong>笛卡尔积</strong>，即将每个本地候选与每个远程候选配对：</li>
+<li>候选对 &#x3D; {<code>(A1, B1)</code>, <code>(A1, B2)</code>, <code>(A2, B1)</code>, <code>(A2, B2)</code>, <code>(A3, B1)</code>, <code>(A3, B2)</code>}</li>
+</ul>
+<h3 id="候选对的用途"><a href="#候选对的用途" class="headerlink" title="候选对的用途"></a><strong>候选对的用途</strong></h3><p>候选对是用于连接性检查的单位。ICE 通过尝试不同的候选对来找出最佳的连接路径。</p>
+<ol>
+<li><strong>连接测试</strong>：对于每个候选对，ICE 会发送 STUN 请求来检查它们是否能够成功建立连接。<ul>
+<li>如果候选对能通过 STUN 验证，它会被标记为 “有效候选对”。</li>
+<li>最终选择一个优先级最高的有效候选对作为实际的连接路径。</li>
+</ul>
+</li>
+<li><strong>打洞（NAT Traversal）</strong>：候选对的连接性检查也会触发 NAT 打洞，帮助双方建立直接连接。</li>
+</ol>
+<h1 id="拉程式碼參考"><a href="#拉程式碼參考" class="headerlink" title="拉程式碼參考"></a>拉程式碼參考<a href="/posts/20230806170400-af856b41.html" title="webrtc">webrtc</a></h1><h1 id="p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection"><a href="#p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection" class="headerlink" title="p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection"></a>p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">IceControllerInterface::SwitchResult</span></span><br><span class="line"><span class="function"><span class="title">BasicIceController::SortAndSwitchConnection</span><span class="params">(IceSwitchReason reason)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Find the best alternative connection by sorting.  It is important to note</span></span><br><span class="line">  <span class="comment">// that amongst equal preference, writable connections, this will choose the</span></span><br><span class="line">  <span class="comment">// one whose estimated latency is lowest.  So it is the only one that we</span></span><br><span class="line">  <span class="comment">// need to consider switching to.</span></span><br><span class="line">  <span class="comment">// TODO(honghaiz): Don&#x27;t sort;  Just use std::max_element in the right places.</span></span><br><span class="line">  absl::<span class="built_in">c_stable_sort</span>(</span><br><span class="line">      connections_, [<span class="keyword">this</span>](<span class="type">const</span> Connection* a, <span class="type">const</span> Connection* b) &#123;</span><br><span class="line">        <span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line">        <span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; <span class="string">&quot;Sorting &quot;</span> &lt;&lt; connections_.<span class="built_in">size</span>()</span><br><span class="line">                      &lt;&lt; <span class="string">&quot; available connections due to: &quot;</span></span><br><span class="line">                      &lt;&lt; <span class="built_in">IceSwitchReasonToString</span>(reason);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; connections_.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; connections_[i]-&gt;<span class="built_in">ToString</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">const</span> Connection* top_connection =</span><br><span class="line">      (!connections_.<span class="built_in">empty</span>()) ? connections_[<span class="number">0</span>] : <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">ShouldSwitchConnection</span>(reason, top_connection);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>c_stable_sort 將 connections_ 做排序 ，排序完後拿出第一個 connection 在呼叫 ShouldSwitchConnection<br>c_stable_sort 裡面使用類似lambda用法</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line"><span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br></pre></td></tr></table></figure>
+<p>先去 CompareConnections 排序<br>如果沒有比較出來就是用 rtt &lt;同一個封包來回時間（Round-Trip Time）&gt; 做比較</p>
+<h2 id="CompareConnections"><a href="#CompareConnections" class="headerlink" title="CompareConnections"></a>CompareConnections</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BasicIceController::CompareConnections</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* a,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* b,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::optional&lt;<span class="type">int64_t</span>&gt; receiving_unchanged_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">bool</span>* missed_receiving_unchanged_threshold)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(a != <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(b != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We prefer to switch to a writable and receiving connection over a</span></span><br><span class="line">  <span class="comment">// non-writable or non-receiving connection, even if the latter has</span></span><br><span class="line">  <span class="comment">// been nominated by the controlling side.</span></span><br><span class="line">  <span class="type">int</span> state_cmp = <span class="built_in">CompareConnectionStates</span>(a, b, receiving_unchanged_threshold,</span><br><span class="line">                                          missed_receiving_unchanged_threshold);</span><br><span class="line">  <span class="keyword">if</span> (state_cmp != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> state_cmp;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">ice_role_func_</span>() == ICEROLE_CONTROLLED) &#123;</span><br><span class="line">    <span class="comment">// Compare the connections based on the nomination states and the last data</span></span><br><span class="line">    <span class="comment">// received time if this is on the controlled side.</span></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &gt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &lt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &gt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &lt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Compare the network cost and priority.</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">CompareConnectionCandidates</span>(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><a href="#CompareConnectionStates-%E6%A0%B9%E6%93%9A%E7%8B%80%E6%85%8B">CompareConnectionStates 根據狀態</a></li>
+<li>remote_nomination (如是受控端)推薦值</li>
+<li>last_data_received (如是受控端)上次接收數據時間戳</li>
+<li><a href="#CompareConnectionCandidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83">CompareConnectionCandidates 網路環境</a></li>
+</ol>
+<h3 id="CompareConnectionStates-根據狀態"><a href="#CompareConnectionStates-根據狀態" class="headerlink" title="CompareConnectionStates 根據狀態"></a>CompareConnectionStates 根據狀態</h3><ol>
+<li>是否可寫</li>
+<li>是否可收</li>
+<li>是否連接</li>
+</ol>
+<h3 id="CompareConnectionCandidates-網路環境"><a href="#CompareConnectionCandidates-網路環境" class="headerlink" title="CompareConnectionCandidates 網路環境"></a>CompareConnectionCandidates 網路環境</h3><ol>
+<li><a href="#%E5%84%AA%E5%85%88%E7%B4%9A">優先級</a></li>
+<li>更新代數</li>
+<li>是否被修剪</li>
+</ol>
+<h4 id="優先級"><a href="#優先級" class="headerlink" title="優先級"></a>優先級</h4><p>WebRTC 会创建一个候选对（Candidate Pair）的检查列表，用于连接性检查。候选对的排序遵循以下规则：</p>
+<h5 id="候选对优先级计算"><a href="#候选对优先级计算" class="headerlink" title="候选对优先级计算"></a>候选对优先级计算</h5><p>候选对优先级&#x3D;2^32×min(本地优先级,远程优先级)+2×max(本地优先级,远程优先级)+(本地优先级&gt;远程优先级?1:0)<br>參考p2p&#x2F;base&#x2F;connection.cc  Connection::priority()</p>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><h2 id="比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则"><a href="#比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则" class="headerlink" title="比較先後順序1. States 狀態    1. 是否可寫    2. 是否可收    3. 是否連接2. remote_nomination (如是受控端)推薦值3. last_data_received (如是受控端)上次接收數據時間戳4. Candidates 網路環境    1. 網路類型    2. 優先級    3. 更新代數    4. 是否被修剪5. rtt 來回時間# 參考- webrtc ICE穿透连接排序算法详解- ICE 连接排序规则"></a>比較先後順序<br>1. States 狀態<br>    1. 是否可寫<br>    2. 是否可收<br>    3. 是否連接<br>2. remote_nomination (如是受控端)推薦值<br>3. last_data_received (如是受控端)上次接收數據時間戳<br>4. Candidates 網路環境<br>    1. 網路類型<br>    2. 優先級<br>    3. 更新代數<br>    4. 是否被修剪<br>5. rtt 來回時間<br># 參考<br>- <a href="https://blog.csdn.net/breezeewu/article/details/142210879">webrtc ICE穿透连接排序算法详解</a><br>- <a href="https://webrtc.mthli.com/connection/ice-connection-sorting/#compareconnectionstates">ICE 连接排序规则</a></h2>]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ICE Interactive Connectivity Establishment，交互式连接建立</title>
     <url>/posts/20241223083000-58bf8773.html</url>
     <content><![CDATA[<p><strong>ICE（Interactive Connectivity Establishment，交互式连接建立）</strong> 是一種協議框架，旨在幫助網絡應用程式在 NAT（網絡地址轉換）和防火牆環境下進行點對點（P2P）連接。ICE 綜合了多種 NAT 穿越技術，包括 STUN 和 TURN，用於建立可靠的通信通道。<br><img src="/images/20241223152120.png"><br><strong>STUN&#x2F;TURN+NAT穿越流&#x3D;ICE流程</strong><br> <span id="more"></span><br> ICE 是框架，STUN 和 TURN 是技術支持。</p>
@@ -381,60 +435,6 @@
       <categories>
         <category>web</category>
       </categories>
-      <tags>
-        <tag>WebRTC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ICE連線排序規則</title>
-    <url>/posts/20241224070200-f38f09a7.html</url>
-    <content><![CDATA[<h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
-<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
-<ol>
-<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。 <span id="more"></span></li>
-<li><strong>远程候选列表</strong>：从对等方通过信令协议（如 SDP）传递过来的候选列表。</li>
-</ol>
-<h3 id="候选对的定义"><a href="#候选对的定义" class="headerlink" title="候选对的定义"></a><strong>候选对的定义</strong></h3><p>候选对是本地候选和远程候选的组合。<br>假设：</p>
-<ul>
-<li>本地候选列表有 3 个候选：<code>A1</code>, <code>A2</code>, <code>A3</code>。</li>
-<li>远程候选列表有 2 个候选：<code>B1</code>, <code>B2</code>。<br>候选对的组合方式是<strong>笛卡尔积</strong>，即将每个本地候选与每个远程候选配对：</li>
-<li>候选对 &#x3D; {<code>(A1, B1)</code>, <code>(A1, B2)</code>, <code>(A2, B1)</code>, <code>(A2, B2)</code>, <code>(A3, B1)</code>, <code>(A3, B2)</code>}</li>
-</ul>
-<h3 id="候选对的用途"><a href="#候选对的用途" class="headerlink" title="候选对的用途"></a><strong>候选对的用途</strong></h3><p>候选对是用于连接性检查的单位。ICE 通过尝试不同的候选对来找出最佳的连接路径。</p>
-<ol>
-<li><strong>连接测试</strong>：对于每个候选对，ICE 会发送 STUN 请求来检查它们是否能够成功建立连接。<ul>
-<li>如果候选对能通过 STUN 验证，它会被标记为 “有效候选对”。</li>
-<li>最终选择一个优先级最高的有效候选对作为实际的连接路径。</li>
-</ul>
-</li>
-<li><strong>打洞（NAT Traversal）</strong>：候选对的连接性检查也会触发 NAT 打洞，帮助双方建立直接连接。</li>
-</ol>
-<h1 id="拉程式碼參考"><a href="#拉程式碼參考" class="headerlink" title="拉程式碼參考"></a>拉程式碼參考<a href="/posts/20230806170400-af856b41.html" title="webrtc">webrtc</a></h1><h1 id="p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection"><a href="#p2p-x2F-base-x2F-basic-ice-controller-cc-–-gt-SortAndSwitchConnection" class="headerlink" title="p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection"></a>p2p&#x2F;base&#x2F;basic_ice_controller.cc –&gt; SortAndSwitchConnection</h1><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function">IceControllerInterface::SwitchResult</span></span><br><span class="line"><span class="function"><span class="title">BasicIceController::SortAndSwitchConnection</span><span class="params">(IceSwitchReason reason)</span> </span>&#123;</span><br><span class="line">  <span class="comment">// Find the best alternative connection by sorting.  It is important to note</span></span><br><span class="line">  <span class="comment">// that amongst equal preference, writable connections, this will choose the</span></span><br><span class="line">  <span class="comment">// one whose estimated latency is lowest.  So it is the only one that we</span></span><br><span class="line">  <span class="comment">// need to consider switching to.</span></span><br><span class="line">  <span class="comment">// TODO(honghaiz): Don&#x27;t sort;  Just use std::max_element in the right places.</span></span><br><span class="line">  absl::<span class="built_in">c_stable_sort</span>(</span><br><span class="line">      connections_, [<span class="keyword">this</span>](<span class="type">const</span> Connection* a, <span class="type">const</span> Connection* b) &#123;</span><br><span class="line">        <span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line">        <span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line">        <span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br><span class="line">      &#125;);</span><br><span class="line"></span><br><span class="line">  <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; <span class="string">&quot;Sorting &quot;</span> &lt;&lt; connections_.<span class="built_in">size</span>()</span><br><span class="line">                      &lt;&lt; <span class="string">&quot; available connections due to: &quot;</span></span><br><span class="line">                      &lt;&lt; <span class="built_in">IceSwitchReasonToString</span>(reason);</span><br><span class="line">  <span class="keyword">for</span> (<span class="type">size_t</span> i = <span class="number">0</span>; i &lt; connections_.<span class="built_in">size</span>(); ++i) &#123;</span><br><span class="line">    <span class="built_in">RTC_LOG</span>(LS_VERBOSE) &lt;&lt; connections_[i]-&gt;<span class="built_in">ToString</span>();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="type">const</span> Connection* top_connection =</span><br><span class="line">      (!connections_.<span class="built_in">empty</span>()) ? connections_[<span class="number">0</span>] : <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">ShouldSwitchConnection</span>(reason, top_connection);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>c_stable_sort 將 connections_ 做排序 ，排序完後拿出第一個 connection 在呼叫 ShouldSwitchConnection<br>c_stable_sort 裡面使用類似lambda用法</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> cmp = <span class="built_in">CompareConnections</span>(a, b, std::<span class="literal">nullopt</span>, <span class="literal">nullptr</span>);</span><br><span class="line"><span class="keyword">if</span> (cmp != <span class="number">0</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> cmp &gt; <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Otherwise, sort based on latency estimate.</span></span><br><span class="line"><span class="keyword">return</span> a-&gt;<span class="built_in">rtt</span>() &lt; b-&gt;<span class="built_in">rtt</span>();</span><br></pre></td></tr></table></figure>
-<p>先去 CompareConnections 排序<br>如果沒有比較出來就是用 rtt &lt;同一個封包來回時間（Round-Trip Time）&gt; 做比較</p>
-<h2 id="CompareConnections"><a href="#CompareConnections" class="headerlink" title="CompareConnections"></a>CompareConnections</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">BasicIceController::CompareConnections</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* a,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> Connection* b,</span></span></span><br><span class="line"><span class="params"><span class="function">    std::optional&lt;<span class="type">int64_t</span>&gt; receiving_unchanged_threshold,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">bool</span>* missed_receiving_unchanged_threshold)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(a != <span class="literal">nullptr</span>);</span><br><span class="line">  <span class="built_in">RTC_CHECK</span>(b != <span class="literal">nullptr</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// We prefer to switch to a writable and receiving connection over a</span></span><br><span class="line">  <span class="comment">// non-writable or non-receiving connection, even if the latter has</span></span><br><span class="line">  <span class="comment">// been nominated by the controlling side.</span></span><br><span class="line">  <span class="type">int</span> state_cmp = <span class="built_in">CompareConnectionStates</span>(a, b, receiving_unchanged_threshold,</span><br><span class="line">                                          missed_receiving_unchanged_threshold);</span><br><span class="line">  <span class="keyword">if</span> (state_cmp != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> state_cmp;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">ice_role_func_</span>() == ICEROLE_CONTROLLED) &#123;</span><br><span class="line">    <span class="comment">// Compare the connections based on the nomination states and the last data</span></span><br><span class="line">    <span class="comment">// received time if this is on the controlled side.</span></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &gt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">remote_nomination</span>() &lt; b-&gt;<span class="built_in">remote_nomination</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &gt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> a_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (a-&gt;<span class="built_in">last_data_received</span>() &lt; b-&gt;<span class="built_in">last_data_received</span>()) &#123;</span><br><span class="line">      <span class="keyword">return</span> b_is_better;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Compare the network cost and priority.</span></span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">CompareConnectionCandidates</span>(a, b);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li><a href="#CompareConnectionStates-%E6%A0%B9%E6%93%9A%E7%8B%80%E6%85%8B">CompareConnectionStates 根據狀態</a></li>
-<li>remote_nomination (如是受控端)推薦值</li>
-<li>last_data_received (如是受控端)上次接收數據時間戳</li>
-<li><a href="#CompareConnectionCandidates-%E7%B6%B2%E8%B7%AF%E7%92%B0%E5%A2%83">CompareConnectionCandidates 網路環境</a></li>
-</ol>
-<h3 id="CompareConnectionStates-根據狀態"><a href="#CompareConnectionStates-根據狀態" class="headerlink" title="CompareConnectionStates 根據狀態"></a>CompareConnectionStates 根據狀態</h3><ol>
-<li>是否可寫</li>
-<li>是否可收</li>
-<li>是否連接</li>
-</ol>
-<h3 id="CompareConnectionCandidates-網路環境"><a href="#CompareConnectionCandidates-網路環境" class="headerlink" title="CompareConnectionCandidates 網路環境"></a>CompareConnectionCandidates 網路環境</h3><ol>
-<li><a href="#%E5%84%AA%E5%85%88%E7%B4%9A">優先級</a></li>
-<li>更新代數</li>
-<li>是否被修剪</li>
-</ol>
-<h4 id="優先級"><a href="#優先級" class="headerlink" title="優先級"></a>優先級</h4><p>WebRTC 会创建一个候选对（Candidate Pair）的检查列表，用于连接性检查。候选对的排序遵循以下规则：</p>
-<h5 id="候选对优先级计算"><a href="#候选对优先级计算" class="headerlink" title="候选对优先级计算"></a>候选对优先级计算</h5><p>候选对优先级&#x3D;2^32×min(本地优先级,远程优先级)+2×max(本地优先级,远程优先级)+(本地优先级&gt;远程优先级?1:0)<br>參考p2p&#x2F;base&#x2F;connection.cc  Connection::priority()</p>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><h2 id="比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则"><a href="#比較先後順序1-States-狀態-1-是否可寫-2-是否可收-3-是否連接2-remote-nomination-如是受控端-推薦值3-last-data-received-如是受控端-上次接收數據時間戳4-Candidates-網路環境-1-網路類型-2-優先級-3-更新代數-4-是否被修剪5-rtt-來回時間-參考-webrtc-ICE穿透连接排序算法详解-ICE-连接排序规则" class="headerlink" title="比較先後順序1. States 狀態    1. 是否可寫    2. 是否可收    3. 是否連接2. remote_nomination (如是受控端)推薦值3. last_data_received (如是受控端)上次接收數據時間戳4. Candidates 網路環境    1. 網路類型    2. 優先級    3. 更新代數    4. 是否被修剪5. rtt 來回時間# 參考- webrtc ICE穿透连接排序算法详解- ICE 连接排序规则"></a>比較先後順序<br>1. States 狀態<br>    1. 是否可寫<br>    2. 是否可收<br>    3. 是否連接<br>2. remote_nomination (如是受控端)推薦值<br>3. last_data_received (如是受控端)上次接收數據時間戳<br>4. Candidates 網路環境<br>    1. 網路類型<br>    2. 優先級<br>    3. 更新代數<br>    4. 是否被修剪<br>5. rtt 來回時間<br># 參考<br>- <a href="https://blog.csdn.net/breezeewu/article/details/142210879">webrtc ICE穿透连接排序算法详解</a><br>- <a href="https://webrtc.mthli.com/connection/ice-connection-sorting/#compareconnectionstates">ICE 连接排序规则</a></h2>]]></content>
       <tags>
         <tag>WebRTC</tag>
       </tags>
@@ -788,6 +788,31 @@
       </tags>
   </entry>
   <entry>
+    <title>P2P 打洞（Peer-to-Peer NAT Traversal）</title>
+    <url>/posts/20241219102800-464c14bb.html</url>
+    <content><![CDATA[<h1 id="兩個裝置分別在NAT後面"><a href="#兩個裝置分別在NAT後面" class="headerlink" title="兩個裝置分別在NAT後面"></a>兩個裝置分別在NAT後面</h1><p><img src="/images/20241219171958.png"></p>
+<h1 id="這時需要一台Server當作溝通橋梁-傳送訊號"><a href="#這時需要一台Server當作溝通橋梁-傳送訊號" class="headerlink" title="這時需要一台Server當作溝通橋梁 傳送訊號"></a>這時需要一台Server當作溝通橋梁 傳送訊號</h1><p><img src="/images/20241219172742.png"></p>
+<h1 id="裝置A向Sever註冊自己外網-IP-和-port"><a href="#裝置A向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置A向Sever註冊自己外網  IP 和 port"></a>裝置A向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172424.png"><br>在 A 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊<br> <span id="more"></span></p>
+<h1 id="裝置B向Sever註冊自己外網-IP-和-port"><a href="#裝置B向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置B向Sever註冊自己外網  IP 和 port"></a>裝置B向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172021.png"><br>在 B 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊</p>
+<h1 id="Sever-向A-B-裝置-傳送對方的-IP-和-port"><a href="#Sever-向A-B-裝置-傳送對方的-IP-和-port" class="headerlink" title="Sever 向A B 裝置 傳送對方的 IP 和 port"></a>Sever 向A B 裝置 傳送對方的 IP 和 port</h1><p><img src="/images/20241219172034.png"><br>Server向A傳送B的 ip 和 port<br>Server向B傳送A的 ip 和 port</p>
+<h1 id="A-向-B-發送-UDP-封包"><a href="#A-向-B-發送-UDP-封包" class="headerlink" title="A 向 B 發送 UDP 封包"></a>A 向 B 發送 UDP 封包</h1><p><img src="/images/20241219172123.png"><br>A 向 B 發送 UDP 封包 在這個過程中 A 的源端口為 3000 並且在穿過 NAT A 時，<br>留下紀錄 192.168.1.1:3000 &lt;-&gt; 203.0.113.1:1234<br>封包到達NAT B時，因為不知如何轉發，所以將此封包拋棄</p>
+<h1 id="B-向-A-發送-UDP-封包"><a href="#B-向-A-發送-UDP-封包" class="headerlink" title="B 向 A 發送 UDP 封包"></a>B 向 A 發送 UDP 封包</h1><p><img src="/images/20241219172134.png"><br>B 向 A 發送 UDP 封包 在這個過程中 B 的源端口為 3000 並且在穿過 NAT B 時，<br>留下紀錄 192.168.30.1:3000 &lt;-&gt; 192.51.100.1:1233<br>封包到達NAT A時，因為先前已有紀錄轉發，所以將此封包轉到 A</p>
+<h1 id="兩邊可以通過UDP-做-P2P連線"><a href="#兩邊可以通過UDP-做-P2P連線" class="headerlink" title="兩邊可以通過UDP 做 P2P連線"></a>兩邊可以通過UDP 做 P2P連線</h1><p><img src="/images/20241219172144.png"></p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>  上述流程為簡易的流程，如</p>
+<ul>
+<li>如何知道自己公網 IP 以及 <a href="/posts/20241223034700-7727d3af.html" title="NAT（Network Address Translation，網路位址轉換）">NAT（Network Address Translation，網路位址轉換）</a>#NAT（网络地址转换）分为以下四种类型 需要用 <a href="/posts/20241223035000-d4e6d128.html" title="STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）">STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</a></li>
+<li>如果NAT類型為 非對稱NAT  需要用 <a href="/posts/20241223040900-46d03228.html" title="TURN 協議（Traversal Using Relays around NAT）">TURN 協議（Traversal Using Relays around NAT）</a><br>  如果遇到不同的設備，成功率會不同，上述流程需要一台Server做幫忙，且NAT類型為 非對稱NAT，仰賴NAT映射關係及UDP特性</li>
+</ul>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://webrtc.mthli.com/basic/p2p-hole-punching/">P2P 打洞原理</a></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+        <tag>p2p</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Nessus</title>
     <url>/posts/20240506024400-613b46cc.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>Nessus是一個弱點掃描工具，業界廣泛使用的漏洞與系統設定評估產品</p>
@@ -826,31 +851,6 @@
       <tags>
         <tag>Nessus</tag>
         <tag>docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>P2P 打洞（Peer-to-Peer NAT Traversal）</title>
-    <url>/posts/20241219102800-464c14bb.html</url>
-    <content><![CDATA[<h1 id="兩個裝置分別在NAT後面"><a href="#兩個裝置分別在NAT後面" class="headerlink" title="兩個裝置分別在NAT後面"></a>兩個裝置分別在NAT後面</h1><p><img src="/images/20241219171958.png"></p>
-<h1 id="這時需要一台Server當作溝通橋梁-傳送訊號"><a href="#這時需要一台Server當作溝通橋梁-傳送訊號" class="headerlink" title="這時需要一台Server當作溝通橋梁 傳送訊號"></a>這時需要一台Server當作溝通橋梁 傳送訊號</h1><p><img src="/images/20241219172742.png"></p>
-<h1 id="裝置A向Sever註冊自己外網-IP-和-port"><a href="#裝置A向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置A向Sever註冊自己外網  IP 和 port"></a>裝置A向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172424.png"><br>在 A 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊<br> <span id="more"></span></p>
-<h1 id="裝置B向Sever註冊自己外網-IP-和-port"><a href="#裝置B向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置B向Sever註冊自己外網  IP 和 port"></a>裝置B向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172021.png"><br>在 B 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊</p>
-<h1 id="Sever-向A-B-裝置-傳送對方的-IP-和-port"><a href="#Sever-向A-B-裝置-傳送對方的-IP-和-port" class="headerlink" title="Sever 向A B 裝置 傳送對方的 IP 和 port"></a>Sever 向A B 裝置 傳送對方的 IP 和 port</h1><p><img src="/images/20241219172034.png"><br>Server向A傳送B的 ip 和 port<br>Server向B傳送A的 ip 和 port</p>
-<h1 id="A-向-B-發送-UDP-封包"><a href="#A-向-B-發送-UDP-封包" class="headerlink" title="A 向 B 發送 UDP 封包"></a>A 向 B 發送 UDP 封包</h1><p><img src="/images/20241219172123.png"><br>A 向 B 發送 UDP 封包 在這個過程中 A 的源端口為 3000 並且在穿過 NAT A 時，<br>留下紀錄 192.168.1.1:3000 &lt;-&gt; 203.0.113.1:1234<br>封包到達NAT B時，因為不知如何轉發，所以將此封包拋棄</p>
-<h1 id="B-向-A-發送-UDP-封包"><a href="#B-向-A-發送-UDP-封包" class="headerlink" title="B 向 A 發送 UDP 封包"></a>B 向 A 發送 UDP 封包</h1><p><img src="/images/20241219172134.png"><br>B 向 A 發送 UDP 封包 在這個過程中 B 的源端口為 3000 並且在穿過 NAT B 時，<br>留下紀錄 192.168.30.1:3000 &lt;-&gt; 192.51.100.1:1233<br>封包到達NAT A時，因為先前已有紀錄轉發，所以將此封包轉到 A</p>
-<h1 id="兩邊可以通過UDP-做-P2P連線"><a href="#兩邊可以通過UDP-做-P2P連線" class="headerlink" title="兩邊可以通過UDP 做 P2P連線"></a>兩邊可以通過UDP 做 P2P連線</h1><p><img src="/images/20241219172144.png"></p>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>  上述流程為簡易的流程，如</p>
-<ul>
-<li>如何知道自己公網 IP 以及 <a href="/posts/20241223034700-7727d3af.html" title="NAT（Network Address Translation，網路位址轉換）">NAT（Network Address Translation，網路位址轉換）</a>#NAT（网络地址转换）分为以下四种类型 需要用 <a href="/posts/20241223035000-d4e6d128.html" title="STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）">STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</a></li>
-<li>如果NAT類型為 非對稱NAT  需要用 <a href="/posts/20241223040900-46d03228.html" title="TURN 協議（Traversal Using Relays around NAT）">TURN 協議（Traversal Using Relays around NAT）</a><br>  如果遇到不同的設備，成功率會不同，上述流程需要一台Server做幫忙，且NAT類型為 非對稱NAT，仰賴NAT映射關係及UDP特性</li>
-</ul>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://webrtc.mthli.com/basic/p2p-hole-punching/">P2P 打洞原理</a></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>WebRTC</tag>
-        <tag>p2p</tag>
       </tags>
   </entry>
   <entry>
@@ -906,56 +906,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Python mt5 on linux</title>
-    <url>/posts/20240126041500-7fb9c93d.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
-<p>如果是Mac M系列 請參考<a href="/posts/20240130041500-3099daac.html" title="Python mt5 on macOS(M系列)">Python mt5 on macOS(M系列)</a><br> <span id="more"></span></p>
-<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
-<li>python3.9</li>
-<li>intelx86&#x2F;amd64  </li>
-<li>docker</li>
-</ul>
-<h1 id="開始吧"><a href="#開始吧" class="headerlink" title="開始吧"></a>開始吧</h1><h2 id="先把專案-clone下來"><a href="#先把專案-clone下來" class="headerlink" title="先把專案 clone下來"></a>先把專案 clone下來</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gmag11/MetaTrader5-Docker-Image.git</span><br></pre></td></tr></table></figure>
-<h2 id="進入到資料夾內"><a href="#進入到資料夾內" class="headerlink" title="進入到資料夾內"></a>進入到資料夾內</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> MetaTrader5-Docker-Image</span><br></pre></td></tr></table></figure>
-<h2 id="設定環境-可以更改帳號密碼"><a href="#設定環境-可以更改帳號密碼" class="headerlink" title="設定環境 可以更改帳號密碼"></a>設定環境 可以更改帳號密碼</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span></span><br><span class="line"><span class="comment">#UID=1000</span></span><br><span class="line"><span class="comment">#GID=1000</span></span><br><span class="line"><span class="comment">#CUSTOM_USER=username</span></span><br><span class="line"><span class="comment">#PASSWORD=securepassword</span></span><br></pre></td></tr></table></figure>
-<h2 id="docker-compose-啟動"><a href="#docker-compose-啟動" class="headerlink" title="docker compose 啟動"></a>docker compose 啟動</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
-<h2 id="腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間"><a href="#腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間" class="headerlink" title="腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )"></a>腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )</h2><ul>
-<li>wine (用來模擬window的環境)</li>
-<li>mone (.NET框架)</li>
-<li>python (在wine裡面安裝python)</li>
-<li>mt5 (在wine裡面安裝mt5)</li>
-<li>python packages (所需套件)</li>
-</ul>
-<h2 id="安裝完後-在瀏覽器輸入localhost-3000"><a href="#安裝完後-在瀏覽器輸入localhost-3000" class="headerlink" title="安裝完後 在瀏覽器輸入localhost:3000"></a>安裝完後 在瀏覽器輸入<a href="localhost:3000">localhost:3000</a></h2><p><img src="/images/20240129104101.png"></p>
-<h2 id="在自己的python上面安裝-mt5linux"><a href="#在自己的python上面安裝-mt5linux" class="headerlink" title="在自己的python上面安裝 mt5linux"></a>在自己的python上面安裝 mt5linux</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mt5linux==0.1.9</span><br></pre></td></tr></table></figure>
-<h2 id="測試連線"><a href="#測試連線" class="headerlink" title="測試連線"></a>測試連線</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mt5linux <span class="keyword">import</span> MetaTrader5</span><br><span class="line">mt5 = MetaTrader5(host=<span class="string">&#x27;localhost&#x27;</span>,port=<span class="number">8001</span>)</span><br><span class="line">mt5.initialize()</span><br><span class="line"><span class="built_in">print</span>(mt5.version())</span><br></pre></td></tr></table></figure>
-<h1 id="附上流程"><a href="#附上流程" class="headerlink" title="附上流程"></a>附上流程</h1><p><img src="/images/20240129102552.png"></p>
-<ul>
-<li>從瀏覽器訪問的時候是經過3000port 開啟 vnc 連到 mt5</li>
-<li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
-</ul>
-<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於Intelx86或amd64，如果是Mac M1晶片無法起動成功，參考<a href="/posts/20240130041500-3099daac.html" title="Python mt5 on macOS(M系列)">Python mt5 on macOS(M系列)</a>．</p>
-<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
-<li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
-<li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
-<li><a href="https://rpyc.readthedocs.io/en/latest/">rpyc</a></li>
-<li><a href="https://pypi.org/project/mt5linux/">mt5linux</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>python</category>
-      </categories>
-      <tags>
-        <tag>docker</tag>
-        <tag>MT5</tag>
-        <tag>linux</tag>
-        <tag>python</tag>
-        <tag>rpyc</tag>
-        <tag>vnc</tag>
-        <tag>wine</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Python mt5 on macOS(M系列)</title>
     <url>/posts/20240130041500-3099daac.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>接續之前<a href="/posts/20240126041500-7fb9c93d.html" title="Python mt5 on linux">Python mt5 on linux</a>已經可以在docker順利啟動mt5．前面這篇通常是部署在Server上，但是開發的時候又是拿Mac開發，決定要嘗試看看，現在要來在Mac M1 上面啟動，因為如果按造<a href="/posts/20240126041500-7fb9c93d.html" title="Python mt5 on linux">Python mt5 on linux</a>的話，會在docker起 vnc ，但好像沒有arm的版本，所以這次就不在docker上啟動了<br> <span id="more"></span></p>
@@ -998,11 +948,61 @@
       </categories>
       <tags>
         <tag>MT5</tag>
+        <tag>mac</tag>
         <tag>python</tag>
         <tag>rpyc</tag>
         <tag>vnc</tag>
         <tag>wine</tag>
-        <tag>mac</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python mt5 on linux</title>
+    <url>/posts/20240126041500-7fb9c93d.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>因為客戶有需求，所以需要用python去控制mt5，但大多伺服器大多都是linux，起一台window的費用比起一台linux貴的很多，所以想要在linux跑mt5，今天介紹一個一個 github 專案<a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></p>
+<p>如果是Mac M系列 請參考<a href="/posts/20240130041500-3099daac.html" title="Python mt5 on macOS(M系列)">Python mt5 on macOS(M系列)</a><br> <span id="more"></span></p>
+<h1 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h1><ul>
+<li>python3.9</li>
+<li>intelx86&#x2F;amd64  </li>
+<li>docker</li>
+</ul>
+<h1 id="開始吧"><a href="#開始吧" class="headerlink" title="開始吧"></a>開始吧</h1><h2 id="先把專案-clone下來"><a href="#先把專案-clone下來" class="headerlink" title="先把專案 clone下來"></a>先把專案 clone下來</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/gmag11/MetaTrader5-Docker-Image.git</span><br></pre></td></tr></table></figure>
+<h2 id="進入到資料夾內"><a href="#進入到資料夾內" class="headerlink" title="進入到資料夾內"></a>進入到資料夾內</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> MetaTrader5-Docker-Image</span><br></pre></td></tr></table></figure>
+<h2 id="設定環境-可以更改帳號密碼"><a href="#設定環境-可以更改帳號密碼" class="headerlink" title="設定環境 可以更改帳號密碼"></a>設定環境 可以更改帳號密碼</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cp</span> .env.example .<span class="built_in">env</span></span><br><span class="line"><span class="comment">#UID=1000</span></span><br><span class="line"><span class="comment">#GID=1000</span></span><br><span class="line"><span class="comment">#CUSTOM_USER=username</span></span><br><span class="line"><span class="comment">#PASSWORD=securepassword</span></span><br></pre></td></tr></table></figure>
+<h2 id="docker-compose-啟動"><a href="#docker-compose-啟動" class="headerlink" title="docker compose 啟動"></a>docker compose 啟動</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+<h2 id="腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間"><a href="#腳本會自動安裝下面的套件-根據設備能力不同時間也有所不同第一次啟動會花比較久時間" class="headerlink" title="腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )"></a>腳本會自動安裝下面的套件 (根據設備能力不同時間也有所不同第一次啟動會花比較久時間 )</h2><ul>
+<li>wine (用來模擬window的環境)</li>
+<li>mone (.NET框架)</li>
+<li>python (在wine裡面安裝python)</li>
+<li>mt5 (在wine裡面安裝mt5)</li>
+<li>python packages (所需套件)</li>
+</ul>
+<h2 id="安裝完後-在瀏覽器輸入localhost-3000"><a href="#安裝完後-在瀏覽器輸入localhost-3000" class="headerlink" title="安裝完後 在瀏覽器輸入localhost:3000"></a>安裝完後 在瀏覽器輸入<a href="localhost:3000">localhost:3000</a></h2><p><img src="/images/20240129104101.png"></p>
+<h2 id="在自己的python上面安裝-mt5linux"><a href="#在自己的python上面安裝-mt5linux" class="headerlink" title="在自己的python上面安裝 mt5linux"></a>在自己的python上面安裝 mt5linux</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">python -m pip install mt5linux==0.1.9</span><br></pre></td></tr></table></figure>
+<h2 id="測試連線"><a href="#測試連線" class="headerlink" title="測試連線"></a>測試連線</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> mt5linux <span class="keyword">import</span> MetaTrader5</span><br><span class="line">mt5 = MetaTrader5(host=<span class="string">&#x27;localhost&#x27;</span>,port=<span class="number">8001</span>)</span><br><span class="line">mt5.initialize()</span><br><span class="line"><span class="built_in">print</span>(mt5.version())</span><br></pre></td></tr></table></figure>
+<h1 id="附上流程"><a href="#附上流程" class="headerlink" title="附上流程"></a>附上流程</h1><p><img src="/images/20240129102552.png"></p>
+<ul>
+<li>從瀏覽器訪問的時候是經過3000port 開啟 vnc 連到 mt5</li>
+<li>從自己python 經過8001port 透過 rpyc 跟 wine 的 python 溝通</li>
+</ul>
+<h1 id="結論"><a href="#結論" class="headerlink" title="結論"></a>結論</h1><p>使用這個專案非常地輕鬆，設定好帳號密碼後只要將docker compose 拉起來，既不用污染環境也非常的快速，真的是非常好用，但是這適用於Intelx86或amd64，如果是Mac M1晶片無法起動成功，參考<a href="/posts/20240130041500-3099daac.html" title="Python mt5 on macOS(M系列)">Python mt5 on macOS(M系列)</a>．</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://github.com/gmag11/MetaTrader5-Docker-Image">MetaTrader5-Docker-Image</a></li>
+<li><a href="https://www.mql5.com/zh/docs/python_metatrader5">python_metatrader5</a></li>
+<li><a href="https://rpyc.readthedocs.io/en/latest/">rpyc</a></li>
+<li><a href="https://pypi.org/project/mt5linux/">mt5linux</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>python</category>
+      </categories>
+      <tags>
+        <tag>docker</tag>
+        <tag>MT5</tag>
+        <tag>python</tag>
+        <tag>rpyc</tag>
+        <tag>vnc</tag>
+        <tag>wine</tag>
+        <tag>linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1199,174 +1199,6 @@
 <hr>
 <h3 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a><strong>扩展</strong></h3><p>虽然 SDP 是一种标准化协议，但不同应用可能需要扩展一些属性。例如，WebRTC 定义了额外的 SDP 属性用于描述数据通道和 NAT 穿越技术。</p>
 <h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>SDP 就是規範描述多媒體通信的格式，使用key,value作為結構<br>只是單單的格式定義 不包含媒體傳輸</p>
-]]></content>
-      <tags>
-        <tag>WebRTC</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</title>
-    <url>/posts/20241223035000-d4e6d128.html</url>
-    <content><![CDATA[<p>STUN（Session Traversal Utilities for NAT，NAT 穿越會話工具）是一種網絡協議，用於協助用戶端通過 NAT（網絡地址轉換）和防火牆發現其<strong>公共 IP 地址和端口</strong>。STUN 的主要目的是幫助建立點對點連接，尤其是在使用 NAT 和防火牆的網絡環境中，例如即時通訊或視頻通話等應用。</p>
-<p>NAT 自己不会告诉服务器它是什么类型的，我们需要一套交互式策略检测对应的类型<br> <span id="more"></span></p>
-<p>RFC 3489<br><img src="/images/20241223104352.png"><br>此演算法在RFC 3489被提出，但在RFC 5389中被刪除。</p>
-<h3 id="STUN-的主要功能"><a href="#STUN-的主要功能" class="headerlink" title="STUN 的主要功能"></a><strong>STUN 的主要功能</strong></h3><ol>
-<li><strong>發現公共 IP 地址和端口</strong>： STUN 協議允許用戶端詢問 STUN 伺服器，用戶端的公共 IP 地址和伺服器看到的端口號是什麼。</li>
-<li><strong>檢測 NAT 類型</strong>： STUN 能夠幫助用戶端檢測 NAT 的類型（如全錐形 NAT、限制錐形 NAT、對稱 NAT 等），以便了解網絡條件。</li>
-<li><strong>協助 P2P 連接</strong>： 通過 STUN，兩個位於 NAT 後的用戶端可以交換公共地址，嘗試建立直接的點對點連接。</li>
-</ol>
-<h3 id="STUN-的工作原理"><a href="#STUN-的工作原理" class="headerlink" title="STUN 的工作原理"></a><strong>STUN 的工作原理</strong></h3><ol>
-<li><strong>用戶端請求</strong>： 用戶端向 STUN 伺服器發送一個包含其本地 IP 和端口的請求。</li>
-<li><strong>伺服器響應</strong>： STUN 伺服器收到請求後，根據其視角返回用戶端的公共 IP 地址和端口。</li>
-<li><strong>NAT 類型檢測</strong>： 通過改變請求的參數，例如更換來源地址、使用不同的伺服器，STUN 可以分析 NAT 的行為，判斷是哪種類型的 NAT。</li>
-</ol>
-<h3 id="STUN-協議的用途"><a href="#STUN-協議的用途" class="headerlink" title="STUN 協議的用途"></a><strong>STUN 協議的用途</strong></h3><ul>
-<li><strong>WebRTC 通信</strong>： 在 WebRTC 中，STUN 是一個關鍵技術，用於讓瀏覽器間建立直接連接。</li>
-<li><strong>VoIP 和視頻會議</strong>： 如 Skype、Zoom 等應用會利用 STUN 來協助穿越 NAT。</li>
-<li><strong>在線遊戲</strong>： 幫助遊戲客戶端在 NAT 後通信。</li>
-</ul>
-<h3 id="STUN-和其他-NAT-穿越技術"><a href="#STUN-和其他-NAT-穿越技術" class="headerlink" title="STUN 和其他 NAT 穿越技術"></a><strong>STUN 和其他 NAT 穿越技術</strong></h3><ol>
-<li><strong>STUN</strong>： 用於發現公共地址和協助直接通信。適用於全錐形 NAT 和部分限制錐形 NAT。</li>
-<li><strong>TURN（Traversal Using Relays around NAT）</strong>： 當直接連接不可行時（如對稱 NAT），TURN 允許數據通過中繼伺服器傳輸。</li>
-<li><strong>ICE（Interactive Connectivity Establishment）</strong>： 綜合使用 STUN 和 TURN 的技術，幫助選擇最佳的通信路徑。</li>
-</ol>
-<hr>
-<h3 id="STUN-的限制"><a href="#STUN-的限制" class="headerlink" title="STUN 的限制"></a><strong>STUN 的限制</strong></h3><ul>
-<li><strong>對稱 NAT 支持有限</strong>： 對於對稱 NAT，用戶端通常無法直接建立連接，需要配合 TURN 使用。</li>
-<li><strong>依賴 STUN 伺服器</strong>： 必須配置和維護可靠的 STUN 伺服器，才能確保其正常運行。</li>
-<li><strong>安全性考量</strong>： STUN 不加密數據，可能面臨中間人攻擊或地址偽造。</li>
-</ul>
-<h3 id="STUN-演算法的基本概念"><a href="#STUN-演算法的基本概念" class="headerlink" title="STUN 演算法的基本概念"></a><strong>STUN 演算法的基本概念</strong></h3><ol>
-<li><p><strong>NAT 類型檢測</strong>：</p>
-<ul>
-<li>判斷 NAT 的行為，包括地址映射和數據包過濾規則。</li>
-<li>確定 NAT 是「全錐形 NAT」、「限制錐形 NAT」、「端口限制錐形 NAT」還是「對稱 NAT」。</li>
-</ul>
-</li>
-<li><p><strong>穿越測試</strong>：</p>
-<ul>
-<li>利用多種測試組合檢測 NAT 穿越能力，確保應用程序可以建立有效的通信通道。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h3 id="STUN-的主要測試步驟"><a href="#STUN-的主要測試步驟" class="headerlink" title="STUN 的主要測試步驟"></a><strong>STUN 的主要測試步驟</strong></h3><p>STUN 使用以下步驟和測試模式來檢測 NAT 的類型和行為：</p>
-<h4 id="步驟-1-發送基本測試-Test-I"><a href="#步驟-1-發送基本測試-Test-I" class="headerlink" title="步驟 1: 發送基本測試 (Test I)"></a><strong>步驟 1: 發送基本測試 (Test I)</strong></h4><ol>
-<li><p><strong>過程</strong>：</p>
-<ul>
-<li>用戶端向 STUN 伺服器發送一個 Binding Request。</li>
-<li>該請求從用戶端的本地地址 <code>A</code> 發出，經過 NAT 之後，伺服器會看到轉換後的公共地址 <code>A&#39;</code>。</li>
-<li>伺服器返回一個 Binding Response，其中包含 <code>MAPPED-ADDRESS</code>。</li>
-</ul>
-</li>
-<li><p><strong>結果解讀</strong>：</p>
-<ul>
-<li>如果返回的 <code>MAPPED-ADDRESS</code> 與請求中的來源地址一致，表示沒有 NAT 或在同一局域網中。</li>
-<li>如果不同，則 NAT 存在，記錄公共地址。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h4 id="步驟-2-發送不同來源地址的測試-Test-II"><a href="#步驟-2-發送不同來源地址的測試-Test-II" class="headerlink" title="步驟 2: 發送不同來源地址的測試 (Test II)"></a><strong>步驟 2: 發送不同來源地址的測試 (Test II)</strong></h4><ol>
-<li><p><strong>過程</strong>：</p>
-<ul>
-<li>用戶端向伺服器發送第二個請求，改變來源端口或地址。</li>
-<li>這一測試用於檢測 NAT 是否會對來源地址改變的數據包進行映射更新。</li>
-</ul>
-</li>
-<li><p><strong>結果解讀</strong>：</p>
-<ul>
-<li>如果伺服器返回相同的地址，則 NAT 是錐形 NAT。</li>
-<li>如果伺服器返回的地址不同，則 NAT 是對稱 NAT。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h4 id="步驟-3-使用不同伺服器的測試-Test-III"><a href="#步驟-3-使用不同伺服器的測試-Test-III" class="headerlink" title="步驟 3: 使用不同伺服器的測試 (Test III)"></a><strong>步驟 3: 使用不同伺服器的測試 (Test III)</strong></h4><ol>
-<li><p><strong>過程</strong>：</p>
-<ul>
-<li>用戶端向另一個 STUN 伺服器發送請求（伺服器 B）。</li>
-<li>比較伺服器 A 和 B 返回的地址。</li>
-</ul>
-</li>
-<li><p><strong>結果解讀</strong>：</p>
-<ul>
-<li>如果伺服器 A 和 B 返回相同的公共地址，表示 NAT 為全錐形 NAT。</li>
-<li>如果返回的公共地址不同，表示 NAT 為對稱 NAT。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h4 id="步驟-4-開啟目標伺服器測試-Test-IV"><a href="#步驟-4-開啟目標伺服器測試-Test-IV" class="headerlink" title="步驟 4: 開啟目標伺服器測試 (Test IV)"></a><strong>步驟 4: 開啟目標伺服器測試 (Test IV)</strong></h4><ol>
-<li><p><strong>過程</strong>：</p>
-<ul>
-<li>用戶端向伺服器發送包含目標伺服器地址的請求。</li>
-<li>測試 NAT 是否允許數據包從特定外部地址進入。</li>
-</ul>
-</li>
-<li><p><strong>結果解讀</strong>：</p>
-<ul>
-<li>如果伺服器能響應，表示 NAT 為限制錐形 NAT。</li>
-<li>如果伺服器無法響應，則 NAT 是端口限制錐形 NAT。</li>
-</ul>
-</li>
-</ol>
-<hr>
-<h3 id="STUN-發現-NAT-類型的算法決策表"><a href="#STUN-發現-NAT-類型的算法決策表" class="headerlink" title="STUN 發現 NAT 類型的算法決策表"></a><strong>STUN 發現 NAT 類型的算法決策表</strong></h3><p>下表簡要說明了 STUN 在不同步驟中的行為和決策：</p>
-<table>
-<thead>
-<tr>
-<th><strong>測試步驟</strong></th>
-<th><strong>返回地址是否一致</strong></th>
-<th><strong>NAT 類型</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>Test I</td>
-<td>是</td>
-<td>無 NAT 或防火牆</td>
-</tr>
-<tr>
-<td></td>
-<td>否</td>
-<td>NAT 存在</td>
-</tr>
-<tr>
-<td>Test II</td>
-<td>是</td>
-<td>錐形 NAT</td>
-</tr>
-<tr>
-<td></td>
-<td>否</td>
-<td>對稱 NAT</td>
-</tr>
-<tr>
-<td>Test III</td>
-<td>是</td>
-<td>全錐形 NAT</td>
-</tr>
-<tr>
-<td></td>
-<td>否</td>
-<td>限制錐形或端口限制錐形 NAT</td>
-</tr>
-<tr>
-<td>Test IV</td>
-<td>是</td>
-<td>限制錐形 NAT</td>
-</tr>
-<tr>
-<td></td>
-<td>否</td>
-<td>端口限制錐形 NAT</td>
-</tr>
-</tbody></table>
-<hr>
-<h3 id="關於防火牆檢測"><a href="#關於防火牆檢測" class="headerlink" title="關於防火牆檢測"></a><strong>關於防火牆檢測</strong></h3><ul>
-<li>防火牆的檢測基於數據包是否能到達伺服器。</li>
-<li>如果所有測試數據包都無法響應，可能是防火牆完全阻止了 UDP 流量。</li>
-</ul>
 ]]></content>
       <tags>
         <tag>WebRTC</tag>
@@ -1770,6 +1602,174 @@
       </tags>
   </entry>
   <entry>
+    <title>STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</title>
+    <url>/posts/20241223035000-d4e6d128.html</url>
+    <content><![CDATA[<p>STUN（Session Traversal Utilities for NAT，NAT 穿越會話工具）是一種網絡協議，用於協助用戶端通過 NAT（網絡地址轉換）和防火牆發現其<strong>公共 IP 地址和端口</strong>。STUN 的主要目的是幫助建立點對點連接，尤其是在使用 NAT 和防火牆的網絡環境中，例如即時通訊或視頻通話等應用。</p>
+<p>NAT 自己不会告诉服务器它是什么类型的，我们需要一套交互式策略检测对应的类型<br> <span id="more"></span></p>
+<p>RFC 3489<br><img src="/images/20241223104352.png"><br>此演算法在RFC 3489被提出，但在RFC 5389中被刪除。</p>
+<h3 id="STUN-的主要功能"><a href="#STUN-的主要功能" class="headerlink" title="STUN 的主要功能"></a><strong>STUN 的主要功能</strong></h3><ol>
+<li><strong>發現公共 IP 地址和端口</strong>： STUN 協議允許用戶端詢問 STUN 伺服器，用戶端的公共 IP 地址和伺服器看到的端口號是什麼。</li>
+<li><strong>檢測 NAT 類型</strong>： STUN 能夠幫助用戶端檢測 NAT 的類型（如全錐形 NAT、限制錐形 NAT、對稱 NAT 等），以便了解網絡條件。</li>
+<li><strong>協助 P2P 連接</strong>： 通過 STUN，兩個位於 NAT 後的用戶端可以交換公共地址，嘗試建立直接的點對點連接。</li>
+</ol>
+<h3 id="STUN-的工作原理"><a href="#STUN-的工作原理" class="headerlink" title="STUN 的工作原理"></a><strong>STUN 的工作原理</strong></h3><ol>
+<li><strong>用戶端請求</strong>： 用戶端向 STUN 伺服器發送一個包含其本地 IP 和端口的請求。</li>
+<li><strong>伺服器響應</strong>： STUN 伺服器收到請求後，根據其視角返回用戶端的公共 IP 地址和端口。</li>
+<li><strong>NAT 類型檢測</strong>： 通過改變請求的參數，例如更換來源地址、使用不同的伺服器，STUN 可以分析 NAT 的行為，判斷是哪種類型的 NAT。</li>
+</ol>
+<h3 id="STUN-協議的用途"><a href="#STUN-協議的用途" class="headerlink" title="STUN 協議的用途"></a><strong>STUN 協議的用途</strong></h3><ul>
+<li><strong>WebRTC 通信</strong>： 在 WebRTC 中，STUN 是一個關鍵技術，用於讓瀏覽器間建立直接連接。</li>
+<li><strong>VoIP 和視頻會議</strong>： 如 Skype、Zoom 等應用會利用 STUN 來協助穿越 NAT。</li>
+<li><strong>在線遊戲</strong>： 幫助遊戲客戶端在 NAT 後通信。</li>
+</ul>
+<h3 id="STUN-和其他-NAT-穿越技術"><a href="#STUN-和其他-NAT-穿越技術" class="headerlink" title="STUN 和其他 NAT 穿越技術"></a><strong>STUN 和其他 NAT 穿越技術</strong></h3><ol>
+<li><strong>STUN</strong>： 用於發現公共地址和協助直接通信。適用於全錐形 NAT 和部分限制錐形 NAT。</li>
+<li><strong>TURN（Traversal Using Relays around NAT）</strong>： 當直接連接不可行時（如對稱 NAT），TURN 允許數據通過中繼伺服器傳輸。</li>
+<li><strong>ICE（Interactive Connectivity Establishment）</strong>： 綜合使用 STUN 和 TURN 的技術，幫助選擇最佳的通信路徑。</li>
+</ol>
+<hr>
+<h3 id="STUN-的限制"><a href="#STUN-的限制" class="headerlink" title="STUN 的限制"></a><strong>STUN 的限制</strong></h3><ul>
+<li><strong>對稱 NAT 支持有限</strong>： 對於對稱 NAT，用戶端通常無法直接建立連接，需要配合 TURN 使用。</li>
+<li><strong>依賴 STUN 伺服器</strong>： 必須配置和維護可靠的 STUN 伺服器，才能確保其正常運行。</li>
+<li><strong>安全性考量</strong>： STUN 不加密數據，可能面臨中間人攻擊或地址偽造。</li>
+</ul>
+<h3 id="STUN-演算法的基本概念"><a href="#STUN-演算法的基本概念" class="headerlink" title="STUN 演算法的基本概念"></a><strong>STUN 演算法的基本概念</strong></h3><ol>
+<li><p><strong>NAT 類型檢測</strong>：</p>
+<ul>
+<li>判斷 NAT 的行為，包括地址映射和數據包過濾規則。</li>
+<li>確定 NAT 是「全錐形 NAT」、「限制錐形 NAT」、「端口限制錐形 NAT」還是「對稱 NAT」。</li>
+</ul>
+</li>
+<li><p><strong>穿越測試</strong>：</p>
+<ul>
+<li>利用多種測試組合檢測 NAT 穿越能力，確保應用程序可以建立有效的通信通道。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="STUN-的主要測試步驟"><a href="#STUN-的主要測試步驟" class="headerlink" title="STUN 的主要測試步驟"></a><strong>STUN 的主要測試步驟</strong></h3><p>STUN 使用以下步驟和測試模式來檢測 NAT 的類型和行為：</p>
+<h4 id="步驟-1-發送基本測試-Test-I"><a href="#步驟-1-發送基本測試-Test-I" class="headerlink" title="步驟 1: 發送基本測試 (Test I)"></a><strong>步驟 1: 發送基本測試 (Test I)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向 STUN 伺服器發送一個 Binding Request。</li>
+<li>該請求從用戶端的本地地址 <code>A</code> 發出，經過 NAT 之後，伺服器會看到轉換後的公共地址 <code>A&#39;</code>。</li>
+<li>伺服器返回一個 Binding Response，其中包含 <code>MAPPED-ADDRESS</code>。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果返回的 <code>MAPPED-ADDRESS</code> 與請求中的來源地址一致，表示沒有 NAT 或在同一局域網中。</li>
+<li>如果不同，則 NAT 存在，記錄公共地址。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-2-發送不同來源地址的測試-Test-II"><a href="#步驟-2-發送不同來源地址的測試-Test-II" class="headerlink" title="步驟 2: 發送不同來源地址的測試 (Test II)"></a><strong>步驟 2: 發送不同來源地址的測試 (Test II)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向伺服器發送第二個請求，改變來源端口或地址。</li>
+<li>這一測試用於檢測 NAT 是否會對來源地址改變的數據包進行映射更新。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器返回相同的地址，則 NAT 是錐形 NAT。</li>
+<li>如果伺服器返回的地址不同，則 NAT 是對稱 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-3-使用不同伺服器的測試-Test-III"><a href="#步驟-3-使用不同伺服器的測試-Test-III" class="headerlink" title="步驟 3: 使用不同伺服器的測試 (Test III)"></a><strong>步驟 3: 使用不同伺服器的測試 (Test III)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向另一個 STUN 伺服器發送請求（伺服器 B）。</li>
+<li>比較伺服器 A 和 B 返回的地址。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器 A 和 B 返回相同的公共地址，表示 NAT 為全錐形 NAT。</li>
+<li>如果返回的公共地址不同，表示 NAT 為對稱 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h4 id="步驟-4-開啟目標伺服器測試-Test-IV"><a href="#步驟-4-開啟目標伺服器測試-Test-IV" class="headerlink" title="步驟 4: 開啟目標伺服器測試 (Test IV)"></a><strong>步驟 4: 開啟目標伺服器測試 (Test IV)</strong></h4><ol>
+<li><p><strong>過程</strong>：</p>
+<ul>
+<li>用戶端向伺服器發送包含目標伺服器地址的請求。</li>
+<li>測試 NAT 是否允許數據包從特定外部地址進入。</li>
+</ul>
+</li>
+<li><p><strong>結果解讀</strong>：</p>
+<ul>
+<li>如果伺服器能響應，表示 NAT 為限制錐形 NAT。</li>
+<li>如果伺服器無法響應，則 NAT 是端口限制錐形 NAT。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="STUN-發現-NAT-類型的算法決策表"><a href="#STUN-發現-NAT-類型的算法決策表" class="headerlink" title="STUN 發現 NAT 類型的算法決策表"></a><strong>STUN 發現 NAT 類型的算法決策表</strong></h3><p>下表簡要說明了 STUN 在不同步驟中的行為和決策：</p>
+<table>
+<thead>
+<tr>
+<th><strong>測試步驟</strong></th>
+<th><strong>返回地址是否一致</strong></th>
+<th><strong>NAT 類型</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Test I</td>
+<td>是</td>
+<td>無 NAT 或防火牆</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>NAT 存在</td>
+</tr>
+<tr>
+<td>Test II</td>
+<td>是</td>
+<td>錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>對稱 NAT</td>
+</tr>
+<tr>
+<td>Test III</td>
+<td>是</td>
+<td>全錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>限制錐形或端口限制錐形 NAT</td>
+</tr>
+<tr>
+<td>Test IV</td>
+<td>是</td>
+<td>限制錐形 NAT</td>
+</tr>
+<tr>
+<td></td>
+<td>否</td>
+<td>端口限制錐形 NAT</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="關於防火牆檢測"><a href="#關於防火牆檢測" class="headerlink" title="關於防火牆檢測"></a><strong>關於防火牆檢測</strong></h3><ul>
+<li>防火牆的檢測基於數據包是否能到達伺服器。</li>
+<li>如果所有測試數據包都無法響應，可能是防火牆完全阻止了 UDP 流量。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Webrtc視訊流</title>
     <url>/posts/20241226081700-efd237b7.html</url>
     <content><![CDATA[<h1 id="開啟相機主要類別-以安卓為例"><a href="#開啟相機主要類別-以安卓為例" class="headerlink" title="開啟相機主要類別(以安卓為例)"></a>開啟相機主要類別(以安卓為例)</h1><p><img src="/images/20241226150748.png"></p>
@@ -2080,6 +2080,31 @@
       </tags>
   </entry>
   <entry>
+    <title>lru_cache 不要亂用</title>
+    <url>/posts/20250219081500-6a4c0b66.html</url>
+    <content><![CDATA[<p> 今天發現跑的一支python程式裡面，我的記憶體不斷上漲，<br> 使用好幾套監測套件</p>
+<ul>
+<li>tracemalloc</li>
+<li>objgraph<br> 找來找去都找不到哪裡記憶體增加<br> 已知大概範圍，但不管如何 <code>del</code>，<code>gc</code> 也呼叫了記憶體還是蹭蹭蹭往上漲，<br> 我以為是我這邊的問題，因為我大部分都是互叫別人的套件，徹底檢查我的程式碼也沒有看到哪裡有洩漏可能，我這支程式是去Influxdb拿資料，還一步步的去追到套件的程式碼也沒看出哪裡有問題，甚至印出所有物件，看是否有循環引用的問題，分析半天也沒看出來 <span id="more"></span></li>
+</ul>
+<p>最後去查套件的每一行code，無意間在<a href="https://github.com/Javidjms/influxable/blob/develop/influxable/db/query.py">query.py</a>瞟到 cache ，@lru_cache(maxsize&#x3D;None)， 查了一下<a href="https://docs.python.org/zh-tw/3/library/functools.html#functools.lru_cache">官方文檔</a>這樣寫記憶體無線增長阿!<br>終於找出真正原因</p>
+<p>但這個寫在裝飾器上沒辦法帶參數些改，最後好險可以透過繼承的手法覆蓋原本的方法，要不然我真的要換套件了，顆顆!!</p>
+<p>我開了一個issus <a href="https://github.com/Javidjms/influxable/issues/31">Memory may grow indefinitely</a>再看開發者如何回復</p>
+<h1 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h1><ul>
+<li><a href="https://medium.com/@jepersyne/python-functools-lru-cache-d5cb632df710">Python｜functools｜lru_cache</a></li>
+<li><a href="https://docs.python.org/zh-tw/3/library/functools.html#functools.lru_cache">官方文檔</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>python</tag>
+        <tag>cache</tag>
+        <tag>memory_leak</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python進度條tqdm</title>
     <url>/posts/20240124061700-2ff23ae2.html</url>
     <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>在查網站時，無意間逛到<a href="https://stackoverflow.com/questions/276052/how-to-get-current-cpu-and-ram-usage-in-python/69511430#69511430">stackoverflow</a>，有人用python的tqdm顯示記憶體和cpu的使用量，看起來有點酷炫，就來複製貼上玩一下吧，也可以用在python需要耗時的程式上，也不用一直print log看起來非常亂。<br> <span id="more"></span></p>
@@ -2295,15 +2320,6 @@
       </tags>
   </entry>
   <entry>
-    <title>搭建webrtc服务器</title>
-    <url>/posts/20241223100200-2469950e.html</url>
-    <content><![CDATA[<p><a href="https://developer.aliyun.com/article/877670">如何搭建一个简单的webrtc服务器</a></p>
-]]></content>
-      <tags>
-        <tag>WebRTC</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>實作 Nginx 負載平衡 load balance</title>
     <url>/posts/20230417154300-ab2a7258.html</url>
     <content><![CDATA[<h2 id="三種-load-balancing-方法"><a href="#三種-load-balancing-方法" class="headerlink" title="三種 load balancing 方法"></a>三種 load balancing 方法</h2><ol>
@@ -2324,6 +2340,15 @@
       <tags>
         <tag>load_balance</tag>
         <tag>nginx</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>搭建webrtc服务器</title>
+    <url>/posts/20241223100200-2469950e.html</url>
+    <content><![CDATA[<p><a href="https://developer.aliyun.com/article/877670">如何搭建一个简单的webrtc服务器</a></p>
+]]></content>
+      <tags>
+        <tag>WebRTC</tag>
       </tags>
   </entry>
   <entry>

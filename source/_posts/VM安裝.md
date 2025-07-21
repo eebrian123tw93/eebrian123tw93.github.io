@@ -6,7 +6,7 @@ tags:
   - ssh-server
   - vm
 date: '2023-11-29 18:16:00'
-updated: '2025-02-19 08:51:01'
+updated: '2025-07-21 01:49:06'
 categories:
   - linux
 description: ''
@@ -137,6 +137,9 @@ source ~/.zshrc
 
 git clone --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autocomplete
 plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete
+
+git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/
+plugins=(git git-flow-completion) plugin添加git-flow-completion
 ```
 ### 參考
 - [如何在Linux作業系統上使用 Z Shell (Zsh)？](https://magiclen.org/zsh/)

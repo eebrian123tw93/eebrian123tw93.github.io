@@ -4,9 +4,9 @@ tags:
   - Nessus
   - chatgpt
 categories:
-  - web
+  - 資安
 date: '2025-02-18 12:38:00'
-updated: '2025-02-19 08:51:03'
+updated: '2025-07-21 01:49:07'
 description: ''
 abbrlink: 8d2c5c93
 keywords:

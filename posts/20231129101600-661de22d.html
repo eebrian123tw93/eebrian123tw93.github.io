@@ -43,7 +43,7 @@
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231129160659.png">
 <meta property="og:image" content="http://eebrian123tw93.github.io/images/20231129160740.png">
 <meta property="article:published_time" content="2023-11-29T10:16:00.000Z">
-<meta property="article:modified_time" content="2025-02-19T00:51:01.000Z">
+<meta property="article:modified_time" content="2025-07-20T17:49:06.000Z">
 <meta property="article:author" content="BrianLu">
 <meta property="article:tag" content="VirtualBox">
 <meta property="article:tag" content="samba">
@@ -187,18 +187,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">46</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">67</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -275,7 +275,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:01" itemprop="dateModified" datetime="2025-02-19T08:51:01+08:00">2025-02-19</time>
+      <time title="Modified: 2025-07-21 01:49:06" itemprop="dateModified" datetime="2025-07-21T01:49:06+08:00">2025-07-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -324,7 +324,7 @@
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
 </ul>
-<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autocomplete</span><br><span class="line">plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete</span><br></pre></td></tr></table></figure>
+<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autocomplete</span><br><span class="line">plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/</span><br><span class="line">plugins=(git git-flow-completion) plugin添加git-flow-completion</span><br></pre></td></tr></table></figure>
 <h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
 <li><a target="_blank" rel="external nofollow noopener noreferrer" href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>

@@ -5,7 +5,7 @@ tags:
 categories:
   - 軟體工程
 date: '2025-07-18 12:34:00'
-updated: '2025-07-21 02:03:23'
+updated: '2025-07-23 01:12:47'
 description: ''
 keywords:
   - git
@@ -43,7 +43,7 @@ git flow hotfix start hotfix-1.0.1
 git flow hotfix finish hotfix-1.0.1
 
 #git-flow-complete
-git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/
+git clone https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion
 plugins=(git git-flow-completion) plugin添加git-flow-completion
 ```
 

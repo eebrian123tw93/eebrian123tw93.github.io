@@ -1677,13 +1677,14 @@
 <li><a href="https://www.ewdna.com/2012/06/ubuntu-ssh-server.html">Ubuntu 安裝與設定 ssh server</a></li>
 <li><a href="https://askubuntu.com/questions/171521/what-is-the-password-for-ssh-rootlocalhost">What is the password for <code>ssh root@localhost</code>?</a></li>
 </ul>
-<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autocomplete</span><br><span class="line">plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/</span><br><span class="line">plugins=(git git-flow-completion) plugin添加git-flow-completion</span><br></pre></td></tr></table></figure>
+<h2 id="zsh-oh-my-zsh"><a href="#zsh-oh-my-zsh" class="headerlink" title="zsh + oh my zsh"></a>zsh + oh my zsh</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">apt install zsh -y</span><br><span class="line">sudo sh -c <span class="string">&quot;echo <span class="subst">$(which zsh)</span> &gt;&gt; /etc/shells&quot;</span></span><br><span class="line">chsh -s /bin/zsh</span><br><span class="line">apt install git curl -y</span><br><span class="line"></span><br><span class="line"><span class="comment">#oh my zsh</span></span><br><span class="line">curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | sh -s</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-autosuggestions</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-autosuggestions <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autosuggestions</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-autosuggestions) plugin添加zsh-autosuggestions</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line"><span class="comment"># plugin zsh-syntax-highlighting</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/zsh-users/zsh-syntax-highlighting.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-syntax-highlighting</span><br><span class="line"></span><br><span class="line">vim ~/.zshrc</span><br><span class="line"><span class="comment"># plugins=(git zsh-syntax-highlighting) plugin添加zsh-syntax-highlighting</span></span><br><span class="line"><span class="built_in">source</span> ~/.zshrc</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> --depth 1 -- https://github.com/marlonrichert/zsh-autocomplete.git <span class="variable">$&#123;ZSH_CUSTOM:-~/.oh-my-zsh/custom&#125;</span>/plugins/zsh-autocomplete</span><br><span class="line">plugins=(git zsh-autocomplete) plugin添加zsh-autocomplete</span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion</span><br><span class="line">plugins=(git git-flow-completion) plugin添加git-flow-completion</span><br></pre></td></tr></table></figure>
 <h3 id="參考-5"><a href="#參考-5" class="headerlink" title="參考"></a>參考</h3><ul>
 <li><a href="https://magiclen.org/zsh/">如何在Linux作業系統上使用 Z Shell (Zsh)？</a></li>
 <li><a href="https://www.jianshu.com/p/43c1b6e40c69">zsh 命令自动补全插件 zsh-autosuggestions 安装和配置</a></li>
 </ul>
 <p><code>apt-get iputils-ping net-tools traceroute vim</code> </p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>]]></content>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;&#123;&quot;</span>bip<span class="string">&quot;:&quot;</span>172.15.0.1/16<span class="string">&quot;&#125;&quot;</span> &gt; /etc/docker/daemon.json</span><br><span class="line">systemctl restart docker.service</span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>linux</category>
       </categories>
@@ -2048,22 +2049,6 @@
       </tags>
   </entry>
   <entry>
-    <title>git@github.com Permission denied (publickey)</title>
-    <url>/posts/20230505084825-9174ad3f.html</url>
-    <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>如果沒有產生過公鑰，會產下面錯誤</p>
-<blockquote>
-<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
-</blockquote>
-<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
-
-<p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
-]]></content>
-  </entry>
-  <entry>
     <title>git flow</title>
     <url>/posts/20250718043400-83d41642.html</url>
     <content><![CDATA[<h2 id="🔧-什麼是-Git-Flow？"><a href="#🔧-什麼是-Git-Flow？" class="headerlink" title="🔧 什麼是 Git Flow？"></a>🔧 什麼是 Git Flow？</h2><p>Git Flow 是一種 Git 的分支管理模型，用來組織開發流程。它主要有以下幾種分支類型：</p>
@@ -2099,7 +2084,7 @@
 <td></td>
 </tr>
 </tbody></table>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#macosx</span></span><br><span class="line">brew install git-flow-avh</span><br><span class="line"><span class="comment">#linux</span></span><br><span class="line">sudo apt-get install git-flow</span><br><span class="line"></span><br><span class="line">git flow init</span><br><span class="line"></span><br><span class="line">git flow feature start my-feature</span><br><span class="line">git flow feature finish my-feature</span><br><span class="line"></span><br><span class="line">git flow release start 1.0.0</span><br><span class="line">git flow release finish 1.0.0</span><br><span class="line">git tag</span><br><span class="line">git push origin main develop --tags</span><br><span class="line"></span><br><span class="line">git flow hotfix start hotfix-1.0.1</span><br><span class="line">git flow hotfix finish hotfix-1.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment">#git-flow-complete</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/</span><br><span class="line">plugins=(git git-flow-completion) plugin添加git-flow-completion</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#macosx</span></span><br><span class="line">brew install git-flow-avh</span><br><span class="line"><span class="comment">#linux</span></span><br><span class="line">sudo apt-get install git-flow</span><br><span class="line"></span><br><span class="line">git flow init</span><br><span class="line"></span><br><span class="line">git flow feature start my-feature</span><br><span class="line">git flow feature finish my-feature</span><br><span class="line"></span><br><span class="line">git flow release start 1.0.0</span><br><span class="line">git flow release finish 1.0.0</span><br><span class="line">git tag</span><br><span class="line">git push origin main develop --tags</span><br><span class="line"></span><br><span class="line">git flow hotfix start hotfix-1.0.1</span><br><span class="line">git flow hotfix finish hotfix-1.0.1</span><br><span class="line"></span><br><span class="line"><span class="comment">#git-flow-complete</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/bobthecow/git-flow-completion ~/.oh-my-zsh/custom/plugins/git-flow-completion</span><br><span class="line">plugins=(git git-flow-completion) plugin添加git-flow-completion</span><br></pre></td></tr></table></figure>
 
 <h2 id="💡-補充：Git-Flow-中-MR-的用法建議"><a href="#💡-補充：Git-Flow-中-MR-的用法建議" class="headerlink" title="💡 補充：Git Flow 中 MR 的用法建議"></a>💡 補充：Git Flow 中 MR 的用法建議</h2><table>
 <thead>
@@ -2158,6 +2143,22 @@
       <tags>
         <tag>git</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>git@github.com Permission denied (publickey)</title>
+    <url>/posts/20230505084825-9174ad3f.html</url>
+    <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>如果沒有產生過公鑰，會產下面錯誤</p>
+<blockquote>
+<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
+</blockquote>
+<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
+]]></content>
   </entry>
   <entry>
     <title>html隱藏元素的方法</title>
@@ -2280,34 +2281,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>使用WebCodecs API對H265解碼</title>
-    <url>/posts/20240125024300-49fdb147.html</url>
-    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，現在處理H265格式，這裡的只是將程式碼有一點小改動</p>
-<h1 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;hev1.1.6.L123.B0&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
-<p>這裡的不同的是  H264 和 H265 使用的 codec 不同</p>
-<blockquote>
-<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> <span id="more"></span><br>檢查<code>config</code> 是否支援</p>
-</blockquote>
-<p>H265目前在chrome上只支援硬解，可以參考底下的連結看看硬體是否支援，<br>如果硬體不行也可以下載支援H265軟硬解的 Chromium 試試看<br>附上採坑日常 <a href="/posts/20240123163300-3f5d67a6.html" title="20240123小日常">20240123小日常</a></p>
-<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
-<li><a href="https://github.com/StaZhu/enable-chromium-hevc-hardware-decoding">enable-chromium-hevc-hardware-decoding</a></li>
-<li><a href="https://blog.csdn.net/Dontla/article/details/132752490?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-132752490-blog-135105844.235%5Ev40%5Epc_relevant_anti_vip&spm=1001.2101.3001.4242.2&utm_relevant_index=4">解决chrome浏览器不能播放H265….）DXVA Checker、GPU-Z</a></li>
-<li><a href="https://codepen.io/danm8675123/pen/abNavqG">HEVC Video Test</a></li>
-<li><a href="https://bluesky-soft.com/en/DXVAChecker.html">DXVAChecker</a></li>
-</ul>
-<h2 id="將-H265NALU轉換成EncodedVideoChunk"><a href="#將-H265NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H265NALU轉換成EncodedVideoChunk"></a>將 H265NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> === <span class="number">19</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
-<p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code> (使用NALU的unit_type)<br>這裡的不同的是 NALU的 unit_type H264 和 H265 代表的不一樣，算出unit_type的方式也有所不同，<br>大家要非常的小心</p>
-<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>H265 和 H264 使用 WebCodecs 的流程大致上沒有太大的區別，需要注意的是H265對於硬體的要求比較高，當今天硬體不支援時，該如何判斷，該如何處理，還有如何解析出H264 H265 unit_type，這也需要工程師閱讀資料得知了- 可以參考<a href="https://www.twblogs.net/a/5c6d2817bd9eee5c86dcca4a">HEVC&#x2F;H265幀類型判斷及NALU TYPE介紹</a></p>
-]]></content>
-      <categories>
-        <category>web</category>
-      </categories>
-      <tags>
-        <tag>H265</tag>
-        <tag>WebCodecsAPI</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>使用WebCodecs API對H264解碼</title>
     <url>/posts/20240122021600-ef8abaf3.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p>WebCodecs API 是可以讓開發者直接使用硬體資源，拿來處理影片或聲音，在還沒個出來之前大多的實作方法是用 webassembly 或是 原生 JavaScript 處理，這些方法需要多加載另外的資源，而且也無法使用到像是GPU的資源，使得效率低。</p>
@@ -2342,6 +2315,34 @@
       </categories>
       <tags>
         <tag>H264</tag>
+        <tag>WebCodecsAPI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>使用WebCodecs API對H265解碼</title>
+    <url>/posts/20240125024300-49fdb147.html</url>
+    <content><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>這邊接續<a href="/posts/20240122021600-ef8abaf3.html" title="使用WebCodecs API對H264解碼">使用WebCodecs API對H264解碼</a>，現在處理H265格式，這裡的只是將程式碼有一點小改動</p>
+<h1 id="差異"><a href="#差異" class="headerlink" title="差異"></a>差異</h1><h2 id="建立-VideoDecoder"><a href="#建立-VideoDecoder" class="headerlink" title="建立 VideoDecoder"></a>建立 VideoDecoder</h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">handleFrame</span>(<span class="params">frame</span>) &#123;</span><br><span class="line">	<span class="comment">// render by canvas</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">	<span class="attr">output</span>: handleFrame,</span><br><span class="line">	<span class="attr">error</span>: <span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">	  <span class="variable language_">console</span>.<span class="title function_">log</span>(e.<span class="property">message</span>);</span><br><span class="line">	&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> config = &#123;</span><br><span class="line">	<span class="attr">codec</span>: <span class="string">&quot;hev1.1.6.L123.B0&quot;</span>,</span><br><span class="line">	<span class="attr">codedWidth</span>: <span class="number">1920</span>,</span><br><span class="line">	<span class="attr">codedHeight</span>: <span class="number">1080</span>,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> decoder = <span class="keyword">new</span> <span class="title class_">VideoDecoder</span>(init);</span><br><span class="line">decoder.<span class="title function_">configure</span>(config);</span><br></pre></td></tr></table></figure>
+<p>這裡的不同的是  H264 和 H265 使用的 codec 不同</p>
+<blockquote>
+<p>使用 <code>await VideoDecoder.isConfigSupported(config)</code><br> <span id="more"></span><br>檢查<code>config</code> 是否支援</p>
+</blockquote>
+<p>H265目前在chrome上只支援硬解，可以參考底下的連結看看硬體是否支援，<br>如果硬體不行也可以下載支援H265軟硬解的 Chromium 試試看<br>附上採坑日常 <a href="/posts/20240123163300-3f5d67a6.html" title="20240123小日常">20240123小日常</a></p>
+<h2 id="參考"><a href="#參考" class="headerlink" title="參考"></a>參考</h2><ul>
+<li><a href="https://github.com/StaZhu/enable-chromium-hevc-hardware-decoding">enable-chromium-hevc-hardware-decoding</a></li>
+<li><a href="https://blog.csdn.net/Dontla/article/details/132752490?utm_medium=distribute.pc_relevant.none-task-blog-2~default~baidujs_baidulandingword~default-1-132752490-blog-135105844.235%5Ev40%5Epc_relevant_anti_vip&spm=1001.2101.3001.4242.2&utm_relevant_index=4">解决chrome浏览器不能播放H265….）DXVA Checker、GPU-Z</a></li>
+<li><a href="https://codepen.io/danm8675123/pen/abNavqG">HEVC Video Test</a></li>
+<li><a href="https://bluesky-soft.com/en/DXVAChecker.html">DXVAChecker</a></li>
+</ul>
+<h2 id="將-H265NALU轉換成EncodedVideoChunk"><a href="#將-H265NALU轉換成EncodedVideoChunk" class="headerlink" title="將 H265NALU轉換成EncodedVideoChunk"></a>將 H265NALU轉換成<code>EncodedVideoChunk</code></h2><figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> init = &#123;</span><br><span class="line">  <span class="attr">type</span>: unit.<span class="property">type</span> === <span class="number">19</span> ? <span class="string">&#x27;key&#x27;</span> : <span class="string">&#x27;delta&#x27;</span>,</span><br><span class="line">  <span class="attr">data</span>: h26XBuffer,</span><br><span class="line">  <span class="attr">timestamp</span>: timestamp,</span><br><span class="line">&#125;;</span><br><span class="line">chunk = <span class="keyword">new</span> <span class="title class_">EncodedVideoChunk</span>(init);</span><br><span class="line">decoder.<span class="title function_">decode</span>(chunk);</span><br></pre></td></tr></table></figure>
+<p><code>EncodedVideoChunk</code> 初始化要分辨這一幀是 <code>key</code> 或 <code>delta</code> (使用NALU的unit_type)<br>這裡的不同的是 NALU的 unit_type H264 和 H265 代表的不一樣，算出unit_type的方式也有所不同，<br>大家要非常的小心</p>
+<h1 id="總結"><a href="#總結" class="headerlink" title="總結"></a>總結</h1><p>H265 和 H264 使用 WebCodecs 的流程大致上沒有太大的區別，需要注意的是H265對於硬體的要求比較高，當今天硬體不支援時，該如何判斷，該如何處理，還有如何解析出H264 H265 unit_type，這也需要工程師閱讀資料得知了- 可以參考<a href="https://www.twblogs.net/a/5c6d2817bd9eee5c86dcca4a">HEVC&#x2F;H265幀類型判斷及NALU TYPE介紹</a></p>
+]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>H265</tag>
         <tag>WebCodecsAPI</tag>
       </tags>
   </entry>

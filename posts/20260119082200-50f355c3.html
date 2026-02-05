@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="今天在工作時又遇到一個蠻棘手的問題。 在和其他家廠商串接 NVR 的時候，RTSPS 一直怎麼都串不起來。第一個直覺當然是「抓封包來比對」，但問題來了：它是 RTSP over TLS，整個連線流程都是加密的，導致我根本看不到實際的 RTSP 封包內容。 一開始有查到網路上的作法，是用 Wireshark 解 HTTPS &#x2F; TLS 的方式：透過設定 SSLKEYLOGFILE 環境變數">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20260119小日常">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20260119082200-50f355c3.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="今天在工作時又遇到一個蠻棘手的問題。 在和其他家廠商串接 NVR 的時候，RTSPS 一直怎麼都串不起來。第一個直覺當然是「抓封包來比對」，但問題來了：它是 RTSP over TLS，整個連線流程都是加密的，導致我根本看不到實際的 RTSP 封包內容。 一開始有查到網路上的作法，是用 Wireshark 解 HTTPS &#x2F; TLS 的方式：透過設定 SSLKEYLOGFILE 環境變數">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20260126154857.png">
+<meta property="article:published_time" content="2026-01-19T08:22:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T21:46:52.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="rtsp">
+<meta property="article:tag" content="https">
+<meta property="article:tag" content="rtsps">
+<meta property="article:tag" content="tls">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20260126154857.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20260119082200-50f355c3.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20260119082200-50f355c3.html","path":"posts/20260119082200-50f355c3.html","title":"20260119小日常"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>20260119小日常 | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <meta name="keywords" content="https,rtsp,rtsps,tls,Brian,Notes,engineer,software,隨記">
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260119082200-50f355c3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="20260119小日常 | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20260119小日常
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-19 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-19T16:22:00+08:00">2026-01-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天在工作時又遇到一個蠻棘手的問題。</p>
+<p>在和其他家廠商串接 NVR 的時候，RTSPS 一直怎麼都串不起來。第一個直覺當然是「抓封包來比對」，但問題來了：它是 <strong>RTSP over TLS</strong>，整個連線流程都是加密的，導致我根本看不到實際的 RTSP 封包內容。</p>
+<p>一開始有查到網路上的作法，是用 <strong>Wireshark 解 HTTPS &#x2F; TLS</strong> 的方式：<br>透過設定 <code>SSLKEYLOGFILE</code> 環境變數，讓應用程式在 TLS 握手時把 session key dump 到指定的檔案，再讓 Wireshark 讀這個 key log 來解密封包。<br> <span id="more"></span></p>
+<p>但這條路很快就卡關了，原因很現實：</p>
+<ul>
+<li><strong>只有特定支援的程式</strong>（例如某些瀏覽器、libssl 有開啟功能的應用）才會把 key dump 到 <code>SSLKEYLOGFILE</code> 可參考<a href="/posts/20260126090100-a136f8fa.html" title="wireshake tls 解包 教學 使用 SSLKEYLOGFILE">wireshake tls 解包 教學 使用 SSLKEYLOGFILE</a></li>
+<li>NVR 是第三方的，完全無法控制</li>
+<li>openRTSP 雖然可以自己編譯，但還得額外實作把 TLS key dump 出來的機制，成本太高<br>  → 這條路基本上先放棄。</li>
+</ul>
+<p>後來再問 GPT，得到另一個方向：<br>可以用 <strong>PolarProxy</strong> 去代理 <strong>322 port（RTSPS）</strong>，藉由 MITM(中間人攻擊) 的方式把 TLS 解開。<br>這個方法對 <strong>TCP 流量是可行的</strong>，但如果牽涉到 <strong>UDP（例如 RTP over UDP）</strong>，PolarProxy 就完全無法處理。 可參考<a href="/posts/20260126090100-40217706.html" title="wireshake tls 解包 教學 使用 PolarProxy">wireshake tls 解包 教學 使用 PolarProxy</a></p>
+<p>再繞了一圈後，發現一個關鍵點：<br>NVR 在拉流之前，<strong>一定會先透過 ONVIF 去拿 RTSP URI</strong>，而 ONVIF 本身是走 <strong>HTTP &#x2F; HTTPS（80 &#x2F; 443）</strong>。</p>
+<p>於是策略就變成：</p>
+<ul>
+<li>用 <strong>Nginx 代理 TCP 80 &#x2F; 443</strong></li>
+<li>把 ONVIF 流量導到可控的中介層</li>
+<li>進而影響後續 RTSPS 的連線行為</li>
+</ul>
+<p><img src="/images/20260126154857.png"></p>
+<p>結果這樣一繞，<strong>最後成功把 RTSPS 的封包解開來看</strong>，也終於能實際比對雙方在 RTSP&#x2F;TLS 流程上的差異。</p>
+<p>整體來說是個繞路但有效的解法，也再次驗證：</p>
+<blockquote>
+<p>有時候解不開資料流本身，就要從「先看是誰給它連線資訊的。」下手。</p>
+</blockquote>
+<blockquote>
+<p><strong>註記</strong>：本文由 GPT 協助潤飾、口語化及語意優化完成。</p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/rtsp/" rel="tag"># rtsp</a>
+              <a href="/tags/https/" rel="tag"># https</a>
+              <a href="/tags/rtsps/" rel="tag"># rtsps</a>
+              <a href="/tags/tls/" rel="tag"># tls</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20260105082200-8b416a8d.html" rel="prev" title="20260105小日常">
+                  <i class="fa fa-chevron-left"></i> 20260105小日常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20260126082200-381a684f.html" rel="next" title="20260126小日常">
+                  20260126小日常 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="今天在與某家廠商串接 NVR 時，遇到一個多播斷線的問題，整理如下。 在串接 RTSPS 的過程中：  單播 RTSP over SSL over TCP：已成功打通 單播 RTSP over SSL over UDP：也已成功 多播：卻會在約 30～40 秒後斷線  因此先嘗試改用 不加密的 RTSP（非 RTSPS），但多播仍然會斷線，問題依舊存在。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20260126小日常">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20260126082200-381a684f.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="今天在與某家廠商串接 NVR 時，遇到一個多播斷線的問題，整理如下。 在串接 RTSPS 的過程中：  單播 RTSP over SSL over TCP：已成功打通 單播 RTSP over SSL over UDP：也已成功 多播：卻會在約 30～40 秒後斷線  因此先嘗試改用 不加密的 RTSP（非 RTSPS），但多播仍然會斷線，問題依舊存在。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-01-26T08:22:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T21:46:52.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="live555">
+<meta property="article:tag" content="rtsp">
+<meta property="article:tag" content="rtsps">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20260126082200-381a684f.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20260126082200-381a684f.html","path":"posts/20260126082200-381a684f.html","title":"20260126小日常"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>20260126小日常 | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <meta name="keywords" content="live555,rtsp,rtsps,Brian,Notes,engineer,software,隨記">
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%9A%8E%E6%AE%B5%E5%88%86%E6%9E%90%EF%BC%9ARTCP-RR%EF%BC%9F"><span class="nav-number">1.</span> <span class="nav-text">第一階段分析：RTCP RR？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8D%E6%96%B0%E6%80%9D%E8%80%83%E6%96%B9%E5%90%91%EF%BC%9ARTSP-Liveness-%E6%A9%9F%E5%88%B6"><span class="nav-number">2.</span> <span class="nav-text">重新思考方向：RTSP Liveness 機制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B5%90%E8%AB%96%E8%88%87%E8%A7%A3%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">結論與解法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260126082200-381a684f.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="20260126小日常 | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          20260126小日常
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-26 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-26T16:22:00+08:00">2026-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>今天在與某家廠商串接 NVR 時，遇到一個多播斷線的問題，整理如下。</p>
+<p>在串接 <strong>RTSPS</strong> 的過程中：</p>
+<ul>
+<li><strong>單播 RTSP over SSL over TCP</strong>：已成功打通</li>
+<li><strong>單播 RTSP over SSL over UDP</strong>：也已成功</li>
+<li><strong>多播</strong>：卻會在約 <strong>30～40 秒後斷線</strong></li>
+</ul>
+<p>因此先嘗試改用 <strong>不加密的 RTSP（非 RTSPS）</strong>，但多播仍然會斷線，問題依舊存在。<br> <span id="more"></span></p>
+<p>一開始以為是 <strong>FPS 掉落</strong> 導致 Client 主動斷線，但使用 <strong>VLC 播放多播串流</strong> 時一切正常，也沒有斷線情況，因此初步排除 FPS 問題。</p>
+<p>接著發現一個更奇怪的現象：</p>
+<ul>
+<li><strong>只有一個 NVR client 連線時</strong> → 約 30～40 秒會斷線</li>
+<li><strong>同時有兩個 client（一個 VLC + 一個 NVR）連線時</strong> → 不會斷線<br>因此決定開始攔封包分析。</li>
+</ul>
+<hr>
+<h3 id="第一階段分析：RTCP-RR？"><a href="#第一階段分析：RTCP-RR？" class="headerlink" title="第一階段分析：RTCP RR？"></a>第一階段分析：RTCP RR？</h3><p>最初懷疑是 <strong>RTCP Receiver Report（RR）沒有送出</strong> 導致斷線，因為在 <strong>live555</strong> 裡有一個 <code>RRHandler</code> 機制，只要收到 RR，就會更新 scheduler，避免 session 被判定為 timeout 而切斷。</p>
+<p>但實際攔封包後發現：</p>
+<ul>
+<li><strong>VLC 在多播時也沒有送 RR</strong></li>
+<li>卻依然不會斷線</li>
+</ul>
+<p>因此這條線索行不通，分析一度卡關。</p>
+<hr>
+<h3 id="重新思考方向：RTSP-Liveness-機制"><a href="#重新思考方向：RTSP-Liveness-機制" class="headerlink" title="重新思考方向：RTSP Liveness 機制"></a>重新思考方向：RTSP Liveness 機制</h3><p>重新思考後，改去攔 <strong>單播 UDP 為何不會斷線</strong>，結果觀察到：</p>
+<ul>
+<li><strong>NVR 在單播 UDP 時，會定期送出 <code>OPTIONS</code> RTSP request</strong></li>
+</ul>
+<p>進一步回頭追 <strong>live555 原始碼</strong>，發現：</p>
+<ul>
+<li><code>noteLiveness()</code><ul>
+<li>只要 <strong>收到 RTSP 封包（例如 OPTIONS、GET_PARAMETER）</strong></li>
+<li>就會被呼叫，用來更新 session 的存活時間</li>
+</ul>
+</li>
+</ul>
+<p>再對照 <strong>VLC 的多播行為</strong>：</p>
+<ul>
+<li>VLC 在多播 UDP 時，會定期送出 <strong><code>GET_PARAMETER</code></strong></li>
+</ul>
+<p>但 <strong>NVR 在多播時完全沒有送任何 RTSP keep-alive 類型的封包</strong>，導致：</p>
+<ul>
+<li>server 無法得知 client 還活著</li>
+<li>超過 timeout 後就主動清除 session</li>
+<li>因此在約 30～40 秒後斷線</li>
+</ul>
+<hr>
+<h3 id="結論與解法"><a href="#結論與解法" class="headerlink" title="結論與解法"></a>結論與解法</h3><p><strong>根本原因</strong>：</p>
+<blockquote>
+<p>NVR 在「多播」模式下，沒有送出任何可讓 server 判定 client 存活的 RTSP 訊號（如 OPTIONS &#x2F; GET_PARAMETER）。</p>
+</blockquote>
+<p><strong>暫時解法</strong>：</p>
+<ul>
+<li>將 server 的 session timeout 30秒<strong>拉長到 5 分鐘</strong></li>
+<li>讓 server 仍能定期清除不必要的連線，同時避免正常多播過早被斷線</li>
+</ul>
+<hr>
+<p>📌 <strong>備註</strong><br>以上內容為 <strong>GPT 協助修正錯字、順語句與結構整理</strong>，技術邏輯與事件流程未做更動。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/live555/" rel="tag"># live555</a>
+              <a href="/tags/rtsp/" rel="tag"># rtsp</a>
+              <a href="/tags/rtsps/" rel="tag"># rtsps</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20260119082200-50f355c3.html" rel="prev" title="20260119小日常">
+                  <i class="fa fa-chevron-left"></i> 20260119小日常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20260126090100-a136f8fa.html" rel="next" title="wireshake tls 解包 教學 使用 SSLKEYLOGFILE">
+                  wireshake tls 解包 教學 使用 SSLKEYLOGFILE <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

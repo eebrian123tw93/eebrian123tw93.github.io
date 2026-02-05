@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -218,7 +218,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241226090200-ee154cd8.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260126090100-a136f8fa.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -236,7 +236,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241226090200-ee154cd8.html" class="post-title-link" itemprop="url">WebRTC 使用了哪些協定</a>
+          <a href="/posts/20260126090100-a136f8fa.html" class="post-title-link" itemprop="url">wireshake tls 解包 教學 使用 SSLKEYLOGFILE</a>
         </h2>
 
         <div class="post-meta-container">
@@ -247,14 +247,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-26 17:02:00" itemprop="dateCreated datePublished" datetime="2024-12-26T17:02:00+08:00">2024-12-26</time>
+      <time title="Created: 2026-01-26 17:01:00" itemprop="dateCreated datePublished" datetime="2026-01-26T17:01:00+08:00">2026-01-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
     </span>
 
   
@@ -267,95 +267,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="WebRTC-使用了哪些協定"><a href="#WebRTC-使用了哪些協定" class="headerlink" title="WebRTC 使用了哪些協定"></a>WebRTC 使用了哪些協定</h2><p>我們最熟悉的網路傳輸協定TCP與UDP，作為傳輸層，兩者都有各自的優缺點，<br>而在WebRTC中，需要能夠實現即時串流應用，在影音傳輸方面上，第一個想到可以搭配的協定，<br>肯定是UDP。</p>
-<p>然而UDP雖然適合影音傳輸上的應用，但在WebRTC中還需要能夠流量控制或處理擁塞等功能，這些是UDP所沒有的功能，<br>為此在UDP上附加了許多輔助協定，如下圖：</p>
+          <h2 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h2><p>TLS&#x2F;SSL 是一種端到端加密協議，資料在網路上傳輸時都是加密的。Wireshark 無法直接解讀加密的 TLS 封包內容（Application Data），除非你提供 <strong>解密所需的對稱 session key</strong>。</p>
+<p><code>SSLKEYLOGFILE</code> 是一個環境變數，它允許某些 TLS&#x2F;SSL 客戶端（如 Chrome、Firefox、OpenSSL 或某些 Python 套件）在啟動時把 <strong>每個 TLS 連線的 session key（pre-master &#x2F; master secret）</strong> 寫入一個檔案。Wireshark 讀取這個檔案後，就能用對稱加密金鑰解密封包，還原明文資料。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241226090200-ee154cd8.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241226081700-efd237b7.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241226081700-efd237b7.html" class="post-title-link" itemprop="url">Webrtc視訊流</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-26 16:17:00" itemprop="dateCreated datePublished" datetime="2024-12-26T16:17:00+08:00">2024-12-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="開啟相機主要類別-以安卓為例"><a href="#開啟相機主要類別-以安卓為例" class="headerlink" title="開啟相機主要類別(以安卓為例)"></a>開啟相機主要類別(以安卓為例)</h1><p><img src="/images/20241226150748.png"></p>
-<h1 id="frame的流向"><a href="#frame的流向" class="headerlink" title="frame的流向"></a>frame的流向</h1><p><img src="/images/20241226150839.png"><br>攝影機擷取的視訊幀資料會被傳遞到 VideoBroadcaster 這個類別進行處理，而擷取過程也到此為止。從 VideoBroadcaster 的名稱就不難發現，幀資料接下來會被以廣播的形式發送給各個訂閱者，也就是說後續的渲染、編碼（和發送）過程是並行處理的。<br>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20241226081700-efd237b7.html#more" rel="contents">
+              <a class="btn" href="/posts/20260126090100-a136f8fa.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -386,7 +302,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260126082200-381a684f.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -404,7 +320,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241224070200-f38f09a7.html" class="post-title-link" itemprop="url">ICE連線排序規則</a>
+          <a href="/posts/20260126082200-381a684f.html" class="post-title-link" itemprop="url">20260126小日常</a>
         </h2>
 
         <div class="post-meta-container">
@@ -415,14 +331,23 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-24 15:02:00" itemprop="dateCreated datePublished" datetime="2024-12-24T15:02:00+08:00">2024-12-24</time>
+      <time title="Created: 2026-01-26 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-26T16:22:00+08:00">2026-01-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
     </span>
 
   
@@ -435,20 +360,24 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
-<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
-<ol>
-<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。
+          <p>今天在與某家廠商串接 NVR 時，遇到一個多播斷線的問題，整理如下。</p>
+<p>在串接 <strong>RTSPS</strong> 的過程中：</p>
+<ul>
+<li><strong>單播 RTSP over SSL over TCP</strong>：已成功打通</li>
+<li><strong>單播 RTSP over SSL over UDP</strong>：也已成功</li>
+<li><strong>多播</strong>：卻會在約 <strong>30～40 秒後斷線</strong></li>
+</ul>
+<p>因此先嘗試改用 <strong>不加密的 RTSP（非 RTSPS）</strong>，但多播仍然會斷線，問題依舊存在。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241224070200-f38f09a7.html#more" rel="contents">
+              <a class="btn" href="/posts/20260126082200-381a684f.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </p></div>
 
     
     
@@ -472,7 +401,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224063000-40453b0a.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260119082200-50f355c3.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -490,7 +419,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241224063000-40453b0a.html" class="post-title-link" itemprop="url">PeerConnection 連線過程</a>
+          <a href="/posts/20260119082200-50f355c3.html" class="post-title-link" itemprop="url">20260119小日常</a>
         </h2>
 
         <div class="post-meta-container">
@@ -501,14 +430,23 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-24 14:30:00" itemprop="dateCreated datePublished" datetime="2024-12-24T14:30:00+08:00">2024-12-24</time>
+      <time title="Created: 2026-01-19 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-19T16:22:00+08:00">2026-01-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
     </span>
 
   
@@ -521,21 +459,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="上圖"><a href="#上圖" class="headerlink" title="上圖"></a>上圖</h1><p><img src="/images/20241224132201.png"></p>
-<h2 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h2><ol>
-<li>上圖不完全是API的呼叫流程，讀者仍需要參考WebRTC的文件或原始碼註解。</li>
-<li>先進入房間的使用者是發起方（ClientA），後進入房間的使用者是參與者（ClientB）。伺服器可以將它們與ICE伺服器位址一起傳回給參與者。</li>
-<li>add streams 不是連接流程中的關鍵步驟，也可以在ICE流程之後再執行。
+          <p>今天在工作時又遇到一個蠻棘手的問題。</p>
+<p>在和其他家廠商串接 NVR 的時候，RTSPS 一直怎麼都串不起來。第一個直覺當然是「抓封包來比對」，但問題來了：它是 <strong>RTSP over TLS</strong>，整個連線流程都是加密的，導致我根本看不到實際的 RTSP 封包內容。</p>
+<p>一開始有查到網路上的作法，是用 <strong>Wireshark 解 HTTPS &#x2F; TLS</strong> 的方式：<br>透過設定 <code>SSLKEYLOGFILE</code> 環境變數，讓應用程式在 TLS 握手時把 session key dump 到指定的檔案，再讓 Wireshark 讀這個 key log 來解密封包。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241224063000-40453b0a.html#more" rel="contents">
+              <a class="btn" href="/posts/20260119082200-50f355c3.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </p></div>
 
     
     
@@ -559,7 +495,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260105082200-8b416a8d.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -577,7 +513,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241224031200-ad213933.html" class="post-title-link" itemprop="url">RTCP（Real-time Transport Control Protocol）</a>
+          <a href="/posts/20260105082200-8b416a8d.html" class="post-title-link" itemprop="url">20260105小日常</a>
         </h2>
 
         <div class="post-meta-container">
@@ -588,14 +524,23 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-24 11:12:00" itemprop="dateCreated datePublished" datetime="2024-12-24T11:12:00+08:00">2024-12-24</time>
+      <time title="Created: 2026-01-05 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-05T16:22:00+08:00">2026-01-05</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
     </span>
 
   
@@ -608,19 +553,113 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h3 id="RTCP-RTP-Control-Protocol-介紹"><a href="#RTCP-RTP-Control-Protocol-介紹" class="headerlink" title="RTCP (RTP Control Protocol) 介紹"></a>RTCP (RTP Control Protocol) 介紹</h3><p>RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。</p>
-<h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a><strong>主要功能</strong></h4><ol>
-<li><p><strong>提供統計資訊</strong><br> RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助檢測網絡問題並評估性能。</p>
+          <p>今天在升級 <strong>live555</strong> 套件，從 <strong>2014 版升級到 2025 版</strong>。<br>整個問題的釐清與除錯過程，<strong>前後大約花了 2 週時間</strong>。</p>
+<p>需求是在系統中新增一個功能：<strong>使用 live555 的 <code>TaskScheduler</code>，每秒更新一次 shared memory 的值，讓其他 process 可以檢查這支 <code>wis-streamer</code> 是否仍然存活</strong>。</p>
+<p>剛完成到可以編譯並正常執行時，卻發現一個異常現象：<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241224031200-ad213933.html#more" rel="contents">
+              <a class="btn" href="/posts/20260105082200-8b416a8d.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </li></ol></div>
+    </p></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260102082200-26d358fc.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20260102082200-26d358fc.html" class="post-title-link" itemprop="url">20260128小日常</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-02 16:22:00" itemprop="dateCreated datePublished" datetime="2026-01-02T16:22:00+08:00">2026-01-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B0%8F%E6%97%A5%E5%B8%B8/" itemprop="url" rel="index"><span itemprop="name">小日常</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>從去年 11 月到現在，我協助公司測試地端 AI 用來寫程式。由於專案涉及不少機密資料，無法直接使用雲端 AI，因此只能投入地端方案。</p>
+<p>一開始使用 <strong>RooCode</strong>。但 11 月時台中公司沒有任何設備或 GPU 可供測試，我只能常常一大早搭高鐵到台北出差。在台北準備好環境與公司專案後，我們開始用各種問題測試地端 AI，不過結果不是頻繁出錯，就是陷入重複回答、鬼打牆的狀況。</p>
+<p>直到後來發現 <strong>Ollama</strong> 上有一個專門給 RooCode 使用的模型<br>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20260102082200-26d358fc.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </p></div>
 
     
     
@@ -637,7 +676,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -649,7 +688,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

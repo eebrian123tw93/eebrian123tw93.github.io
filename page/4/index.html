@@ -167,7 +167,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">58</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -178,7 +178,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-count">77</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -218,7 +218,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241223074500-739a46ba.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241226090200-ee154cd8.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -236,7 +236,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241223074500-739a46ba.html" class="post-title-link" itemprop="url">SDP（Session Description Protocol, 会话描述协议）</a>
+          <a href="/posts/20241226090200-ee154cd8.html" class="post-title-link" itemprop="url">WebRTC 使用了哪些協定</a>
         </h2>
 
         <div class="post-meta-container">
@@ -247,7 +247,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-23 15:45:00" itemprop="dateCreated datePublished" datetime="2024-12-23T15:45:00+08:00">2024-12-23</time>
+      <time title="Created: 2024-12-26 17:02:00" itemprop="dateCreated datePublished" datetime="2024-12-26T17:02:00+08:00">2024-12-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -267,103 +267,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>会话描述协议（SDP，Session Description Protocol）是一种用于多媒体通信的文本格式协议。它通常用于描述多媒体会话的参数，例如会议、语音或视频通话、ICE 服务器信息、音视频编码信息，以便参与方可以协商和建立通信。</p>
-<h2 id="SDP-本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如-RTP、RTCP-或-SIP）结合使用，以建立和管理会话。以下是-SDP-的一些关键点："><a href="#SDP-本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如-RTP、RTCP-或-SIP）结合使用，以建立和管理会话。以下是-SDP-的一些关键点：" class="headerlink" title="SDP 本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如 RTP、RTCP 或 SIP）结合使用，以建立和管理会话。以下是 SDP 的一些关键点： 
- "></a>SDP 本身并不传输媒体数据，而是作为描述协议，与其他传输协议（如 RTP、RTCP 或 SIP）结合使用，以建立和管理会话。以下是 SDP 的一些关键点：<br>
+          <h2 id="WebRTC-使用了哪些協定"><a href="#WebRTC-使用了哪些協定" class="headerlink" title="WebRTC 使用了哪些協定"></a>WebRTC 使用了哪些協定</h2><p>我們最熟悉的網路傳輸協定TCP與UDP，作為傳輸層，兩者都有各自的優缺點，<br>而在WebRTC中，需要能夠實現即時串流應用，在影音傳輸方面上，第一個想到可以搭配的協定，<br>肯定是UDP。</p>
+<p>然而UDP雖然適合影音傳輸上的應用，但在WebRTC中還需要能夠流量控制或處理擁塞等功能，這些是UDP所沒有的功能，<br>為此在UDP上附加了許多輔助協定，如下圖：</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241223074500-739a46ba.html#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </h2></div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241223040900-46d03228.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="BrianLu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Brian's 隨記">
-      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Brian's 隨記">
-      <meta itemprop="description" content>
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241223040900-46d03228.html" class="post-title-link" itemprop="url">TURN 協議（Traversal Using Relays around NAT）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2024-12-23 12:09:00" itemprop="dateCreated datePublished" datetime="2024-12-23T12:09:00+08:00">2024-12-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p><strong>TURN（Traversal Using Relays around NAT）</strong> 是一種用於穿越 NAT（Network Address Translation）和防火牆的網絡協議，通常在實時通信應用中使用，例如視頻通話、即時消息和其他需要點對點連接的應用。通過<strong>中繼服務器轉發流量</strong>來解決這些問題</p>
-<hr>
-<h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a><strong>核心概念</strong></h3><ol>
-<li><p><strong>背景：</strong></p>
-<ul>
-<li>NAT 和防火牆可能會阻止直接的點對點通信。</li>
-</ul>
-</li>
-</ol>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/20241223040900-46d03228.html#more" rel="contents">
+              <a class="btn" href="/posts/20241226090200-ee154cd8.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -394,7 +302,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241223035000-d4e6d128.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241226081700-efd237b7.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -412,7 +320,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241223035000-d4e6d128.html" class="post-title-link" itemprop="url">STUN（ Session Traversal Utilities for NAT，NAT 穿越會話工具）</a>
+          <a href="/posts/20241226081700-efd237b7.html" class="post-title-link" itemprop="url">Webrtc視訊流</a>
         </h2>
 
         <div class="post-meta-container">
@@ -423,7 +331,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-23 11:50:00" itemprop="dateCreated datePublished" datetime="2024-12-23T11:50:00+08:00">2024-12-23</time>
+      <time title="Created: 2024-12-26 16:17:00" itemprop="dateCreated datePublished" datetime="2024-12-26T16:17:00+08:00">2024-12-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -443,11 +351,11 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>STUN（Session Traversal Utilities for NAT，NAT 穿越會話工具）是一種網絡協議，用於協助用戶端通過 NAT（網絡地址轉換）和防火牆發現其<strong>公共 IP 地址和端口</strong>。STUN 的主要目的是幫助建立點對點連接，尤其是在使用 NAT 和防火牆的網絡環境中，例如即時通訊或視頻通話等應用。</p>
-<p>NAT 自己不会告诉服务器它是什么类型的，我们需要一套交互式策略检测对应的类型<br>
+          <h1 id="開啟相機主要類別-以安卓為例"><a href="#開啟相機主要類別-以安卓為例" class="headerlink" title="開啟相機主要類別(以安卓為例)"></a>開啟相機主要類別(以安卓為例)</h1><p><img src="/images/20241226150748.png"></p>
+<h1 id="frame的流向"><a href="#frame的流向" class="headerlink" title="frame的流向"></a>frame的流向</h1><p><img src="/images/20241226150839.png"><br>攝影機擷取的視訊幀資料會被傳遞到 VideoBroadcaster 這個類別進行處理，而擷取過程也到此為止。從 VideoBroadcaster 的名稱就不難發現，幀資料接下來會被以廣播的形式發送給各個訂閱者，也就是說後續的渲染、編碼（和發送）過程是並行處理的。<br>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241223035000-d4e6d128.html#more" rel="contents">
+              <a class="btn" href="/posts/20241226081700-efd237b7.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -478,7 +386,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241223034700-7727d3af.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224070200-f38f09a7.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -496,7 +404,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241223034700-7727d3af.html" class="post-title-link" itemprop="url">NAT（Network Address Translation，網路位址轉換）</a>
+          <a href="/posts/20241224070200-f38f09a7.html" class="post-title-link" itemprop="url">ICE連線排序規則</a>
         </h2>
 
         <div class="post-meta-container">
@@ -507,14 +415,14 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-23 11:47:00" itemprop="dateCreated datePublished" datetime="2024-12-23T11:47:00+08:00">2024-12-23</time>
+      <time title="Created: 2024-12-24 15:02:00" itemprop="dateCreated datePublished" datetime="2024-12-24T15:02:00+08:00">2024-12-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2025-02-19 08:51:02" itemprop="dateModified" datetime="2025-02-19T08:51:02+08:00">2025-02-19</time>
+      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
     </span>
 
   
@@ -527,13 +435,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>NAT（Network Address Translation，網路位址轉換）是一種網路技術，用於將內部網路的私有IP地址轉換為公共IP地址，或反向轉換。這項技術的主要目的是讓多台內部設備能夠共享一個或少量公共IP地址進行外部網路通信，同時提高網路安全性。</p>
-<h3 id="NAT-的主要功能："><a href="#NAT-的主要功能：" class="headerlink" title="NAT 的主要功能："></a>NAT 的主要功能：</h3><ol>
-<li><strong>地址重用</strong>：通過使用私有IP地址，節省了公共IP地址的資源。</li>
-<li><strong>隱藏內部網路結構</strong>：外部設備無法直接訪問內部設備，提高了安全性。
+          <h1 id="Candiates-Examples"><a href="#Candiates-Examples" class="headerlink" title="Candiates Examples"></a>Candiates Examples</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 组标识为 udpcandidate，使用 RTP 协议传输数据，基于 UDP 协议，</span><br><span class="line">// 优先级为 1076558079，地址为 172.217.27.142:31269，类型为 host；</span><br><span class="line">// host 表示客户端与该 candidate 位于同一个 LAN 或者 NAT，因此可以直连</span><br><span class="line">a=candidate:udpcandidate 1 udp 1076558079 172.217.27.142 31269 typ host</span><br><span class="line"></span><br><span class="line">// 组标识为 tcpcandidate，使用 RTP 协议传输数据，基于 TCP 协议，</span><br><span class="line">// 优先级为 1076302079，地址为 172.217.27.142:31368，类型为 host；</span><br><span class="line">// passive（被动）这个概念仅属于 TCP candidates，</span><br><span class="line">// 表示该 candidate 不会主动发起连接，只能被动等待连接</span><br><span class="line">a=candidate:tcpcandidate 1 tcp 1076302079 172.217.27.142 31368 typ host tcptype passive</span><br></pre></td></tr></table></figure>
+<h1 id="候选对（Candidate-Pair）"><a href="#候选对（Candidate-Pair）" class="headerlink" title="候选对（Candidate Pair）"></a>候选对（Candidate Pair）</h1><h3 id="候选列表"><a href="#候选列表" class="headerlink" title="候选列表"></a><strong>候选列表</strong></h3><p>在 WebRTC 的 ICE 流程中，通信双方都会生成各自的 <strong>候选列表</strong>：</p>
+<ol>
+<li><strong>本地候选列表</strong>：由本地网络接口发现的候选（包括 Host、Server Reflexive、Relayed 等）。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241223034700-7727d3af.html#more" rel="contents">
+              <a class="btn" href="/posts/20241224070200-f38f09a7.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
@@ -564,7 +472,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
-    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241219102800-464c14bb.html">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224063000-40453b0a.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -582,7 +490,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/20241219102800-464c14bb.html" class="post-title-link" itemprop="url">P2P 打洞（Peer-to-Peer NAT Traversal）</a>
+          <a href="/posts/20241224063000-40453b0a.html" class="post-title-link" itemprop="url">PeerConnection 連線過程</a>
         </h2>
 
         <div class="post-meta-container">
@@ -593,7 +501,7 @@
       </span>
       <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2024-12-19 18:28:00" itemprop="dateCreated datePublished" datetime="2024-12-19T18:28:00+08:00">2024-12-19</time>
+      <time title="Created: 2024-12-24 14:30:00" itemprop="dateCreated datePublished" datetime="2024-12-24T14:30:00+08:00">2024-12-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -613,19 +521,106 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="兩個裝置分別在NAT後面"><a href="#兩個裝置分別在NAT後面" class="headerlink" title="兩個裝置分別在NAT後面"></a>兩個裝置分別在NAT後面</h1><p><img src="/images/20241219171958.png"></p>
-<h1 id="這時需要一台Server當作溝通橋梁-傳送訊號"><a href="#這時需要一台Server當作溝通橋梁-傳送訊號" class="headerlink" title="這時需要一台Server當作溝通橋梁 傳送訊號"></a>這時需要一台Server當作溝通橋梁 傳送訊號</h1><p><img src="/images/20241219172742.png"></p>
-<h1 id="裝置A向Sever註冊自己外網-IP-和-port"><a href="#裝置A向Sever註冊自己外網-IP-和-port" class="headerlink" title="裝置A向Sever註冊自己外網  IP 和 port"></a>裝置A向Sever註冊自己外網  IP 和 port</h1><p><img src="/images/20241219172424.png"><br>在 A 裝置啟一個 3000 UDP服務 並將自己的 外網 ip 和 port 向 server 註冊<br>
+          <h1 id="上圖"><a href="#上圖" class="headerlink" title="上圖"></a>上圖</h1><p><img src="/images/20241224132201.png"></p>
+<h2 id="備註"><a href="#備註" class="headerlink" title="備註"></a>備註</h2><ol>
+<li>上圖不完全是API的呼叫流程，讀者仍需要參考WebRTC的文件或原始碼註解。</li>
+<li>先進入房間的使用者是發起方（ClientA），後進入房間的使用者是參與者（ClientB）。伺服器可以將它們與ICE伺服器位址一起傳回給參與者。</li>
+<li>add streams 不是連接流程中的關鍵步驟，也可以在ICE流程之後再執行。
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/20241219102800-464c14bb.html#more" rel="contents">
+              <a class="btn" href="/posts/20241224063000-40453b0a.html#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
           <!--/noindex-->
         
       
-    </p></div>
+    </li></ol></div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang>
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20241224031200-ad213933.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/20241224031200-ad213933.html" class="post-title-link" itemprop="url">RTCP（Real-time Transport Control Protocol）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2024-12-24 11:12:00" itemprop="dateCreated datePublished" datetime="2024-12-24T11:12:00+08:00">2024-12-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2025-02-19 08:51:03" itemprop="dateModified" datetime="2025-02-19T08:51:03+08:00">2025-02-19</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="RTCP-RTP-Control-Protocol-介紹"><a href="#RTCP-RTP-Control-Protocol-介紹" class="headerlink" title="RTCP (RTP Control Protocol) 介紹"></a>RTCP (RTP Control Protocol) 介紹</h3><p>RTCP（RTP Control Protocol）是與 RTP（Real-Time Transport Protocol）一起使用的協議，用於管理和監控多媒體數據的傳輸。它主要負責提供反饋機制，讓參與者能夠監控網絡性能，並協調實時應用程序的行為。</p>
+<h4 id="主要功能"><a href="#主要功能" class="headerlink" title="主要功能"></a><strong>主要功能</strong></h4><ol>
+<li><p><strong>提供統計資訊</strong><br> RTCP 為參與者提供傳輸統計資訊（如丟包率、延遲和抖動等），幫助檢測網絡問題並評估性能。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/20241224031200-ad213933.html#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </li></ol></div>
 
     
     
@@ -642,7 +637,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/10/">10</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" title="Previous page" aria-label="Previous page" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" title="Next page" aria-label="Next page" href="/page/5/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -654,7 +649,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2025</span>
+  <span itemprop="copyrightYear">2026</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

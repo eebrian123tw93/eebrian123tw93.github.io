@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、原理TLS&#x2F;SSL 是一種端到端加密協議，資料在網路上傳輸時都是加密的。Wireshark 無法直接解讀加密的 TLS 封包內容（Application Data），除非你提供 解密所需的對稱 session key。 SSLKEYLOGFILE 是一個環境變數，它允許某些 TLS&#x2F;SSL 客戶端（如 Chrome、Firefox、OpenSSL 或某些 Python 套件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="wireshake tls 解包 教學 使用 SSLKEYLOGFILE">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20260126090100-a136f8fa.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="一、原理TLS&#x2F;SSL 是一種端到端加密協議，資料在網路上傳輸時都是加密的。Wireshark 無法直接解讀加密的 TLS 封包內容（Application Data），除非你提供 解密所需的對稱 session key。 SSLKEYLOGFILE 是一個環境變數，它允許某些 TLS&#x2F;SSL 客戶端（如 Chrome、Firefox、OpenSSL 或某些 Python 套件">
+<meta property="og:locale">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20260126163156.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20260126163334.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20260126164348.png">
+<meta property="og:image" content="http://eebrian123tw93.github.io/images/20260126164708.png">
+<meta property="article:published_time" content="2026-01-26T09:01:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T21:46:52.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="tls">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://eebrian123tw93.github.io/images/20260126163156.png">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20260126090100-a136f8fa.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20260126090100-a136f8fa.html","path":"posts/20260126090100-a136f8fa.html","title":"wireshake tls 解包 教學 使用 SSLKEYLOGFILE"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>wireshake tls 解包 教學 使用 SSLKEYLOGFILE | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <meta name="keywords" content="tls,Brian,Notes,engineer,software,隨記">
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">一、原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E9%81%A9%E7%94%A8%E7%AF%84%E5%9C%8D"><span class="nav-number">2.</span> <span class="nav-text">二、適用範圍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E4%B8%80%E6%AD%A5%E6%AD%A5%E6%95%99%E5%AD%B8"><span class="nav-number">3.</span> <span class="nav-text">三、一步步教學</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-1%EF%BC%9A%E8%A8%AD%E5%AE%9A-SSLKEYLOGFILE-%E7%92%B0%E5%A2%83%E8%AE%8A%E6%95%B8"><span class="nav-number">3.1.</span> <span class="nav-text">步驟 1：設定 SSLKEYLOGFILE 環境變數</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-2%EF%BC%9A%E5%9C%A8-Wireshark-%E8%A8%AD%E5%AE%9A-TLS-key-log"><span class="nav-number">3.2.</span> <span class="nav-text">步驟 2：在 Wireshark 設定 TLS key log</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-3%EF%BC%9A%E5%95%9F%E5%8B%95-TLS-%E5%AE%A2%E6%88%B6%E7%AB%AF"><span class="nav-number">3.3.</span> <span class="nav-text">步驟 3：啟動 TLS 客戶端</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-4%EF%BC%9A%E6%8A%93%E5%8F%96%E5%B0%81%E5%8C%85"><span class="nav-number">3.4.</span> <span class="nav-text">步驟 4：抓取封包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-5%EF%BC%9A%E8%A7%A3%E5%AF%86%E5%B0%81%E5%8C%85"><span class="nav-number">3.5.</span> <span class="nav-text">步驟 5：解密封包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%AD%A5%E9%A9%9F-6%EF%BC%9A%E9%A9%97%E8%AD%89"><span class="nav-number">3.6.</span> <span class="nav-text">步驟 6：驗證</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260126090100-a136f8fa.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="wireshake tls 解包 教學 使用 SSLKEYLOGFILE | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          wireshake tls 解包 教學 使用 SSLKEYLOGFILE
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-26 17:01:00" itemprop="dateCreated datePublished" datetime="2026-01-26T17:01:00+08:00">2026-01-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h2><p>TLS&#x2F;SSL 是一種端到端加密協議，資料在網路上傳輸時都是加密的。Wireshark 無法直接解讀加密的 TLS 封包內容（Application Data），除非你提供 <strong>解密所需的對稱 session key</strong>。</p>
+<p><code>SSLKEYLOGFILE</code> 是一個環境變數，它允許某些 TLS&#x2F;SSL 客戶端（如 Chrome、Firefox、OpenSSL 或某些 Python 套件）在啟動時把 <strong>每個 TLS 連線的 session key（pre-master &#x2F; master secret）</strong> 寫入一個檔案。Wireshark 讀取這個檔案後，就能用對稱加密金鑰解密封包，還原明文資料。<br> <span id="more"></span></p>
+<p>流程概念如下：</p>
+<ol>
+<li>瀏覽器&#x2F;程式端啟用 <code>SSLKEYLOGFILE</code>，每次 TLS 握手成功後會將對應的 session key 寫入檔案。</li>
+<li>Wireshark 讀取這個 key log 檔案，匹配封包中的 <code>ClientHello</code>、<code>ServerHello</code> 等訊息。</li>
+<li>Wireshark 使用這些 session key 解密封包，顯示原始明文資料（HTTP、WebSocket、gRPC 等）。</li>
+</ol>
+<hr>
+<h2 id="二、適用範圍"><a href="#二、適用範圍" class="headerlink" title="二、適用範圍"></a>二、適用範圍</h2><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>支援協議</td>
+<td>TLS 1.0 &#x2F; 1.1 &#x2F; 1.2 &#x2F; 1.3（部分舊版或實驗性 TLS 1.3 cipher 可能無法解）</td>
+</tr>
+<tr>
+<td>支援軟體</td>
+<td>Firefox、Chrome、Edge、OpenSSL-based 程式（curl, Python <code>requests</code> with OpenSSL）</td>
+</tr>
+<tr>
+<td>不適用情況</td>
+<td>非 OpenSSL&#x2F;TLS 客戶端產生的 key，或者使用硬體加密（如 HSM、某些硬體 VPN）</td>
+</tr>
+<tr>
+<td>注意</td>
+<td>TLS 1.3 中，Wireshark 只能解密使用 key log 的加密資料，<strong>early data &#x2F; 0-RTT</strong> 可能無法解密。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、一步步教學"><a href="#三、一步步教學" class="headerlink" title="三、一步步教學"></a>三、一步步教學</h2><p>假設你要抓瀏覽器的 HTTPS 流量：</p>
+<h3 id="步驟-1：設定-SSLKEYLOGFILE-環境變數"><a href="#步驟-1：設定-SSLKEYLOGFILE-環境變數" class="headerlink" title="步驟 1：設定 SSLKEYLOGFILE 環境變數"></a>步驟 1：設定 SSLKEYLOGFILE 環境變數</h3><ul>
+<li>Windows（PowerShell）：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#windows (PowerShell)</span></span><br><span class="line"><span class="variable">$env</span>:SSLKEYLOGFILE=<span class="string">&quot;C:\temp\sslkeys.log&quot;</span></span><br><span class="line"><span class="comment"># Linux or MacOS</span></span><br><span class="line">`<span class="built_in">export</span> SSLKEYLOGFILE=/tmp/sslkeys.log`</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：路徑需確保程式有寫入權限。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h3 id="步驟-2：在-Wireshark-設定-TLS-key-log"><a href="#步驟-2：在-Wireshark-設定-TLS-key-log" class="headerlink" title="步驟 2：在 Wireshark 設定 TLS key log"></a>步驟 2：在 Wireshark 設定 TLS key log</h3><ol>
+<li>在 Wireshark 選單：<strong>Edit → Preferences → Protocols → TLS</strong></li>
+<li>找到 <strong>(Pre)-Master-Secret log filename</strong>，填入 <code>sslkeys.log</code> 的路徑。</li>
+<li>確定勾選 <strong>“Attempt to decrypt TLS”</strong>。<br> <img src="/images/20260126163156.png"><br> <img src="/images/20260126163334.png"></li>
+</ol>
+<hr>
+<h3 id="步驟-3：啟動-TLS-客戶端"><a href="#步驟-3：啟動-TLS-客戶端" class="headerlink" title="步驟 3：啟動 TLS 客戶端"></a>步驟 3：啟動 TLS 客戶端</h3><ul>
+<li>例如 Chrome 或 Firefox：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">google-chrome</span><br></pre></td></tr></table></figure></li>
+<li>任何新的 HTTPS 連線都會把 session key 寫入 <code>sslkeys.log</code>。</li>
+</ul>
+<hr>
+<h3 id="步驟-4：抓取封包"><a href="#步驟-4：抓取封包" class="headerlink" title="步驟 4：抓取封包"></a>步驟 4：抓取封包</h3><ol>
+<li>打開 Wireshark，選擇你的網路介面抓包。</li>
+<li>針對你要解密的 TLS 流量開始抓包（或用已存在的 pcap 檔）。</li>
+</ol>
+<h3 id="步驟-5：解密封包"><a href="#步驟-5：解密封包" class="headerlink" title="步驟 5：解密封包"></a>步驟 5：解密封包</h3><ol>
+<li>重新載入封包或重新抓包。</li>
+<li>Wireshark 會自動使用 key log 解密 TLS 封包。</li>
+<li>可以看到 <code>Application Data</code> 被解析成明文，例如 HTTP&#x2F;2、WebSocket。</li>
+</ol>
+<hr>
+<h3 id="步驟-6：驗證"><a href="#步驟-6：驗證" class="headerlink" title="步驟 6：驗證"></a>步驟 6：驗證</h3><ul>
+<li>在 Wireshark 中，找到某個 TLS 封包 → 展開 <code>Secure Sockets Layer</code> → <code>Decrypted TLS Application Data</code>。</li>
+<li>若顯示明文 HTTP&#x2F;JSON&#x2F;其他資料，表示解密成功。<br><img src="/images/20260126164348.png"><br><img src="/images/20260126164708.png"></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tls/" rel="tag"># tls</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20260126082200-381a684f.html" rel="prev" title="20260126小日常">
+                  <i class="fa fa-chevron-left"></i> 20260126小日常
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20260126090100-40217706.html" rel="next" title="wireshake tls 解包 教學 使用 PolarProxy">
+                  wireshake tls 解包 教學 使用 PolarProxy <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

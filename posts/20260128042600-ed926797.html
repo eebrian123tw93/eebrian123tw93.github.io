@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="資料競態（Data Race）如何解 — C++ 工程筆記一、什麼是 Data Race（重點） 兩個以上執行緒，同時存取同一個記憶體位置，且至少一個是寫入，又沒有同步機制→ 未定義行為（UB）  在 C++：  Data race 不是「邏輯錯誤」 是 語言層級的 UB 編譯器可以假設「它不會發生」  二、為什麼 -O2 會放大 Data Race 問題">
+<meta property="og:type" content="article">
+<meta property="og:title" content="資料競態（Data Race） Undefined Behavior">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20260128042600-ed926797.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="資料競態（Data Race）如何解 — C++ 工程筆記一、什麼是 Data Race（重點） 兩個以上執行緒，同時存取同一個記憶體位置，且至少一個是寫入，又沒有同步機制→ 未定義行為（UB）  在 C++：  Data race 不是「邏輯錯誤」 是 語言層級的 UB 編譯器可以假設「它不會發生」  二、為什麼 -O2 會放大 Data Race 問題">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-01-28T04:26:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T21:59:13.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="OptimizingCompiler">
+<meta property="article:tag" content="cplusplus">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20260128042600-ed926797.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20260128042600-ed926797.html","path":"posts/20260128042600-ed926797.html","title":"資料競態（Data Race） Undefined Behavior"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>資料競態（Data Race） Undefined Behavior | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <meta name="keywords" content="OptimizingCompiler,cplusplus,Brian,Notes,engineer,software,隨記">
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B3%87%E6%96%99%E7%AB%B6%E6%85%8B%EF%BC%88Data-Race%EF%BC%89%E5%A6%82%E4%BD%95%E8%A7%A3-%E2%80%94-C-%E5%B7%A5%E7%A8%8B%E7%AD%86%E8%A8%98"><span class="nav-number">1.</span> <span class="nav-text">資料競態（Data Race）如何解 — C++ 工程筆記</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E4%BB%80%E9%BA%BC%E6%98%AF-Data-Race%EF%BC%88%E9%87%8D%E9%BB%9E%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">一、什麼是 Data Race（重點）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E7%82%BA%E4%BB%80%E9%BA%BC-O2-%E6%9C%83%E6%94%BE%E5%A4%A7-Data-Race-%E5%95%8F%E9%A1%8C"><span class="nav-number">1.2.</span> <span class="nav-text">二、為什麼 -O2 會放大 Data Race 問題</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E9%8C%AF%E8%AA%A4%E7%AF%84%E4%BE%8B%EF%BC%88%E5%85%B8%E5%9E%8B%E8%B8%A9%E9%9B%B7%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">三、錯誤範例（典型踩雷）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9D%8C-%E7%84%A1%E5%90%8C%E6%AD%A5%E7%9A%84%E6%97%97%E6%A8%99"><span class="nav-number">1.3.1.</span> <span class="nav-text">❌ 無同步的旗標</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E6%AD%A3%E7%A2%BA%E8%A7%A3%E6%B3%95%E7%B8%BD%E8%A6%BD%EF%BC%88%E5%85%88%E7%9C%8B%E8%A1%A8%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">四、正確解法總覽（先看表）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A7%A3%E6%B3%95-1%EF%BC%9A%E4%BD%BF%E7%94%A8-std-atomic%EF%BC%88%E6%9C%80%E5%B8%B8%E8%A6%8B%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">五、解法 1：使用 std::atomic（最常見）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%A9%E7%94%A8%E6%83%85%E5%A2%83"><span class="nav-number">1.5.1.</span> <span class="nav-text">適用情境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B"><span class="nav-number">1.5.2.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E6%9C%89%E6%95%88"><span class="nav-number">1.5.3.</span> <span class="nav-text">為什麼有效</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%A7%A3%E6%B3%95-2%EF%BC%9A%E4%BD%BF%E7%94%A8-std-mutex"><span class="nav-number">1.6.</span> <span class="nav-text">六、解法 2：使用 std::mutex</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%A9%E7%94%A8%E6%83%85%E5%A2%83-1"><span class="nav-number">1.6.1.</span> <span class="nav-text">適用情境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AF%84%E4%BE%8B-1"><span class="nav-number">1.6.2.</span> <span class="nav-text">範例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">1.6.3.</span> <span class="nav-text">優點</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%83%E3%80%81%E8%A7%A3%E6%B3%95-3%EF%BC%9Acondition-variable%EF%BC%88%E9%81%BF%E5%85%8D-busy-wait%EF%BC%89"><span class="nav-number">1.7.</span> <span class="nav-text">七、解法 3：condition_variable（避免 busy wait）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%A9%E7%94%A8%E6%83%85%E5%A2%83-2"><span class="nav-number">1.7.1.</span> <span class="nav-text">適用情境</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AB%E3%80%81%E7%82%BA%E4%BB%80%E9%BA%BC-volatile-%E4%B8%8D%E8%83%BD%E8%A7%A3-Data-Race%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89"><span class="nav-number">1.8.</span> <span class="nav-text">八、為什麼 volatile 不能解 Data Race（重要）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B9%9D%E3%80%81%E5%B8%B8%E8%A6%8B%E9%8C%AF%E8%AA%A4%E4%BF%AE%E6%B3%95%EF%BC%88%E4%B8%8D%E8%A6%81%E7%94%A8%EF%BC%89"><span class="nav-number">1.9.</span> <span class="nav-text">九、常見錯誤修法（不要用）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E5%A6%82%E4%BD%95%E6%AA%A2%E6%B8%AC-Data-Race"><span class="nav-number">1.10.</span> <span class="nav-text">十、如何檢測 Data Race</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E2%9C%85-ThreadSanitizer%EF%BC%88%E5%BC%B7%E7%83%88%E5%BB%BA%E8%AD%B0%EF%BC%89"><span class="nav-number">1.10.1.</span> <span class="nav-text">✅ ThreadSanitizer（強烈建議）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#fsanitize-thread-%E5%B9%BE%E4%B9%8E%E8%83%BD%E7%9B%B4%E6%8E%A5%E6%8C%87%E5%87%BA%EF%BC%9A-%E5%93%AA%E5%80%8B%E8%AE%8A%E6%95%B8-%E5%93%AA%E4%BA%9B-thread-%E5%93%AA%E8%A1%8C-code"><span class="nav-number">1.11.</span> <span class="nav-text">-fsanitize&#x3D;thread- 幾乎能直接指出：    - 哪個變數    - 哪些 thread    - 哪行 code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81%E5%B7%A5%E7%A8%8B%E5%88%A4%E6%96%B7%E5%8F%A3%E8%A8%A3"><span class="nav-number">1.12.</span> <span class="nav-text">十一、工程判斷口訣</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E7%B8%BD%E7%B5%90"><span class="nav-number">1.13.</span> <span class="nav-text">十二、總結</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260128042600-ed926797.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="資料競態（Data Race） Undefined Behavior | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          資料競態（Data Race） Undefined Behavior
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-28 12:26:00" itemprop="dateCreated datePublished" datetime="2026-01-28T12:26:00+08:00">2026-01-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:59:13" itemprop="dateModified" datetime="2026-02-05T05:59:13+08:00">2026-02-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="資料競態（Data-Race）如何解-—-C-工程筆記"><a href="#資料競態（Data-Race）如何解-—-C-工程筆記" class="headerlink" title="資料競態（Data Race）如何解 — C++ 工程筆記"></a>資料競態（Data Race）如何解 — C++ 工程筆記</h1><h2 id="一、什麼是-Data-Race（重點）"><a href="#一、什麼是-Data-Race（重點）" class="headerlink" title="一、什麼是 Data Race（重點）"></a>一、什麼是 Data Race（重點）</h2><blockquote>
+<p><strong>兩個以上執行緒，同時存取同一個記憶體位置，且至少一個是寫入，又沒有同步機制</strong><br>→ <strong>未定義行為（UB）</strong></p>
+</blockquote>
+<p>在 C++：</p>
+<ul>
+<li>Data race <strong>不是「邏輯錯誤」</strong></li>
+<li>是 <strong>語言層級的 UB</strong></li>
+<li>編譯器可以假設「它不會發生」</li>
+</ul>
+<h2 id="二、為什麼-O2-會放大-Data-Race-問題"><a href="#二、為什麼-O2-會放大-Data-Race-問題" class="headerlink" title="二、為什麼 -O2 會放大 Data Race 問題"></a>二、為什麼 <code>-O2</code> 會放大 Data Race 問題</h2> <span id="more"></span>
+<p>在沒有同步的情況下，編譯器可以合法地：</p>
+<ul>
+<li>將變數快取在暫存器</li>
+<li>假設變數不會被其他執行緒修改</li>
+<li>移除重複讀取</li>
+<li>重排讀寫指令<br>結果：<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (flag == <span class="number">0</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+在 <code>-O2</code> 下可能變成 <strong>無限迴圈</strong>。</li>
+</ul>
+<h2 id="三、錯誤範例（典型踩雷）"><a href="#三、錯誤範例（典型踩雷）" class="headerlink" title="三、錯誤範例（典型踩雷）"></a>三、錯誤範例（典型踩雷）</h2><h3 id="❌-無同步的旗標"><a href="#❌-無同步的旗標" class="headerlink" title="❌ 無同步的旗標"></a>❌ 無同步的旗標</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> ready = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">ready = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line"><span class="keyword">while</span> (ready == <span class="number">0</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>問題：</p>
+<ul>
+<li>無 mutex</li>
+<li>無 atomic</li>
+<li>無 memory order<br>  → <strong>Data race（UB）</strong></li>
+</ul>
+<h2 id="四、正確解法總覽（先看表）"><a href="#四、正確解法總覽（先看表）" class="headerlink" title="四、正確解法總覽（先看表）"></a>四、正確解法總覽（先看表）</h2><table>
+<thead>
+<tr>
+<th>情境</th>
+<th>正確解法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>單一 flag &#x2F; 計數</td>
+<td><code>std::atomic</code></td>
+</tr>
+<tr>
+<td>多個共享資料</td>
+<td><code>std::mutex</code></td>
+</tr>
+<tr>
+<td>生產者 &#x2F; 消費者</td>
+<td><code>condition_variable</code></td>
+</tr>
+<tr>
+<td>只需一次初始化</td>
+<td><code>std::call_once</code></td>
+</tr>
+<tr>
+<td>高效能 lock-free</td>
+<td>atomic + memory order</td>
+</tr>
+</tbody></table>
+<h2 id="五、解法-1：使用-std-atomic（最常見）"><a href="#五、解法-1：使用-std-atomic（最常見）" class="headerlink" title="五、解法 1：使用 std::atomic（最常見）"></a>五、解法 1：使用 <code>std::atomic</code>（最常見）</h2><h3 id="適用情境"><a href="#適用情境" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>單一變數</li>
+<li>狀態旗標</li>
+<li>計數器</li>
+</ul>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atomic&gt;</span></span></span><br><span class="line">std::atomic&lt;<span class="type">bool</span>&gt; ready&#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">ready.<span class="built_in">store</span>(<span class="literal">true</span>, std::memory_order_release);</span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line"><span class="keyword">while</span> (!ready.<span class="built_in">load</span>(std::memory_order_acquire)) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="為什麼有效"><a href="#為什麼有效" class="headerlink" title="為什麼有效"></a>為什麼有效</h3><ul>
+<li>保證：<ul>
+<li>不會被快取</li>
+<li>不會被重排</li>
+<li>無 data race</li>
+</ul>
+</li>
+</ul>
+<h2 id="六、解法-2：使用-std-mutex"><a href="#六、解法-2：使用-std-mutex" class="headerlink" title="六、解法 2：使用 std::mutex"></a>六、解法 2：使用 <code>std::mutex</code></h2><h3 id="適用情境-1"><a href="#適用情境-1" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>多個共享變數</li>
+<li>複雜狀態</li>
+<li>需要一致性</li>
+</ul>
+<h3 id="範例-1"><a href="#範例-1" class="headerlink" title="範例"></a>範例</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">std::mutex m;</span><br><span class="line"><span class="type">int</span> data;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  data = <span class="number">42</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  <span class="built_in">use</span>(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><ul>
+<li>語意清楚</li>
+<li>不需理解 memory order</li>
+<li>安全性最高</li>
+</ul>
+<h2 id="七、解法-3：condition-variable（避免-busy-wait）"><a href="#七、解法-3：condition-variable（避免-busy-wait）" class="headerlink" title="七、解法 3：condition_variable（避免 busy wait）"></a>七、解法 3：<code>condition_variable</code>（避免 busy wait）</h2><h3 id="適用情境-2"><a href="#適用情境-2" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>等待事件</li>
+<li>生產者 &#x2F; 消費者<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">std::mutex m;</span><br><span class="line">std::condition_variable cv;</span><br><span class="line"><span class="type">bool</span> ready = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  ready = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">cv.<span class="built_in">notify_one</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  cv.<span class="built_in">wait</span>(lock, [] &#123; <span class="keyword">return</span> ready; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="八、為什麼-volatile-不能解-Data-Race（重要）"><a href="#八、為什麼-volatile-不能解-Data-Race（重要）" class="headerlink" title="八、為什麼 volatile 不能解 Data Race（重要）"></a>八、為什麼 <code>volatile</code> 不能解 Data Race（重要）</h2><p>❌ <strong>錯誤觀念</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">int</span> flag;</span><br></pre></td></tr></table></figure>
+<p>事實：</p>
+<ul>
+<li><code>volatile</code>：<ul>
+<li>只保證「每次都真的讀 &#x2F; 寫」</li>
+<li>不提供同步</li>
+<li>不提供 memory order</li>
+</ul>
+</li>
+<li><strong>不能防止 data race</strong></li>
+<li>在 C++ 多執行緒下仍是 UB<br>👉 <code>volatile</code> 只適合：</li>
+<li>MMIO</li>
+<li>signal handler（有限情境）</li>
+</ul>
+<h2 id="九、常見錯誤修法（不要用）"><a href="#九、常見錯誤修法（不要用）" class="headerlink" title="九、常見錯誤修法（不要用）"></a>九、常見錯誤修法（不要用）</h2><table>
+<thead>
+<tr>
+<th>錯誤方式</th>
+<th>問題</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>volatile</code></td>
+<td>無同步、仍 UB</td>
+</tr>
+<tr>
+<td><code>sleep()</code> 等待</td>
+<td>timing hack</td>
+</tr>
+<tr>
+<td>假設 x86 strong ordering</td>
+<td>不可攜</td>
+</tr>
+<tr>
+<td><code>if</code> + 無鎖</td>
+<td>無 happens-before</td>
+</tr>
+</tbody></table>
+<h2 id="十、如何檢測-Data-Race"><a href="#十、如何檢測-Data-Race" class="headerlink" title="十、如何檢測 Data Race"></a>十、如何檢測 Data Race</h2><h3 id="✅-ThreadSanitizer（強烈建議）"><a href="#✅-ThreadSanitizer（強烈建議）" class="headerlink" title="✅ ThreadSanitizer（強烈建議）"></a>✅ ThreadSanitizer（強烈建議）</h3><h2 id="fsanitize-thread-幾乎能直接指出：-哪個變數-哪些-thread-哪行-code"><a href="#fsanitize-thread-幾乎能直接指出：-哪個變數-哪些-thread-哪行-code" class="headerlink" title="-fsanitize=thread- 幾乎能直接指出：    - 哪個變數    - 哪些 thread    - 哪行 code"></a><code>-fsanitize=thread</code><br>- 幾乎能直接指出：<br>    - 哪個變數<br>    - 哪些 thread<br>    - 哪行 code</h2><h2 id="十一、工程判斷口訣"><a href="#十一、工程判斷口訣" class="headerlink" title="十一、工程判斷口訣"></a>十一、工程判斷口訣</h2><blockquote>
+<p><strong>只要多執行緒共享資料<br>→ 不是 atomic 就是 mutex<br>→ 沒第三條路</strong></p>
+</blockquote>
+<hr>
+<h2 id="十二、總結"><a href="#十二、總結" class="headerlink" title="十二、總結"></a>十二、總結</h2><ul>
+<li>Data race 是 <strong>C++ 語言層級 UB</strong></li>
+<li><code>-O2</code> 只會讓問題更明顯</li>
+<li><code>volatile</code> 不是解法</li>
+<li>正確工具：<ul>
+<li><code>std::atomic</code></li>
+<li><code>std::mutex</code></li>
+<li><code>condition_variable</code></li>
+</ul>
+</li>
+<li>唯一正確原則：<br>  <strong>所有共享資料都必須有同步語意</strong></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OptimizingCompiler/" rel="tag"># OptimizingCompiler</a>
+              <a href="/tags/cplusplus/" rel="tag"># cplusplus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20260128033700-f331a109.html" rel="prev" title="編譯器最佳化導致問題（UB 筆記）">
+                  <i class="fa fa-chevron-left"></i> 編譯器最佳化導致問題（UB 筆記）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20260128043600-4ccde5ec.html" rel="next" title="Strict Aliasing Rule Undefined Behavior">
+                  Strict Aliasing Rule Undefined Behavior <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>

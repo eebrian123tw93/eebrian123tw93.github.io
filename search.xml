@@ -149,6 +149,183 @@
       </tags>
   </entry>
   <entry>
+    <title>20260105小日常</title>
+    <url>/posts/20260105082200-8b416a8d.html</url>
+    <content><![CDATA[<p>今天在升級 <strong>live555</strong> 套件，從 <strong>2014 版升級到 2025 版</strong>。<br>整個問題的釐清與除錯過程，<strong>前後大約花了 2 週時間</strong>。</p>
+<p>需求是在系統中新增一個功能：<strong>使用 live555 的 <code>TaskScheduler</code>，每秒更新一次 shared memory 的值，讓其他 process 可以檢查這支 <code>wis-streamer</code> 是否仍然存活</strong>。</p>
+<p>剛完成到可以編譯並正常執行時，卻發現一個異常現象：<br> <span id="more"></span><br> <strong><code>TaskScheduler</code> 並沒有穩定地每秒執行一次</strong>，有時甚至會延遲到 <strong>10 秒</strong> 才執行。</p>
+<p>開始追 code 後發現，只要 <strong>RTCP 那邊有註冊 scheduler</strong>，延遲就會出現，而且行為相當隨機。<br>為了降低變因，我後來簡化測試條件，只保留 <strong>1 路串流、僅送 video</strong>，此時延遲現象就沒有那麼嚴重。</p>
+<p>接著我比對了 <strong>新版與舊版 scheduler 的實作差異</strong>，也深入研究了它的排程機制。表面上看起來差異不大，理論上不應該造成這種問題。<br>直到我開始 <strong>列印 scheduler 內部儲存的剩餘時間</strong>，才發現一件很詭異的事：<strong>竟然出現負值時間</strong>。</p>
+<p>我進一步檢查了時間計算中可能發生借位的地方，邏輯上也沒有問題。更奇妙的是，<strong>只要我多加一行 <code>printf</code>，行為就恢復正常了</strong>。</p>
+<p>詢問 GPT 之後，才被點醒：<strong>這很可能是編譯器最佳化（compiler optimization）造成的未定義行為被掩蓋或放大</strong>。  參考<a href="/posts/20260128033700-f331a109.html" title="編譯器最佳化導致問題（UB 筆記）">編譯器最佳化導致問題（UB 筆記）</a> 和 <a href="/posts/20260128043600-4ccde5ec.html" title="Strict Aliasing Rule Undefined Behavior">Strict Aliasing Rule Undefined Behavior</a><br>在釐清問題與風險的過程中，<strong>另一個實際且有效的解決方式，就是主動詢問資深同事，確認是否曾遇過類似情境或已知 live555 在新版下的潛在陷阱</strong>，能避免在錯誤方向上耗費過多時間。</p>
+<p>結論就是：<br><strong>以後遇到這種詭異問題，除了自行追 code，也要及早確認編譯參數、使用 <code>gdbserver</code>，並適時向資深同事請教，才能更快找出真正的原因。</strong></p>
+<hr>
+<p>✏️ <strong>本文已由 GPT 協助修正文句、錯字與結構，技術內容保持不變。</strong></p>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>live555</tag>
+        <tag>rtsp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20260119小日常</title>
+    <url>/posts/20260119082200-50f355c3.html</url>
+    <content><![CDATA[<p>今天在工作時又遇到一個蠻棘手的問題。</p>
+<p>在和其他家廠商串接 NVR 的時候，RTSPS 一直怎麼都串不起來。第一個直覺當然是「抓封包來比對」，但問題來了：它是 <strong>RTSP over TLS</strong>，整個連線流程都是加密的，導致我根本看不到實際的 RTSP 封包內容。</p>
+<p>一開始有查到網路上的作法，是用 <strong>Wireshark 解 HTTPS &#x2F; TLS</strong> 的方式：<br>透過設定 <code>SSLKEYLOGFILE</code> 環境變數，讓應用程式在 TLS 握手時把 session key dump 到指定的檔案，再讓 Wireshark 讀這個 key log 來解密封包。<br> <span id="more"></span></p>
+<p>但這條路很快就卡關了，原因很現實：</p>
+<ul>
+<li><strong>只有特定支援的程式</strong>（例如某些瀏覽器、libssl 有開啟功能的應用）才會把 key dump 到 <code>SSLKEYLOGFILE</code> 可參考<a href="/posts/20260126090100-a136f8fa.html" title="wireshake tls 解包 教學 使用 SSLKEYLOGFILE">wireshake tls 解包 教學 使用 SSLKEYLOGFILE</a></li>
+<li>NVR 是第三方的，完全無法控制</li>
+<li>openRTSP 雖然可以自己編譯，但還得額外實作把 TLS key dump 出來的機制，成本太高<br>  → 這條路基本上先放棄。</li>
+</ul>
+<p>後來再問 GPT，得到另一個方向：<br>可以用 <strong>PolarProxy</strong> 去代理 <strong>322 port（RTSPS）</strong>，藉由 MITM(中間人攻擊) 的方式把 TLS 解開。<br>這個方法對 <strong>TCP 流量是可行的</strong>，但如果牽涉到 <strong>UDP（例如 RTP over UDP）</strong>，PolarProxy 就完全無法處理。 可參考<a href="/posts/20260126090100-40217706.html" title="wireshake tls 解包 教學 使用 PolarProxy">wireshake tls 解包 教學 使用 PolarProxy</a></p>
+<p>再繞了一圈後，發現一個關鍵點：<br>NVR 在拉流之前，<strong>一定會先透過 ONVIF 去拿 RTSP URI</strong>，而 ONVIF 本身是走 <strong>HTTP &#x2F; HTTPS（80 &#x2F; 443）</strong>。</p>
+<p>於是策略就變成：</p>
+<ul>
+<li>用 <strong>Nginx 代理 TCP 80 &#x2F; 443</strong></li>
+<li>把 ONVIF 流量導到可控的中介層</li>
+<li>進而影響後續 RTSPS 的連線行為</li>
+</ul>
+<p><img src="/images/20260126154857.png"></p>
+<p>結果這樣一繞，<strong>最後成功把 RTSPS 的封包解開來看</strong>，也終於能實際比對雙方在 RTSP&#x2F;TLS 流程上的差異。</p>
+<p>整體來說是個繞路但有效的解法，也再次驗證：</p>
+<blockquote>
+<p>有時候解不開資料流本身，就要從「先看是誰給它連線資訊的。」下手。</p>
+</blockquote>
+<blockquote>
+<p><strong>註記</strong>：本文由 GPT 協助潤飾、口語化及語意優化完成。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>rtsp</tag>
+        <tag>https</tag>
+        <tag>rtsps</tag>
+        <tag>tls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20260126小日常</title>
+    <url>/posts/20260126082200-381a684f.html</url>
+    <content><![CDATA[<p>今天在與某家廠商串接 NVR 時，遇到一個多播斷線的問題，整理如下。</p>
+<p>在串接 <strong>RTSPS</strong> 的過程中：</p>
+<ul>
+<li><strong>單播 RTSP over SSL over TCP</strong>：已成功打通</li>
+<li><strong>單播 RTSP over SSL over UDP</strong>：也已成功</li>
+<li><strong>多播</strong>：卻會在約 <strong>30～40 秒後斷線</strong></li>
+</ul>
+<p>因此先嘗試改用 <strong>不加密的 RTSP（非 RTSPS）</strong>，但多播仍然會斷線，問題依舊存在。<br> <span id="more"></span></p>
+<p>一開始以為是 <strong>FPS 掉落</strong> 導致 Client 主動斷線，但使用 <strong>VLC 播放多播串流</strong> 時一切正常，也沒有斷線情況，因此初步排除 FPS 問題。</p>
+<p>接著發現一個更奇怪的現象：</p>
+<ul>
+<li><strong>只有一個 NVR client 連線時</strong> → 約 30～40 秒會斷線</li>
+<li><strong>同時有兩個 client（一個 VLC + 一個 NVR）連線時</strong> → 不會斷線<br>因此決定開始攔封包分析。</li>
+</ul>
+<hr>
+<h3 id="第一階段分析：RTCP-RR？"><a href="#第一階段分析：RTCP-RR？" class="headerlink" title="第一階段分析：RTCP RR？"></a>第一階段分析：RTCP RR？</h3><p>最初懷疑是 <strong>RTCP Receiver Report（RR）沒有送出</strong> 導致斷線，因為在 <strong>live555</strong> 裡有一個 <code>RRHandler</code> 機制，只要收到 RR，就會更新 scheduler，避免 session 被判定為 timeout 而切斷。</p>
+<p>但實際攔封包後發現：</p>
+<ul>
+<li><strong>VLC 在多播時也沒有送 RR</strong></li>
+<li>卻依然不會斷線</li>
+</ul>
+<p>因此這條線索行不通，分析一度卡關。</p>
+<hr>
+<h3 id="重新思考方向：RTSP-Liveness-機制"><a href="#重新思考方向：RTSP-Liveness-機制" class="headerlink" title="重新思考方向：RTSP Liveness 機制"></a>重新思考方向：RTSP Liveness 機制</h3><p>重新思考後，改去攔 <strong>單播 UDP 為何不會斷線</strong>，結果觀察到：</p>
+<ul>
+<li><strong>NVR 在單播 UDP 時，會定期送出 <code>OPTIONS</code> RTSP request</strong></li>
+</ul>
+<p>進一步回頭追 <strong>live555 原始碼</strong>，發現：</p>
+<ul>
+<li><code>noteLiveness()</code><ul>
+<li>只要 <strong>收到 RTSP 封包（例如 OPTIONS、GET_PARAMETER）</strong></li>
+<li>就會被呼叫，用來更新 session 的存活時間</li>
+</ul>
+</li>
+</ul>
+<p>再對照 <strong>VLC 的多播行為</strong>：</p>
+<ul>
+<li>VLC 在多播 UDP 時，會定期送出 <strong><code>GET_PARAMETER</code></strong></li>
+</ul>
+<p>但 <strong>NVR 在多播時完全沒有送任何 RTSP keep-alive 類型的封包</strong>，導致：</p>
+<ul>
+<li>server 無法得知 client 還活著</li>
+<li>超過 timeout 後就主動清除 session</li>
+<li>因此在約 30～40 秒後斷線</li>
+</ul>
+<hr>
+<h3 id="結論與解法"><a href="#結論與解法" class="headerlink" title="結論與解法"></a>結論與解法</h3><p><strong>根本原因</strong>：</p>
+<blockquote>
+<p>NVR 在「多播」模式下，沒有送出任何可讓 server 判定 client 存活的 RTSP 訊號（如 OPTIONS &#x2F; GET_PARAMETER）。</p>
+</blockquote>
+<p><strong>暫時解法</strong>：</p>
+<ul>
+<li>將 server 的 session timeout 30秒<strong>拉長到 5 分鐘</strong></li>
+<li>讓 server 仍能定期清除不必要的連線，同時避免正常多播過早被斷線</li>
+</ul>
+<hr>
+<p>📌 <strong>備註</strong><br>以上內容為 <strong>GPT 協助修正錯字、順語句與結構整理</strong>，技術邏輯與事件流程未做更動。</p>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>live555</tag>
+        <tag>rtsp</tag>
+        <tag>rtsps</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>20260128小日常</title>
+    <url>/posts/20260102082200-26d358fc.html</url>
+    <content><![CDATA[<p>從去年 11 月到現在，我協助公司測試地端 AI 用來寫程式。由於專案涉及不少機密資料，無法直接使用雲端 AI，因此只能投入地端方案。</p>
+<p>一開始使用 <strong>RooCode</strong>。但 11 月時台中公司沒有任何設備或 GPU 可供測試，我只能常常一大早搭高鐵到台北出差。在台北準備好環境與公司專案後，我們開始用各種問題測試地端 AI，不過結果不是頻繁出錯，就是陷入重複回答、鬼打牆的狀況。</p>
+<p>直到後來發現 <strong>Ollama</strong> 上有一個專門給 RooCode 使用的模型<br> <span id="more"></span><br> <code>qwen3_cline_roocode</code>，這個模型幾乎不會出錯，也不再鬼打牆，當下其實蠻開心的。</p>
+<p>不過，當拿它來處理較長的程式碼時，又出現新的問題：<br><strong>上下文壓縮失敗，回應非常吃力</strong>。我們推測是 code 太長、context 不夠，於是改成每 <strong>400 行切一段</strong> 再分批詢問，效果確實有改善，幾乎可以確認是上下文長度不足的問題。</p>
+<p>同時也發現，<strong>RooCode 本身餵給模型的 system prompt 非常長</strong>，本身就佔用了大量上下文空間，對地端模型來說負擔很重。</p>
+<p>有趣的是，在家裡我用 RooCode，但改成<strong>自己串接雲端 AI</strong>，效果卻非常好：</p>
+<ul>
+<li>指哪打哪    </li>
+<li>會自動拆功能</li>
+<li>再把功能拆成更小的任務逐步完成</li>
+</ul>
+<p>不過這樣的使用方式也有代價，<strong>實際使用下來噴了不少錢，每天大約 30 元台幣</strong>。<br>即便如此，體驗仍明顯優於地端模型，這也讓我一直思考：<br><strong>為什麼地端模型就是做不到同樣的事？</strong></p>
+<p>到了 <strong>12 月底</strong>，台北設備租用時間結束，公司決定直接採購硬體做測試：</p>
+<ul>
+<li>一台 Spark（約 9 萬）</li>
+<li>一台 Mac Studio（約 24 萬）</li>
+</ul>
+<p>價格真的不便宜，但實測結果其實和之前差不多；而且發現 <strong>用 RooCode 問問題速度非常慢，慢到完全不想用</strong>。</p>
+<p>因此最後我們決定 <strong>更換工具</strong>，改用 <strong>Continue</strong>，後來又出現了 <strong>OpenCode</strong>。<br>搭配 <code>qwen3-coder:30b</code> 後，發現 OpenCode 會<strong>自動切檔案再餵給模型</strong>，整體體驗明顯好很多。</p>
+<p>到了 <strong>1 月中旬</strong>，<strong>SKILL</strong> 又突然爆紅。我們目前測試的是 <strong>SVN commit helper</strong>，效果意外地不錯，後續也會持續開發或尋找更多實用的 SKILL。</p>
+<p>另外，因為需要評估這些機器<strong>能同時支援多少人使用</strong>，我們也開始上監控：</p>
+<ul>
+<li>exporter</li>
+<li>Prometheus</li>
+<li>Grafana</li>
+</ul>
+<p>透過這次實作，終於稍微理解它們的整體架構。因為我以前做 DevOps 時，監控是另一套架構，對 Prometheus 這套其實一直一知半解；現在雖然還沒完全搞懂，但至少有概念了。之後可以再深入研究：</p>
+<ul>
+<li>Prometheus 查詢語法（PromQL）</li>
+<li>exporter 的資料格式與設計方式</li>
+</ul>
+<p>最後補充一點：<br><strong>Mac GPU 一直沒有人寫 exporter</strong>，於是我乾脆直接請 AI 用 Python 寫了一個 <code>macmon-exporter</code> 服務，讓 Prometheus 可以順利收集 macOS 上的相關監控資料。參考: <a href="/posts/20260128101300-bf9fa31c.html" title="macmon_exporter">macmon_exporter</a></p>
+<hr>
+<p><strong>說明：</strong><br>以上內容已由 <strong>GPT 協助修改錯字、調整語句流暢度與段落結構，並補充你提供的雲端 AI 使用成本描述</strong>，未更動原意與技術內容</p>
+]]></content>
+      <categories>
+        <category>小日常</category>
+      </categories>
+      <tags>
+        <tag>AI</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>DMA (Direct Memory Access)</title>
     <url>/posts/20231118194800-e891e3a3.html</url>
     <content><![CDATA[<h1 id="介紹"><a href="#介紹" class="headerlink" title="介紹"></a>介紹</h1><p><img src="/images/20231119023846.png"><br>直接記憶體存取（Direct Memory Access，DMA） 獨立地直接讀寫系統記憶體，而不需中央處理器介入處理，減輕處理器負擔，減輕內核工作量</p>
@@ -1496,6 +1673,141 @@
       </tags>
   </entry>
   <entry>
+    <title>Strict Aliasing Rule Undefined Behavior</title>
+    <url>/posts/20260128043600-4ccde5ec.html</url>
+    <content><![CDATA[<h2 id="一、問題核心回顧"><a href="#一、問題核心回顧" class="headerlink" title="一、問題核心回顧"></a>一、問題核心回顧</h2><blockquote>
+<p><strong>Strict aliasing rule 規定：不同型別的 pointer &#x2F; reference 不得指向同一物件。</strong></p>
+</blockquote>
+<h2 id="違反此規則：-屬於-未定義行為（UB）-O2-O3-會合法地產生錯誤行為-O0-正常只是「剛好沒被最佳化」-gt-「這段程式碼永遠不會出現」，因此優化器可能-不會像你預期那樣正確讀-x2F-寫記憶體。"><a href="#違反此規則：-屬於-未定義行為（UB）-O2-O3-會合法地產生錯誤行為-O0-正常只是「剛好沒被最佳化」-gt-「這段程式碼永遠不會出現」，因此優化器可能-不會像你預期那樣正確讀-x2F-寫記憶體。" class="headerlink" title="違反此規則：- 屬於 未定義行為（UB）- -O2 / -O3 會合法地產生錯誤行為- -O0 正常只是「剛好沒被最佳化」&gt; 「這段程式碼永遠不會出現」，因此優化器可能 不會像你預期那樣正確讀&#x2F;寫記憶體。"></a>違反此規則：<br>- 屬於 <strong>未定義行為（UB）</strong><br>- <code>-O2 / -O3</code> 會合法地產生錯誤行為<br>- <code>-O0</code> 正常只是「剛好沒被最佳化」<br>&gt; 「這段程式碼永遠不會出現」，因此優化器可能 <strong>不會像你預期那樣正確讀&#x2F;寫記憶體</strong>。</h2> <span id="more"></span>
+<h2 id="二、什麼情況一定要「解」"><a href="#二、什麼情況一定要「解」" class="headerlink" title="二、什麼情況一定要「解」"></a>二、什麼情況一定要「解」</h2><h2 id="只要出現以下任一狀況，就必須處理：-T-amp-obj，且-T-≠-obj-的實際型別-pointer-cast-做-type-punning-reinterpret-cast-lt-T-amp-gt-O0-正常、-O2-錯亂-加-volatile-才「正常」"><a href="#只要出現以下任一狀況，就必須處理：-T-amp-obj，且-T-≠-obj-的實際型別-pointer-cast-做-type-punning-reinterpret-cast-lt-T-amp-gt-O0-正常、-O2-錯亂-加-volatile-才「正常」" class="headerlink" title="只要出現以下任一狀況，就必須處理：- (T&amp;)obj，且 T ≠ obj 的實際型別- pointer cast 做 type-punning- reinterpret_cast&lt;T&amp;&gt;- -O0 正常、-O2 錯亂- 加 volatile 才「正常」"></a>只要出現以下任一狀況，就<strong>必須處理</strong>：<br>- <code>(T&amp;)obj</code>，且 <code>T ≠ obj 的實際型別</code><br>- pointer cast 做 type-punning<br>- <code>reinterpret_cast&lt;T&amp;&gt;</code><br>- <code>-O0</code> 正常、<code>-O2</code> 錯亂<br>- 加 <code>volatile</code> 才「正常」</h2><h2 id="三、Strict-Aliasing-的正確解法總覽"><a href="#三、Strict-Aliasing-的正確解法總覽" class="headerlink" title="三、Strict Aliasing 的正確解法總覽"></a>三、Strict Aliasing 的正確解法總覽</h2><table>
+<thead>
+<tr>
+<th>解法</th>
+<th>是否推薦</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>型別一致</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>最佳、零 UB</td>
+</tr>
+<tr>
+<td>不回傳 reference</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>安全、好維護</td>
+</tr>
+<tr>
+<td><code>memcpy</code> type-punning</td>
+<td>⭐⭐⭐⭐</td>
+<td>合法轉型</td>
+</tr>
+<tr>
+<td><code>union</code>（有限）</td>
+<td>⭐⭐</td>
+<td>需小心 active member</td>
+</tr>
+<tr>
+<td><code>-fno-strict-aliasing</code></td>
+<td>⭐</td>
+<td>不推薦，僅過渡</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、解法-1：型別一致（最正確）"><a href="#四、解法-1：型別一致（最正確）" class="headerlink" title="四、解法 1：型別一致（最正確）"></a>四、解法 1：型別一致（最正確）</h2><h3 id="問題寫法"><a href="#問題寫法" class="headerlink" title="問題寫法"></a>問題寫法</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">time_base_seconds&amp; <span class="title">secs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (time_base_seconds&amp;)tv.tv_sec;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正確寫法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="type">time_t</span>&amp; <span class="title">secs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> tv.tv_sec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="原則"><a href="#原則" class="headerlink" title="原則"></a>原則</h3><blockquote>
+<p><strong>用什麼型別宣告，就用什麼型別存取</strong></p>
+</blockquote>
+<h2 id="五、解法-2：不要回傳-reference（強烈推薦）"><a href="#五、解法-2：不要回傳-reference（強烈推薦）" class="headerlink" title="五、解法 2：不要回傳 reference（強烈推薦）"></a>五、解法 2：不要回傳 reference（強烈推薦）</h2><h3 id="問題點"><a href="#問題點" class="headerlink" title="問題點"></a>問題點</h3><ul>
+<li>reference 綁定錯誤型別</li>
+<li>容易隱含 UB</li>
+</ul>
+<h3 id="安全設計"><a href="#安全設計" class="headerlink" title="安全設計"></a>安全設計</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="function">time_base_seconds <span class="title">secs</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> tv.tv_sec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_secs</span><span class="params">(time_base_seconds v)</span> </span>&#123;</span><br><span class="line">  tv.tv_sec = v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><ul>
+<li>無 aliasing 問題</li>
+<li>最佳化友善</li>
+<li>API 清楚</li>
+</ul>
+<h2 id="六、解法-3：使用-memcpy（合法-type-punning）"><a href="#六、解法-3：使用-memcpy（合法-type-punning）" class="headerlink" title="六、解法 3：使用 memcpy（合法 type-punning）"></a>六、解法 3：使用 <code>memcpy</code>（合法 type-punning）</h2><h3 id="適用情境"><a href="#適用情境" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>需要轉換位元表示</li>
+<li>不能改結構定義<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">time_base_seconds dst; </span><br><span class="line">std::<span class="built_in">memcpy</span>(&amp;dst, &amp;tv.tv_sec, <span class="built_in">sizeof</span>(dst));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="說明"><a href="#說明" class="headerlink" title="說明"></a>說明</h3><ul>
+<li>C++ 標準明確允許</li>
+<li>編譯器會最佳化成單一 load<br>七、解法 4：<code>union</code>（有限且需非常小心）<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="title class_">U</span> &#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+限制：</li>
+<li>只能存取 <strong>目前 active member</strong></li>
+<li>跨型別讀取在 C++ 中仍有限制</li>
+<li><strong>不推薦在新程式使用</strong><br>八、解法 5：關閉 strict aliasing（最後手段）<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-fno-strict-aliasing</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="為什麼不推薦"><a href="#為什麼不推薦" class="headerlink" title="為什麼不推薦"></a>為什麼不推薦</h3><ul>
+<li>全專案效能下降</li>
+<li>掩蓋設計錯誤</li>
+<li>不可攜</li>
+<li>新 compiler &#x2F; LTO 仍可能出問題</li>
+</ul>
+<p>九、哪些東西「不能解」strict aliasing</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>volatile</code></td>
+<td>不影響 alias 規則</td>
+</tr>
+<tr>
+<td><code>reinterpret_cast</code></td>
+<td>明確寫出 UB</td>
+</tr>
+<tr>
+<td>指標大小相同</td>
+<td>規範不看大小</td>
+</tr>
+<tr>
+<td>x86 強排序</td>
+<td>與 alias 無關</td>
+</tr>
+</tbody></table>
+<h2 id="十、重構時的安全準則（工程版）"><a href="#十、重構時的安全準則（工程版）" class="headerlink" title="十、重構時的安全準則（工程版）"></a>十、重構時的安全準則（工程版）</h2><ol>
+<li><strong>永遠不要回傳 cast 過的 reference</strong></li>
+<li><strong>API 以值為界線，內部再轉型</strong></li>
+<li><strong>型別不一致 → 用 <code>memcpy</code></strong></li>
+<li><strong><code>reinterpret_cast</code> 視為紅色警告</strong></li>
+<li><strong><code>-O2</code> 是基本測試，不是選項</strong></li>
+</ol>
+<hr>
+<h2 id="十一、Code-Review-檢查清單"><a href="#十一、Code-Review-檢查清單" class="headerlink" title="十一、Code Review 檢查清單"></a>十一、Code Review 檢查清單</h2><ul>
+<li>是否有 <code>(T&amp;)obj</code>？</li>
+<li>是否用 pointer cast 存取不同型別？</li>
+<li>accessor 是否回傳錯誤型別 reference？</li>
+<li>是否依賴 <code>-fno-strict-aliasing</code>？</li>
+<li><code>-O2</code> 行為是否與 <code>-O0</code> 一致？</li>
+</ul>
+<hr>
+<h2 id="十二、總結"><a href="#十二、總結" class="headerlink" title="十二、總結"></a>十二、總結</h2><ul>
+<li>Strict aliasing 是 <strong>效能與正確性的交換前提</strong></li>
+<li>違反規則的程式：<ul>
+<li>行為不被保證</li>
+<li><code>-O2</code> 出問題是正常</li>
+</ul>
+</li>
+<li>唯一根本解法：<br>  <strong>修正型別設計，使存取方式合法</strong></li>
+</ul>
+<blockquote>
+<p><strong>不要和編譯器鬥智，讓型別正確即可。</strong></p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>OptimizingCompiler</tag>
+        <tag>cplusplus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>TURN 協議（Traversal Using Relays around NAT）</title>
     <url>/posts/20241223040900-46d03228.html</url>
     <content><![CDATA[<p><strong>TURN（Traversal Using Relays around NAT）</strong> 是一種用於穿越 NAT（Network Address Translation）和防火牆的網絡協議，通常在實時通信應用中使用，例如視頻通話、即時消息和其他需要點對點連接的應用。通過<strong>中繼服務器轉發流量</strong>來解決這些問題</p>
@@ -2119,6 +2431,22 @@
       </tags>
   </entry>
   <entry>
+    <title>git@github.com Permission denied (publickey)</title>
+    <url>/posts/20230505084825-9174ad3f.html</url>
+    <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>如果沒有產生過公鑰，會產下面錯誤</p>
+<blockquote>
+<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
+</blockquote>
+<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
+
+<p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
+]]></content>
+  </entry>
+  <entry>
     <title>git常用指令</title>
     <url>/posts/20250622074200-c34887c6.html</url>
     <content><![CDATA[<h1 id="config"><a href="#config" class="headerlink" title="config"></a>config</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 解决 git 中文路径显示 unicode 代码的问题</span></span><br><span class="line">git config --global core.quotepath <span class="literal">false</span></span><br><span class="line">git config --global user.name username</span><br><span class="line">git config --global user.email user_email</span><br><span class="line">git config --<span class="built_in">local</span> user.name username</span><br><span class="line">git config --<span class="built_in">local</span> user.email user_email</span><br><span class="line">git config --list</span><br><span class="line">git config --global core.editor <span class="string">&quot;vim&quot;</span></span><br></pre></td></tr></table></figure>
@@ -2143,22 +2471,6 @@
       <tags>
         <tag>git</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>git@github.com Permission denied (publickey)</title>
-    <url>/posts/20230505084825-9174ad3f.html</url>
-    <content><![CDATA[<p>git clone permission denied(publickey)<br><img src="/images/pasted-0.png"><br>原因：git clone 沒有ssh的publickey<br>解決：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
-
-<p>如果沒有產生過公鑰，會產下面錯誤</p>
-<blockquote>
-<p>cat: &#x2F;root&#x2F;.ssh&#x2F;id_rsa.pub: No such file or directory</p>
-</blockquote>
-<p>使用ssh-keygen產公鑰(遇到提示按Enter)</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ssh-keygen</span><br></pre></td></tr></table></figure>
-
-<p>將印出來的公鑰設定去<a href="https://github.com/settings/ssh/new">SSH Add New Key</a> or (GitHub &gt;&gt; Settings &gt;&gt; SSH and GPG keys &gt;&gt; New SSH key)<br><img src="/images/pasted-2.png"></p>
-]]></content>
   </entry>
   <entry>
     <title>html隱藏元素的方法</title>
@@ -2199,6 +2511,16 @@
         <tag>python</tag>
         <tag>cache</tag>
         <tag>memory_leak</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>macmon_exporter</title>
+    <url>/posts/20260128101300-bf9fa31c.html</url>
+    <content><![CDATA[<h1 id="程式碼"><a href="#程式碼" class="headerlink" title="程式碼"></a>程式碼</h1><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"><span class="keyword">from</span> prometheus_client <span class="keyword">import</span> start_http_server, Gauge</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- Prometheus Metrics ----------</span></span><br><span class="line">all_power = Gauge(<span class="string">&quot;macmon_all_power_watts&quot;</span>, <span class="string">&quot;Total power consumption&quot;</span>)</span><br><span class="line">cpu_power = Gauge(<span class="string">&quot;macmon_cpu_power_watts&quot;</span>, <span class="string">&quot;CPU power consumption&quot;</span>)</span><br><span class="line">gpu_power = Gauge(<span class="string">&quot;macmon_gpu_power_watts&quot;</span>, <span class="string">&quot;GPU power consumption&quot;</span>)</span><br><span class="line">gpu_ram_power = Gauge(<span class="string">&quot;macmon_gpu_ram_power_watts&quot;</span>, <span class="string">&quot;GPU RAM power consumption&quot;</span>)</span><br><span class="line">ram_power = Gauge(<span class="string">&quot;macmon_ram_power_watts&quot;</span>, <span class="string">&quot;RAM power consumption&quot;</span>)</span><br><span class="line">sys_power = Gauge(<span class="string">&quot;macmon_sys_power_watts&quot;</span>, <span class="string">&quot;System power consumption&quot;</span>)</span><br><span class="line"></span><br><span class="line">cpu_temp = Gauge(<span class="string">&quot;macmon_cpu_temperature_celsius&quot;</span>, <span class="string">&quot;Average CPU temperature&quot;</span>)</span><br><span class="line">gpu_temp = Gauge(<span class="string">&quot;macmon_gpu_temperature_celsius&quot;</span>, <span class="string">&quot;Average GPU temperature&quot;</span>)</span><br><span class="line"></span><br><span class="line">ram_total = Gauge(<span class="string">&quot;macmon_ram_total_bytes&quot;</span>, <span class="string">&quot;Total RAM&quot;</span>)</span><br><span class="line">ram_usage = Gauge(<span class="string">&quot;macmon_ram_usage_bytes&quot;</span>, <span class="string">&quot;Used RAM&quot;</span>)</span><br><span class="line">swap_total = Gauge(<span class="string">&quot;macmon_swap_total_bytes&quot;</span>, <span class="string">&quot;Total Swap&quot;</span>)</span><br><span class="line">swap_usage = Gauge(<span class="string">&quot;macmon_swap_usage_bytes&quot;</span>, <span class="string">&quot;Used Swap&quot;</span>)</span><br><span class="line"></span><br><span class="line">pcpu_cores = Gauge(<span class="string">&quot;macmon_pcpu_cores&quot;</span>, <span class="string">&quot;Performance CPU core count&quot;</span>)</span><br><span class="line">pcpu_usage = Gauge(<span class="string">&quot;macmon_pcpu_usage_ratio&quot;</span>, <span class="string">&quot;Performance CPU usage ratio&quot;</span>)</span><br><span class="line"></span><br><span class="line">ecpu_cores = Gauge(<span class="string">&quot;macmon_ecpu_cores&quot;</span>, <span class="string">&quot;Efficiency CPU core count&quot;</span>)</span><br><span class="line">ecpu_usage = Gauge(<span class="string">&quot;macmon_ecpu_usage_ratio&quot;</span>, <span class="string">&quot;Efficiency CPU usage ratio&quot;</span>)</span><br><span class="line"></span><br><span class="line">gpu_cores = Gauge(<span class="string">&quot;macmon_gpu_cores&quot;</span>, <span class="string">&quot;GPU core count&quot;</span>)</span><br><span class="line">gpu_usage = Gauge(<span class="string">&quot;macmon_gpu_usage_ratio&quot;</span>, <span class="string">&quot;GPU usage ratio&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- Data Reader ----------</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read_macmon_pipe</span>():</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> sys.stdin:</span><br><span class="line">        line = line.strip()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> line:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="built_in">print</span>(line)</span><br><span class="line">            data = json.loads(line)</span><br><span class="line"></span><br><span class="line">            all_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;all_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line">            cpu_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;cpu_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line">            gpu_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;gpu_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line">            gpu_ram_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;gpu_ram_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line">            ram_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;ram_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line">            sys_power.<span class="built_in">set</span>(data.get(<span class="string">&quot;sys_power&quot;</span>, <span class="number">0</span>))</span><br><span class="line"></span><br><span class="line">            cpu_temp.<span class="built_in">set</span>(data[<span class="string">&quot;temp&quot;</span>][<span class="string">&quot;cpu_temp_avg&quot;</span>])</span><br><span class="line">            gpu_temp.<span class="built_in">set</span>(data[<span class="string">&quot;temp&quot;</span>][<span class="string">&quot;gpu_temp_avg&quot;</span>])</span><br><span class="line"></span><br><span class="line">            mem = data[<span class="string">&quot;memory&quot;</span>]</span><br><span class="line">            ram_total.<span class="built_in">set</span>(mem[<span class="string">&quot;ram_total&quot;</span>])</span><br><span class="line">            ram_usage.<span class="built_in">set</span>(mem[<span class="string">&quot;ram_usage&quot;</span>])</span><br><span class="line">            swap_total.<span class="built_in">set</span>(mem[<span class="string">&quot;swap_total&quot;</span>])</span><br><span class="line">            swap_usage.<span class="built_in">set</span>(mem[<span class="string">&quot;swap_usage&quot;</span>])</span><br><span class="line"></span><br><span class="line">            pcpu_cores.<span class="built_in">set</span>(data[<span class="string">&quot;pcpu_usage&quot;</span>][<span class="number">0</span>])</span><br><span class="line">            pcpu_usage.<span class="built_in">set</span>(data[<span class="string">&quot;pcpu_usage&quot;</span>][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">            ecpu_cores.<span class="built_in">set</span>(data[<span class="string">&quot;ecpu_usage&quot;</span>][<span class="number">0</span>])</span><br><span class="line">            ecpu_usage.<span class="built_in">set</span>(data[<span class="string">&quot;ecpu_usage&quot;</span>][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">            gpu_cores.<span class="built_in">set</span>(data[<span class="string">&quot;gpu_usage&quot;</span>][<span class="number">0</span>])</span><br><span class="line">            gpu_usage.<span class="built_in">set</span>(data[<span class="string">&quot;gpu_usage&quot;</span>][<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">f&quot;Parse error: <span class="subst">&#123;e&#125;</span>&quot;</span>, file=sys.stderr)</span><br><span class="line"></span><br><span class="line"><span class="comment"># ---------- Main ----------</span></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    start_http_server(<span class="number">9105</span>)  <span class="comment"># Prometheus scrape port</span></span><br><span class="line">    t = threading.Thread(target=read_macmon_pipe, daemon=<span class="literal">True</span>)</span><br><span class="line">    t.start()</span><br><span class="line">    t.join()</span><br></pre></td></tr></table></figure>
+
+<h1 id="執行"><a href="#執行" class="headerlink" title="執行"></a>執行</h1><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">macmon pipe | python main.py</span><br><span class="line"></span><br><span class="line"><span class="comment">#curl</span></span><br><span class="line">curl http://localhost:9105/</span><br></pre></td></tr></table></figure>]]></content>
+      <tags>
+        <tag>prometheus</tag>
       </tags>
   </entry>
   <entry>
@@ -2279,6 +2601,179 @@
 <li><a href="https://ithelp.ithome.com.tw/articles/10294624">Day 8: 快快樂樂地用SonarQube進行檢測吧!</a></li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>wireshake tls 解包 教學 使用 PolarProxy</title>
+    <url>/posts/20260126090100-40217706.html</url>
+    <content><![CDATA[<h2 id="一、原理說明（為什麼-PolarProxy-能解）"><a href="#一、原理說明（為什麼-PolarProxy-能解）" class="headerlink" title="一、原理說明（為什麼 PolarProxy 能解）"></a>一、原理說明（為什麼 PolarProxy 能解）</h2><h3 id="核心概念：主動式-MITM-TLS-Proxy"><a href="#核心概念：主動式-MITM-TLS-Proxy" class="headerlink" title="核心概念：主動式 MITM TLS Proxy"></a>核心概念：<strong>主動式 MITM TLS Proxy</strong></h3><p>PolarProxy 並不是像 <code>SSLKEYLOGFILE</code> 那樣「被動取得 session key」，而是：</p>
+<ol>
+<li><strong>客戶端 ↔ PolarProxy ↔ 伺服器</strong></li>
+<li>PolarProxy：<ul>
+<li>與「伺服器」建立一條真正的 TLS</li>
+<li>與「客戶端」建立另一條 TLS <span id="more"></span></li>
+</ul>
+</li>
+<li>因為 PolarProxy <strong>本身就是 TLS 端點</strong><ul>
+<li>它「知道所有明文資料」</li>
+<li>可以把「已解密後的流量」輸出成 pcap</li>
+</ul>
+</li>
+<li>Wireshark 只看到 <strong>明文 TCP &#x2F; RTSP &#x2F; HTTP</strong>，不需要任何金鑰</li>
+</ol>
+<p>👉 <strong>關鍵差異</strong></p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原理</th>
+<th>限制</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>SSLKEYLOGFILE</td>
+<td>被動解密</td>
+<td>需 client 支援</td>
+</tr>
+<tr>
+<td>PolarProxy</td>
+<td>主動 MITM</td>
+<td>需信任 CA</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、適用範圍（非常重要）"><a href="#二、適用範圍（非常重要）" class="headerlink" title="二、適用範圍（非常重要）"></a>二、適用範圍（非常重要）</h2><h3 id="✅-適合"><a href="#✅-適合" class="headerlink" title="✅ 適合"></a>✅ 適合</h3><ul>
+<li>RTSPS（RTSP over TLS）</li>
+<li>HTTPS</li>
+<li>MQTT over TLS</li>
+<li><strong>第三方 NVR &#x2F; Camera（無法改程式）</strong></li>
+<li>openRTSP、VLC、客戶端黑盒</li>
+</ul>
+<h3 id="❌-不適合-x2F-無法"><a href="#❌-不適合-x2F-無法" class="headerlink" title="❌ 不適合 &#x2F; 無法"></a>❌ 不適合 &#x2F; 無法</h3><ul>
+<li><strong>Certificate Pinning</strong></li>
+<li>硬體內建不可替換 CA</li>
+<li>Mutual TLS（client cert 驗證）</li>
+<li>TLS over UDP（DTLS）</li>
+</ul>
+<hr>
+<h2 id="三、整體架構圖（文字版）"><a href="#三、整體架構圖（文字版）" class="headerlink" title="三、整體架構圖（文字版）"></a>三、整體架構圖（文字版）</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">openRTSP / NVR</span><br><span class="line">      │</span><br><span class="line">      │  TLS (假憑證)</span><br><span class="line">      ▼</span><br><span class="line">  PolarProxy</span><br><span class="line">      │</span><br><span class="line">      │  TLS (真憑證)</span><br><span class="line">      ▼</span><br><span class="line">   真實 RTSP Server</span><br></pre></td></tr></table></figure>
+
+<h2 id="PolarProxy-同時：-對-client-偽裝-server-對-server-偽裝-client"><a href="#PolarProxy-同時：-對-client-偽裝-server-對-server-偽裝-client" class="headerlink" title="PolarProxy 同時：- 對 client 偽裝 server- 對 server 偽裝 client"></a>PolarProxy 同時：<br>- 對 client 偽裝 server<br>- 對 server 偽裝 client</h2><h2 id="四、實作步驟（一步一步）"><a href="#四、實作步驟（一步一步）" class="headerlink" title="四、實作步驟（一步一步）"></a>四、實作步驟（一步一步）</h2><h3 id="Step-1：下載執行檔"><a href="#Step-1：下載執行檔" class="headerlink" title="Step 1：下載執行檔"></a>Step 1：下載執行檔</h3><ul>
+<li><a href="https://www.netresec.com/?page=PolarProxy">官網</a></li>
+<li>tar -zxvf PolarProxy_1-0-2_linux-x64.tar.gz</li>
+</ul>
+<hr>
+<h3 id="Step-2：啟動-PolarProxy-讓「客戶端信任-PolarProxy-CA」"><a href="#Step-2：啟動-PolarProxy-讓「客戶端信任-PolarProxy-CA」" class="headerlink" title="Step 2：啟動 PolarProxy 讓「客戶端信任 PolarProxy CA」"></a>Step 2：啟動 PolarProxy 讓「客戶端信任 PolarProxy CA」</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 啟動服務 </span></span><br><span class="line"><span class="comment"># 監聽 443 port </span></span><br><span class="line"><span class="comment"># 流量轉到 10.81.81.4</span></span><br><span class="line"><span class="comment"># tcp dump 到 decrypted.pcap</span></span><br><span class="line"><span class="comment"># cert port 10080 訪問 http://localhost:10080/polarproxy.cer</span></span><br><span class="line"><span class="comment"># -d debug</span></span><br><span class="line">sudo ./PolarProxy -p 0.0.0.0,443,443 --connect 10.81.81.4  -w decrypted.pcap --certhttp 10080 -d  --nosni Topview --leafcert sign</span><br><span class="line"></span><br><span class="line"><span class="comment"># linux</span></span><br><span class="line">wget http://localhost:10080/polarproxy.cer </span><br><span class="line">sudo <span class="built_in">mv</span> polarproxy.cer  /usr/local/share/ca-certificates/polarproxy.crt </span><br><span class="line">sudo update-ca-certificates</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="Step-3：修改-client-連線目標"><a href="#Step-3：修改-client-連線目標" class="headerlink" title="Step 3：修改 client 連線目標"></a>Step 3：修改 client 連線目標</h3><ul>
+<li>打開瀏覽器訪問 <a href="https://localhost/">https://localhost</a></li>
+</ul>
+<hr>
+<h3 id="Step-4：用-Wireshark-開啟解密後封包"><a href="#Step-4：用-Wireshark-開啟解密後封包" class="headerlink" title="Step 4：用 Wireshark 開啟解密後封包"></a>Step 4：用 Wireshark 開啟解密後封包</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wireshark decrypted.pcap</span><br></pre></td></tr></table></figure>
+<p><img src="/images/20260126173632.png"><br><img src="/images/20260126173728.png"><br>❗<strong>Wireshark 不需要設定 TLS Key</strong></p>
+<hr>
+<h2 id="六、常見問題整理"><a href="#六、常見問題整理" class="headerlink" title="六、常見問題整理"></a>六、常見問題整理</h2><h3 id="Q1：為何-PolarProxy-沒反應？"><a href="#Q1：為何-PolarProxy-沒反應？" class="headerlink" title="Q1：為何 PolarProxy 沒反應？"></a>Q1：為何 PolarProxy 沒反應？</h3><ul>
+<li>client 沒連到 proxy</li>
+<li>port 綁錯 IP</li>
+<li>防火牆</li>
+<li>CA 未被信任</li>
+</ul>
+<h3 id="Q2：看到-TLS-Alert-x2F-Handshake-Failure？"><a href="#Q2：看到-TLS-Alert-x2F-Handshake-Failure？" class="headerlink" title="Q2：看到 TLS Alert &#x2F; Handshake Failure？"></a>Q2：看到 TLS Alert &#x2F; Handshake Failure？</h3><ul>
+<li>client 不信任 CA</li>
+<li>TLS version &#x2F; cipher 不相容</li>
+<li>Certificate Pinning</li>
+</ul>
+<h3 id="Q3：可以解-UDP-RTP-嗎？"><a href="#Q3：可以解-UDP-RTP-嗎？" class="headerlink" title="Q3：可以解 UDP RTP 嗎？"></a>Q3：可以解 UDP RTP 嗎？</h3><ul>
+<li>❌ 不行  </li>
+<li>PolarProxy 只處理 TLS&#x2F;TCP</li>
+</ul>
+<hr>
+<h2 id="七、什麼情境「一定要用-PolarProxy」"><a href="#七、什麼情境「一定要用-PolarProxy」" class="headerlink" title="七、什麼情境「一定要用 PolarProxy」"></a>七、什麼情境「一定要用 PolarProxy」</h2><ul>
+<li>第三方 NVR</li>
+<li>無法改 client</li>
+<li>SSLKEYLOGFILE 不支援</li>
+<li>想直接看到 RTSP &#x2F; HTTP 明文</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>tls</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>wireshake tls 解包 教學 使用 SSLKEYLOGFILE</title>
+    <url>/posts/20260126090100-a136f8fa.html</url>
+    <content><![CDATA[<h2 id="一、原理"><a href="#一、原理" class="headerlink" title="一、原理"></a>一、原理</h2><p>TLS&#x2F;SSL 是一種端到端加密協議，資料在網路上傳輸時都是加密的。Wireshark 無法直接解讀加密的 TLS 封包內容（Application Data），除非你提供 <strong>解密所需的對稱 session key</strong>。</p>
+<p><code>SSLKEYLOGFILE</code> 是一個環境變數，它允許某些 TLS&#x2F;SSL 客戶端（如 Chrome、Firefox、OpenSSL 或某些 Python 套件）在啟動時把 <strong>每個 TLS 連線的 session key（pre-master &#x2F; master secret）</strong> 寫入一個檔案。Wireshark 讀取這個檔案後，就能用對稱加密金鑰解密封包，還原明文資料。<br> <span id="more"></span></p>
+<p>流程概念如下：</p>
+<ol>
+<li>瀏覽器&#x2F;程式端啟用 <code>SSLKEYLOGFILE</code>，每次 TLS 握手成功後會將對應的 session key 寫入檔案。</li>
+<li>Wireshark 讀取這個 key log 檔案，匹配封包中的 <code>ClientHello</code>、<code>ServerHello</code> 等訊息。</li>
+<li>Wireshark 使用這些 session key 解密封包，顯示原始明文資料（HTTP、WebSocket、gRPC 等）。</li>
+</ol>
+<hr>
+<h2 id="二、適用範圍"><a href="#二、適用範圍" class="headerlink" title="二、適用範圍"></a>二、適用範圍</h2><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>支援協議</td>
+<td>TLS 1.0 &#x2F; 1.1 &#x2F; 1.2 &#x2F; 1.3（部分舊版或實驗性 TLS 1.3 cipher 可能無法解）</td>
+</tr>
+<tr>
+<td>支援軟體</td>
+<td>Firefox、Chrome、Edge、OpenSSL-based 程式（curl, Python <code>requests</code> with OpenSSL）</td>
+</tr>
+<tr>
+<td>不適用情況</td>
+<td>非 OpenSSL&#x2F;TLS 客戶端產生的 key，或者使用硬體加密（如 HSM、某些硬體 VPN）</td>
+</tr>
+<tr>
+<td>注意</td>
+<td>TLS 1.3 中，Wireshark 只能解密使用 key log 的加密資料，<strong>early data &#x2F; 0-RTT</strong> 可能無法解密。</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、一步步教學"><a href="#三、一步步教學" class="headerlink" title="三、一步步教學"></a>三、一步步教學</h2><p>假設你要抓瀏覽器的 HTTPS 流量：</p>
+<h3 id="步驟-1：設定-SSLKEYLOGFILE-環境變數"><a href="#步驟-1：設定-SSLKEYLOGFILE-環境變數" class="headerlink" title="步驟 1：設定 SSLKEYLOGFILE 環境變數"></a>步驟 1：設定 SSLKEYLOGFILE 環境變數</h3><ul>
+<li>Windows（PowerShell）：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment">#windows (PowerShell)</span></span><br><span class="line"><span class="variable">$env</span>:SSLKEYLOGFILE=<span class="string">&quot;C:\temp\sslkeys.log&quot;</span></span><br><span class="line"><span class="comment"># Linux or MacOS</span></span><br><span class="line">`<span class="built_in">export</span> SSLKEYLOGFILE=/tmp/sslkeys.log`</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意：路徑需確保程式有寫入權限。</p>
+</blockquote>
+</li>
+</ul>
+<hr>
+<h3 id="步驟-2：在-Wireshark-設定-TLS-key-log"><a href="#步驟-2：在-Wireshark-設定-TLS-key-log" class="headerlink" title="步驟 2：在 Wireshark 設定 TLS key log"></a>步驟 2：在 Wireshark 設定 TLS key log</h3><ol>
+<li>在 Wireshark 選單：<strong>Edit → Preferences → Protocols → TLS</strong></li>
+<li>找到 <strong>(Pre)-Master-Secret log filename</strong>，填入 <code>sslkeys.log</code> 的路徑。</li>
+<li>確定勾選 <strong>“Attempt to decrypt TLS”</strong>。<br> <img src="/images/20260126163156.png"><br> <img src="/images/20260126163334.png"></li>
+</ol>
+<hr>
+<h3 id="步驟-3：啟動-TLS-客戶端"><a href="#步驟-3：啟動-TLS-客戶端" class="headerlink" title="步驟 3：啟動 TLS 客戶端"></a>步驟 3：啟動 TLS 客戶端</h3><ul>
+<li>例如 Chrome 或 Firefox：<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">google-chrome</span><br></pre></td></tr></table></figure></li>
+<li>任何新的 HTTPS 連線都會把 session key 寫入 <code>sslkeys.log</code>。</li>
+</ul>
+<hr>
+<h3 id="步驟-4：抓取封包"><a href="#步驟-4：抓取封包" class="headerlink" title="步驟 4：抓取封包"></a>步驟 4：抓取封包</h3><ol>
+<li>打開 Wireshark，選擇你的網路介面抓包。</li>
+<li>針對你要解密的 TLS 流量開始抓包（或用已存在的 pcap 檔）。</li>
+</ol>
+<h3 id="步驟-5：解密封包"><a href="#步驟-5：解密封包" class="headerlink" title="步驟 5：解密封包"></a>步驟 5：解密封包</h3><ol>
+<li>重新載入封包或重新抓包。</li>
+<li>Wireshark 會自動使用 key log 解密 TLS 封包。</li>
+<li>可以看到 <code>Application Data</code> 被解析成明文，例如 HTTP&#x2F;2、WebSocket。</li>
+</ol>
+<hr>
+<h3 id="步驟-6：驗證"><a href="#步驟-6：驗證" class="headerlink" title="步驟 6：驗證"></a>步驟 6：驗證</h3><ul>
+<li>在 Wireshark 中，找到某個 TLS 封包 → 展開 <code>Secure Sockets Layer</code> → <code>Decrypted TLS Application Data</code>。</li>
+<li>若顯示明文 HTTP&#x2F;JSON&#x2F;其他資料，表示解密成功。<br><img src="/images/20260126164348.png"><br><img src="/images/20260126164708.png"></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>tls</tag>
+      </tags>
   </entry>
   <entry>
     <title>使用WebCodecs API對H264解碼</title>
@@ -2449,6 +2944,132 @@
       </tags>
   </entry>
   <entry>
+    <title>編譯器最佳化導致問題（UB 筆記）</title>
+    <url>/posts/20260128033700-f331a109.html</url>
+    <content><![CDATA[<h1 id="編譯器最佳化導致問題筆記（Undefined-Behavior）"><a href="#編譯器最佳化導致問題筆記（Undefined-Behavior）" class="headerlink" title="編譯器最佳化導致問題筆記（Undefined Behavior）"></a>編譯器最佳化導致問題筆記（Undefined Behavior）</h1><h2 id="一、核心觀念"><a href="#一、核心觀念" class="headerlink" title="一、核心觀念"></a>一、核心觀念</h2><blockquote>
+<p><strong>編譯器最佳化不是「照程式碼跑」，而是「照語言規範跑」。</strong></p>
+</blockquote>
+<p>在 C &#x2F; C++ 中：</p>
+<ul>
+<li><strong>未定義行為（UB）代表語言不保證任何結果</strong></li>
+<li>編譯器可以假設 <strong>UB 不存在</strong></li>
+<li>因此在 <code>-O2</code> &#x2F; <code>-O3</code> 下，編譯器可以：<ul>
+<li>重排指令</li>
+<li>刪除看似「不可能發生」的程式碼 <span id="more"></span></li>
+<li>快取變數、不再重讀</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="二、為什麼-O2-會導致問題"><a href="#二、為什麼-O2-會導致問題" class="headerlink" title="二、為什麼 -O2 會導致問題"></a>二、為什麼 <code>-O2</code> 會導致問題</h2><h3 id="關鍵假設-程式沒有-UB"><a href="#關鍵假設-程式沒有-UB" class="headerlink" title="關鍵假設 程式沒有 UB"></a>關鍵假設 <em><strong>程式沒有 UB</strong></em></h3><p>基於此假設，編譯器可以合法地做出以下行為：</p>
+<ul>
+<li>如果某條件在「無 UB 前提下永遠為真 &#x2F; 假」→ 直接刪除分支</li>
+<li>如果某變數理論上不會被改變 → 永遠使用快取值</li>
+<li>如果某狀態在規範下不可能出現 → 不做防禦檢查</li>
+</ul>
+<p>👉 結果就是：</p>
+<ul>
+<li><code>-O0</code> 看似正常</li>
+<li><code>-O2</code> 行為錯亂或邏輯消失</li>
+</ul>
+<h2 id="三、常見會被-O2-放大的-UB-類型"><a href="#三、常見會被-O2-放大的-UB-類型" class="headerlink" title="三、常見會被 -O2 放大的 UB 類型"></a>三、常見會被 <code>-O2</code> 放大的 UB 類型</h2><h3 id="1️⃣-使用未初始化變數"><a href="#1️⃣-使用未初始化變數" class="headerlink" title="1️⃣ 使用未初始化變數"></a>1️⃣ 使用未初始化變數</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x;</span><br><span class="line"><span class="keyword">if</span> (x &gt; <span class="number">0</span>) &#123; ... &#125;   <span class="comment">// ❌ UB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>x</code> 的值未定義</li>
+<li>編譯器可以假設：<br>  <code>這段程式永遠不會走到這裡</code></li>
+<li>分支可能被整段刪除</li>
+</ul>
+<h3 id="2️⃣陣列越界"><a href="#2️⃣陣列越界" class="headerlink" title="2️⃣陣列越界"></a>2️⃣陣列越界</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a[<span class="number">10</span>];</span><br><span class="line">a[<span class="number">10</span>] = <span class="number">1</span>;   <span class="comment">// ❌ UB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>編譯器假設所有存取都在合法範圍內</li>
+<li>越界後的行為不被保證</li>
+<li><code>-O2</code> 下可能：<ul>
+<li>覆寫不相關變數</li>
+<li>產生不可預期結果</li>
+</ul>
+</li>
+</ul>
+<h3 id="3️⃣-解引用-NULL-x2F-野指標"><a href="#3️⃣-解引用-NULL-x2F-野指標" class="headerlink" title="3️⃣ 解引用 NULL &#x2F; 野指標"></a>3️⃣ 解引用 NULL &#x2F; 野指標</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span>* p = <span class="literal">nullptr</span>;</span><br><span class="line">*p = <span class="number">1</span>;   <span class="comment">// ❌ UB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>編譯器可以假設：<code>指標永遠不是 NULL</code></li>
+<li>因此：<ul>
+<li>NULL 檢查可能被移除</li>
+<li>導致 crash 或邏輯錯誤</li>
+</ul>
+</li>
+</ul>
+<h3 id="4️⃣-signed-overflow（非常常見）"><a href="#4️⃣-signed-overflow（非常常見）" class="headerlink" title="4️⃣ signed overflow（非常常見）"></a>4️⃣ signed overflow（非常常見）</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> x = INT_MAX;</span><br><span class="line">x += <span class="number">1</span>;   <span class="comment">// ❌ UB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>signed overflow 是 UB</strong></li>
+<li>編譯器可假設：<code>overflow 不會發生</code></li>
+<li>因此：<ul>
+<li><code>if (x &lt; 0)</code> 可能被刪除</li>
+<li>數學邏輯被重排</li>
+</ul>
+</li>
+</ul>
+<h3 id="5️⃣-資料競態（Data-Race）"><a href="#5️⃣-資料競態（Data-Race）" class="headerlink" title="5️⃣ 資料競態（Data Race）"></a>5️⃣ 資料競態（Data Race）</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> flag = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">flag = <span class="number">1</span>;</span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line"><span class="keyword">while</span> (flag == <span class="number">0</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>無同步的多執行緒存取</li>
+<li>屬於 UB</li>
+<li><code>-O2</code> 下：<ul>
+<li><code>flag</code> 可能被快取</li>
+<li>迴圈變成無限迴圈</li>
+</ul>
+</li>
+<li>解決辦法: <a href="/posts/20260128042600-ed926797.html" title="資料競態（Data Race） Undefined Behavior">資料競態（Data Race） Undefined Behavior</a></li>
+</ul>
+<h3 id="6️⃣-memcpy-用在重疊記憶體"><a href="#6️⃣-memcpy-用在重疊記憶體" class="headerlink" title="6️⃣ memcpy 用在重疊記憶體"></a>6️⃣ <code>memcpy</code> 用在重疊記憶體</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memcpy</span>(buf + <span class="number">1</span>, buf, n);   <span class="comment">// ❌ UB</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>memcpy</code> 明確要求 <strong>來源與目的不可重疊</strong></li>
+<li>編譯器可以：<ul>
+<li>使用向量化</li>
+<li>重排 copy 順序</li>
+</ul>
+</li>
+<li>導致資料毀損<br>正確做法：<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">memmove</span>(buf + <span class="number">1</span>, buf, n);  <span class="comment">// ✅</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="7️⃣"><a href="#7️⃣" class="headerlink" title="7️⃣ "></a>7️⃣ <a href="/posts/20260128043600-4ccde5ec.html" title="Strict Aliasing Rule Undefined Behavior">Strict Aliasing Rule Undefined Behavior</a></h3><h2 id="四、-O2-下的典型錯誤現象"><a href="#四、-O2-下的典型錯誤現象" class="headerlink" title="四、-O2 下的典型錯誤現象"></a>四、<code>-O2</code> 下的典型錯誤現象</h2><ul>
+<li>條件判斷被「消失」</li>
+<li>看似必要的程式碼被刪除</li>
+<li>變數值突然不更新</li>
+<li><code>volatile</code> 加了才「正常」</li>
+<li>debug &#x2F; release 行為完全不同</li>
+</ul>
+<hr>
+<h2 id="五、為什麼-volatile-只能暫時「救火」"><a href="#五、為什麼-volatile-只能暫時「救火」" class="headerlink" title="五、為什麼 volatile 只能暫時「救火」"></a>五、為什麼 <code>volatile</code> 只能暫時「救火」</h2><ul>
+<li><code>volatile</code> 只影響：<ul>
+<li>是否允許快取</li>
+<li>是否可消除存取</li>
+</ul>
+</li>
+<li><strong>不能修正 UB</strong></li>
+<li>換編譯器 &#x2F; 換版本 &#x2F; 換平台 → 仍可能出錯</li>
+</ul>
+<h2 id="六、實務除錯與預防建議"><a href="#六、實務除錯與預防建議" class="headerlink" title="六、實務除錯與預防建議"></a>六、實務除錯與預防建議</h2><h3 id="✅-使用-Sanitizer（最有效）"><a href="#✅-使用-Sanitizer（最有效）" class="headerlink" title="✅ 使用 Sanitizer（最有效）"></a>✅ 使用 Sanitizer（最有效）</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">-fsanitize=address,undefined</span><br><span class="line">-fsanitize=thread</span><br></pre></td></tr></table></figure>
+<h3 id="✅-比較不同最佳化等級"><a href="#✅-比較不同最佳化等級" class="headerlink" title="✅ 比較不同最佳化等級"></a>✅ 比較不同最佳化等級</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">-O0 / -O1 / -O2</span><br></pre></td></tr></table></figure>
+
+<h3 id="✅-避免依賴-UB-的「剛好行為」"><a href="#✅-避免依賴-UB-的「剛好行為」" class="headerlink" title="✅ 避免依賴 UB 的「剛好行為」"></a>✅ 避免依賴 UB 的「剛好行為」</h3><ul>
+<li>不用未初始化值</li>
+<li>嚴格檢查邊界</li>
+<li>使用正確同步原語</li>
+<li>使用正確 API（<code>memmove</code> vs <code>memcpy</code>）</li>
+</ul>
+<h2 id="七、工程判斷準則（重點）"><a href="#七、工程判斷準則（重點）" class="headerlink" title="七、工程判斷準則（重點）"></a>七、工程判斷準則（重點）</h2><blockquote>
+<p><strong>只要 <code>-O0</code> 正常、<code>-O2</code> 出錯<br>幾乎可以直接判定：程式中存在 UB</strong></p>
+</blockquote>
+<h2 id="八、總結"><a href="#八、總結" class="headerlink" title="八、總結"></a>八、總結</h2><ul>
+<li>編譯器最佳化不會製造 bug</li>
+<li><strong>UB 才是問題來源</strong></li>
+<li><code>-O2</code> 只是揭露原本就不被保證的行為</li>
+<li>唯一根本解法：<br>  <strong>修正程式邏輯，使其符合語言規範</strong></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>OptimizingCompiler</tag>
+        <tag>cplusplus</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>webrtc</title>
     <url>/posts/20230806170400-af856b41.html</url>
     <content><![CDATA[<h1 id="env"><a href="#env" class="headerlink" title="env"></a>env</h1><h2 id="Dockerfile"><a href="#Dockerfile" class="headerlink" title="Dockerfile"></a>Dockerfile</h2><figure class="highlight dockerfile"><table><tr><td class="code"><pre><span class="line"><span class="keyword">FROM</span> ubuntu:<span class="number">22.04</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置非互動模式，更新包管理器並安裝必要軟體</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">    git curl python3 vim xz-utils lsb-release sudo file &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    apt-get clean &amp;&amp; <span class="built_in">rm</span> -rf /var/lib/apt/lists/*</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apt-get update &amp;&amp; apt-get install -y --no-install-recommends \</span></span><br><span class="line"><span class="language-bash">    ca-certificates &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    update-ca-certificates &amp;&amp; \</span></span><br><span class="line"><span class="language-bash">    <span class="built_in">rm</span> -rf /var/lib/apt/lists/*</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 克隆 depot_tools 並設置 PATH</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> git <span class="built_in">clone</span> https://chromium.googlesource.com/chromium/tools/depot_tools.git /opt/depot_tools</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 設置環境變數</span></span><br><span class="line"><span class="keyword">ENV</span> PATH=<span class="string">&quot;/opt/depot_tools:$PATH&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /opt</span></span><br></pre></td></tr></table></figure>
@@ -2470,6 +3091,152 @@
 ]]></content>
       <tags>
         <tag>WebRTC</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>資料競態（Data Race） Undefined Behavior</title>
+    <url>/posts/20260128042600-ed926797.html</url>
+    <content><![CDATA[<h1 id="資料競態（Data-Race）如何解-—-C-工程筆記"><a href="#資料競態（Data-Race）如何解-—-C-工程筆記" class="headerlink" title="資料競態（Data Race）如何解 — C++ 工程筆記"></a>資料競態（Data Race）如何解 — C++ 工程筆記</h1><h2 id="一、什麼是-Data-Race（重點）"><a href="#一、什麼是-Data-Race（重點）" class="headerlink" title="一、什麼是 Data Race（重點）"></a>一、什麼是 Data Race（重點）</h2><blockquote>
+<p><strong>兩個以上執行緒，同時存取同一個記憶體位置，且至少一個是寫入，又沒有同步機制</strong><br>→ <strong>未定義行為（UB）</strong></p>
+</blockquote>
+<p>在 C++：</p>
+<ul>
+<li>Data race <strong>不是「邏輯錯誤」</strong></li>
+<li>是 <strong>語言層級的 UB</strong></li>
+<li>編譯器可以假設「它不會發生」</li>
+</ul>
+<h2 id="二、為什麼-O2-會放大-Data-Race-問題"><a href="#二、為什麼-O2-會放大-Data-Race-問題" class="headerlink" title="二、為什麼 -O2 會放大 Data Race 問題"></a>二、為什麼 <code>-O2</code> 會放大 Data Race 問題</h2> <span id="more"></span>
+<p>在沒有同步的情況下，編譯器可以合法地：</p>
+<ul>
+<li>將變數快取在暫存器</li>
+<li>假設變數不會被其他執行緒修改</li>
+<li>移除重複讀取</li>
+<li>重排讀寫指令<br>結果：<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">while</span> (flag == <span class="number">0</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+在 <code>-O2</code> 下可能變成 <strong>無限迴圈</strong>。</li>
+</ul>
+<h2 id="三、錯誤範例（典型踩雷）"><a href="#三、錯誤範例（典型踩雷）" class="headerlink" title="三、錯誤範例（典型踩雷）"></a>三、錯誤範例（典型踩雷）</h2><h3 id="❌-無同步的旗標"><a href="#❌-無同步的旗標" class="headerlink" title="❌ 無同步的旗標"></a>❌ 無同步的旗標</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> ready = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">ready = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line"><span class="keyword">while</span> (ready == <span class="number">0</span>) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>問題：</p>
+<ul>
+<li>無 mutex</li>
+<li>無 atomic</li>
+<li>無 memory order<br>  → <strong>Data race（UB）</strong></li>
+</ul>
+<h2 id="四、正確解法總覽（先看表）"><a href="#四、正確解法總覽（先看表）" class="headerlink" title="四、正確解法總覽（先看表）"></a>四、正確解法總覽（先看表）</h2><table>
+<thead>
+<tr>
+<th>情境</th>
+<th>正確解法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>單一 flag &#x2F; 計數</td>
+<td><code>std::atomic</code></td>
+</tr>
+<tr>
+<td>多個共享資料</td>
+<td><code>std::mutex</code></td>
+</tr>
+<tr>
+<td>生產者 &#x2F; 消費者</td>
+<td><code>condition_variable</code></td>
+</tr>
+<tr>
+<td>只需一次初始化</td>
+<td><code>std::call_once</code></td>
+</tr>
+<tr>
+<td>高效能 lock-free</td>
+<td>atomic + memory order</td>
+</tr>
+</tbody></table>
+<h2 id="五、解法-1：使用-std-atomic（最常見）"><a href="#五、解法-1：使用-std-atomic（最常見）" class="headerlink" title="五、解法 1：使用 std::atomic（最常見）"></a>五、解法 1：使用 <code>std::atomic</code>（最常見）</h2><h3 id="適用情境"><a href="#適用情境" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>單一變數</li>
+<li>狀態旗標</li>
+<li>計數器</li>
+</ul>
+<h3 id="範例"><a href="#範例" class="headerlink" title="範例"></a>範例</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;atomic&gt;</span></span></span><br><span class="line">std::atomic&lt;<span class="type">bool</span>&gt; ready&#123;<span class="literal">false</span>&#125;;</span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">ready.<span class="built_in">store</span>(<span class="literal">true</span>, std::memory_order_release);</span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line"><span class="keyword">while</span> (!ready.<span class="built_in">load</span>(std::memory_order_acquire)) &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="為什麼有效"><a href="#為什麼有效" class="headerlink" title="為什麼有效"></a>為什麼有效</h3><ul>
+<li>保證：<ul>
+<li>不會被快取</li>
+<li>不會被重排</li>
+<li>無 data race</li>
+</ul>
+</li>
+</ul>
+<h2 id="六、解法-2：使用-std-mutex"><a href="#六、解法-2：使用-std-mutex" class="headerlink" title="六、解法 2：使用 std::mutex"></a>六、解法 2：使用 <code>std::mutex</code></h2><h3 id="適用情境-1"><a href="#適用情境-1" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>多個共享變數</li>
+<li>複雜狀態</li>
+<li>需要一致性</li>
+</ul>
+<h3 id="範例-1"><a href="#範例-1" class="headerlink" title="範例"></a>範例</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">std::mutex m;</span><br><span class="line"><span class="type">int</span> data;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  data = <span class="number">42</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  <span class="built_in">use</span>(data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><ul>
+<li>語意清楚</li>
+<li>不需理解 memory order</li>
+<li>安全性最高</li>
+</ul>
+<h2 id="七、解法-3：condition-variable（避免-busy-wait）"><a href="#七、解法-3：condition-variable（避免-busy-wait）" class="headerlink" title="七、解法 3：condition_variable（避免 busy wait）"></a>七、解法 3：<code>condition_variable</code>（避免 busy wait）</h2><h3 id="適用情境-2"><a href="#適用情境-2" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>等待事件</li>
+<li>生產者 &#x2F; 消費者<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line">std::mutex m;</span><br><span class="line">std::condition_variable cv;</span><br><span class="line"><span class="type">bool</span> ready = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread A</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  ready = <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line">cv.<span class="built_in">notify_one</span>();</span><br><span class="line"></span><br><span class="line"><span class="comment">// thread B</span></span><br><span class="line">&#123;</span><br><span class="line">  <span class="function">std::unique_lock&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(m)</span></span>;</span><br><span class="line">  cv.<span class="built_in">wait</span>(lock, [] &#123; <span class="keyword">return</span> ready; &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="八、為什麼-volatile-不能解-Data-Race（重要）"><a href="#八、為什麼-volatile-不能解-Data-Race（重要）" class="headerlink" title="八、為什麼 volatile 不能解 Data Race（重要）"></a>八、為什麼 <code>volatile</code> 不能解 Data Race（重要）</h2><p>❌ <strong>錯誤觀念</strong></p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">volatile</span> <span class="type">int</span> flag;</span><br></pre></td></tr></table></figure>
+<p>事實：</p>
+<ul>
+<li><code>volatile</code>：<ul>
+<li>只保證「每次都真的讀 &#x2F; 寫」</li>
+<li>不提供同步</li>
+<li>不提供 memory order</li>
+</ul>
+</li>
+<li><strong>不能防止 data race</strong></li>
+<li>在 C++ 多執行緒下仍是 UB<br>👉 <code>volatile</code> 只適合：</li>
+<li>MMIO</li>
+<li>signal handler（有限情境）</li>
+</ul>
+<h2 id="九、常見錯誤修法（不要用）"><a href="#九、常見錯誤修法（不要用）" class="headerlink" title="九、常見錯誤修法（不要用）"></a>九、常見錯誤修法（不要用）</h2><table>
+<thead>
+<tr>
+<th>錯誤方式</th>
+<th>問題</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>volatile</code></td>
+<td>無同步、仍 UB</td>
+</tr>
+<tr>
+<td><code>sleep()</code> 等待</td>
+<td>timing hack</td>
+</tr>
+<tr>
+<td>假設 x86 strong ordering</td>
+<td>不可攜</td>
+</tr>
+<tr>
+<td><code>if</code> + 無鎖</td>
+<td>無 happens-before</td>
+</tr>
+</tbody></table>
+<h2 id="十、如何檢測-Data-Race"><a href="#十、如何檢測-Data-Race" class="headerlink" title="十、如何檢測 Data Race"></a>十、如何檢測 Data Race</h2><h3 id="✅-ThreadSanitizer（強烈建議）"><a href="#✅-ThreadSanitizer（強烈建議）" class="headerlink" title="✅ ThreadSanitizer（強烈建議）"></a>✅ ThreadSanitizer（強烈建議）</h3><h2 id="fsanitize-thread-幾乎能直接指出：-哪個變數-哪些-thread-哪行-code"><a href="#fsanitize-thread-幾乎能直接指出：-哪個變數-哪些-thread-哪行-code" class="headerlink" title="-fsanitize=thread- 幾乎能直接指出：    - 哪個變數    - 哪些 thread    - 哪行 code"></a><code>-fsanitize=thread</code><br>- 幾乎能直接指出：<br>    - 哪個變數<br>    - 哪些 thread<br>    - 哪行 code</h2><h2 id="十一、工程判斷口訣"><a href="#十一、工程判斷口訣" class="headerlink" title="十一、工程判斷口訣"></a>十一、工程判斷口訣</h2><blockquote>
+<p><strong>只要多執行緒共享資料<br>→ 不是 atomic 就是 mutex<br>→ 沒第三條路</strong></p>
+</blockquote>
+<hr>
+<h2 id="十二、總結"><a href="#十二、總結" class="headerlink" title="十二、總結"></a>十二、總結</h2><ul>
+<li>Data race 是 <strong>C++ 語言層級 UB</strong></li>
+<li><code>-O2</code> 只會讓問題更明顯</li>
+<li><code>volatile</code> 不是解法</li>
+<li>正確工具：<ul>
+<li><code>std::atomic</code></li>
+<li><code>std::mutex</code></li>
+<li><code>condition_variable</code></li>
+</ul>
+</li>
+<li>唯一正確原則：<br>  <strong>所有共享資料都必須有同步語意</strong></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>OptimizingCompiler</tag>
+        <tag>cplusplus</tag>
       </tags>
   </entry>
 </search>

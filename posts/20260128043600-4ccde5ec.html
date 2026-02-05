@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-big-counter.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"eebrian123tw93.github.io","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.15.1","exturl":false,"sidebar":{"position":"left","display":"always","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="一、問題核心回顧 Strict aliasing rule 規定：不同型別的 pointer &#x2F; reference 不得指向同一物件。  違反此規則：- 屬於 未定義行為（UB）- -O2 &#x2F; -O3 會合法地產生錯誤行為- -O0 正常只是「剛好沒被最佳化」&gt; 「這段程式碼永遠不會出現」，因此優化器可能 不會像你預期那樣正確讀&#x2F;寫記憶體。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Strict Aliasing Rule Undefined Behavior">
+<meta property="og:url" content="http://eebrian123tw93.github.io/posts/20260128043600-4ccde5ec.html">
+<meta property="og:site_name" content="Brian&#39;s 隨記">
+<meta property="og:description" content="一、問題核心回顧 Strict aliasing rule 規定：不同型別的 pointer &#x2F; reference 不得指向同一物件。  違反此規則：- 屬於 未定義行為（UB）- -O2 &#x2F; -O3 會合法地產生錯誤行為- -O0 正常只是「剛好沒被最佳化」&gt; 「這段程式碼永遠不會出現」，因此優化器可能 不會像你預期那樣正確讀&#x2F;寫記憶體。">
+<meta property="og:locale">
+<meta property="article:published_time" content="2026-01-28T04:36:00.000Z">
+<meta property="article:modified_time" content="2026-02-04T21:46:52.000Z">
+<meta property="article:author" content="BrianLu">
+<meta property="article:tag" content="OptimizingCompiler">
+<meta property="article:tag" content="cplusplus">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://eebrian123tw93.github.io/posts/20260128043600-4ccde5ec.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh","comments":true,"permalink":"http://eebrian123tw93.github.io/posts/20260128043600-4ccde5ec.html","path":"posts/20260128043600-4ccde5ec.html","title":"Strict Aliasing Rule Undefined Behavior"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Strict Aliasing Rule Undefined Behavior | Brian's 隨記</title>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YGGD5RS8TM"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YGGD5RS8TM');
+</script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({
+          google_ad_client: 'ca-pub-1252660992855516',
+          enable_page_level_ads: true
+     });
+</script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <meta name="keywords" content="OptimizingCompiler,cplusplus,Brian,Notes,engineer,software,隨記">
+  
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Brian's 隨記</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80" placeholder="Searching..." spellcheck="false" type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%95%8F%E9%A1%8C%E6%A0%B8%E5%BF%83%E5%9B%9E%E9%A1%A7"><span class="nav-number">1.</span> <span class="nav-text">一、問題核心回顧</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%81%95%E5%8F%8D%E6%AD%A4%E8%A6%8F%E5%89%87%EF%BC%9A-%E5%B1%AC%E6%96%BC-%E6%9C%AA%E5%AE%9A%E7%BE%A9%E8%A1%8C%E7%82%BA%EF%BC%88UB%EF%BC%89-O2-O3-%E6%9C%83%E5%90%88%E6%B3%95%E5%9C%B0%E7%94%A2%E7%94%9F%E9%8C%AF%E8%AA%A4%E8%A1%8C%E7%82%BA-O0-%E6%AD%A3%E5%B8%B8%E5%8F%AA%E6%98%AF%E3%80%8C%E5%89%9B%E5%A5%BD%E6%B2%92%E8%A2%AB%E6%9C%80%E4%BD%B3%E5%8C%96%E3%80%8D-gt-%E3%80%8C%E9%80%99%E6%AE%B5%E7%A8%8B%E5%BC%8F%E7%A2%BC%E6%B0%B8%E9%81%A0%E4%B8%8D%E6%9C%83%E5%87%BA%E7%8F%BE%E3%80%8D%EF%BC%8C%E5%9B%A0%E6%AD%A4%E5%84%AA%E5%8C%96%E5%99%A8%E5%8F%AF%E8%83%BD-%E4%B8%8D%E6%9C%83%E5%83%8F%E4%BD%A0%E9%A0%90%E6%9C%9F%E9%82%A3%E6%A8%A3%E6%AD%A3%E7%A2%BA%E8%AE%80-x2F-%E5%AF%AB%E8%A8%98%E6%86%B6%E9%AB%94%E3%80%82"><span class="nav-number">2.</span> <span class="nav-text">違反此規則：- 屬於 未定義行為（UB）- -O2 &#x2F; -O3 會合法地產生錯誤行為- -O0 正常只是「剛好沒被最佳化」&gt; 「這段程式碼永遠不會出現」，因此優化器可能 不會像你預期那樣正確讀&#x2F;寫記憶體。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BB%80%E9%BA%BC%E6%83%85%E6%B3%81%E4%B8%80%E5%AE%9A%E8%A6%81%E3%80%8C%E8%A7%A3%E3%80%8D"><span class="nav-number">3.</span> <span class="nav-text">二、什麼情況一定要「解」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AA%E8%A6%81%E5%87%BA%E7%8F%BE%E4%BB%A5%E4%B8%8B%E4%BB%BB%E4%B8%80%E7%8B%80%E6%B3%81%EF%BC%8C%E5%B0%B1%E5%BF%85%E9%A0%88%E8%99%95%E7%90%86%EF%BC%9A-T-amp-obj%EF%BC%8C%E4%B8%94-T-%E2%89%A0-obj-%E7%9A%84%E5%AF%A6%E9%9A%9B%E5%9E%8B%E5%88%A5-pointer-cast-%E5%81%9A-type-punning-reinterpret-cast-lt-T-amp-gt-O0-%E6%AD%A3%E5%B8%B8%E3%80%81-O2-%E9%8C%AF%E4%BA%82-%E5%8A%A0-volatile-%E6%89%8D%E3%80%8C%E6%AD%A3%E5%B8%B8%E3%80%8D"><span class="nav-number">4.</span> <span class="nav-text">只要出現以下任一狀況，就必須處理：- (T&amp;)obj，且 T ≠ obj 的實際型別- pointer cast 做 type-punning- reinterpret_cast&lt;T&amp;&gt;- -O0 正常、-O2 錯亂- 加 volatile 才「正常」</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E3%80%81Strict-Aliasing-%E7%9A%84%E6%AD%A3%E7%A2%BA%E8%A7%A3%E6%B3%95%E7%B8%BD%E8%A6%BD"><span class="nav-number">5.</span> <span class="nav-text">三、Strict Aliasing 的正確解法總覽</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E8%A7%A3%E6%B3%95-1%EF%BC%9A%E5%9E%8B%E5%88%A5%E4%B8%80%E8%87%B4%EF%BC%88%E6%9C%80%E6%AD%A3%E7%A2%BA%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">四、解法 1：型別一致（最正確）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E5%AF%AB%E6%B3%95"><span class="nav-number">6.1.</span> <span class="nav-text">問題寫法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%89%87"><span class="nav-number">6.2.</span> <span class="nav-text">原則</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%94%E3%80%81%E8%A7%A3%E6%B3%95-2%EF%BC%9A%E4%B8%8D%E8%A6%81%E5%9B%9E%E5%82%B3-reference%EF%BC%88%E5%BC%B7%E7%83%88%E6%8E%A8%E8%96%A6%EF%BC%89"><span class="nav-number">7.</span> <span class="nav-text">五、解法 2：不要回傳 reference（強烈推薦）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%95%8F%E9%A1%8C%E9%BB%9E"><span class="nav-number">7.1.</span> <span class="nav-text">問題點</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E8%A8%AD%E8%A8%88"><span class="nav-number">7.2.</span> <span class="nav-text">安全設計</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%84%AA%E9%BB%9E"><span class="nav-number">7.3.</span> <span class="nav-text">優點</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%AD%E3%80%81%E8%A7%A3%E6%B3%95-3%EF%BC%9A%E4%BD%BF%E7%94%A8-memcpy%EF%BC%88%E5%90%88%E6%B3%95-type-punning%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">六、解法 3：使用 memcpy（合法 type-punning）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%A9%E7%94%A8%E6%83%85%E5%A2%83"><span class="nav-number">8.1.</span> <span class="nav-text">適用情境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AA%AA%E6%98%8E"><span class="nav-number">8.2.</span> <span class="nav-text">說明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%82%BA%E4%BB%80%E9%BA%BC%E4%B8%8D%E6%8E%A8%E8%96%A6"><span class="nav-number">8.3.</span> <span class="nav-text">為什麼不推薦</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E3%80%81%E9%87%8D%E6%A7%8B%E6%99%82%E7%9A%84%E5%AE%89%E5%85%A8%E6%BA%96%E5%89%87%EF%BC%88%E5%B7%A5%E7%A8%8B%E7%89%88%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">十、重構時的安全準則（工程版）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%B8%80%E3%80%81Code-Review-%E6%AA%A2%E6%9F%A5%E6%B8%85%E5%96%AE"><span class="nav-number">10.</span> <span class="nav-text">十一、Code Review 檢查清單</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%81%E4%BA%8C%E3%80%81%E7%B8%BD%E7%B5%90"><span class="nav-number">11.</span> <span class="nav-text">十二、總結</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">BrianLu</p>
+  <div class="site-description" itemprop="description">隨手記錄筆記，幫助記憶</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">58</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">77</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/eebrian123tw93" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;eebrian123tw93" rel="external nofollow noopener noreferrer" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+      
+      
+        <div class="links-of-blogroll-title">
+          <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-1252660992855516" data-ad-slot="7182416679" data-ad-format="auto" data-full-width-responsive="true"></ins>
+          <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+          </script>
+        </div>
+      
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh">
+    <link itemprop="mainEntityOfPage" href="http://eebrian123tw93.github.io/posts/20260128043600-4ccde5ec.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BrianLu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Brian's 隨記">
+      <meta itemprop="description" content="隨手記錄筆記，幫助記憶">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Strict Aliasing Rule Undefined Behavior | Brian's 隨記">
+      <meta itemprop="description" content>
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Strict Aliasing Rule Undefined Behavior
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2026-01-28 12:36:00" itemprop="dateCreated datePublished" datetime="2026-01-28T12:36:00+08:00">2026-01-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2026-02-05 05:46:52" itemprop="dateModified" datetime="2026-02-05T05:46:52+08:00">2026-02-05</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="一、問題核心回顧"><a href="#一、問題核心回顧" class="headerlink" title="一、問題核心回顧"></a>一、問題核心回顧</h2><blockquote>
+<p><strong>Strict aliasing rule 規定：不同型別的 pointer &#x2F; reference 不得指向同一物件。</strong></p>
+</blockquote>
+<h2 id="違反此規則：-屬於-未定義行為（UB）-O2-O3-會合法地產生錯誤行為-O0-正常只是「剛好沒被最佳化」-gt-「這段程式碼永遠不會出現」，因此優化器可能-不會像你預期那樣正確讀-x2F-寫記憶體。"><a href="#違反此規則：-屬於-未定義行為（UB）-O2-O3-會合法地產生錯誤行為-O0-正常只是「剛好沒被最佳化」-gt-「這段程式碼永遠不會出現」，因此優化器可能-不會像你預期那樣正確讀-x2F-寫記憶體。" class="headerlink" title="違反此規則：- 屬於 未定義行為（UB）- -O2 / -O3 會合法地產生錯誤行為- -O0 正常只是「剛好沒被最佳化」&gt; 「這段程式碼永遠不會出現」，因此優化器可能 不會像你預期那樣正確讀&#x2F;寫記憶體。"></a>違反此規則：<br>- 屬於 <strong>未定義行為（UB）</strong><br>- <code>-O2 / -O3</code> 會合法地產生錯誤行為<br>- <code>-O0</code> 正常只是「剛好沒被最佳化」<br>&gt; 「這段程式碼永遠不會出現」，因此優化器可能 <strong>不會像你預期那樣正確讀&#x2F;寫記憶體</strong>。</h2> <span id="more"></span>
+<h2 id="二、什麼情況一定要「解」"><a href="#二、什麼情況一定要「解」" class="headerlink" title="二、什麼情況一定要「解」"></a>二、什麼情況一定要「解」</h2><h2 id="只要出現以下任一狀況，就必須處理：-T-amp-obj，且-T-≠-obj-的實際型別-pointer-cast-做-type-punning-reinterpret-cast-lt-T-amp-gt-O0-正常、-O2-錯亂-加-volatile-才「正常」"><a href="#只要出現以下任一狀況，就必須處理：-T-amp-obj，且-T-≠-obj-的實際型別-pointer-cast-做-type-punning-reinterpret-cast-lt-T-amp-gt-O0-正常、-O2-錯亂-加-volatile-才「正常」" class="headerlink" title="只要出現以下任一狀況，就必須處理：- (T&amp;)obj，且 T ≠ obj 的實際型別- pointer cast 做 type-punning- reinterpret_cast&lt;T&amp;&gt;- -O0 正常、-O2 錯亂- 加 volatile 才「正常」"></a>只要出現以下任一狀況，就<strong>必須處理</strong>：<br>- <code>(T&amp;)obj</code>，且 <code>T ≠ obj 的實際型別</code><br>- pointer cast 做 type-punning<br>- <code>reinterpret_cast&lt;T&amp;&gt;</code><br>- <code>-O0</code> 正常、<code>-O2</code> 錯亂<br>- 加 <code>volatile</code> 才「正常」</h2><h2 id="三、Strict-Aliasing-的正確解法總覽"><a href="#三、Strict-Aliasing-的正確解法總覽" class="headerlink" title="三、Strict Aliasing 的正確解法總覽"></a>三、Strict Aliasing 的正確解法總覽</h2><table>
+<thead>
+<tr>
+<th>解法</th>
+<th>是否推薦</th>
+<th>說明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>型別一致</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>最佳、零 UB</td>
+</tr>
+<tr>
+<td>不回傳 reference</td>
+<td>⭐⭐⭐⭐⭐</td>
+<td>安全、好維護</td>
+</tr>
+<tr>
+<td><code>memcpy</code> type-punning</td>
+<td>⭐⭐⭐⭐</td>
+<td>合法轉型</td>
+</tr>
+<tr>
+<td><code>union</code>（有限）</td>
+<td>⭐⭐</td>
+<td>需小心 active member</td>
+</tr>
+<tr>
+<td><code>-fno-strict-aliasing</code></td>
+<td>⭐</td>
+<td>不推薦，僅過渡</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="四、解法-1：型別一致（最正確）"><a href="#四、解法-1：型別一致（最正確）" class="headerlink" title="四、解法 1：型別一致（最正確）"></a>四、解法 1：型別一致（最正確）</h2><h3 id="問題寫法"><a href="#問題寫法" class="headerlink" title="問題寫法"></a>問題寫法</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">time_base_seconds&amp; <span class="title">secs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> (time_base_seconds&amp;)tv.tv_sec;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>正確寫法</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">time_t</span>&amp; <span class="title">secs</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> tv.tv_sec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="原則"><a href="#原則" class="headerlink" title="原則"></a>原則</h3><blockquote>
+<p><strong>用什麼型別宣告，就用什麼型別存取</strong></p>
+</blockquote>
+<h2 id="五、解法-2：不要回傳-reference（強烈推薦）"><a href="#五、解法-2：不要回傳-reference（強烈推薦）" class="headerlink" title="五、解法 2：不要回傳 reference（強烈推薦）"></a>五、解法 2：不要回傳 reference（強烈推薦）</h2><h3 id="問題點"><a href="#問題點" class="headerlink" title="問題點"></a>問題點</h3><ul>
+<li>reference 綁定錯誤型別</li>
+<li>容易隱含 UB</li>
+</ul>
+<h3 id="安全設計"><a href="#安全設計" class="headerlink" title="安全設計"></a>安全設計</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">time_base_seconds <span class="title">secs</span><span class="params">()</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> tv.tv_sec;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">set_secs</span><span class="params">(time_base_seconds v)</span> </span>&#123;</span><br><span class="line">  tv.tv_sec = v;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="優點"><a href="#優點" class="headerlink" title="優點"></a>優點</h3><ul>
+<li>無 aliasing 問題</li>
+<li>最佳化友善</li>
+<li>API 清楚</li>
+</ul>
+<h2 id="六、解法-3：使用-memcpy（合法-type-punning）"><a href="#六、解法-3：使用-memcpy（合法-type-punning）" class="headerlink" title="六、解法 3：使用 memcpy（合法 type-punning）"></a>六、解法 3：使用 <code>memcpy</code>（合法 type-punning）</h2><h3 id="適用情境"><a href="#適用情境" class="headerlink" title="適用情境"></a>適用情境</h3><ul>
+<li>需要轉換位元表示</li>
+<li>不能改結構定義<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">time_base_seconds dst; </span><br><span class="line">std::<span class="built_in">memcpy</span>(&amp;dst, &amp;tv.tv_sec, <span class="built_in">sizeof</span>(dst));</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="說明"><a href="#說明" class="headerlink" title="說明"></a>說明</h3><ul>
+<li>C++ 標準明確允許</li>
+<li>編譯器會最佳化成單一 load<br>七、解法 4：<code>union</code>（有限且需非常小心）<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">union</span> <span class="title class_">U</span> &#123;</span><br><span class="line">  <span class="type">int</span> i;</span><br><span class="line">  <span class="type">float</span> f;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+限制：</li>
+<li>只能存取 <strong>目前 active member</strong></li>
+<li>跨型別讀取在 C++ 中仍有限制</li>
+<li><strong>不推薦在新程式使用</strong><br>八、解法 5：關閉 strict aliasing（最後手段）<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-fno-strict-aliasing</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="為什麼不推薦"><a href="#為什麼不推薦" class="headerlink" title="為什麼不推薦"></a>為什麼不推薦</h3><ul>
+<li>全專案效能下降</li>
+<li>掩蓋設計錯誤</li>
+<li>不可攜</li>
+<li>新 compiler &#x2F; LTO 仍可能出問題</li>
+</ul>
+<p>九、哪些東西「不能解」strict aliasing</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>volatile</code></td>
+<td>不影響 alias 規則</td>
+</tr>
+<tr>
+<td><code>reinterpret_cast</code></td>
+<td>明確寫出 UB</td>
+</tr>
+<tr>
+<td>指標大小相同</td>
+<td>規範不看大小</td>
+</tr>
+<tr>
+<td>x86 強排序</td>
+<td>與 alias 無關</td>
+</tr>
+</tbody></table>
+<h2 id="十、重構時的安全準則（工程版）"><a href="#十、重構時的安全準則（工程版）" class="headerlink" title="十、重構時的安全準則（工程版）"></a>十、重構時的安全準則（工程版）</h2><ol>
+<li><strong>永遠不要回傳 cast 過的 reference</strong></li>
+<li><strong>API 以值為界線，內部再轉型</strong></li>
+<li><strong>型別不一致 → 用 <code>memcpy</code></strong></li>
+<li><strong><code>reinterpret_cast</code> 視為紅色警告</strong></li>
+<li><strong><code>-O2</code> 是基本測試，不是選項</strong></li>
+</ol>
+<hr>
+<h2 id="十一、Code-Review-檢查清單"><a href="#十一、Code-Review-檢查清單" class="headerlink" title="十一、Code Review 檢查清單"></a>十一、Code Review 檢查清單</h2><ul>
+<li>是否有 <code>(T&amp;)obj</code>？</li>
+<li>是否用 pointer cast 存取不同型別？</li>
+<li>accessor 是否回傳錯誤型別 reference？</li>
+<li>是否依賴 <code>-fno-strict-aliasing</code>？</li>
+<li><code>-O2</code> 行為是否與 <code>-O0</code> 一致？</li>
+</ul>
+<hr>
+<h2 id="十二、總結"><a href="#十二、總結" class="headerlink" title="十二、總結"></a>十二、總結</h2><ul>
+<li>Strict aliasing 是 <strong>效能與正確性的交換前提</strong></li>
+<li>違反規則的程式：<ul>
+<li>行為不被保證</li>
+<li><code>-O2</code> 出問題是正常</li>
+</ul>
+</li>
+<li>唯一根本解法：<br>  <strong>修正型別設計，使存取方式合法</strong></li>
+</ul>
+<blockquote>
+<p><strong>不要和編譯器鬥智，讓型別正確即可。</strong></p>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/OptimizingCompiler/" rel="tag"># OptimizingCompiler</a>
+              <a href="/tags/cplusplus/" rel="tag"># cplusplus</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/20260128042600-ed926797.html" rel="prev" title="資料競態（Data Race） Undefined Behavior">
+                  <i class="fa fa-chevron-left"></i> 資料競態（Data Race） Undefined Behavior
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/20260128101300-bf9fa31c.html" rel="next" title="macmon_exporter">
+                  macmon_exporter <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2026</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">BrianLu</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="external nofollow noopener noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="external nofollow noopener noreferrer" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+
+</body>
+</html>
